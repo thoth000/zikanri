@@ -1,0 +1,40 @@
+name: zikanri
+description: A new Flutter application.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.2.2 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  share: ^0.6.3+6
+  intl: ^0.16.1
+  provider: ^4.0.4
+  flutter_datetime_picker: 1.2.5
+  dynamic_theme: ^1.0.1
+  cupertino_icons: ^0.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+
+  uses-material-design: true
+
+  fonts:
+    - family: NotoSansJP
+      fonts:
+      - asset: fonts/NotoSansJP-Bold.otf
+        weight: 700
+      - asset: fonts/NotoSansJP-Regular.otf
+        weight: 400
+      - asset: fonts/NotoSansJP-Thin.otf
+        weight: 100
+  assets:
+    - images/zikanri_icon.png
+    - images/zikanri_shaped.png
+    - images/mark1.png
+    - images/splash_deco.png
