@@ -20,6 +20,7 @@ class SlideMenu extends StatelessWidget {
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
+              //TODO:think
               padding: EdgeInsets.only(bottom: displaySize.width / 8 + 20.0),
               child: Container(height: 1.0, color: Colors.grey),
             ),
@@ -61,7 +62,7 @@ class SlideMenu extends StatelessWidget {
                   Text(
                     '  ホーム',
                     style: TextStyle(
-                        fontSize: displaySize.width / 20,
+                        fontSize: FontSize.small,
                         fontWeight: FontWeight.w400),
                   ),
                 ],
@@ -76,9 +77,6 @@ class SlideMenu extends StatelessWidget {
               );
             },
           ),
-          Divider(
-            height: 1,
-          ),
           FlatButton(
             child: Padding(
               padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
@@ -92,7 +90,7 @@ class SlideMenu extends StatelessWidget {
                   Text(
                     ' これまでの記録',
                     style: TextStyle(
-                        fontSize: displaySize.width / 20,
+                        fontSize: FontSize.small,
                         fontWeight: FontWeight.w400),
                   ),
                 ],
@@ -107,9 +105,6 @@ class SlideMenu extends StatelessWidget {
               );
             },
           ),
-          Divider(
-            height: 1,
-          ),
           FlatButton(
             child: Padding(
               padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
@@ -123,7 +118,7 @@ class SlideMenu extends StatelessWidget {
                   Text(
                     '  ユーザー',
                     style: TextStyle(
-                        fontSize: displaySize.width / 20,
+                        fontSize: FontSize.small,
                         fontWeight: FontWeight.w400),
                   ),
                 ],
@@ -138,9 +133,6 @@ class SlideMenu extends StatelessWidget {
               );
             },
           ),
-          Divider(
-            height: 1,
-          ),
           FlatButton(
             child: Padding(
               padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
@@ -154,7 +146,7 @@ class SlideMenu extends StatelessWidget {
                   Text(
                     '  設定',
                     style: TextStyle(
-                        fontSize: displaySize.width / 20,
+                        fontSize: FontSize.small,
                         fontWeight: FontWeight.w400),
                   ),
                 ],
@@ -206,7 +198,7 @@ class SlideMenu extends StatelessWidget {
                 'アカウント登録',
                 style: TextStyle(
                     color: Colors.white,
-                    fontSize: displaySize.width / 25,
+                    fontSize: FontSize.xsmall,
                     fontWeight: FontWeight.bold),
               ),
             ),

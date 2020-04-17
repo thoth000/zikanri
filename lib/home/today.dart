@@ -40,11 +40,10 @@ class TodayWidget extends StatelessWidget {
                     Expanded(
                       flex: 6,
                       child: Text(
-                        itemList[2]+
-                            '分 × ' +
-                            itemList[3]+
-                            'pt',
-                        style: TextStyle(fontSize: displaySize.width / 30),
+                        itemList[2] + '分 × ' + itemList[3] + 'pt',
+                        style: TextStyle(
+                          fontSize: FontSize.xxsmall,
+                        ),
                       ),
                     ),
                     Expanded(
@@ -52,14 +51,18 @@ class TodayWidget extends StatelessWidget {
                         child: Center(
                           child: Text(
                             '→',
-                            style: TextStyle(fontSize: displaySize.width / 20),
+                            style: TextStyle(
+                              fontSize: FontSize.small,
+                            ),
                           ),
                         )),
                     Expanded(
                       flex: 4,
                       child: Text(
-                        itemList[4]+ 'pt',
-                        style: TextStyle(fontSize: displaySize.width / 30),
+                        itemList[4] + 'pt',
+                        style: TextStyle(
+                          fontSize: FontSize.xxsmall,
+                        ),
                       ),
                     ),
                   ],
@@ -140,7 +143,7 @@ class TodayWidget extends StatelessWidget {
                         Text(
                           '総ポイント',
                           style: TextStyle(
-                              fontSize: displaySize.width / 17,
+                              fontSize: FontSize.midium,
                               fontWeight: FontWeight.w700),
                         ),
                       ],
@@ -149,7 +152,7 @@ class TodayWidget extends StatelessWidget {
                       userData.todayPoint.toString() + ' ',
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
-                        fontSize: displaySize.width / 8,
+                        fontSize: FontSize.xxlarge,
                       ),
                     ),
                   ],
@@ -160,7 +163,7 @@ class TodayWidget extends StatelessWidget {
                 Text(
                   '記録',
                   style: TextStyle(
-                      fontSize: displaySize.width / 17,
+                      fontSize: FontSize.midium,
                       fontWeight: FontWeight.w700),
                 ),
                 SizedBox(

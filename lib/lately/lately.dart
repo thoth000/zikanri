@@ -17,7 +17,7 @@ class LatelyPage extends StatelessWidget {
           child: Text(
             '最近の記録',
             style: TextStyle(
-              fontSize: displaySize.width / 12,
+              fontSize: FontSize.xlarge,
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -69,7 +69,7 @@ class LatelyPage extends StatelessWidget {
               Text(
                 l[0],
                 style: TextStyle(
-                  fontSize: displaySize.width / 15,
+                  fontSize: FontSize.large,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -146,8 +146,9 @@ class LatelyPage extends StatelessWidget {
                 Text(
                   '記録',
                   style: TextStyle(
-                      fontSize: displaySize.width / 15,
-                      fontWeight: FontWeight.w700),
+                    fontSize: FontSize.large,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
                 Divider(
                   height: 5,
@@ -202,7 +203,7 @@ class LatelyPage extends StatelessWidget {
                   softWrap: false,
                   overflow: TextOverflow.fade,
                   style: TextStyle(
-                    fontSize: displaySize.width / 25,
+                    fontSize: FontSize.xsmall,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -213,11 +214,10 @@ class LatelyPage extends StatelessWidget {
                       Expanded(
                         flex: 6,
                         child: Text(
-                          itemList[2]+
-                              '分 × ' +
-                              itemList[3]+
-                              'pt',
-                          style: TextStyle(fontSize: displaySize.width / 30),
+                          itemList[2] + '分 × ' + itemList[3] + 'pt',
+                          style: TextStyle(
+                            fontSize: FontSize.xxsmall,
+                          ),
                         ),
                       ),
                       Expanded(
@@ -225,15 +225,19 @@ class LatelyPage extends StatelessWidget {
                         child: Center(
                           child: Text(
                             '→',
-                            style: TextStyle(fontSize: displaySize.width / 20),
+                            style: TextStyle(
+                              fontSize: FontSize.small,
+                            ),
                           ),
                         ),
                       ),
                       Expanded(
                         flex: 4,
                         child: Text(
-                          itemList[4]+ 'pt',
-                          style: TextStyle(fontSize: displaySize.width / 30),
+                          itemList[4] + 'pt',
+                          style: TextStyle(
+                            fontSize: FontSize.xxsmall,
+                          ),
                         ),
                       ),
                     ],

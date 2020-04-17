@@ -13,9 +13,15 @@ void main() {
     runApp(
       ChangeNotifierProvider(
         create: (_) => ThemeNotifier(),
-        child:ChangeNotifierProvider(
+        child: ChangeNotifierProvider(
           create: (_) => UserDataNotifier(),
-          child: MyApp())));
+          child: ChangeNotifierProvider(
+            create: (_) => RecordNotifier(),
+            child: MyApp(),
+          ),
+        ),
+      ),
+    );
   });
 }
 

@@ -14,6 +14,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
     return Scaffold(
+      resizeToAvoidBottomInset:false,
       key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -50,14 +51,14 @@ class HomePage extends StatelessWidget {
                     Text(
                       '今月の情報',
                       style: TextStyle(
-                        fontSize: displaySize.width / 17,
+                        fontSize: FontSize.large,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     Text(
                       today,
                       style: TextStyle(
-                        fontSize:displaySize.width/30,
+                        fontSize:FontSize.xxsmall,
                         color: Colors.grey,
                       ),
                     ),
@@ -75,14 +76,14 @@ class HomePage extends StatelessWidget {
                     Text(
                       '今日の情報',
                       style: TextStyle(
-                        fontSize: displaySize.width / 17,
+                        fontSize: FontSize.large,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     Text(
                       today,
                       style: TextStyle(
-                        fontSize:displaySize.width/30,
+                        fontSize:FontSize.xxsmall,
                         color: Colors.grey,
                       ),
                     ),
@@ -99,7 +100,7 @@ class HomePage extends StatelessWidget {
           Align(
             alignment: Alignment.bottomRight,
             child: Padding(
-              padding: const EdgeInsets.only(bottom: 15, right: 0),
+              padding: const EdgeInsets.only(bottom: 10, right: 10),
               child: RButton(),
             ),
           ),

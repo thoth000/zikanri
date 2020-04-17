@@ -44,7 +44,7 @@ class _TMWidgetState extends State<TMWidget> {
     var value,
   ) {
     return Container(
-      width: displaySize.width/3.7,
+      width: displaySize.width / 3.7,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -55,11 +55,17 @@ class _TMWidgetState extends State<TMWidget> {
             value.toString(),
             softWrap: false,
             overflow: TextOverflow.fade,
-            style: TextStyle(fontSize: displaySize.width / 15.5,fontWeight: FontWeight.w700),
+            style: TextStyle(
+              fontSize: FontSize.large,
+              fontWeight: FontWeight.w700,
+            ),
           ),
           Text(
             title,
-            style: TextStyle(color: Colors.grey,fontSize: displaySize.width/30),
+            style: TextStyle(
+              color: Colors.grey,
+              fontSize: FontSize.xxsmall,
+            ),
           ),
         ],
       ),

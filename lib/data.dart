@@ -1,23 +1,52 @@
 import 'package:flutter/material.dart';
 
 Size displaySize;
+var tmp;
+
+class FontSize {
+  static double xxsmall = displaySize.width / 30;
+  static double xsmall = displaySize.width / 25;
+  static double small = displaySize.width / 20;
+  static double midium = displaySize.width / 17;
+  static double large = displaySize.width / 15.5;
+  static double xlarge = displaySize.width / 12;
+  static double xxlarge = displaySize.width / 8;
+  static double big = displaySize.width / 6.5;
+}
+
 DateTime firstLoginDate;
 String previousDate = '2020年07月21日';
 
 int totalPassedDays;
 int passedDays = 20;
 
-//記録追加時の必要変数
-String title = '';
-double rating = 0.0;
-int time = 0;
-int tmpValue = 0;
-var tmp=0;
-
 AssetImage userIcon = AssetImage('images/zikanri_icon.png');
 
+const List iconList = [
+  ["57746", "指定なし"],
+  ["57680", "勉強"],
+  ["58699", "読書"],
+  ["58726", "運動"],
+  ["57519", "仕事"],
+  ["58373", "音楽"],
+  ["58378", "イラスト"],
+  ["58168", "ゲーム"],
+  ["58937", "メディア"],
+  ["58917", "SNS"],
+  ["58143", "開発"],
+  ["59497", "創作"],
+  ["60227", "筋トレ"],
+  ["58386", "カメラ"],
+  ["58899", "ドライブ"],
+  ["58721", "食事"],
+  ["60231", "料理"],
+  ["59677", "ペット"],
+  ["59596", "買い物"],
+  ["58693", "園芸"],
+];
+
 //BaseColor
-List baseColors = [
+const List baseColors = [
   [Color(0XFF39BAE8), Color(0XFF0000A1)],
   [Color(0XFFffcccc), Color(0XFFcaabd8)],
   [Color(0XFFa2a9af), Color(0XFF4c5870)],
@@ -28,6 +57,63 @@ List baseColors = [
 //userHasColors => call baseColors
 List myColors = ['0', '1', '4', '5'];
 
+//changeNotifier for record
+class RecordNotifier with ChangeNotifier {
+  String _title = "";
+  String get title => _title;
+  String _category = "57746";
+  String get category => _category;
+  int _rating = 0;
+  int get rating => _rating;
+  int _time = 0;
+  int get time => _time;
+  bool _timecheck = true;
+  bool get timecheck => _timecheck;
+  var tmp;
+
+  void changeTitle(String s) {
+    _title = s;
+    notifyListeners();
+  }
+
+  void changeTime(String s) {
+    int _minite = int.parse(s);
+    if (_minite > 1440 || _minite == 0) {
+      _timecheck = true;
+    } else {
+      _timecheck = false;
+      _time = _minite;
+    }
+    notifyListeners();
+  }
+
+  void changeValue(int i) {
+    if (_rating == i) {
+    } else {
+      _rating = i;
+      notifyListeners();
+    }
+  }
+
+  void changeCategory(String s) {
+    if (_category == s) {
+    } else {
+      _category = s;
+      notifyListeners();
+    }
+  }
+
+  void initialize() {
+    _title = "";
+    _category = "57746";
+    _time = 0;
+    _rating = 0;
+    _timecheck = false;
+    notifyListeners();
+  }
+}
+
+//changeNotifier for theme
 class ThemeNotifier with ChangeNotifier {
   //Theme
   bool _isDark = false;
@@ -39,7 +125,6 @@ class ThemeNotifier with ChangeNotifier {
   ThemeData buildTheme() => ThemeData(
         fontFamily: 'NotoSansJP',
         brightness: _isDark ? Brightness.dark : Brightness.light,
-        buttonColor: _isDark ? _themeColors()[0] : _themeColors()[1],
         primaryIconTheme: IconThemeData(
           color: _isDark ? _themeColors()[0] : _themeColors()[1],
         ),
@@ -63,8 +148,9 @@ class ThemeNotifier with ChangeNotifier {
   }
 }
 
+//changeNotifier for userData
 class UserDataNotifier with ChangeNotifier {
-  int _totalPointScore = 40000;
+  int _totalPointScore = 1286749;
   int get totalPointScore => _totalPointScore;
   String _userName = 'ゲスト';
   String get userName => _userName;
@@ -154,9 +240,15 @@ class UserDataNotifier with ChangeNotifier {
     _thisMonthValue = (_thisMonthPoint / _thisMonthMinite).toStringAsFixed(2);
     _todayValue = (_todayPoint / _todayMinite).toStringAsFixed(2);
     _todayDoneList.add(listData);
-    _latelyData.removeAt(_latelyData.length-1);
-    _latelyData.add([previousDate,_todayMinite.toString(),_todayPoint.toString(),_todayValue,]);
-    print(_latelyData);
+    _latelyData.removeAt(_latelyData.length - 1);
+    _latelyData.add(
+      [
+        previousDate,
+        _todayMinite.toString(),
+        _todayPoint.toString(),
+        _todayValue,
+      ],
+    );
     notifyListeners();
   }
 
@@ -172,8 +264,15 @@ class UserDataNotifier with ChangeNotifier {
     _thisMonthValue = (_thisMonthPoint / _thisMonthMinite).toStringAsFixed(2);
     _todayValue = (_todayPoint / _todayMinite).toStringAsFixed(2);
     _todayDoneList.removeAt(index);
-    _latelyData.removeAt(_latelyData.length-1);
-    _latelyData.add([previousDate,_todayMinite.toString(),_todayPoint.toString(),_todayValue,]);
+    _latelyData.removeAt(_latelyData.length - 1);
+    _latelyData.add(
+      [
+        previousDate,
+        _todayMinite.toString(),
+        _todayPoint.toString(),
+        _todayValue,
+      ],
+    );
     notifyListeners();
   }
 }

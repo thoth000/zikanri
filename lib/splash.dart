@@ -36,7 +36,7 @@ class _SplashPageState extends State<SplashPage> {
     Timer(
       Duration(seconds: 4),
       () {
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           _createRoute(),
         );
@@ -46,6 +46,7 @@ class _SplashPageState extends State<SplashPage> {
 
   Widget build(BuildContext context) {
     displaySize = MediaQuery.of(context).size;
+    print(displaySize);
     return Scaffold(
       body: Container(
         color: Colors.white,
@@ -69,13 +70,13 @@ class _SplashPageState extends State<SplashPage> {
                     style: TextStyle(
                       color: Color(0XFF3A405A),
                       fontWeight: FontWeight.w700,
-                      fontSize: displaySize.width / 7.5,
+                      fontSize: FontSize.xxlarge,
                     ),
                   ),
                   Text(
                     '毎日をより価値あるものに',
                     style: TextStyle(
-                      fontSize: displaySize.width / 25,
+                      fontSize: FontSize.xsmall,
                       color: Color(0XFF3A405A),
                     ),
                   ),

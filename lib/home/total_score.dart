@@ -7,12 +7,9 @@ class TotalScoreWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
-    Size displaySize;
-    displaySize = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Container(
-        height: displaySize.width / 2,
         width: displaySize.width,
         decoration: BoxDecoration(
           gradient: LinearGradient(colors: theme.themeColors),
@@ -26,51 +23,58 @@ class TotalScoreWidget extends StatelessWidget {
             ),
           ],
         ),
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(displaySize.width / 100),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Icon(
-                      null,
-                      size: displaySize.width / 10,
-                    ),
-                    Text(
-                      'Total Point',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: displaySize.width / 12.5,
-                          fontWeight: FontWeight.w300),
-                    ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.share,
-                        color: Colors.white,
-                        size: displaySize.width / 12.5,
-                      ),
-                      onPressed: () {
-                        Share.share(
-                          "ユーザーID:${userData.userID}\n${userData.totalPointScore}ポイントに到達しました！\n#ジカンリ",
-                        );
-                      },
-                    ),
-                  ],
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                IconButton(
+                  onPressed:null,
+                  iconSize: displaySize.width/12,
+                  icon: Icon(null),
                 ),
-              ),
-              Text(
-                userData.totalPointScore.toString(),
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: displaySize.width / 5.5,
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic,
+                Text(
+                  'Total Point',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: FontSize.xlarge,//12.5
+                    fontWeight: FontWeight.w300
+                  ),
                 ),
+                IconButton(
+                  icon: Icon(
+                    Icons.share,
+                    color: Colors.white,
+                    size: displaySize.width / 12,
+                  ),
+                  onPressed: () {
+                    Share.share(
+                      "ユーザーID:${userData.userID}\n${userData.totalPointScore}ポイントに到達しました！\n#ジカンリ",
+                    );
+                  },
+                ),
+              ],
+            ),
+            Text(
+              userData.totalPointScore.toString(),
+              overflow: TextOverflow.fade,
+              softWrap: false,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: FontSize.big,
+                fontWeight: FontWeight.w700,
+                fontStyle: FontStyle.italic,
               ),
-            ],
-          ),
+            ),
+            SizedBox(
+              height: 25,
+            ),
+          ],
         ),
       ),
     );
