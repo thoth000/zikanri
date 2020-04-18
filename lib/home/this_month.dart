@@ -32,7 +32,7 @@ class _TMWidgetState extends State<TMWidget> {
                   userData.thisMonthPoint,
                 ),
                 _widget('平均価値', userData.thisMonthValue),
-                _widget('日平均', userData.averagePoint),
+                _widget('日平均', userData.thisMonthAverage),
               ],
             ),
           ),

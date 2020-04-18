@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
-import 'Splash.dart';
 import 'package:flutter/services.dart';
-import 'data.dart';
 import 'package:provider/provider.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+import 'Splash.dart';
+import 'data.dart';
+
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  await Hive.openBox('theme');
+  await Hive.openBox('userData');
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -17,7 +23,9 @@ void main() {
           create: (_) => UserDataNotifier(),
           child: ChangeNotifierProvider(
             create: (_) => RecordNotifier(),
-            child: MyApp(),
+            child: ChangeNotifierProvider(
+              create: (_) => ReloadNotifier(),
+              child: MyApp()),
           ),
         ),
       ),

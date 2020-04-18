@@ -153,17 +153,17 @@ class LatelyPage extends StatelessWidget {
                 Divider(
                   height: 5,
                 ),
-                for (int j = 0; j < userData.latelyDoneData[i].length; j++)
-                  _dayDoneList(userData.latelyDoneData[i][j], j),
+                for (int j = 0; j < userData.latelyData[i][4].length; j++)
+                  _dayDoneList(userData.latelyData[i][4][j], j),
                 Center(
                   child: Padding(
                     padding: EdgeInsets.symmetric(
-                      vertical: (userData.latelyDoneData[i].length == 0)
+                      vertical: (userData.latelyData[i][4].length == 0)
                           ? displaySize.width / 5
                           : 0,
                     ),
                     child: Text(
-                      (userData.latelyDoneData[i].length == 0)
+                      (userData.latelyData[i][4].length == 0)
                           ? 'この日の記録はありません'
                           : '',
                     ),

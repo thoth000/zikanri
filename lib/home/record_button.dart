@@ -346,7 +346,7 @@ class RButton extends StatelessWidget {
                                               : Colors.black,
                                         ),
                                         onPressed: () => record
-                                            .changeCategory(itemList[0]), //TODO
+                                            .changeCategory(itemList[0]),
                                       ),
                                     ),
                                     Text(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 Size displaySize;
 var tmp;
@@ -11,14 +12,8 @@ class FontSize {
   static double large = displaySize.width / 15.5;
   static double xlarge = displaySize.width / 12;
   static double xxlarge = displaySize.width / 8;
-  static double big = displaySize.width / 6.5;
+  static double big = displaySize.width / 6;
 }
-
-DateTime firstLoginDate;
-String previousDate = '2020年07月21日';
-
-int totalPassedDays;
-int passedDays = 20;
 
 AssetImage userIcon = AssetImage('images/zikanri_icon.png');
 
@@ -55,7 +50,6 @@ const List baseColors = [
   [Color(0XFFe8f044), Color(0XFF21bf73)],
 ];
 //userHasColors => call baseColors
-List myColors = ['0', '1', '4', '5'];
 
 //changeNotifier for record
 class RecordNotifier with ChangeNotifier {
@@ -116,12 +110,13 @@ class RecordNotifier with ChangeNotifier {
 //changeNotifier for theme
 class ThemeNotifier with ChangeNotifier {
   //Theme
-  bool _isDark = false;
+  bool _isDark=false;
   bool get isDark => _isDark;
   int _themeColorsIndex = 0;
-  List _themeColors() => baseColors[int.parse(myColors[_themeColorsIndex])];
+  List _myColors = ['0','1','2'];
+  List get myColors => _myColors;
+  List _themeColors() => baseColors[int.parse(_myColors[_themeColorsIndex])];
   List get themeColors => _themeColors();
-
   ThemeData buildTheme() => ThemeData(
         fontFamily: 'NotoSansJP',
         brightness: _isDark ? Brightness.dark : Brightness.light,
@@ -140,49 +135,60 @@ class ThemeNotifier with ChangeNotifier {
   void changeMode() {
     _isDark = !_isDark;
     notifyListeners();
+    Hive.box('theme').put('isDark', _isDark);
   }
 
   void changeTheme(int i) {
     _themeColorsIndex = i;
+    notifyListeners();
+    Hive.box('theme').put('themeColorsIndex', _themeColorsIndex);
+  }
+  
+  void addTheme(int i){
+    _myColors.add(i);
+    notifyListeners();
+    Hive.box('theme').put('myColors', _myColors);
+  }
+
+  void initialze() async {
+    var box = Hive.box('theme');
+    _isDark = await box.get('isDark');
+    _themeColorsIndex = await box.get('themeColorsIndex');
+    _myColors = await box.get('myColors');
     notifyListeners();
   }
 }
 
 //changeNotifier for userData
 class UserDataNotifier with ChangeNotifier {
-  int _totalPointScore = 1286749;
-  int get totalPointScore => _totalPointScore;
-  String _userName = 'ゲスト';
-  String get userName => _userName;
-  String _userID = '123456789';
-  String get userID => _userID;
-  bool _registerCheck = false;
-  bool get registerCheck => _registerCheck;
+  String userName = "ゲスト";
+  String userID = "";
+  bool registerCheck = false;
+  String previousDate="2020年01月01日";
+  String thisMonth="01";
+  int totalPassedDays=1;
+  int passedDays=1;
 
-  int _thisMonthPoint = 30000;
+  int _totalPointScore = 0;
+  int get totalPointScore => _totalPointScore;
+  int _thisMonthPoint = 0;
   int get thisMonthPoint => _thisMonthPoint;
-  int _thisMonthMinite = 10000;
+  int _thisMonthMinite = 0;
   int get thisMonthMinite => _thisMonthMinite;
-  int _averagePoint = 1500;
-  int get averagePoint => _averagePoint;
-  String _thisMonthValue = '3.00';
+  String _thisMonthValue = '0.00';
   String get thisMonthValue => _thisMonthValue;
-  //List<String>で保存するためにdayDataとdayDoneのデータを分けた。
-  //こっちが値系の配列
-  //日付,時間,総ポイント,時間価値
-  List _latelyData = [
-    ['2020年07月19日', '1000', '2900', '2.9'],
-    ['2020年07月20日', '2000', '3500', '1.75'],
-    ['2020年07月21日', '1640', '7600', '4.63'],
-  ];
+  int _thisMonthAverage = 0;
+  int get thisMonthAverage => _thisMonthAverage;
+
+  int _todayPoint =0;
+  int get todayPoint => _todayPoint;
+  int _todayMinite = 0;
+  int get todayMinite => _todayMinite;
+  String _todayValue = '0.00';
+  String get todayValue => _todayValue;
+  //日付,時間,総ポイント,時間価値,DoneList
+  List _latelyData=[];
   List get latelyData => _latelyData;
-  //こっちが記録を持っておく配列
-  List _latelyDoneData() => [
-        todayDoneList2,
-        todayDoneList1,
-        todayDoneList,
-      ];
-  List get latelyDoneData => _latelyDoneData();
 
   int index = 0;
   void setIndex(int i) {
@@ -190,42 +196,10 @@ class UserDataNotifier with ChangeNotifier {
     notifyListeners();
   }
 
-  int _todayPoint = 7600;
-  int get todayPoint => _todayPoint;
-  int _todayMinite = 1640;
-  int get todayMinite => _todayMinite;
-  String _todayValue = '4.63';
-  String get todayValue => _todayValue;
-
-  List _todayDoneList = [
-    ['58168', '今日はひろしまひろしまスタジアムで試合でした。楽しかった', '120', '5', '600'],
-    ['58168', '花火撮影', '120', '0', '0'],
-    ['58168', 'イラスト描き', '1400', '5', '7000'],
-  ];
+  List _todayDoneList = [];
   List get todayDoneList => _todayDoneList;
 
-  List todayDoneList1 = [
-    ['58168', 'かきくけこ', '120', '5', '600'],
-    ['58168', '花火撮影', '120', '0', '0'],
-    ['58168', 'イラスト描き', '1439', '5', '7195'],
-  ];
-
-  List todayDoneList2 = [
-    ['58168', 'あいうえお', '120', '5', '600'],
-    ['58168', '花火撮影', '120', '0', '0'],
-    ['58168', 'イラスト描き', '1439', '5', '7195'],
-  ];
-
-  List _shortCuts = [
-    ['58168', '1', '1439', '5', '7195'],
-    ['58168', '2', '120', '5', '600'],
-    ['58168', '3', '1439', '5', '7195'],
-    ['58168', '4', '120', '5', '600'],
-    ['58168', '5', '1439', '5', '7195'],
-    ['58168', '6', '120', '5', '600'],
-    ['58168', '7', '1439', '5', '7195'],
-    ['58168', '8', '120', '5', '600'],
-  ];
+  List _shortCuts = [];
   List get shortCuts => _shortCuts;
 
   void recordDone(listData) {
@@ -236,7 +210,7 @@ class UserDataNotifier with ChangeNotifier {
     _todayPoint += _point;
     _thisMonthMinite += _minite;
     _todayMinite += _minite;
-    _averagePoint = (_thisMonthPoint / passedDays).round();
+    _thisMonthAverage = (_thisMonthPoint / passedDays).round();
     _thisMonthValue = (_thisMonthPoint / _thisMonthMinite).toStringAsFixed(2);
     _todayValue = (_todayPoint / _todayMinite).toStringAsFixed(2);
     _todayDoneList.add(listData);
@@ -247,9 +221,29 @@ class UserDataNotifier with ChangeNotifier {
         _todayMinite.toString(),
         _todayPoint.toString(),
         _todayValue,
+        _todayDoneList,
       ],
     );
     notifyListeners();
+    //TODO:記録の保存
+    Hive.box('userData').put('userValue', [
+      _totalPointScore,
+      _thisMonthPoint,
+      _thisMonthMinite,
+      _thisMonthValue,
+      _thisMonthAverage,
+      _todayPoint,
+      _todayMinite,
+      _todayValue,
+    ]);
+    Hive.box('userData').put('todayDoneList', _todayDoneList);
+    Hive.box('userData').put('latelyData', _latelyData);
+  }
+
+  void addShortCuts(item){
+    _shortCuts.add(item);
+    notifyListeners();
+    Hive.box('userName').put('shortCuts', _shortCuts);
   }
 
   void deleteDone(listData, index) {
@@ -260,7 +254,7 @@ class UserDataNotifier with ChangeNotifier {
     _todayPoint -= _point;
     _thisMonthMinite -= _minite;
     _todayMinite -= _minite;
-    _averagePoint = (_thisMonthPoint / passedDays).round();
+    _thisMonthAverage = (_thisMonthPoint / passedDays).round();
     _thisMonthValue = (_thisMonthPoint / _thisMonthMinite).toStringAsFixed(2);
     _todayValue = (_todayPoint / _todayMinite).toStringAsFixed(2);
     _todayDoneList.removeAt(index);
@@ -271,8 +265,57 @@ class UserDataNotifier with ChangeNotifier {
         _todayMinite.toString(),
         _todayPoint.toString(),
         _todayValue,
+        _todayDoneList,
       ],
     );
+    notifyListeners();
+    Hive.box('userData').put('userValue', [
+      _totalPointScore,
+      _thisMonthPoint,
+      _thisMonthMinite,
+      _thisMonthValue,
+      _thisMonthAverage,
+      _todayPoint,
+      _todayMinite,
+      _todayValue,
+    ]);
+    Hive.box('userData').put('todayDoneList', _todayDoneList);
+    Hive.box('userData').put('latelyData', _latelyData);
+  }
+
+  void initialze() {
+    var box = Hive.box('userData');
+    var userValue = box.get('userValue');
+    _totalPointScore = userValue[0];
+    _thisMonthPoint = userValue[1];
+    _thisMonthMinite = userValue[2];
+    _thisMonthValue = userValue[3];
+    _thisMonthAverage = userValue[4];
+    _todayPoint = userValue[5];
+    _todayMinite = userValue[6];
+    _todayValue = userValue[7];
+    _latelyData = box.get('latelyData');
+    _todayDoneList = box.get('todayDoneList');
+    _shortCuts = box.get('shortCuts');
+    userName = box.get('userName');
+    userID = box.get('userID');
+    registerCheck = box.get('resisterCheck');
+    previousDate = box.get('previousDate');
+    thisMonth = box.get('thisMonth');
+    totalPassedDays =box.get('totalPassedDays');
+    passedDays = box.get('passedDays');
+  }
+}
+class ReloadNotifier with ChangeNotifier {
+  bool _reload = false;
+  bool get reload => _reload;
+  void reloded() {
+    _reload = true;
+    notifyListeners();
+  }
+
+  void finishload() {
+    _reload = false;
     notifyListeners();
   }
 }

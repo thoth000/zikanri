@@ -18,65 +18,46 @@ class _DHWidgetState extends State<DHWidget> {
             BoxDecoration(gradient: LinearGradient(colors: theme.themeColors)),
         child: Stack(
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                FlatButton(
-                  shape: CircleBorder(),
-                  child: Container(
-                      width: displaySize.width / 4,
-                      height: displaySize.width / 4,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                            width: 4,
-                            color: (theme.isDark)
-                                ? Color(0XFF303030)
-                                : Colors.white),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(
-                            displaySize.width,
-                          ),
-                        ),
-                        color: Colors.white,
-                      ),
+            Container(
+                width: displaySize.width / 4,
+                height: displaySize.width / 4,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(
+                      displaySize.width,
+                    ),
+                  ),
+                  border:  Border.all(
+                    color:  (theme.isDark) ? Color(0XFF303030) : Colors.white,
+                    width: 5,
+                  ),
+                ),
+                child: Stack(
+                  children: <Widget>[
+                    Center(
                       child: Container(
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               image: DecorationImage(
-                                  fit: BoxFit.fill, image: userIcon)))),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SettingPage(),
-                      ),
-                    );
-                  },
-                ),
-                (userData.registerCheck)
-                    ? Flexible(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 0.0, right: 3.0),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Text(
-                              "@${userData.userID}",
-                              style: TextStyle(
-                                fontSize: FontSize.midium,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w100,
-                              ),
-                            ),
+                                  fit: BoxFit.fill, image: userIcon))),
+                    ),
+                    SizedBox(
+                      height: displaySize.width / 4,
+                      width: displaySize.width / 4,
+                      child: FlatButton(
+                        color: Colors.transparent,
+                        shape: CircleBorder(),
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SettingPage(),
                           ),
                         ),
-                      )
-                    : Text(
-                        ' ',
-                        style: TextStyle(
-                          fontSize: FontSize.midium,
-                        ),
+                        child: Container(),
                       ),
-              ],
-            ),
+                    ),
+                  ],
+                )),
             Align(
               alignment: Alignment.bottomLeft,
               child: Padding(

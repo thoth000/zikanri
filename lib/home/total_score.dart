@@ -28,14 +28,14 @@ class TotalScoreWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             SizedBox(
-              height: 10,
+              height: displaySize.width/20,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 IconButton(
                   onPressed:null,
-                  iconSize: displaySize.width/12,
+                  iconSize: displaySize.width/15,
                   icon: Icon(null),
                 ),
                 Text(
@@ -50,15 +50,18 @@ class TotalScoreWidget extends StatelessWidget {
                   icon: Icon(
                     Icons.share,
                     color: Colors.white,
-                    size: displaySize.width / 12,
+                    size: displaySize.width / 15,
                   ),
                   onPressed: () {
                     Share.share(
-                      "ユーザーID:${userData.userID}\n${userData.totalPointScore}ポイントに到達しました！\n#ジカンリ",
+                      "ユーザー:${userData.userName}\n${userData.totalPointScore}ポイントに到達しました！\n#ジカンリ",
                     );
                   },
                 ),
               ],
+            ),
+            SizedBox(
+              height: displaySize.width/50,
             ),
             Text(
               userData.totalPointScore.toString(),
@@ -72,7 +75,7 @@ class TotalScoreWidget extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 25,
+              height: displaySize.width/10,
             ),
           ],
         ),
