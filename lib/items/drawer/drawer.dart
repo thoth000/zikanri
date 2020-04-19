@@ -10,6 +10,22 @@ import '../../data.dart';
 import 'drawer_header.dart';
 
 class SlideMenu extends StatelessWidget {
+  Route _createRoute(page) {
+      return PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) => page,
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          var begin = Offset(1.0, 0.0);
+          var end = Offset.zero;
+          var curve = Curves.ease;
+          var tween =
+              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+          return SlideTransition(
+            position: animation.drive(tween),
+            child: child,
+          );
+        },
+      );
+    }
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
@@ -21,20 +37,39 @@ class SlideMenu extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: Padding(
               //TODO:think
-              padding: EdgeInsets.only(bottom: displaySize.width / 8 + 20.0),
-              child: Container(height: 1.0, color: Colors.grey),
+              padding: EdgeInsets.only(bottom: displaySize.width / 8 + 10.0),
+              child: Divider(height: 1,),
             ),
           ),
           Align(
             alignment: Alignment.bottomLeft,
-            child: Padding(
-              padding: EdgeInsets.all(10.0),
-              child: isThemeButton(theme),
+            child: Row(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.all(5.0),
+                  child: isThemeButton(theme),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical:5.0),
+                  child: IconButton(
+                    iconSize: displaySize.width/11,
+                    icon: Icon(Icons.settings),
+                    color: Colors.grey[700],
+                    onPressed: () async{
+                      Navigator.pop(context);
+                      await Navigator.push(context,_createRoute(SettingPage()));
+                    }
+                  ),
+                ),
+              ],
             ),
           ),
           Align(
             alignment: Alignment.bottomRight,
-            child: resisterButton(context, theme, userData),
+            child: Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: resisterButton(context, theme, userData),
+            ),
           ),
         ],
       ),
@@ -83,6 +118,34 @@ class SlideMenu extends StatelessWidget {
               child: Row(
                 children: <Widget>[
                   Icon(
+                    Icons.supervised_user_circle,
+                    size: displaySize.width / 8,
+                    color: Colors.grey[700],
+                  ),
+                  Text(
+                    '  ユーザー',
+                    style: TextStyle(
+                        fontSize: FontSize.small,
+                        fontWeight: FontWeight.w400),
+                  ),
+                ],
+              ),
+            ),
+            onPressed: () async{
+              await Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => UserPage(),
+                ),
+              );
+            },
+          ),
+          FlatButton(
+            child: Padding(
+              padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+              child: Row(
+                children: <Widget>[
+                  Icon(
                     Icons.assessment,
                     size: displaySize.width / 8,
                     color: Colors.grey[700],
@@ -101,62 +164,6 @@ class SlideMenu extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => PRPage(),
-                ),
-              );
-            },
-          ),
-          FlatButton(
-            child: Padding(
-              padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
-              child: Row(
-                children: <Widget>[
-                  Icon(
-                    Icons.supervised_user_circle,
-                    size: displaySize.width / 8,
-                    color: Colors.grey[700],
-                  ),
-                  Text(
-                    '  ユーザー',
-                    style: TextStyle(
-                        fontSize: FontSize.small,
-                        fontWeight: FontWeight.w400),
-                  ),
-                ],
-              ),
-            ),
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => UserPage(),
-                ),
-              );
-            },
-          ),
-          FlatButton(
-            child: Padding(
-              padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
-              child: Row(
-                children: <Widget>[
-                  Icon(
-                    Icons.settings,
-                    size: displaySize.width / 8,
-                    color: Colors.grey[700],
-                  ),
-                  Text(
-                    '  設定',
-                    style: TextStyle(
-                        fontSize: FontSize.small,
-                        fontWeight: FontWeight.w400),
-                  ),
-                ],
-              ),
-            ),
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => SettingPage(),
                 ),
               );
             },
@@ -181,7 +188,6 @@ class SlideMenu extends StatelessWidget {
   Widget resisterButton(context, theme, userData) {
     if (userData.registerCheck == false) {
       return FlatButton(
-          padding: EdgeInsets.all(10.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(80.0)),
           ),

@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
-import 'package:zikanri/items/drawer/drawer.dart';
+
+import '../home/home.dart';
 import '../data.dart';
 
 class SettingPage extends StatelessWidget {
   Widget build(BuildContext context) {
-    final _scaffoldKey = GlobalKey<ScaffoldState>();
     final theme = Provider.of<ThemeNotifier>(context);
     return Scaffold(
-      key: _scaffoldKey,
       appBar: AppBar(
         elevation: 0,
         title: Text(
@@ -20,14 +19,7 @@ class SettingPage extends StatelessWidget {
           ),
         ),
         backgroundColor: Colors.transparent,
-        leading: IconButton(
-          icon: Icon(
-            Icons.menu,
-          ),
-          onPressed: () => _scaffoldKey.currentState.openDrawer(),
-        ),
       ),
-      drawer: SlideMenu(),
       body: ListView(
         children: <Widget>[
           Container(

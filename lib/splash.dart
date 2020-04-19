@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
@@ -27,7 +29,7 @@ class _SplashPageState extends State<SplashPage> {
       if (date != Hive.box('userData').get('previousDate')) {
         var box = Hive.box('userData');
         var additem = box.get('latelyData');
-        if(additem.length>=14){
+        if (additem.length >= 14) {
           additem.removeAt(0);
         }
         additem.add([date, 0, 0, '0.00', []]);
@@ -58,15 +60,37 @@ class _SplashPageState extends State<SplashPage> {
     print(displaySize);
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
+    final reload = Provider.of<ReloadNotifier>(context);
     final bool firstcheck = Hive.box('userData').containsKey('welcome');
     var width = displaySize.width;
     var height = displaySize.height;
     if (width > height) {
       width = height;
     }
-    Route _createRoute(page) {
+    Route _createHomeRoute() {
       return PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => page,
+        pageBuilder: (context, animation, secondaryAnimation) => HomePage(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          var begin = Offset(1.0, 0.0);
+          var end = Offset.zero;
+          var curve = Curves.ease;
+          var tween =
+              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+          return SlideTransition(
+            position: animation.drive(tween),
+            child: child,
+          );
+        },
+      );
+    }
+
+    Future changepage() async {
+      await Navigator.pushReplacement(context, _createHomeRoute());
+    }
+
+    Route _createWelcomeRoute() {
+      return PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) => WelcomePage(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           var begin = Offset(1.0, 0.0);
           var end = Offset.zero;
@@ -122,7 +146,7 @@ class _SplashPageState extends State<SplashPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(
-                    height: firstcheck ? 0 : width / 6.5 + 25,
+                    height: (firstcheck ^ reload.reload) ? 0 : width / 6.5 + 25,
                   ),
                   Container(
                     height: width / 2,
@@ -149,19 +173,18 @@ class _SplashPageState extends State<SplashPage> {
                             ),
                             color: Colors.transparent,
                             child: Container(),
-                            onPressed: () {
+                            onPressed: () async {
                               displaySize = MediaQuery.of(context).size;
                               if (Hive.box('userData').containsKey('welcome')) {
-                                theme.initialze();
-                                userData.initialze();
-                                Navigator.pushReplacement(
-                                  context,
-                                  _createRoute(HomePage()),
-                                );
+                                reload.reloded();
+                                await theme.initialze();
+                                await userData.initialze();
+                                Timer(Duration(seconds: 2), reload.finishload);
+                                Timer(Duration(milliseconds: 2500), changepage);
                               } else {
-                                Navigator.pushReplacement(
+                                await Navigator.pushReplacement(
                                   context,
-                                  _createRoute(WelcomePage()),
+                                  _createWelcomeRoute(),
                                 );
                               }
                             },
@@ -171,7 +194,18 @@ class _SplashPageState extends State<SplashPage> {
                     ),
                   ),
                   firstcheck
-                      ? Container()
+                      ? (reload.reload)
+                          ? Padding(
+                              padding: const EdgeInsets.only(top: 25),
+                              child: Container(
+                                height: width / 6.5,
+                                width: width / 6.5,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 5,
+                                ),
+                              ),
+                            )
+                          : Container()
                       : Padding(
                           padding: const EdgeInsets.only(top: 25),
                           child: Card(
