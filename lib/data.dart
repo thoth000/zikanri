@@ -12,7 +12,7 @@ class FontSize {
   static double large = displaySize.width / 15.5;
   static double xlarge = displaySize.width / 12;
   static double xxlarge = displaySize.width / 8;
-  static double big = displaySize.width / 6;
+  static double big = displaySize.width / 6.3;
 }
 
 AssetImage userIcon = AssetImage('images/zikanri_icon.png');
@@ -110,10 +110,10 @@ class RecordNotifier with ChangeNotifier {
 //changeNotifier for theme
 class ThemeNotifier with ChangeNotifier {
   //Theme
-  bool _isDark=false;
+  bool _isDark = false;
   bool get isDark => _isDark;
   int _themeColorsIndex = 0;
-  List _myColors = ['0','1','2'];
+  List _myColors = ['0', '1', '2'];
   List get myColors => _myColors;
   List _themeColors() => baseColors[int.parse(_myColors[_themeColorsIndex])];
   List get themeColors => _themeColors();
@@ -132,25 +132,25 @@ class ThemeNotifier with ChangeNotifier {
           ),
         ),
       );
-  void changeMode() {
+  Future changeMode() async {
     _isDark = !_isDark;
+    await Hive.box('theme').put('isDark', _isDark);
     notifyListeners();
-    Hive.box('theme').put('isDark', _isDark);
   }
 
-  void changeTheme(int i) {
+  Future changeTheme(int i) async {
     _themeColorsIndex = i;
+    await Hive.box('theme').put('themeColorsIndex', _themeColorsIndex);
     notifyListeners();
-    Hive.box('theme').put('themeColorsIndex', _themeColorsIndex);
-  }
-  
-  void addTheme(int i){
-    _myColors.add(i);
-    notifyListeners();
-    Hive.box('theme').put('myColors', _myColors);
   }
 
-  void initialze() async {
+  Future addTheme(int i) async {
+    _myColors.add(i);
+    await Hive.box('theme').put('myColors', _myColors);
+    notifyListeners();
+  }
+
+  Future initialze() async {
     var box = Hive.box('theme');
     _isDark = await box.get('isDark');
     _themeColorsIndex = await box.get('themeColorsIndex');
@@ -164,10 +164,10 @@ class UserDataNotifier with ChangeNotifier {
   String userName = "ゲスト";
   String userID = "";
   bool registerCheck = false;
-  String previousDate="2020年01月01日";
-  String thisMonth="01";
-  int totalPassedDays=1;
-  int passedDays=1;
+  String previousDate = "2020年01月01日";
+  String thisMonth = "01";
+  int totalPassedDays = 1;
+  int passedDays = 1;
 
   int _totalPointScore = 0;
   int get totalPointScore => _totalPointScore;
@@ -180,14 +180,14 @@ class UserDataNotifier with ChangeNotifier {
   int _thisMonthAverage = 0;
   int get thisMonthAverage => _thisMonthAverage;
 
-  int _todayPoint =0;
+  int _todayPoint = 0;
   int get todayPoint => _todayPoint;
   int _todayMinite = 0;
   int get todayMinite => _todayMinite;
   String _todayValue = '0.00';
   String get todayValue => _todayValue;
   //日付,時間,総ポイント,時間価値,DoneList
-  List _latelyData=[];
+  List _latelyData = [];
   List get latelyData => _latelyData;
 
   int index = 0;
@@ -202,7 +202,7 @@ class UserDataNotifier with ChangeNotifier {
   List _shortCuts = [];
   List get shortCuts => _shortCuts;
 
-  void recordDone(listData) {
+  Future recordDone(listData) async {
     int _point = int.parse(listData[4]);
     int _minite = int.parse(listData[2]);
     _totalPointScore += _point;
@@ -226,7 +226,7 @@ class UserDataNotifier with ChangeNotifier {
     );
     notifyListeners();
     //TODO:記録の保存
-    Hive.box('userData').put('userValue', [
+    await Hive.box('userData').put('userValue', [
       _totalPointScore,
       _thisMonthPoint,
       _thisMonthMinite,
@@ -236,17 +236,17 @@ class UserDataNotifier with ChangeNotifier {
       _todayMinite,
       _todayValue,
     ]);
-    Hive.box('userData').put('todayDoneList', _todayDoneList);
-    Hive.box('userData').put('latelyData', _latelyData);
+    await Hive.box('userData').put('todayDoneList', _todayDoneList);
+    await Hive.box('userData').put('latelyData', _latelyData);
   }
 
-  void addShortCuts(item){
+  Future addShortCuts(item) async {
     _shortCuts.add(item);
+    await Hive.box('userName').put('shortCuts', _shortCuts);
     notifyListeners();
-    Hive.box('userName').put('shortCuts', _shortCuts);
   }
 
-  void deleteDone(listData, index) {
+  Future deleteDone(listData, index) async {
     int _point = int.parse(listData[4]);
     int _minite = int.parse(listData[2]);
     _totalPointScore -= _point;
@@ -268,8 +268,7 @@ class UserDataNotifier with ChangeNotifier {
         _todayDoneList,
       ],
     );
-    notifyListeners();
-    Hive.box('userData').put('userValue', [
+    await Hive.box('userData').put('userValue', [
       _totalPointScore,
       _thisMonthPoint,
       _thisMonthMinite,
@@ -279,13 +278,14 @@ class UserDataNotifier with ChangeNotifier {
       _todayMinite,
       _todayValue,
     ]);
-    Hive.box('userData').put('todayDoneList', _todayDoneList);
-    Hive.box('userData').put('latelyData', _latelyData);
+    await Hive.box('userData').put('todayDoneList', _todayDoneList);
+    await Hive.box('userData').put('latelyData', _latelyData);
+    notifyListeners();
   }
 
-  void initialze() {
+  Future initialze() async{
     var box = Hive.box('userData');
-    var userValue = box.get('userValue');
+    var userValue = await box.get('userValue');
     _totalPointScore = userValue[0];
     _thisMonthPoint = userValue[1];
     _thisMonthMinite = userValue[2];
@@ -294,18 +294,19 @@ class UserDataNotifier with ChangeNotifier {
     _todayPoint = userValue[5];
     _todayMinite = userValue[6];
     _todayValue = userValue[7];
-    _latelyData = box.get('latelyData');
-    _todayDoneList = box.get('todayDoneList');
-    _shortCuts = box.get('shortCuts');
-    userName = box.get('userName');
-    userID = box.get('userID');
-    registerCheck = box.get('resisterCheck');
-    previousDate = box.get('previousDate');
-    thisMonth = box.get('thisMonth');
-    totalPassedDays =box.get('totalPassedDays');
-    passedDays = box.get('passedDays');
+    _latelyData = await box.get('latelyData');
+    _todayDoneList = await box.get('todayDoneList');
+    _shortCuts = await box.get('shortCuts');
+    userName = await box.get('userName');
+    userID = await box.get('userID');
+    registerCheck = await box.get('resisterCheck');
+    previousDate = await box.get('previousDate');
+    thisMonth = await box.get('thisMonth');
+    totalPassedDays = await box.get('totalPassedDays');
+    passedDays = await box.get('passedDays');
   }
 }
+
 class ReloadNotifier with ChangeNotifier {
   bool _reload = false;
   bool get reload => _reload;

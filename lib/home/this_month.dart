@@ -23,7 +23,7 @@ class _TMWidgetState extends State<TMWidget> {
           elevation: 5,
           child: Container(
             padding: EdgeInsets.all(10),
-            height: displaySize.width / 2,
+            height: displaySize.width / 2.2,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[

@@ -16,64 +16,63 @@ class _DHWidgetState extends State<DHWidget> {
     return DrawerHeader(
         decoration:
             BoxDecoration(gradient: LinearGradient(colors: theme.themeColors)),
-        child: Stack(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Container(
-                width: displaySize.width / 4,
-                height: displaySize.width / 4,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(
-                      displaySize.width,
-                    ),
-                  ),
-                  border:  Border.all(
-                    color:  (theme.isDark) ? Color(0XFF303030) : Colors.white,
-                    width: 5,
+              width: displaySize.width / 4,
+              height: displaySize.width / 4,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(
+                    displaySize.width,
                   ),
                 ),
-                child: Stack(
-                  children: <Widget>[
-                    Center(
-                      child: Container(
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  fit: BoxFit.fill, image: userIcon))),
-                    ),
-                    SizedBox(
-                      height: displaySize.width / 4,
-                      width: displaySize.width / 4,
-                      child: FlatButton(
-                        color: Colors.transparent,
-                        shape: CircleBorder(),
-                        onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SettingPage(),
-                          ),
+                border: Border.all(
+                  color: (theme.isDark) ? Color(0XFF303030) : Colors.white,
+                  width: 5,
+                ),
+              ),
+              child: Stack(
+                children: <Widget>[
+                  Center(
+                    child: Container(
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                fit: BoxFit.fill, image: userIcon))),
+                  ),
+                  SizedBox(
+                    height: displaySize.width / 4,
+                    width: displaySize.width / 4,
+                    child: FlatButton(
+                      color: Colors.transparent,
+                      shape: CircleBorder(),
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SettingPage(),
                         ),
-                        child: Container(),
                       ),
+                      child: Container(),
                     ),
-                  ],
-                )),
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: Padding(
-                padding:
-                    //TODO:think
-                    EdgeInsets.only(
-                        left: 10, right: displaySize.width / 5, bottom: 1.0),
-                child: Text(
-                  '${userData.userName}',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: FontSize.xlarge, //12.5
-                      fontWeight: FontWeight.w700),
-                ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              width: displaySize.width / 20,
+            ),
+            Flexible(
+              child: Text(
+                '${userData.userName}',
+                overflow: TextOverflow.ellipsis,
+                softWrap: true,
+                maxLines: 3,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: FontSize.large, //12.5
+                    fontWeight: FontWeight.w700),
               ),
             ),
           ],

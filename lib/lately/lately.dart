@@ -10,10 +10,7 @@ class LatelyPage extends StatelessWidget {
     return ListView(
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: 10,
-            horizontal: 20,
-          ),
+          padding: EdgeInsets.all(20),
           child: Text(
             '最近の記録',
             style: TextStyle(
@@ -23,7 +20,7 @@ class LatelyPage extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: displaySize.width / 2.5,
+          height: displaySize.width / 2,
           child: PageView(
             onPageChanged: (i) => userData.setIndex(i),
             controller: PageController(initialPage: userData.latelyData.length),
@@ -34,7 +31,7 @@ class LatelyPage extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: displaySize.width / 20,
+          height: displaySize.width / 15,
         ),
         _dayDone(
           (userData.latelyData.length == 1) ? 0 : userData.index,
@@ -48,6 +45,40 @@ class LatelyPage extends StatelessWidget {
     );
   }
 
+  Widget _widget(
+    String title,
+    var value,
+  ) {
+    return Container(
+      height: displaySize.width / 3.5,
+      width: displaySize.width / 3.7,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Icon(
+            Icons.bubble_chart,
+          ),
+          Text(
+            value.toString(),
+            softWrap: false,
+            overflow: TextOverflow.fade,
+            style: TextStyle(
+              fontSize: FontSize.large,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          Text(
+            title,
+            style: TextStyle(
+              color: Colors.grey,
+              fontSize: FontSize.xxsmall,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _dayData(List l, theme) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10),
@@ -57,6 +88,7 @@ class LatelyPage extends StatelessWidget {
           borderRadius: BorderRadius.circular(30),
         ),
         child: Container(
+          height: displaySize.width / 2,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(30)),
             border: Border.all(
@@ -74,45 +106,16 @@ class LatelyPage extends StatelessWidget {
                 ),
               ),
               Divider(),
+              //TODOここから
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Text(
-                        '記録時間',
-                        style: TextStyle(),
-                      ),
-                      Text(
-                        l[1].toString() + '分',
-                        style: TextStyle(),
-                      ),
-                    ],
+                  _widget(
+                    '記録時間',
+                    l[1],
                   ),
-                  Column(
-                    children: <Widget>[
-                      Text(
-                        '総ポイント',
-                        style: TextStyle(),
-                      ),
-                      Text(
-                        l[2].toString() + 'pt',
-                        style: TextStyle(),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: <Widget>[
-                      Text(
-                        '時間価値',
-                        style: TextStyle(),
-                      ),
-                      Text(
-                        l[3].toString() + 'pt',
-                        style: TextStyle(),
-                      ),
-                    ],
-                  )
+                  _widget('総ポイント', l[2]),
+                  _widget('時間価値', l[3]),
                 ],
               ),
             ],

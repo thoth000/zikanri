@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
-import '../main.dart';
-
 import 'package:zikanri/items/drawer/drawer.dart';
 import '../data.dart';
-
 
 class SettingPage extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -30,26 +28,26 @@ class SettingPage extends StatelessWidget {
         ),
       ),
       drawer: SlideMenu(),
-      body: Container(
-        padding: EdgeInsets.all(10),
-        child: Card(
-          child: Wrap(
-            children: <Widget>[
-              for (int i = 0; i < theme.myColors.length; i++)
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: themeChanger(theme, i),
-                ),
-              RaisedButton(
-                onPressed: (){
-                  Hive.box('theme').clear();
-                  Hive.box('userData').clear();
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MyApp()));
-                },
+      body: ListView(
+        children: <Widget>[
+          Container(
+            child: Card(
+              child: Wrap(
+                children: <Widget>[
+                  for (int i = 0; i < theme.myColors.length; i++)
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: themeChanger(theme, i),
+                    ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
+          RaisedButton(
+            color: Colors.red,
+            onPressed: () => showDialog(context: context,child:clearAlert(context))
+          ),
+        ],
       ),
     );
   }
@@ -60,13 +58,38 @@ class SettingPage extends StatelessWidget {
       width: displaySize.width / 8,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
-        gradient: LinearGradient(colors: baseColors[int.parse(theme.myColors[i])]),
+        gradient:
+            LinearGradient(colors: baseColors[int.parse(theme.myColors[i])]),
       ),
-      child: RaisedButton(
+      child: FlatButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5),
+        ),
         color: Colors.transparent,
-        elevation: 0,
+        child: Container(),
         onPressed: () => theme.changeTheme(i),
       ),
+    );
+  }
+
+  Widget clearAlert(BuildContext context) {
+    return AlertDialog(
+      title: Text('データの永久削除'),
+      content: Text('データを削除しますか？\n削除すると自動的にアプリが終了します。'),
+      actions: <Widget>[
+        FlatButton(
+          child: Text('いいえ'),
+          onPressed: () => Navigator.pop(context),
+        ),
+        FlatButton(
+          child: Text('はい'),
+          onPressed: () {
+            Hive.box('theme').clear();
+            Hive.box('userData').clear();
+            SystemNavigator.pop();
+          },
+        ),
+      ],
     );
   }
 }

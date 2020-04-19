@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../data.dart';
@@ -8,12 +9,13 @@ class TotalScoreWidget extends StatelessWidget {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: EdgeInsets.all(displaySize.width/20),
       child: Container(
+        height: displaySize.width/2.2,
         width: displaySize.width,
         decoration: BoxDecoration(
           gradient: LinearGradient(colors: theme.themeColors),
-          borderRadius: BorderRadius.all(Radius.circular(30)),
+          borderRadius: BorderRadius.all(Radius.circular(displaySize.width/12)),
           boxShadow: [
             BoxShadow(
               spreadRadius: 1.0,
@@ -24,11 +26,10 @@ class TotalScoreWidget extends StatelessWidget {
           ],
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             SizedBox(
-              height: displaySize.width/20,
+              height: displaySize.width/40,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -61,21 +62,21 @@ class TotalScoreWidget extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: displaySize.width/50,
+              height: displaySize.width/100,
             ),
-            Text(
-              userData.totalPointScore.toString(),
-              overflow: TextOverflow.fade,
-              softWrap: false,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: FontSize.big,
-                fontWeight: FontWeight.w700,
-                fontStyle: FontStyle.italic,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal:displaySize.width/30),
+              child: Text(
+                userData.totalPointScore.toString(),
+                overflow: TextOverflow.fade,
+                softWrap: false,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: FontSize.big,
+                  fontWeight: FontWeight.w700,
+                  fontStyle: FontStyle.italic,
+                ),
               ),
-            ),
-            SizedBox(
-              height: displaySize.width/10,
             ),
           ],
         ),
