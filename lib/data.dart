@@ -150,7 +150,7 @@ class ThemeNotifier with ChangeNotifier {
     notifyListeners();
   }
 
-  Future initialze() async {
+  Future initialize() async {
     var box = Hive.box('theme');
     _isDark = await box.get('isDark');
     _themeColorsIndex = await box.get('themeColorsIndex');
@@ -225,7 +225,6 @@ class UserDataNotifier with ChangeNotifier {
       ],
     );
     notifyListeners();
-    //TODO:記録の保存
     await Hive.box('userData').put('userValue', [
       _totalPointScore,
       _thisMonthPoint,
@@ -242,8 +241,8 @@ class UserDataNotifier with ChangeNotifier {
 
   Future addShortCuts(item) async {
     _shortCuts.add(item);
-    await Hive.box('userName').put('shortCuts', _shortCuts);
     notifyListeners();
+    await Hive.box('userName').put('shortCuts', _shortCuts);
   }
 
   Future deleteDone(listData, index) async {
@@ -283,7 +282,7 @@ class UserDataNotifier with ChangeNotifier {
     notifyListeners();
   }
 
-  Future initialze() async{
+  Future initialize() async{
     var box = Hive.box('userData');
     var userValue = await box.get('userValue');
     _totalPointScore = userValue[0];

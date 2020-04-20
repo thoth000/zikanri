@@ -357,7 +357,7 @@ class RButton extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                              ), //TODO:
+                              ), //TODO:並び替え対応
                           ],
                         ),
                       ],
@@ -372,7 +372,6 @@ class RButton extends StatelessWidget {
     );
   }
 
-//TODO:ショートカット
   Widget shortCutSheet(context, userData) {
     return FractionallySizedBox(
       heightFactor: 0.7,

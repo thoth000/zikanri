@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
 
-import '../home/home.dart';
 import '../data.dart';
 
 class SettingPage extends StatelessWidget {
@@ -51,7 +50,7 @@ class SettingPage extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
         gradient:
-            LinearGradient(colors: baseColors[int.parse(theme.myColors[i])]),
+            LinearGradient(colors: baseColors[int.parse(theme.myColors[i])],),
       ),
       child: FlatButton(
         shape: RoundedRectangleBorder(
@@ -59,7 +58,7 @@ class SettingPage extends StatelessWidget {
         ),
         color: Colors.transparent,
         child: Container(),
-        onPressed: () => theme.changeTheme(i),
+        onPressed: () async=> await theme.changeTheme(i),
       ),
     );
   }

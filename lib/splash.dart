@@ -28,13 +28,14 @@ class _SplashPageState extends State<SplashPage> {
       final month = DateFormat("MM").format(DateTime.now());
       if (date != Hive.box('userData').get('previousDate')) {
         var box = Hive.box('userData');
+        await box.put('previousDate', date);
+        await box.put('todayDoneLisy', []);
         var additem = box.get('latelyData');
         if (additem.length >= 14) {
           additem.removeAt(0);
         }
         additem.add([date, 0, 0, '0.00', []]);
         await box.put('latelyData', additem);
-        await box.put('todayDoneLisy', []);
         additem = box.get('userValue');
         if (month != box.get('thisMonth')) {
           additem[1] = 0;
@@ -57,7 +58,6 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     displaySize = MediaQuery.of(context).size;
-    print(displaySize);
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
     final reload = Provider.of<ReloadNotifier>(context);
@@ -177,8 +177,8 @@ class _SplashPageState extends State<SplashPage> {
                               displaySize = MediaQuery.of(context).size;
                               if (Hive.box('userData').containsKey('welcome')) {
                                 reload.reloded();
-                                await theme.initialze();
-                                await userData.initialze();
+                                await theme.initialize();
+                                await userData.initialize();
                                 Timer(Duration(seconds: 2), reload.finishload);
                                 Timer(Duration(milliseconds: 2500), changepage);
                               } else {
@@ -202,6 +202,7 @@ class _SplashPageState extends State<SplashPage> {
                                 width: width / 6.5,
                                 child: CircularProgressIndicator(
                                   strokeWidth: 5,
+                                  valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
                                 ),
                               ),
                             )

@@ -106,7 +106,6 @@ class LatelyPage extends StatelessWidget {
                 ),
               ),
               Divider(),
-              //TODOここから
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[

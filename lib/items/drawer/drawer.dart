@@ -36,7 +36,6 @@ class SlideMenu extends StatelessWidget {
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              //TODO:think
               padding: EdgeInsets.only(bottom: displaySize.width / 8 + 10.0),
               child: Divider(height: 1,),
             ),
@@ -47,7 +46,7 @@ class SlideMenu extends StatelessWidget {
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.all(5.0),
-                  child: isThemeButton(theme),
+                  child: isDarkButton(theme,context),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical:5.0),
@@ -176,12 +175,15 @@ class SlideMenu extends StatelessWidget {
     );
   }
 
-  Widget isThemeButton(theme) {
+  Widget isDarkButton(theme,context) {
     return IconButton(
       icon: Icon(Icons.lightbulb_outline),
       iconSize: displaySize.width / 11,
       color: Colors.grey[700],
-      onPressed: () => theme.changeMode(),
+      onPressed: (){
+        Navigator.pop(context);
+        theme.changeMode();
+        },
     );
   }
 

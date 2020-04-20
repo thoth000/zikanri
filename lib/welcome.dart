@@ -73,8 +73,8 @@ class WelcomePage extends StatelessWidget {
       await userDataBox.put('thisMonth', firstMonth);
       await userDataBox.put('passedDays', 1);
       await userDataBox.put('totalPassedDays', 1);
-      theme.initialze();
-      userData.initialze();
+      theme.initialize();
+      userData.initialize();
     }
 
     return Scaffold(
@@ -97,7 +97,6 @@ class WelcomePage extends StatelessWidget {
             ),
           ),
           Center(
-            //TODO:LoadWidget
             child: (reload.reload)
                 ? Container(
                     height: 100,
