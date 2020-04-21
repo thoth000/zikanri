@@ -181,8 +181,8 @@ class _SplashPageState extends State<SplashPage> {
                                     .get('activities');
                                 await theme.initialize();
                                 await userData.initialize();
-                                Timer(Duration(seconds: 2), reload.finishload);
-                                Timer(Duration(milliseconds: 2500), changepage);
+                                Timer(Duration(seconds: 1), reload.finishload);
+                                Timer(Duration(milliseconds: 1500), changepage);
                               } else {
                                 await Navigator.pushReplacement(
                                   context,

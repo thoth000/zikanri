@@ -26,9 +26,10 @@ class _MinuteMeterState extends State<MinuteMeter> {
         Hive.box('userData').get('previousDate')) {
       await Future.delayed(Duration());
       showDialog(
-          barrierDismissible: false,
-          context: (context),
-          builder: (context) => datecheckDialog(context));
+        barrierDismissible: false,
+        context: (context),
+        builder: (context) => datecheckDialog(context),
+      );
     } else {
       setState(() {
         for (int i = 0; i < activities.length; i++) {
@@ -52,9 +53,12 @@ class _MinuteMeterState extends State<MinuteMeter> {
       SnackBar(
         duration: Duration(seconds: 1),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top:Radius.circular(50)),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(50)),
         ),
-        content: Text('タイマーをスタートさせました',textAlign: TextAlign.center,),
+        content: Text(
+          'タイマーをスタートさせました',
+          textAlign: TextAlign.center,
+        ),
       ),
     );
   }
@@ -71,9 +75,12 @@ class _MinuteMeterState extends State<MinuteMeter> {
         duration: Duration(seconds: 1),
         elevation: 5,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top:Radius.circular(50)),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(50)),
         ),
-        content: Text('タイマーをストップさせました',textAlign: TextAlign.center,),
+        content: Text(
+          'タイマーをストップさせました',
+          textAlign: TextAlign.center,
+        ),
       ),
     );
   }
