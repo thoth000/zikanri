@@ -29,18 +29,18 @@ class _SplashPageState extends State<SplashPage> {
       if (date != Hive.box('userData').get('previousDate')) {
         var box = Hive.box('userData');
         await box.put('previousDate', date);
-        await box.put('todayDoneLisy', []);
+        await box.put('todayDoneList', []);
         var additem = box.get('latelyData');
         if (additem.length >= 14) {
           additem.removeAt(0);
         }
-        additem.add([date, 0, 0, '0.00', []]);
+        additem.add([date, 0, 0, 'NaN', []]);
         await box.put('latelyData', additem);
         additem = box.get('userValue');
         if (month != box.get('thisMonth')) {
           additem[1] = 0;
           additem[2] = 0;
-          additem[3] = '0.00';
+          additem[3] = 'NaN';
           additem[4] = 0;
           await box.put('passedDays', 1);
         } else {
@@ -48,7 +48,7 @@ class _SplashPageState extends State<SplashPage> {
         }
         additem[5] = 0;
         additem[6] = 0;
-        additem[7] = '0.00';
+        additem[7] = 'NaN';
         await box.put('userValue', additem);
         await box.put('totalPassedDays', box.get('totalPassedDays') + 1);
       }
@@ -177,6 +177,8 @@ class _SplashPageState extends State<SplashPage> {
                               displaySize = MediaQuery.of(context).size;
                               if (Hive.box('userData').containsKey('welcome')) {
                                 reload.reloded();
+                                activities = await Hive.box('userData')
+                                    .get('activities');
                                 await theme.initialize();
                                 await userData.initialize();
                                 Timer(Duration(seconds: 2), reload.finishload);
@@ -202,7 +204,8 @@ class _SplashPageState extends State<SplashPage> {
                                 width: width / 6.5,
                                 child: CircularProgressIndicator(
                                   strokeWidth: 5,
-                                  valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
+                                  valueColor: new AlwaysStoppedAnimation<Color>(
+                                      Colors.blue),
                                 ),
                               ),
                             )

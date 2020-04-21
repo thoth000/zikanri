@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
+
 import '../items/drawer/drawer.dart';
 import 'total_score.dart';
+import 'minute_meter.dart';
 import '../data.dart';
 import 'record_button.dart';
 import 'this_month.dart';
@@ -16,6 +19,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset:false,
       key: _scaffoldKey,
+      floatingActionButton: RButton(),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -43,6 +47,7 @@ class HomePage extends StatelessWidget {
                 indent: 10,
                 endIndent: 10,
               ),
+              MinuteMeter(),
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: Column(
@@ -96,13 +101,6 @@ class HomePage extends StatelessWidget {
                 width: displaySize.width,
               ),
             ],
-          ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 10, right: 10),
-              child: RButton(),
-            ),
           ),
         ],
       ),

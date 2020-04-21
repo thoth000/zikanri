@@ -47,6 +47,8 @@ class TotalScoreWidget extends StatelessWidget {
                   ),
                 ),
                 IconButton(
+                  highlightColor: Colors.transparent,
+                  splashColor: Colors.transparent,
                   icon: Icon(
                     Icons.share,
                     color: Colors.white,

@@ -51,10 +51,14 @@ const List baseColors = [
 ];
 //userHasColors => call baseColors
 
+List activities=[];
+
 //changeNotifier for record
 class RecordNotifier with ChangeNotifier {
   String _title = "";
   String get title => _title;
+  bool _isRecord = true;
+  bool get isRecord => _isRecord;
   String _category = "57746";
   String get category => _category;
   int _rating = 0;
@@ -63,7 +67,6 @@ class RecordNotifier with ChangeNotifier {
   int get time => _time;
   bool _timecheck = true;
   bool get timecheck => _timecheck;
-  var tmp;
 
   void changeTitle(String s) {
     _title = s;
@@ -71,12 +74,12 @@ class RecordNotifier with ChangeNotifier {
   }
 
   void changeTime(String s) {
-    int _minite = int.parse(s);
-    if (_minite > 1440 || _minite == 0) {
+    int _minute = int.parse(s);
+    if (_minute > 1440 || _minute == 0) {
       _timecheck = true;
     } else {
       _timecheck = false;
-      _time = _minite;
+      _time = _minute;
     }
     notifyListeners();
   }
@@ -97,12 +100,31 @@ class RecordNotifier with ChangeNotifier {
     }
   }
 
-  void initialize() {
+  void recordMode() {
+    if (_isRecord == true) {
+    } else {
+      _isRecord = true;
+      notifyListeners();
+    }
+  }
+
+  void startMode() {
+    if (_isRecord == false) {
+    } else {
+      _isRecord = false;
+      _time = 0;
+      _timecheck = false;
+      notifyListeners();
+    }
+  }
+
+  void reset() {
     _title = "";
     _category = "57746";
     _time = 0;
     _rating = 0;
     _timecheck = false;
+    _isRecord=true;
     notifyListeners();
   }
 }
@@ -173,8 +195,8 @@ class UserDataNotifier with ChangeNotifier {
   int get totalPointScore => _totalPointScore;
   int _thisMonthPoint = 0;
   int get thisMonthPoint => _thisMonthPoint;
-  int _thisMonthMinite = 0;
-  int get thisMonthMinite => _thisMonthMinite;
+  int _thisMonthMinute = 0;
+  int get thisMonthMinute => _thisMonthMinute;
   String _thisMonthValue = '0.00';
   String get thisMonthValue => _thisMonthValue;
   int _thisMonthAverage = 0;
@@ -182,8 +204,8 @@ class UserDataNotifier with ChangeNotifier {
 
   int _todayPoint = 0;
   int get todayPoint => _todayPoint;
-  int _todayMinite = 0;
-  int get todayMinite => _todayMinite;
+  int _todayMinute = 0;
+  int get todayMinute => _todayMinute;
   String _todayValue = '0.00';
   String get todayValue => _todayValue;
   //日付,時間,総ポイント,時間価値,DoneList
@@ -202,66 +224,83 @@ class UserDataNotifier with ChangeNotifier {
   List _shortCuts = [];
   List get shortCuts => _shortCuts;
 
-  Future recordDone(listData) async {
-    int _point = int.parse(listData[4]);
-    int _minite = int.parse(listData[2]);
-    _totalPointScore += _point;
-    _thisMonthPoint += _point;
-    _todayPoint += _point;
-    _thisMonthMinite += _minite;
-    _todayMinite += _minite;
-    _thisMonthAverage = (_thisMonthPoint / passedDays).round();
-    _thisMonthValue = (_thisMonthPoint / _thisMonthMinite).toStringAsFixed(2);
-    _todayValue = (_todayPoint / _todayMinite).toStringAsFixed(2);
-    _todayDoneList.add(listData);
-    _latelyData.removeAt(_latelyData.length - 1);
-    _latelyData.add(
-      [
-        previousDate,
-        _todayMinite.toString(),
-        _todayPoint.toString(),
-        _todayValue,
-        _todayDoneList,
-      ],
-    );
-    notifyListeners();
-    await Hive.box('userData').put('userValue', [
-      _totalPointScore,
-      _thisMonthPoint,
-      _thisMonthMinite,
-      _thisMonthValue,
-      _thisMonthAverage,
-      _todayPoint,
-      _todayMinite,
-      _todayValue,
-    ]);
-    await Hive.box('userData').put('todayDoneList', _todayDoneList);
-    await Hive.box('userData').put('latelyData', _latelyData);
-  }
-
   Future addShortCuts(item) async {
     _shortCuts.add(item);
     notifyListeners();
     await Hive.box('userName').put('shortCuts', _shortCuts);
   }
 
+  Future addActivities(
+    DateTime startTime,
+    String title,
+    String category,
+  ) async {
+    /*スタートした時刻、
+    ストップ
+    タイトル、
+    カテゴリー、
+    ストップしたときに更新する時間（スタート時刻は再スタートした時刻に更新する）
+    */
+    activities.add([startTime, false, title, category, 0]);
+    await Hive.box('userData').put('activities', activities);
+    notifyListeners();
+  }
+
+
+  Future recordDone(listData) async {
+    int _point = int.parse(listData[4]);
+    int _minute = int.parse(listData[2]);
+    _totalPointScore += _point;
+    _thisMonthPoint += _point;
+    _todayPoint += _point;
+    _thisMonthMinute += _minute;
+    _todayMinute += _minute;
+    _thisMonthAverage = (_thisMonthPoint / passedDays).round();
+    _thisMonthValue = (_thisMonthPoint / _thisMonthMinute).toStringAsFixed(2);
+    _todayValue = (_todayPoint / _todayMinute).toStringAsFixed(2);
+    _todayDoneList.add(listData);
+    _latelyData.removeAt(_latelyData.length - 1);
+    _latelyData.add(
+      [
+        previousDate,
+        _todayMinute.toString(),
+        _todayPoint.toString(),
+        _todayValue,
+        _todayDoneList,
+      ],
+    );
+    notifyListeners();
+    await Hive.box('userData').put('userValue', [
+      _totalPointScore,
+      _thisMonthPoint,
+      _thisMonthMinute,
+      _thisMonthValue,
+      _thisMonthAverage,
+      _todayPoint,
+      _todayMinute,
+      _todayValue,
+    ]);
+    await Hive.box('userData').put('todayDoneList', _todayDoneList);
+    await Hive.box('userData').put('latelyData', _latelyData);
+  }
+
   Future deleteDone(listData, index) async {
     int _point = int.parse(listData[4]);
-    int _minite = int.parse(listData[2]);
+    int _minute = int.parse(listData[2]);
     _totalPointScore -= _point;
     _thisMonthPoint -= _point;
     _todayPoint -= _point;
-    _thisMonthMinite -= _minite;
-    _todayMinite -= _minite;
+    _thisMonthMinute -= _minute;
+    _todayMinute -= _minute;
     _thisMonthAverage = (_thisMonthPoint / passedDays).round();
-    _thisMonthValue = (_thisMonthPoint / _thisMonthMinite).toStringAsFixed(2);
-    _todayValue = (_todayPoint / _todayMinite).toStringAsFixed(2);
+    _thisMonthValue = (_thisMonthPoint / _thisMonthMinute).toStringAsFixed(2);
+    _todayValue = (_todayPoint / _todayMinute).toStringAsFixed(2);
     _todayDoneList.removeAt(index);
     _latelyData.removeAt(_latelyData.length - 1);
     _latelyData.add(
       [
         previousDate,
-        _todayMinite.toString(),
+        _todayMinute.toString(),
         _todayPoint.toString(),
         _todayValue,
         _todayDoneList,
@@ -270,11 +309,11 @@ class UserDataNotifier with ChangeNotifier {
     await Hive.box('userData').put('userValue', [
       _totalPointScore,
       _thisMonthPoint,
-      _thisMonthMinite,
+      _thisMonthMinute,
       _thisMonthValue,
       _thisMonthAverage,
       _todayPoint,
-      _todayMinite,
+      _todayMinute,
       _todayValue,
     ]);
     await Hive.box('userData').put('todayDoneList', _todayDoneList);
@@ -282,16 +321,23 @@ class UserDataNotifier with ChangeNotifier {
     notifyListeners();
   }
 
-  Future initialize() async{
+  Future finishActivity(itemList, i) async {
+    //これして
+    activities.removeAt(i);
+    await Hive.box('userData').put('activities', activities);
+    notifyListeners();
+  }
+
+  Future initialize() async {
     var box = Hive.box('userData');
     var userValue = await box.get('userValue');
     _totalPointScore = userValue[0];
     _thisMonthPoint = userValue[1];
-    _thisMonthMinite = userValue[2];
+    _thisMonthMinute = userValue[2];
     _thisMonthValue = userValue[3];
     _thisMonthAverage = userValue[4];
     _todayPoint = userValue[5];
-    _todayMinite = userValue[6];
+    _todayMinute = userValue[6];
     _todayValue = userValue[7];
     _latelyData = await box.get('latelyData');
     _todayDoneList = await box.get('todayDoneList');
