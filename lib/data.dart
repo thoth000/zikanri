@@ -41,7 +41,9 @@ const List iconList = [
 ];
 
 //BaseColor
+//単色をベースにしていく
 const List baseColors = [
+  [Color(0XFF1DA1F2), Color(0XFF1DA1F2)],//単色
   [Color(0XFF39BAE8), Color(0XFF0000A1)],
   [Color(0XFFffcccc), Color(0XFFcaabd8)],
   [Color(0XFFa2a9af), Color(0XFF4c5870)],
