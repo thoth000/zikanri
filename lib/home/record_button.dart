@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
-import 'package:zikanri/home/home.dart';
+import '../splash.dart';
 
 import '../data.dart';
 
@@ -48,31 +49,71 @@ class _RButtonState extends State<RButton> {
               ),
               child: Container(),
               onPressed: () {
-                showModalBottomSheet(
-                  shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(30)),
-                  ),
-                  context: context,
-                  isScrollControlled: true,
-                  builder: (context) => bottomsheet(context, theme, userData),
-                );
+                var date = DateFormat("yyyy年MM月dd日").format(DateTime.now());
+                if (date != Hive.box('userData').get('previousDate')) {
+                  showDialog(
+                      barrierDismissible: false,
+                      context: (context),
+                      builder: (context) => datecheckDialog(context));
+                } else {
+                  showModalBottomSheet(
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(30)),
+                    ),
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (context) => bottomsheet(context, theme, userData),
+                  );
+                }
               },
               onLongPress: () {
-                showModalBottomSheet(
-                  shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(30)),
-                  ),
-                  context: context,
-                  isScrollControlled: true,
-                  builder: (context) => shortCutSheet(context, userData),
-                );
+                var date = DateFormat("yyyy年MM月dd日").format(DateTime.now());
+                if (date != Hive.box('userData').get('previousDate')) {
+                  showDialog(
+                      barrierDismissible: false,
+                      context: (context),
+                      builder: (context) => datecheckDialog(context));
+                } else {
+                  showModalBottomSheet(
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(30)),
+                    ),
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (context) => shortCutSheet(context, userData),
+                  );
+                }
               },
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget datecheckDialog(context) {
+    return AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30),
+      ),
+      title: Text('日付が変わっています'),
+      content: Text('タイトル画面に戻ります'),
+      actions: <Widget>[
+        FlatButton(
+          child: Text('はい'),
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SplashPage(),
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 
@@ -407,12 +448,7 @@ class _RButtonState extends State<RButton> {
                                   );
                                   record.reset();
                                   Navigator.pop(context);
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => HomePage(),
-                                    ),
-                                  );
+                                  //TODO:もともとここにHomePage遷移があった
                                 }
                               }
                             },
