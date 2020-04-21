@@ -43,7 +43,9 @@ const List iconList = [
 //BaseColor
 //単色をベースにしていく
 const List baseColors = [
-  [Color(0XFF1DA1F2), Color(0XFF1DA1F2)],//単色
+  [Color(0XFF1DA1F2), Color(0XFF1DA1F2)], //単色
+  [Color(0XFFea7070), Color(0XFFea7070)], //単色
+  [Color(0XFF3b8686), Color(0XFF3b8686)], //単色
   [Color(0XFF39BAE8), Color(0XFF0000A1)],
   [Color(0XFFffcccc), Color(0XFFcaabd8)],
   [Color(0XFFa2a9af), Color(0XFF4c5870)],
@@ -53,7 +55,7 @@ const List baseColors = [
 ];
 //userHasColors => call baseColors
 
-List activities=[];
+List activities = [];
 
 //changeNotifier for record
 class RecordNotifier with ChangeNotifier {
@@ -126,7 +128,7 @@ class RecordNotifier with ChangeNotifier {
     _time = 0;
     _rating = 0;
     _timecheck = false;
-    _isRecord=true;
+    _isRecord = true;
     notifyListeners();
   }
 }
@@ -137,7 +139,7 @@ class ThemeNotifier with ChangeNotifier {
   bool _isDark = false;
   bool get isDark => _isDark;
   int _themeColorsIndex = 0;
-  List _myColors = ['0', '1', '2'];
+  List _myColors = ['0', '1', '2','3','4','5','6','7'];
   List get myColors => _myColors;
   List _themeColors() => baseColors[int.parse(_myColors[_themeColorsIndex])];
   List get themeColors => _themeColors();
@@ -247,7 +249,6 @@ class UserDataNotifier with ChangeNotifier {
     await Hive.box('userData').put('activities', activities);
     notifyListeners();
   }
-
 
   Future recordDone(listData) async {
     int _point = int.parse(listData[4]);
