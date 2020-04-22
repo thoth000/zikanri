@@ -292,6 +292,7 @@ class _RButtonState extends State<RButton> {
                                     style: _headlineStyle,
                                   ),
                                   Container(
+                                    height: displaySize.width / 6.5,
                                     width: displaySize.width / 2.5,
                                     margin: EdgeInsets.symmetric(vertical: 5),
                                     decoration: BoxDecoration(
@@ -302,16 +303,21 @@ class _RButtonState extends State<RButton> {
                                         horizontal: 5,
                                         vertical: 2,
                                       ),
-                                      child: TextField(
-                                        keyboardType: TextInputType.number,
-                                        inputFormatters: <TextInputFormatter>[
-                                          WhitelistingTextInputFormatter
-                                              .digitsOnly,
-                                        ],
-                                        textInputAction: TextInputAction.go,
-                                        decoration: InputDecoration.collapsed(
-                                            hintText: "60"),
-                                        onChanged: (s) => record.changeTime(s),
+                                      child: Center(
+                                        child: TextField(
+                                          textAlignVertical: TextAlignVertical.center,
+                                          keyboardType: TextInputType.number,
+                                          inputFormatters: <TextInputFormatter>[
+                                            WhitelistingTextInputFormatter
+                                                .digitsOnly,
+                                          ],
+                                          textInputAction: TextInputAction.go,
+                                          decoration: InputDecoration.collapsed(
+                                            hintText: "60",
+                                          ),
+                                          onChanged: (s) =>
+                                              record.changeTime(s),
+                                        ),
                                       ),
                                     ),
                                   ),

@@ -189,19 +189,17 @@ class SlideMenu extends StatelessWidget {
 
   Widget resisterButton(context, theme, userData) {
     if (userData.registerCheck == false) {
-      return FlatButton(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(80.0)),
-          ),
-          child: Container(
-            height: displaySize.width / 8,
-            width: displaySize.width / 3,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(colors: theme.themeColors),
-              borderRadius:
-                  BorderRadius.all(Radius.circular(displaySize.width)),
-            ),
-            child: Center(
+      return Container(
+        height: displaySize.width / 8,
+        width: displaySize.width / 3,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(colors: theme.themeColors),
+          borderRadius:
+              BorderRadius.all(Radius.circular(100)),
+        ),
+        child: Stack(
+          children: <Widget>[
+            Center(
               child: Text(
                 'アカウント登録',
                 style: TextStyle(
@@ -210,15 +208,21 @@ class SlideMenu extends StatelessWidget {
                     fontWeight: FontWeight.bold),
               ),
             ),
-          ),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => HomePage(),
+            SizedBox(
+              height: displaySize.width/8,
+              width: displaySize.width/3,
+              child: FlatButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                onPressed: null,//TODO:登録ページ
+                child: Container(),
+                color: Colors.transparent,
               ),
-            );
-          });
+            ),
+          ],
+        ),
+      );
     } else {
       return Container();
     }
