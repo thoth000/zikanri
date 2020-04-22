@@ -33,7 +33,12 @@ class PRPage extends StatelessWidget {
       body: PageView(
         scrollDirection: Axis.horizontal,
         children: <Widget>[
-          LatelyPage(),
+          Container(
+            color: Colors.lightBlue,
+          ),
+          Container(
+            color: Colors.lightGreen,
+          ),
         ],
       ),
     );

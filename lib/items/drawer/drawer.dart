@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
 import '../../previous_records/previous_records.dart';
+import '../../lately/lately.dart';
 import '../../user/user.dart';
 import '../../Setting/Setting.dart';
 import '../../home/home.dart';
@@ -145,6 +146,34 @@ class SlideMenu extends StatelessWidget {
               child: Row(
                 children: <Widget>[
                   Icon(
+                    Icons.today,
+                    size: displaySize.width / 8,
+                    color: Colors.grey[700],
+                  ),
+                  Text(
+                    '  最近の記録',
+                    style: TextStyle(
+                        fontSize: FontSize.small,
+                        fontWeight: FontWeight.w400),
+                  ),
+                ],
+              ),
+            ),
+            onPressed: () async{
+              await Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LatelyPage(),
+                ),
+              );
+            },
+          ),
+          FlatButton(
+            child: Padding(
+              padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+              child: Row(
+                children: <Widget>[
+                  Icon(
                     Icons.assessment,
                     size: displaySize.width / 8,
                     color: Colors.grey[700],
@@ -168,7 +197,8 @@ class SlideMenu extends StatelessWidget {
             },
           ),
           Divider(
-            height: 1,
+            height: 20,
+            endIndent: 20,
           ),
         ],
       ),

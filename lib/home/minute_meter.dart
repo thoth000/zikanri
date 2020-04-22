@@ -153,7 +153,6 @@ class _MinuteMeterState extends State<MinuteMeter> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                //TODO:ここからメイン
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -403,15 +402,6 @@ class FinishRecordDialog extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   for (int i = 0; i < 3; i++) numberBloc(theme, record, i),
-                ],
-              ),
-              SizedBox(
-                height: displaySize.width / 50,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  for (int i = 3; i < 6; i++) numberBloc(theme, record, i),
                 ],
               ),
               SizedBox(

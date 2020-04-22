@@ -12,7 +12,7 @@ class FontSize {
   static double large = displaySize.width / 15.5;
   static double xlarge = displaySize.width / 12;
   static double xxlarge = displaySize.width / 8;
-  static double big = displaySize.width / 6.3;
+  static double big = displaySize.width / 6;
 }
 
 AssetImage userIcon = AssetImage('images/zikanri_icon.png');

@@ -33,6 +33,7 @@ class TotalScoreWidget extends StatelessWidget {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 IconButton(
                   onPressed: null,

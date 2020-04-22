@@ -2,46 +2,60 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:zikanri/data.dart';
+import 'package:zikanri/items/drawer/drawer.dart';
 
 class LatelyPage extends StatelessWidget {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
-    return ListView(
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.all(20),
-          child: Text(
-            '最近の記録',
-            style: TextStyle(
-              fontSize: FontSize.xlarge,
-              fontWeight: FontWeight.w700,
+    return Scaffold(
+      key: _scaffoldKey,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Text(
+          '最近の記録',
+          style: TextStyle(
+            fontWeight: FontWeight.w400,
+            color: theme.isDark ? Colors.white : Colors.black,
+          ),
+        ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.menu,
+          ),
+          onPressed: () => _scaffoldKey.currentState.openDrawer(),
+        ),
+      ),
+      drawer: SlideMenu(),
+      body: ListView(
+        children: <Widget>[
+          SizedBox(
+            height: displaySize.width / 2,
+            child: PageView(
+              onPageChanged: (i) => userData.setIndex(i),
+              controller:
+                  PageController(initialPage: userData.latelyData.length),
+              children: <Widget>[
+                for (var itemList in userData.latelyData)
+                  _dayData(itemList, theme),
+              ],
             ),
           ),
-        ),
-        SizedBox(
-          height: displaySize.width / 2,
-          child: PageView(
-            onPageChanged: (i) => userData.setIndex(i),
-            controller: PageController(initialPage: userData.latelyData.length),
-            children: <Widget>[
-              for (var itemList in userData.latelyData)
-                _dayData(itemList, theme),
-            ],
+          SizedBox(
+            height: displaySize.width / 15,
           ),
-        ),
-        SizedBox(
-          height: displaySize.width / 15,
-        ),
-        _dayDone(
-          (userData.latelyData.length == 1) ? 0 : userData.index,
-          theme,
-          userData,
-        ),
-        SizedBox(
-          height: displaySize.width / 10,
-        ),
-      ],
+          _dayDone(
+            (userData.latelyData.length == 1) ? 0 : userData.index,
+            theme,
+            userData,
+          ),
+          SizedBox(
+            height: displaySize.width / 10,
+          ),
+        ],
+      ),
     );
   }
 

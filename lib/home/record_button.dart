@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
+import 'package:zikanri/home/home.dart';
 import '../splash.dart';
 
 import '../data.dart';
@@ -454,6 +455,7 @@ class _RButtonState extends State<RButton> {
                                   );
                                   record.reset();
                                   Navigator.pop(context);
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage(),),);
                                   //TODO:もともとここにHomePage遷移があった
                                 }
                               }
