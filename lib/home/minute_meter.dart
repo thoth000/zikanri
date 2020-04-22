@@ -67,6 +67,7 @@ class _MinuteMeterState extends State<MinuteMeter> {
     //スタート時刻を更新して、時間に差分を加える
     setState(() {
       activities[i][4] += DateTime.now().difference(activities[i][0]).inMinutes;
+      activities[i][5] = activities[i][4];
       activities[i][1] = true;
     });
     await Hive.box('userData').put('activities', activities);
@@ -93,10 +94,7 @@ class _MinuteMeterState extends State<MinuteMeter> {
 
   @override
   Widget build(BuildContext context) {
-    final userData = Provider.of<UserDataNotifier>(context);
     final theme = Provider.of<ThemeNotifier>(context);
-    final record = Provider.of<RecordNotifier>(context);
-    var box = Hive.box('userData');
     return Column(
       children: <Widget>[
         (activities.length == 0)
