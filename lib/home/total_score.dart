@@ -8,13 +8,14 @@ class TotalScoreWidget extends StatelessWidget {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
     return Padding(
-      padding: EdgeInsets.all(displaySize.width/20),
+      padding: EdgeInsets.all(displaySize.width / 20),
       child: Container(
-        height: displaySize.width/2.2,
+        height: displaySize.width / 2.2,
         width: displaySize.width,
         decoration: BoxDecoration(
           gradient: LinearGradient(colors: theme.themeColors),
-          borderRadius: BorderRadius.all(Radius.circular(displaySize.width/12)),
+          borderRadius:
+              BorderRadius.all(Radius.circular(displaySize.width / 12)),
           boxShadow: [
             BoxShadow(
               spreadRadius: 1.0,
@@ -28,23 +29,22 @@ class TotalScoreWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             SizedBox(
-              height: displaySize.width/40,
+              height: displaySize.width / 40,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 IconButton(
-                  onPressed:null,
-                  iconSize: displaySize.width/15,
+                  onPressed: null,
+                  iconSize: displaySize.width / 15,
                   icon: Icon(null),
                 ),
                 Text(
                   'Total Point',
                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize: FontSize.xlarge,//12.5
-                    fontWeight: FontWeight.w300
-                  ),
+                      color: Colors.white,
+                      fontSize: FontSize.xlarge, //12.5
+                      fontWeight: FontWeight.w300),
                 ),
                 IconButton(
                   highlightColor: Colors.transparent,
@@ -63,19 +63,21 @@ class TotalScoreWidget extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: displaySize.width/100,
+              height: displaySize.width / 100,
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal:displaySize.width/30),
-              child: Text(
-                userData.totalPointScore.toString(),
-                overflow: TextOverflow.fade,
-                softWrap: false,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: FontSize.big,
-                  fontWeight: FontWeight.w700,
-                  fontStyle: FontStyle.italic,
+              padding: EdgeInsets.symmetric(horizontal: displaySize.width / 30),
+              child: Container(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Text(
+                    userData.totalPointScore.toString(),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: FontSize.big,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                 ),
               ),
             ),

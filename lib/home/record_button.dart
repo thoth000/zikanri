@@ -333,7 +333,7 @@ class _RButtonState extends State<RButton> {
                                       scrollDirection: Axis.horizontal,
                                       child: Row(
                                         children: <Widget>[
-                                          for (int i = 0; i < 6; i++)
+                                          for (int i = 0; i < 3; i++)
                                             Row(
                                               children: <Widget>[
                                                 SizedBox(

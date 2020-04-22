@@ -28,15 +28,10 @@ const List iconList = [
   ["58168", "ゲーム"],
   ["58937", "メディア"],
   ["58917", "SNS"],
-  ["58143", "開発"],
-  ["59497", "創作"],
-  ["60227", "筋トレ"],
+  ["58143", "IT"],
   ["58386", "カメラ"],
   ["58899", "ドライブ"],
-  ["58721", "食事"],
-  ["60231", "料理"],
-  ["59677", "ペット"],
-  ["59596", "買い物"],
+  ["59601", "生活"],
   ["58693", "園芸"],
 ];
 
@@ -65,7 +60,7 @@ class RecordNotifier with ChangeNotifier {
   bool get isRecord => _isRecord;
   String _category = "57746";
   String get category => _category;
-  int _rating = 0;
+  int _rating = 1;
   int get rating => _rating;
   int _time = 0;
   int get time => _time;
@@ -126,7 +121,7 @@ class RecordNotifier with ChangeNotifier {
     _title = "";
     _category = "57746";
     _time = 0;
-    _rating = 0;
+    _rating = 1;
     _timecheck = false;
     _isRecord = true;
     notifyListeners();
