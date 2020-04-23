@@ -34,21 +34,20 @@ class _SplashPageState extends State<SplashPage> {
         if (additem.length >= 14) {
           additem.removeAt(0);
         }
-        additem.add([date, 0, 0, 'NaN', []]);
+        additem.add([date, 0, 0, 0, []]);
         await box.put('latelyData', additem);
         additem = box.get('userValue');
         if (month != box.get('thisMonth')) {
-          additem[1] = 0;
-          additem[2] = 0;
-          additem[3] = 'NaN';
+          additem[3] = 0;
           additem[4] = 0;
+          additem[5] = 0;
           await box.put('passedDays', 1);
         } else {
           await box.put('passedDays', box.get('passedDays') + 1);
         }
-        additem[5] = 0;
         additem[6] = 0;
-        additem[7] = 'NaN';
+        additem[7] = 0;
+        additem[8] = 0;
         await box.put('userValue', additem);
         await box.put('totalPassedDays', box.get('totalPassedDays') + 1);
       }
@@ -177,6 +176,7 @@ class _SplashPageState extends State<SplashPage> {
                               displaySize = MediaQuery.of(context).size;
                               if (Hive.box('userData').containsKey('welcome')) {
                                 reload.reloded();
+                                //activitiesはsetStateでデータ変更されるので別取り
                                 activities = await Hive.box('userData')
                                     .get('activities');
                                 await theme.initialize();
@@ -195,7 +195,8 @@ class _SplashPageState extends State<SplashPage> {
                       ],
                     ),
                   ),
-                  firstcheck
+                  //アイコン下のウィジェット
+                  (firstcheck)
                       ? (reload.reload)
                           ? Padding(
                               padding: const EdgeInsets.only(top: 25),
