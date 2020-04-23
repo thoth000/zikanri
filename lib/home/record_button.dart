@@ -343,50 +343,9 @@ class _RButtonState extends State<RButton> {
                                           for (int i = 0; i < 3; i++)
                                             Row(
                                               children: <Widget>[
-                                                SizedBox(
-                                                  height:
-                                                      displaySize.width / 6.5,
-                                                  width:
-                                                      displaySize.width / 6.5,
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      border: Border.all(
-                                                        color: (record.rating ==
-                                                                i)
-                                                            ? (theme.isDark)
-                                                                ? theme.themeColors[
-                                                                    0]
-                                                                : theme
-                                                                    .themeColors[1]
-                                                            : Colors.grey,
-                                                        width:
-                                                            (record.rating == i)
-                                                                ? 3
-                                                                : 1,
-                                                      ),
-                                                    ),
-                                                    child: FlatButton(
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                      ),
-                                                      onPressed: () =>
-                                                          record.changeValue(i),
-                                                      child: Text(
-                                                        i.toString(),
-                                                        style: TextStyle(
-                                                          fontSize:
-                                                              FontSize.small,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
+                                                //心配なのはstatefulでnotifierが動かないこと
+                                                blocButton(theme, record, false),
+                                                blocButton(theme,record,true),
                                                 SizedBox(
                                                   width: 5,
                                                 )
@@ -434,9 +393,8 @@ class _RButtonState extends State<RButton> {
                                   userData.recordDone([
                                     record.category,
                                     record.title,
-                                    record.time.toString(),
-                                    record.rating.toString(),
-                                    (record.time * record.rating).toString(),
+                                    record.time,
+                                    record.isGood,
                                   ]);
                                   record.reset();
                                   Navigator.pop(context);
@@ -543,6 +501,43 @@ class _RButtonState extends State<RButton> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget blocButton(theme, record, isGood) {
+    return Container(
+      height: displaySize.width / 8,
+      width: displaySize.width / 8,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+          color: (record.rating == isGood)
+              ? (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1]
+              : Colors.grey,
+          width: (record.rating == isGood) ? 3 : 1,
+        ),
+      ),
+      child: Stack(
+        children: <Widget>[
+          Center(
+            child: Icon(
+              (isGood) ? Icons.trending_up : Icons.trending_flat,
+            ),
+          ),
+          SizedBox(
+            height: displaySize.width / 8,
+            width: displaySize.width / 8,
+            child: FlatButton(
+              color: Colors.transparent,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              onPressed: () => record.changeValue(isGood),
+              child: Container(),
+            ),
+          ),
+        ],
       ),
     );
   }
