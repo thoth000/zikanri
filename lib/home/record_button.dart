@@ -83,7 +83,8 @@ class _RButtonState extends State<RButton> {
                     ),
                     context: context,
                     isScrollControlled: true,
-                    builder: (context) => shortCutSheet(context, userData),
+                    builder: (context) =>
+                        shortCutSheet(context, theme, userData),
                   );
                 }
               },
@@ -194,7 +195,6 @@ class _RButtonState extends State<RButton> {
                               width: (record.isRecord) ? 3 : 1,
                             ),
                           ),
-                          //TODO:記録する
                           child: FlatButton(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
@@ -222,7 +222,6 @@ class _RButtonState extends State<RButton> {
                         width: (!record.isRecord) ? 3 : 1,
                       ),
                     ),
-                    //TODO:スタートする
                     child: FlatButton(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -420,7 +419,6 @@ class _RButtonState extends State<RButton> {
                                       builder: (context) => HomePage(),
                                     ),
                                   );
-                                  //TODO:もともとここにHomePage遷移があった
                                 }
                               }
                             },
@@ -569,7 +567,7 @@ class _RButtonState extends State<RButton> {
     );
   }
 
-  Widget shortCutSheet(context, userData) {
+  Widget shortCutSheet(context, theme, userData) {
     return FractionallySizedBox(
       heightFactor: 0.7,
       child: Padding(
@@ -641,42 +639,57 @@ class _RButtonState extends State<RButton> {
                     height: 5,
                   ),
                   for (var itemList in userData.shortCuts)
-                    Container(
-                      height: displaySize.width / 6.5,
-                      width: displaySize.width,
-                      margin: EdgeInsets.symmetric(vertical: 5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                          color: Colors.grey,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 5.0),
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                      ),
-                      child: FlatButton(
-                        onPressed: () {
-                          userData.recordDone(itemList);
-                          Navigator.pop(context);
-                        },
-                        child: Row(
-                          children: <Widget>[
-                            Icon(
-                              IconData(
-                                int.parse(itemList[0]),
-                                fontFamily: "MaterialIcons",
-                              ),
-                              size: displaySize.width / 10,
+                        child: Container(
+                          height: displaySize.width / 6.5,
+                          width: displaySize.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: Colors.grey,
                             ),
-                            SizedBox(
-                              width: 10,
+                          ),
+                          child: FlatButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                            Text(
-                              itemList[1],
-                              overflow: TextOverflow.fade,
-                              softWrap: false,
-                              style: TextStyle(
-                                fontSize: FontSize.xsmall,
-                              ),
+                            onPressed: () {
+                              userData.recordDone(itemList);
+                              Navigator.pop(context);
+                            },
+                            child: Row(
+                              children: <Widget>[
+                                Icon(
+                                  IconData(
+                                    int.parse(itemList[0]),
+                                    fontFamily: "MaterialIcons",
+                                  ),
+                                  color: (itemList[3])
+                                      ? (theme.isDark)
+                                          ? theme.themeColors[0]
+                                          : theme.themeColors[1]
+                                      : Colors.grey,
+                                  size: displaySize.width / 10,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  itemList[1],
+                                  overflow: TextOverflow.fade,
+                                  softWrap: false,
+                                  style: TextStyle(
+                                    fontSize: FontSize.xsmall,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
                     ),

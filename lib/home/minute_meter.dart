@@ -176,7 +176,7 @@ class _MinuteMeterState extends State<MinuteMeter> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Container(
-                              width: displaySize.width / 1.65,
+                              width: displaySize.width / 1.6,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
@@ -203,9 +203,17 @@ class _MinuteMeterState extends State<MinuteMeter> {
                                 ],
                               ),
                             ),
-                            Text(
-                              activities[i][5].toString() + '分',
-                              style: TextStyle(fontSize: FontSize.midium),
+                            Container(
+                              width: displaySize.width/5.5,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  Text(
+                                    activities[i][5].toString() + '分',
+                                    style: TextStyle(fontSize: FontSize.midium),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -277,8 +285,7 @@ class _MinuteMeterState extends State<MinuteMeter> {
                                           showDialog(
                                             context: context,
                                             builder: (context) =>
-                                                FinishRecordDialog(
-                                                    activity, time, i),
+                                                FinishRecordDialog(activity, time, i),
                                           );
                                         },
                                       ),
@@ -369,7 +376,7 @@ class FinishRecordDialog extends StatelessWidget {
         borderRadius: BorderRadius.circular(30),
       ),
       child: SizedBox(
-        height: displaySize.width + 20,
+        height: displaySize.width,
         width: displaySize.width / 1.5,
         child: Padding(
           padding: const EdgeInsets.all(15.0),
@@ -382,7 +389,7 @@ class FinishRecordDialog extends StatelessWidget {
                   int.parse(activity[3]),
                   fontFamily: 'MaterialIcons',
                 ),
-                size: displaySize.width / 7,
+                size: displaySize.width / 10,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
@@ -441,7 +448,7 @@ class FinishRecordDialog extends StatelessWidget {
                         [
                           activity[3],
                           activity[2],
-                          time.toString(),
+                          time.toInt(),
                           record.isGood,
                         ],
                       );
@@ -449,6 +456,7 @@ class FinishRecordDialog extends StatelessWidget {
                       Hive.box('userData').put('activities', activities);
                       Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (context) => HomePage()));
+                      record.reset();
                     },
                   ),
                 ),
@@ -462,8 +470,8 @@ class FinishRecordDialog extends StatelessWidget {
 
   Widget blocButton(theme, record, isGood) {
     return Container(
-      height: displaySize.width / 8,
-      width: displaySize.width / 8,
+      height: displaySize.width / 7,
+      width: displaySize.width / 7,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
@@ -478,11 +486,15 @@ class FinishRecordDialog extends StatelessWidget {
           Center(
             child: Icon(
               (isGood) ? Icons.trending_up : Icons.trending_flat,
+              color: (isGood)
+                  ? (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1]
+                  : Colors.grey,
+              size: displaySize.width / 10,
             ),
           ),
           SizedBox(
-            height: displaySize.width / 8,
-            width: displaySize.width / 8,
+            height: displaySize.width / 7,
+            width: displaySize.width / 7,
             child: FlatButton(
               color: Colors.transparent,
               shape: RoundedRectangleBorder(

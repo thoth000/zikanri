@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:zikanri/lately/lately.dart';
 
 import '../data.dart';
 import '../items/drawer/drawer.dart';
