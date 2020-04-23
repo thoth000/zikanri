@@ -52,18 +52,24 @@ class WelcomePage extends StatelessWidget {
         totalP,
         thisMonthP,thisMonthM,thisMonthV,thisMonthA,
         todayP,todayM,todayV,
-        ]*/
-      await userDataBox.put('userValue', [0, 0, 0, 'NaN', 0, 0, 0, 'NaN']);
+      ]*/
+
+      /*userValue=[
+        aTime,aGood,aPer,
+        tmTime,tmGood,tmPer,
+        tTime,tGood,tPer
+      ]*/
+      await userDataBox.put('userValue', [0,0,0,0,0,0,0,0,0]);
       await userDataBox.put('latelyData', [
-        [firstdate, 0, 0, 'NaN', []],
+        [firstdate, 0, 0, 0, []],
       ]);
       await userDataBox.put('todayDoneList', []);
       await userDataBox.put(
         'shortCuts',
         [
-          ['57680', '数学の勉強', '60', '1', '300'],
-          ['58726', 'バスケの練習', '120', '1', '480'],
-          ['58168', 'ひと狩り', '120', '0', '240'],
+          ['57680', '数学の勉強', '60', true,],
+          ['58726', 'バスケの練習', '120', true,],
+          ['58168', 'ひと狩り', '120', false,],
         ],
       );
       await userDataBox.put('activities', []);

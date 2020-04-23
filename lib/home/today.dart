@@ -141,7 +141,7 @@ class TodayWidget extends StatelessWidget {
                     Column(
                       children: <Widget>[
                         Text(
-                          '総ポイント',
+                          '価値時間',
                           style: TextStyle(
                               fontSize: FontSize.midium,
                               fontWeight: FontWeight.w700),

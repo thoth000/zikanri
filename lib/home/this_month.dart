@@ -28,11 +28,11 @@ class _TMWidgetState extends State<TMWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 _widget(
-                  '総ポイント',
+                  '記録時間',
                   userData.thisMonthPoint,
                 ),
-                _widget('平均価値', userData.thisMonthValue),
-                _widget('日平均', userData.thisMonthAverage),
+                _widget('価値時間', userData.thisMonthValue),
+                _widget('価値の割合', userData.thisMonthAverage),
               ],
             ),
           ),
