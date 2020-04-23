@@ -413,8 +413,8 @@ class FinishRecordDialog extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  numberBloc(theme, record, false),
-                  numberBloc(theme, record, true),
+                  blocButton(theme, record, false),
+                  blocButton(theme, record, true),
                 ],
               ),
               SizedBox(
@@ -460,7 +460,7 @@ class FinishRecordDialog extends StatelessWidget {
     );
   }
 
-  Widget numberBloc(theme, record, isGood) {
+  Widget blocButton(theme, record, isGood) {
     return Container(
       height: displaySize.width / 8,
       width: displaySize.width / 8,
