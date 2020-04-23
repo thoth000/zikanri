@@ -18,7 +18,10 @@ class TodayWidget extends StatelessWidget {
                 fontFamily: 'MaterialIcons',
               ),
               size: displaySize.width / 10,
-              color: Colors.grey,
+              //カラーは価値時間ならテーマカラーを、価値なしではグレーを用いる
+              color: (itemList[3])
+                  ? (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1]
+                  : Colors.grey,
             ),
           ),
           Container(
@@ -34,38 +37,11 @@ class TodayWidget extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Expanded(
-                      flex: 6,
-                      child: Text(
-                        itemList[2] + '分 × ' + itemList[3] + 'pt',
-                        style: TextStyle(
-                          fontSize: FontSize.xxsmall,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                        flex: 4,
-                        child: Center(
-                          child: Text(
-                            '→',
-                            style: TextStyle(
-                              fontSize: FontSize.small,
-                            ),
-                          ),
-                        )),
-                    Expanded(
-                      flex: 4,
-                      child: Text(
-                        itemList[4] + 'pt',
-                        style: TextStyle(
-                          fontSize: FontSize.xxsmall,
-                        ),
-                      ),
-                    ),
-                  ],
+                Text(
+                  itemList[2] + '分',
+                  style: TextStyle(
+                    fontSize: FontSize.xxsmall,
+                  ),
                 ),
               ],
             ),
@@ -163,8 +139,7 @@ class TodayWidget extends StatelessWidget {
                 Text(
                   '記録',
                   style: TextStyle(
-                      fontSize: FontSize.midium,
-                      fontWeight: FontWeight.w700),
+                      fontSize: FontSize.midium, fontWeight: FontWeight.w700),
                 ),
                 SizedBox(
                   height: 10,
