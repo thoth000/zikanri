@@ -246,7 +246,7 @@ class UserDataNotifier with ChangeNotifier {
   }
 
   Future recordDone(listData) async {
-    int time=listData[2];
+    int time = listData[2];
     _allTime += time;
     _thisMonthTime += time;
     _todayTime += time;
@@ -255,9 +255,9 @@ class UserDataNotifier with ChangeNotifier {
       _thisMonthGood += time;
       _todayGood += time;
     }
-    _allPer = (_allGood / _allTime).round();
-    _thisMonthPer = (_thisMonthGood / _thisMonthTime).round();
-    _todayPer = (_todayGood / _todayTime).round();
+    _allPer = (_allGood*100 / _allTime).round();
+    _thisMonthPer = (_thisMonthGood*100 / _thisMonthTime).round();
+    _todayPer = (_todayGood*100 / _todayTime).round();
     _todayDoneList.add(listData);
     _latelyData.removeAt(_latelyData.length - 1);
     _latelyData.add(
@@ -270,7 +270,6 @@ class UserDataNotifier with ChangeNotifier {
       ],
     );
     notifyListeners();
-    
     await Hive.box('userData').put('userValue', [
       _allTime,
       _allGood,
@@ -287,7 +286,7 @@ class UserDataNotifier with ChangeNotifier {
   }
 
   Future deleteDone(listData, index) async {
-    int time=listData[2];
+    int time = listData[2];
     _allTime -= time;
     _thisMonthTime -= time;
     _todayTime -= time;
@@ -296,9 +295,9 @@ class UserDataNotifier with ChangeNotifier {
       _thisMonthGood -= time;
       _todayGood -= time;
     }
-    _allPer = (_allGood / _allTime).round();
-    _thisMonthPer = (_thisMonthGood / _thisMonthTime).round();
-    _todayPer = (_todayGood / _todayTime).round();
+    _allPer = (_allTime==0)?0:(_allGood*100 / _allTime).round();
+    _thisMonthPer = (_thisMonthTime==0)?0:(_thisMonthGood*100 / _thisMonthTime).round();
+    _todayPer = (_todayTime==0)?0:(_todayGood*100 / _todayTime).round();
     _todayDoneList.removeAt(index);
     _latelyData.removeAt(_latelyData.length - 1);
     _latelyData.add(
