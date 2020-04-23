@@ -58,7 +58,7 @@ class TotalScoreWidget extends StatelessWidget {
                   ),
                   onPressed: () {
                     Share.share(
-                      "ユーザー:${userData.userName}\n${userData.totalPointScore}ポイントに到達しました！\n#ジカンリ",
+                      "ユーザー:${userData.userName}\n価値ある時間が${userData.allGood}分に到達しました！\n#ジカンリ",
                     );
                   },
                 ),
@@ -73,7 +73,7 @@ class TotalScoreWidget extends StatelessWidget {
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Text(
-                    userData.totalPointScore.toString(),
+                    userData.allGood.toString(),
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: FontSize.big,
