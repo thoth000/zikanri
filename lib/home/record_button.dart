@@ -311,8 +311,6 @@ class _RButtonState extends State<RButton> {
                                         style: TextStyle(
                                           fontSize: FontSize.small,
                                         ),
-                                        textAlignVertical:
-                                            TextAlignVertical.top,
                                         keyboardType: TextInputType.number,
                                         inputFormatters: <TextInputFormatter>[
                                           WhitelistingTextInputFormatter
@@ -322,8 +320,7 @@ class _RButtonState extends State<RButton> {
                                         decoration: InputDecoration.collapsed(
                                           hintText: "60",
                                         ),
-                                        onChanged: (s) =>
-                                            record.changeTime(s),
+                                        onChanged: (s) => record.changeTime(s),
                                       ),
                                     ),
                                   ),
@@ -350,7 +347,7 @@ class _RButtonState extends State<RButton> {
                                               //心配なのはstatefulでnotifierが動かないこと
                                               blocButton(theme, record, false),
                                               SizedBox(
-                                                width: displaySize.width/50,
+                                                width: displaySize.width / 50,
                                               ),
                                               blocButton(theme, record, true),
                                             ],
@@ -477,18 +474,35 @@ class _RButtonState extends State<RButton> {
                                                   : 1,
                                         ),
                                       ),
-                                      child: IconButton(
-                                        icon: Icon(
-                                          IconData(
-                                            int.parse(itemList[0]),
-                                            fontFamily: "MaterialIcons",
+                                      child: Stack(
+                                        children: <Widget>[
+                                          Center(
+                                            child: Icon(
+                                              IconData(
+                                                int.parse(itemList[0]),
+                                                fontFamily: "MaterialIcons",
+                                              ),
+                                              color: (theme.isDark)
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                              size: displaySize.width / 15,
+                                            ),
                                           ),
-                                          color: (theme.isDark)
-                                              ? Colors.white
-                                              : Colors.black,
-                                        ),
-                                        onPressed: () =>
-                                            record.changeCategory(itemList[0]),
+                                          SizedBox(
+                                            height: displaySize.width / 6.5,
+                                            width: displaySize.width / 6.5,
+                                            child: FlatButton(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              child: Container(),
+                                              color: Colors.transparent,
+                                              onPressed: () => record
+                                                  .changeCategory(itemList[0]),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                     Text(
@@ -532,13 +546,15 @@ class _RButtonState extends State<RButton> {
           Center(
             child: Icon(
               (isGood) ? Icons.trending_up : Icons.trending_flat,
-              color: (isGood)?(theme.isDark) ? theme.themeColors[0] : theme.themeColors[1]:Colors.grey,
-              size: displaySize.width/10,
+              color: (isGood)
+                  ? (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1]
+                  : Colors.grey,
+              size: displaySize.width / 10,
             ),
           ),
           SizedBox(
-            height: displaySize.width / 8,
-            width: displaySize.width / 8,
+            height: displaySize.width / 7,
+            width: displaySize.width / 7,
             child: FlatButton(
               color: Colors.transparent,
               shape: RoundedRectangleBorder(
