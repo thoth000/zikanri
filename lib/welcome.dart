@@ -42,24 +42,18 @@ class WelcomePage extends StatelessWidget {
       var firstMonth = DateFormat("MM").format(DateTime.now());
       var themeBox = Hive.box('theme');
       var userDataBox = Hive.box('userData');
-      //theme
+      // theme
       await themeBox.put('isDark', false);
       await themeBox.put('themeColorsIndex', 0);
       await themeBox.put('myColors', ['0', '1', '2', '3', '4', '5', '6', '7']);
-      //userData
+      // userData
       await userDataBox.put('welcome', "Yey!");
-      /*userValue=[
-        totalP,
-        thisMonthP,thisMonthM,thisMonthV,thisMonthA,
-        todayP,todayM,todayV,
-      ]*/
-
       /*userValue=[
         aTime,aGood,aPer,
         tmTime,tmGood,tmPer,
         tTime,tGood,tPer
       ]*/
-      await userDataBox.put('userValue', [0,0,0,0,0,0,0,0,0]);
+      await userDataBox.put('userValue', [0, 0, 0, 0, 0, 0, 0, 0, 0]);
       await userDataBox.put('latelyData', [
         [firstdate, 0, 0, 0, []],
       ]);
@@ -67,9 +61,10 @@ class WelcomePage extends StatelessWidget {
       await userDataBox.put(
         'shortCuts',
         [
-          ['57680', '数学の勉強', '60', true,],
-          ['58726', 'バスケの練習', '120', true,],
-          ['58168', 'ひと狩り', '120', false,],
+          ['57680', '数学の勉強', '60', true],
+          ['58726', 'バスケの練習', '120', true],
+          ['58168', 'ひと狩り', '120', false],
+          ['58143', 'プログラミング', '240', true],
         ],
       );
       await userDataBox.put('activities', []);
@@ -97,7 +92,7 @@ class WelcomePage extends StatelessWidget {
                   reload.reloded();
                   makeDir(false);
                   Timer(Duration(milliseconds: 2000), reload.finishload);
-                  Timer(Duration(seconds: 2500), changepage);
+                  Timer(Duration(seconds: 2300), changepage);
                 },
                 child: Container(),
               ),
