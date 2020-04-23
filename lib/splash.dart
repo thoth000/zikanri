@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'home/home.dart';
+import 'home/record_button.dart';
 import 'welcome.dart';
 import 'data.dart';
 
@@ -14,6 +15,8 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  var box1;
+  var box2;
   @override
   void initState() {
     super.initState();
@@ -30,25 +33,25 @@ class _SplashPageState extends State<SplashPage> {
         var box = Hive.box('userData');
         await box.put('previousDate', date);
         await box.put('todayDoneList', []);
-        var additem = box.get('latelyData');
-        if (additem.length >= 14) {
-          additem.removeAt(0);
+        box1 = box.get('latelyData');
+        if (box1.length >= 14) {
+          box1.removeAt(0);
         }
-        additem.add([date, 0, 0, 0, []]);
-        await box.put('latelyData', additem);
-        additem = box.get('userValue');
+        box1.add([date, 0, 0, 0, []]);
+        await box.put('latelyData', box1);
+        box2 = box.get('userValue');
         if (month != box.get('thisMonth')) {
-          additem[3] = 0;
-          additem[4] = 0;
-          additem[5] = 0;
+          box2[3] = 0;
+          box2[4] = 0;
+          box2[5] = 0;
           await box.put('passedDays', 1);
         } else {
           await box.put('passedDays', box.get('passedDays') + 1);
         }
-        additem[6] = 0;
-        additem[7] = 0;
-        additem[8] = 0;
-        await box.put('userValue', additem);
+        box2[6] = 0;
+        box2[7] = 0;
+        box2[8] = 0;
+        await box.put('userValue', box2);
         await box.put('totalPassedDays', box.get('totalPassedDays') + 1);
       }
     }
@@ -187,6 +190,24 @@ class _SplashPageState extends State<SplashPage> {
                                 await Navigator.pushReplacement(
                                   context,
                                   _createWelcomeRoute(),
+                                );
+                              }
+                            },
+                            onLongPress: () async {
+                              if (Hive.box('userData').containsKey('welcome')) {
+                                displaySize = MediaQuery.of(context).size;
+                                activities = await Hive.box('userData')
+                                    .get('activities');
+                                await theme.initialize();
+                                await userData.initialize();
+                                showModalBottomSheet(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(30)),
+                                  ),
+                                  context: context,
+                                  isScrollControlled: true,
+                                  builder: (context) => RecordBottomSheet(true),
                                 );
                               }
                             },

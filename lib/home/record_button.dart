@@ -9,15 +9,10 @@ import '../splash.dart';
 
 import '../data.dart';
 
-class RButton extends StatefulWidget {
+class RButton extends StatelessWidget {
   @override
-  _RButtonState createState() => _RButtonState();
-}
-
-class _RButtonState extends State<RButton> {
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
-    final userData = Provider.of<UserDataNotifier>(context);
     return Container(
       height: displaySize.width / 5,
       width: displaySize.width / 5,
@@ -53,9 +48,10 @@ class _RButtonState extends State<RButton> {
                 var date = DateFormat("yyyy年MM月dd日").format(DateTime.now());
                 if (date != Hive.box('userData').get('previousDate')) {
                   showDialog(
-                      barrierDismissible: false,
-                      context: (context),
-                      builder: (context) => datecheckDialog(context));
+                    barrierDismissible: false,
+                    context: (context),
+                    builder: (context) => DateChangeDialog(),
+                  );
                 } else {
                   showModalBottomSheet(
                     shape: RoundedRectangleBorder(
@@ -64,7 +60,7 @@ class _RButtonState extends State<RButton> {
                     ),
                     context: context,
                     isScrollControlled: true,
-                    builder: (context) => bottomsheet(context, theme, userData),
+                    builder: (context) => RecordBottomSheet(false),
                   );
                 }
               },
@@ -72,9 +68,10 @@ class _RButtonState extends State<RButton> {
                 var date = DateFormat("yyyy年MM月dd日").format(DateTime.now());
                 if (date != Hive.box('userData').get('previousDate')) {
                   showDialog(
-                      barrierDismissible: false,
-                      context: (context),
-                      builder: (context) => datecheckDialog(context));
+                    barrierDismissible: false,
+                    context: (context),
+                    builder: (context) => DateChangeDialog(),
+                  );
                 } else {
                   showModalBottomSheet(
                     shape: RoundedRectangleBorder(
@@ -83,8 +80,7 @@ class _RButtonState extends State<RButton> {
                     ),
                     context: context,
                     isScrollControlled: true,
-                    builder: (context) =>
-                        shortCutSheet(context, theme, userData),
+                    builder: (context) => ShortCutSheet(),
                   );
                 }
               },
@@ -94,14 +90,41 @@ class _RButtonState extends State<RButton> {
       ),
     );
   }
+}
 
-  Widget datecheckDialog(context) {
+class DateChangeDialog extends StatefulWidget {
+  @override
+  _DateChangeDialogState createState() => _DateChangeDialogState();
+}
+
+class _DateChangeDialogState extends State<DateChangeDialog> {
+  void initState() {
+    super.initState();
+    pagechange();
+  }
+
+  Future pagechange() async {
+    Future.delayed(
+      Duration(milliseconds: 1500),
+      () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SplashPage(),
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return AlertDialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
       ),
       title: Text('日付が変わっています'),
-      content: Text('タイトル画面に戻ります'),
+      content: Text('自動的にタイトル画面に戻ります'),
       actions: <Widget>[
         FlatButton(
           child: Text('はい'),
@@ -118,8 +141,22 @@ class _RButtonState extends State<RButton> {
       ],
     );
   }
+}
 
-  Widget bottomsheet(BuildContext context, theme, userData) {
+class RecordBottomSheet extends StatefulWidget {
+  final splash;
+  RecordBottomSheet(this.splash);
+  @override
+  _RecordBottomSheetState createState() => _RecordBottomSheetState(splash);
+}
+
+class _RecordBottomSheetState extends State<RecordBottomSheet> {
+  final splash;
+  _RecordBottomSheetState(this.splash);
+  @override
+  Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeNotifier>(context);
+    final userData = Provider.of<UserDataNotifier>(context);
     final _decorationStyle = BoxDecoration(
       borderRadius: BorderRadius.circular(10),
       border: Border.all(color: Colors.grey),
@@ -390,12 +427,14 @@ class _RButtonState extends State<RButton> {
                                 if (record.titleCheck || record.timeCheck) {
                                   record.click();
                                 } else {
-                                  userData.recordDone([
-                                    record.category,
-                                    record.title,
-                                    record.time,
-                                    record.isGood,
-                                  ]);
+                                  userData.recordDone(
+                                    [
+                                      record.category,
+                                      record.title,
+                                      record.time,
+                                      record.isGood,
+                                    ],
+                                  );
                                   record.reset();
                                   Navigator.pop(context);
                                 }
@@ -411,12 +450,20 @@ class _RButtonState extends State<RButton> {
                                   );
                                   record.reset();
                                   Navigator.pop(context);
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => HomePage(),
-                                    ),
-                                  );
+                                  if (splash) {
+                                    //TODO:スナックバーでもおいとこ
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                      content: Text('記録！'),
+                                    ));
+                                    Navigator.pop(context);
+                                  } else {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => HomePage(),
+                                      ),
+                                    );
+                                  }
                                 }
                               }
                             },
@@ -568,7 +615,7 @@ class _RButtonState extends State<RButton> {
           Center(
             child: Icon(
               (isGood) ? Icons.trending_up : Icons.trending_flat,
-              color: (isGood)
+              color: (record.isGood == isGood)
                   ? (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1]
                   : Colors.grey,
               size: displaySize.width / 10,
@@ -590,8 +637,13 @@ class _RButtonState extends State<RButton> {
       ),
     );
   }
+}
 
-  Widget shortCutSheet(context, theme, userData) {
+class ShortCutSheet extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeNotifier>(context);
+    final userData = Provider.of<UserDataNotifier>(context);
     return FractionallySizedBox(
       heightFactor: 0.7,
       child: Padding(

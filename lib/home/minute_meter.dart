@@ -204,7 +204,7 @@ class _MinuteMeterState extends State<MinuteMeter> {
                               ),
                             ),
                             Container(
-                              width: displaySize.width/5.5,
+                              width: displaySize.width / 5.5,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: <Widget>[
@@ -285,7 +285,8 @@ class _MinuteMeterState extends State<MinuteMeter> {
                                           showDialog(
                                             context: context,
                                             builder: (context) =>
-                                                FinishRecordDialog(activity, time, i),
+                                                FinishRecordDialog(
+                                                    activity, time, i),
                                           );
                                         },
                                       ),
@@ -486,7 +487,7 @@ class FinishRecordDialog extends StatelessWidget {
           Center(
             child: Icon(
               (isGood) ? Icons.trending_up : Icons.trending_flat,
-              color: (isGood)
+              color: (record.isGood == isGood)
                   ? (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1]
                   : Colors.grey,
               size: displaySize.width / 10,
