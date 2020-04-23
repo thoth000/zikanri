@@ -29,10 +29,10 @@ class _TMWidgetState extends State<TMWidget> {
               children: <Widget>[
                 _widget(
                   '記録時間',
-                  userData.thisMonthPoint,
+                  userData.thisMonthTime,
                 ),
-                _widget('価値時間', userData.thisMonthValue),
-                _widget('価値の割合', userData.thisMonthAverage),
+                _widget('価値時間', userData.thisMonthGood),
+                _widget('価値の割合', userData.thisMonthPer),
               ],
             ),
           ),
