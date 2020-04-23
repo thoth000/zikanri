@@ -32,7 +32,7 @@ class LatelyPage extends StatelessWidget {
       body: ListView(
         children: <Widget>[
           SizedBox(
-            height: displaySize.width/15,
+            height: displaySize.width / 15,
           ),
           SizedBox(
             height: displaySize.width / 2,
@@ -97,6 +97,7 @@ class LatelyPage extends StatelessWidget {
   }
 
   Widget _dayData(List l, theme) {
+    //lはlatelyDataのリストアイテム
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10),
       child: Card(
@@ -116,7 +117,7 @@ class LatelyPage extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Text(
-                l[0],
+                l[0], //日付
                 style: TextStyle(
                   fontSize: FontSize.large,
                   fontWeight: FontWeight.w700,
@@ -142,6 +143,7 @@ class LatelyPage extends StatelessWidget {
   }
 
   Widget _dayDone(i, theme, userData) {
+    //iは日付に対応したindex
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10),
       child: Card(
@@ -173,7 +175,7 @@ class LatelyPage extends StatelessWidget {
                   height: 5,
                 ),
                 for (int j = 0; j < userData.latelyData[i][4].length; j++)
-                  _dayDoneList(userData.latelyData[i][4][j], j),
+                  _dayDoneList(userData.latelyData[i][4][j], theme),
                 Center(
                   child: Padding(
                     padding: EdgeInsets.symmetric(
@@ -186,7 +188,7 @@ class LatelyPage extends StatelessWidget {
                           ? 'この日の記録はありません'
                           : '',
                       style: TextStyle(
-                        fontSize: FontSize.xsmall,
+                        fontSize: FontSize.small,
                       ),
                     ),
                   ),
@@ -199,11 +201,12 @@ class LatelyPage extends StatelessWidget {
     );
   }
 
-  Widget _dayDoneList(List itemList, int index) {
+  Widget _dayDoneList(List itemList, theme) {
+    //itemListは各日のDoneListの中の記録
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(right: 10),
@@ -213,60 +216,30 @@ class LatelyPage extends StatelessWidget {
                 fontFamily: 'MaterialIcons',
               ),
               size: displaySize.width / 12,
-              color: Colors.grey,
+              color: (itemList[3])
+                  ? (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1]
+                  : Colors.grey,
             ),
           ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  itemList[1],
-                  softWrap: false,
-                  overflow: TextOverflow.fade,
-                  style: TextStyle(
-                    fontSize: FontSize.xsmall,
-                    fontWeight: FontWeight.w700,
-                  ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                itemList[1], //タイトル
+                softWrap: false,
+                overflow: TextOverflow.fade,
+                style: TextStyle(
+                  fontSize: FontSize.xsmall,
+                  fontWeight: FontWeight.w700,
                 ),
-                SizedBox(
-                  width: displaySize.width / 2,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 6,
-                        child: Text(
-                          itemList[2] + '分 × ' + itemList[3] + 'pt',
-                          style: TextStyle(
-                            fontSize: FontSize.xxsmall,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 4,
-                        child: Center(
-                          child: Text(
-                            '→',
-                            style: TextStyle(
-                              fontSize: FontSize.small,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 4,
-                        child: Text(
-                          itemList[4] + 'pt',
-                          style: TextStyle(
-                            fontSize: FontSize.xxsmall,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+              ),
+              Text(
+                itemList[2] + '分',
+                style: TextStyle(
+                  fontSize: FontSize.xxsmall,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),
