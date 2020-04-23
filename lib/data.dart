@@ -207,35 +207,15 @@ class UserDataNotifier with ChangeNotifier {
   int get todayGood => _todayGood;
   int _todayPer = 0;
   int get todayPer => _todayPer;
-  
-  int _totalPointScore = 0;
-  int get totalPointScore => _totalPointScore;
-  int _thisMonthPoint = 0;
-  int get thisMonthPoint => _thisMonthPoint;
-  int _thisMonthMinute = 0;
-  int get thisMonthMinute => _thisMonthMinute;
-
-  String _thisMonthValue = '0.00';
-  String get thisMonthValue => _thisMonthValue;
-  int _thisMonthAverage = 0;
-  int get thisMonthAverage => _thisMonthAverage;
-
-  int _todayPoint = 0;
-  int get todayPoint => _todayPoint;
-  int _todayMinute = 0;
-  int get todayMinute => _todayMinute;
-  String _todayValue = '0.00';
-  String get todayValue => _todayValue;
-  
-  //日付,記録時間,価値時間,価値の割合,DoneList
-  List _latelyData = [];
-  List get latelyData => _latelyData;
 
   int index = 0;
   void setIndex(int i) {
     index = i;
     notifyListeners();
   }
+  //日付,記録時間,価値時間,価値の割合,DoneList
+  List _latelyData = [];
+  List get latelyData => _latelyData;
 
   List _todayDoneList = [];
   List get todayDoneList => _todayDoneList;
@@ -266,29 +246,6 @@ class UserDataNotifier with ChangeNotifier {
   }
 
   Future recordDone(listData) async {
-    int _point = int.parse(listData[4]);
-    int _minute = int.parse(listData[2]);
-    _totalPointScore += _point;
-    _thisMonthPoint += _point;
-    _todayPoint += _point;
-    _thisMonthMinute += _minute;
-    _todayMinute += _minute;
-    _thisMonthAverage = (_thisMonthPoint / passedDays).round();
-    _thisMonthValue = (_thisMonthPoint / _thisMonthMinute).toStringAsFixed(2);
-    _todayValue = (_todayPoint / _todayMinute).toStringAsFixed(2);
-    _todayDoneList.add(listData);
-    _latelyData.removeAt(_latelyData.length - 1);
-    _latelyData.add(
-      [
-        previousDate,
-        _todayMinute.toString(),
-        _todayPoint.toString(),
-        _todayValue,
-        _todayDoneList,
-      ],
-    );
-    notifyListeners();
-    
     int time=listData[2];
     _allTime += time;
     _thisMonthTime += time;
@@ -315,15 +272,6 @@ class UserDataNotifier with ChangeNotifier {
     notifyListeners();
     
     await Hive.box('userData').put('userValue', [
-      _totalPointScore,
-      _thisMonthPoint,
-      _thisMonthMinute,
-      _thisMonthValue,
-      _thisMonthAverage,
-      _todayPoint,
-      _todayMinute,
-      _todayValue,
-
       _allTime,
       _allGood,
       _allPer,
@@ -333,36 +281,12 @@ class UserDataNotifier with ChangeNotifier {
       _todayTime,
       _todayGood,
       _todayPer,
-
     ]);
     await Hive.box('userData').put('todayDoneList', _todayDoneList);
     await Hive.box('userData').put('latelyData', _latelyData);
   }
 
   Future deleteDone(listData, index) async {
-    int _point = int.parse(listData[4]);
-    int _minute = int.parse(listData[2]);
-    _totalPointScore -= _point;
-    _thisMonthPoint -= _point;
-    _todayPoint -= _point;
-    _thisMonthMinute -= _minute;
-    _todayMinute -= _minute;
-    _thisMonthAverage = (_thisMonthPoint / passedDays).round();
-    _thisMonthValue = (_thisMonthPoint / _thisMonthMinute).toStringAsFixed(2);
-    _todayValue = (_todayPoint / _todayMinute).toStringAsFixed(2);
-    _todayDoneList.removeAt(index);
-    _latelyData.removeAt(_latelyData.length - 1);
-    _latelyData.add(
-      [
-        previousDate,
-        _todayMinute.toString(),
-        _todayPoint.toString(),
-        _todayValue,
-        _todayDoneList,
-      ],
-    );
-    notifyListeners();
-    
     int time=listData[2];
     _allTime -= time;
     _thisMonthTime -= time;
@@ -387,17 +311,7 @@ class UserDataNotifier with ChangeNotifier {
       ],
     );
     notifyListeners();
-    
     await Hive.box('userData').put('userValue', [
-      _totalPointScore,
-      _thisMonthPoint,
-      _thisMonthMinute,
-      _thisMonthValue,
-      _thisMonthAverage,
-      _todayPoint,
-      _todayMinute,
-      _todayValue,
-      
       _allTime,
       _allGood,
       _allPer,
@@ -407,7 +321,6 @@ class UserDataNotifier with ChangeNotifier {
       _todayTime,
       _todayGood,
       _todayPer,
-      
     ]);
     await Hive.box('userData').put('todayDoneList', _todayDoneList);
     await Hive.box('userData').put('latelyData', _latelyData);
@@ -423,15 +336,6 @@ class UserDataNotifier with ChangeNotifier {
   Future initialize() async {
     var box = Hive.box('userData');
     var userValue = await box.get('userValue');
-    _totalPointScore = userValue[0];
-    _thisMonthPoint = userValue[1];
-    _thisMonthMinute = userValue[2];
-    _thisMonthValue = userValue[3];
-    _thisMonthAverage = userValue[4];
-    _todayPoint = userValue[5];
-    _todayMinute = userValue[6];
-    _todayValue = userValue[7];
-    
     _allTime = userValue[0];
     _allGood = userValue[1];
     _allPer = userValue[2];
@@ -441,7 +345,6 @@ class UserDataNotifier with ChangeNotifier {
     _todayTime = userValue[6];
     _todayGood = userValue[7];
     _todayPer = userValue[8];
-    
     _latelyData = await box.get('latelyData');
     _todayDoneList = await box.get('todayDoneList');
     _shortCuts = await box.get('shortCuts');
