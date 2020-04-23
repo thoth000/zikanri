@@ -134,7 +134,7 @@ class ThemeNotifier with ChangeNotifier {
   bool _isDark = false;
   bool get isDark => _isDark;
   int _themeColorsIndex = 0;
-  List _myColors = ['0', '1', '2','3','4','5','6','7'];
+  List _myColors = ['0', '1', '2', '3', '4', '5', '6', '7'];
   List get myColors => _myColors;
   List _themeColors() => baseColors[int.parse(_myColors[_themeColorsIndex])];
   List get themeColors => _themeColors();
@@ -288,6 +288,32 @@ class UserDataNotifier with ChangeNotifier {
       ],
     );
     notifyListeners();
+    /*
+    time=listData[2];
+    _allTime += time;
+    _thisMonthTime += time;
+    _todayTime += time;
+    if(listData[3]){
+      _allGood += time;
+      _thisMonthGood += time;
+      _todayGood += time;
+    }
+    _allPer = (_allGood / _allTime).round();
+    _thisMonthPer = (_thisMonthGood / _thisMonthTime).round();
+    _todayPer = (_todayGood / _todayTime).round();
+    _todayDoneList.add(listData);
+    _latelyData.removeAt(_latelyData.length - 1);
+    _latelyData.add(
+      [
+        previousDate,
+        _todayTime,
+        _todayGood,
+        _todayPer,
+        _todayDoneList,
+      ],
+    );
+    notifyListeners();
+    */
     await Hive.box('userData').put('userValue', [
       _totalPointScore,
       _thisMonthPoint,
@@ -324,6 +350,23 @@ class UserDataNotifier with ChangeNotifier {
         _todayDoneList,
       ],
     );
+
+    /*
+    time=listData[2];
+    _allTime += time;
+    _thisMonthTime += time;
+    _todayTime += time;
+    if(listData[3]){
+      _allGood += time;
+      _thisMonthGood += time;
+      _todayGood += time;
+    }
+    _allPer = (_allGood / _allTime).round();
+    _thisMonthPer = (_thisMonthGood / _thisMonthTime).round();
+    _todayPer = (_todayGood / _todayTime).round();
+    notifyListeners();
+    */
+
     await Hive.box('userData').put('userValue', [
       _totalPointScore,
       _thisMonthPoint,
