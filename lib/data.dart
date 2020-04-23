@@ -189,13 +189,33 @@ class UserDataNotifier with ChangeNotifier {
   String thisMonth = "01";
   int totalPassedDays = 1;
   int passedDays = 1;
-
+  /*
+  int _allTime = 0;
+  int get aTime => _allTime;
+  int _allGood = 0;
+  int get aGood => _allGood;
+  int _allPer = 0;
+  int get allPer => _allPer;
+  int _thisMonthTime = 0;
+  int get thisMonthTime => _thisMonthTime;
+  int _thisMonthGood = 0;
+  int get thisMonthGood => _thisMonthGood;
+  int _thisMonthPer = 0;
+  int get thisMonthPer => _thisMonthPer;
+  int _todayTime = 0;
+  int get todayTime => _todayTime;
+  int _todayGood = 0;
+  int get todayGood => _todayGood;
+  int _todayPer = 0;
+  int get todayPer => _todayPer;
+  */
   int _totalPointScore = 0;
   int get totalPointScore => _totalPointScore;
   int _thisMonthPoint = 0;
   int get thisMonthPoint => _thisMonthPoint;
   int _thisMonthMinute = 0;
   int get thisMonthMinute => _thisMonthMinute;
+
   String _thisMonthValue = '0.00';
   String get thisMonthValue => _thisMonthValue;
   int _thisMonthAverage = 0;
@@ -337,6 +357,17 @@ class UserDataNotifier with ChangeNotifier {
     _todayPoint = userValue[5];
     _todayMinute = userValue[6];
     _todayValue = userValue[7];
+    /*
+    _allTime = userValue[0];
+    _allGood = userValue[1];
+    _allPer = userValue[2];
+    _tmTime = userValue[3];
+    _tmGood = userValue[4];
+    _tmPer = userValue[5];
+    _tTime = userValue[6];
+    _tGood = userValue[7];
+    _tPer = userValue[8];
+    */
     _latelyData = await box.get('latelyData');
     _todayDoneList = await box.get('todayDoneList');
     _shortCuts = await box.get('shortCuts');
