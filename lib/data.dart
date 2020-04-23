@@ -32,7 +32,6 @@ const List iconList = [
   ["58386", "カメラ"],
   ["58899", "ドライブ"],
   ["59601", "生活"],
-  ["58693", "園芸"],
 ];
 
 //BaseColor
@@ -189,11 +188,11 @@ class UserDataNotifier with ChangeNotifier {
   String thisMonth = "01";
   int totalPassedDays = 1;
   int passedDays = 1;
-  /*
+  
   int _allTime = 0;
-  int get aTime => _allTime;
+  int get allTime => _allTime;
   int _allGood = 0;
-  int get aGood => _allGood;
+  int get allGood => _allGood;
   int _allPer = 0;
   int get allPer => _allPer;
   int _thisMonthTime = 0;
@@ -208,7 +207,7 @@ class UserDataNotifier with ChangeNotifier {
   int get todayGood => _todayGood;
   int _todayPer = 0;
   int get todayPer => _todayPer;
-  */
+  
   int _totalPointScore = 0;
   int get totalPointScore => _totalPointScore;
   int _thisMonthPoint = 0;
@@ -227,7 +226,8 @@ class UserDataNotifier with ChangeNotifier {
   int get todayMinute => _todayMinute;
   String _todayValue = '0.00';
   String get todayValue => _todayValue;
-  //日付,時間,総ポイント,時間価値,DoneList
+  
+  //日付,記録時間,価値時間,価値の割合,DoneList
   List _latelyData = [];
   List get latelyData => _latelyData;
 
@@ -288,8 +288,8 @@ class UserDataNotifier with ChangeNotifier {
       ],
     );
     notifyListeners();
-    /*
-    time=listData[2];
+    
+    int time=listData[2];
     _allTime += time;
     _thisMonthTime += time;
     _todayTime += time;
@@ -313,7 +313,7 @@ class UserDataNotifier with ChangeNotifier {
       ],
     );
     notifyListeners();
-    */
+    
     await Hive.box('userData').put('userValue', [
       _totalPointScore,
       _thisMonthPoint,
@@ -323,6 +323,17 @@ class UserDataNotifier with ChangeNotifier {
       _todayPoint,
       _todayMinute,
       _todayValue,
+
+      _allTime,
+      _allGood,
+      _allPer,
+      _thisMonthTime,
+      _thisMonthGood,
+      _thisMonthPer,
+      _todayTime,
+      _todayGood,
+      _todayPer,
+
     ]);
     await Hive.box('userData').put('todayDoneList', _todayDoneList);
     await Hive.box('userData').put('latelyData', _latelyData);
@@ -350,23 +361,33 @@ class UserDataNotifier with ChangeNotifier {
         _todayDoneList,
       ],
     );
-
-    /*
-    time=listData[2];
-    _allTime += time;
-    _thisMonthTime += time;
-    _todayTime += time;
+    notifyListeners();
+    
+    int time=listData[2];
+    _allTime -= time;
+    _thisMonthTime -= time;
+    _todayTime -= time;
     if(listData[3]){
-      _allGood += time;
-      _thisMonthGood += time;
-      _todayGood += time;
+      _allGood -= time;
+      _thisMonthGood -= time;
+      _todayGood -= time;
     }
     _allPer = (_allGood / _allTime).round();
     _thisMonthPer = (_thisMonthGood / _thisMonthTime).round();
     _todayPer = (_todayGood / _todayTime).round();
+    _todayDoneList.removeAt(index);
+    _latelyData.removeAt(_latelyData.length - 1);
+    _latelyData.add(
+      [
+        previousDate,
+        _todayTime,
+        _todayGood,
+        _todayPer,
+        _todayDoneList,
+      ],
+    );
     notifyListeners();
-    */
-
+    
     await Hive.box('userData').put('userValue', [
       _totalPointScore,
       _thisMonthPoint,
@@ -376,17 +397,27 @@ class UserDataNotifier with ChangeNotifier {
       _todayPoint,
       _todayMinute,
       _todayValue,
+      
+      _allTime,
+      _allGood,
+      _allPer,
+      _thisMonthTime,
+      _thisMonthGood,
+      _thisMonthPer,
+      _todayTime,
+      _todayGood,
+      _todayPer,
+      
     ]);
     await Hive.box('userData').put('todayDoneList', _todayDoneList);
     await Hive.box('userData').put('latelyData', _latelyData);
-    notifyListeners();
   }
 
   Future finishActivity(itemList, i) async {
     //これして
     activities.removeAt(i);
-    await Hive.box('userData').put('activities', activities);
     notifyListeners();
+    await Hive.box('userData').put('activities', activities);
   }
 
   Future initialize() async {
@@ -400,17 +431,17 @@ class UserDataNotifier with ChangeNotifier {
     _todayPoint = userValue[5];
     _todayMinute = userValue[6];
     _todayValue = userValue[7];
-    /*
+    
     _allTime = userValue[0];
     _allGood = userValue[1];
     _allPer = userValue[2];
-    _tmTime = userValue[3];
-    _tmGood = userValue[4];
-    _tmPer = userValue[5];
-    _tTime = userValue[6];
-    _tGood = userValue[7];
-    _tPer = userValue[8];
-    */
+    _thisMonthTime = userValue[3];
+    _thisMonthGood = userValue[4];
+    _thisMonthPer = userValue[5];
+    _todayTime = userValue[6];
+    _todayGood = userValue[7];
+    _todayPer = userValue[8];
+    
     _latelyData = await box.get('latelyData');
     _todayDoneList = await box.get('todayDoneList');
     _shortCuts = await box.get('shortCuts');
