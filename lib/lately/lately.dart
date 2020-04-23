@@ -108,11 +108,13 @@ class LatelyPage extends StatelessWidget {
         child: Container(
           height: displaySize.width / 2,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(30)),
+            borderRadius: BorderRadius.all(
+              Radius.circular(30),
+            ),
             border: Border.all(
-                color:
-                    theme.isDark ? theme.themeColors[0] : theme.themeColors[1],
-                width: 2),
+              color: theme.isDark ? theme.themeColors[0] : theme.themeColors[1],
+              width: 2,
+            ),
           ),
           child: Column(
             children: <Widget>[
@@ -131,8 +133,14 @@ class LatelyPage extends StatelessWidget {
                     '記録時間',
                     l[1],
                   ),
-                  _widget('価値時間', l[2]),
-                  _widget('価値の割合', l[3]),
+                  _widget(
+                    '価値時間',
+                    l[2],
+                  ),
+                  _widget(
+                    '価値の割合',
+                    l[3],
+                  ),
                 ],
               ),
             ],
@@ -151,15 +159,21 @@ class LatelyPage extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(30)),
+            borderRadius: BorderRadius.all(
+              Radius.circular(30),
+            ),
             border: Border.all(
-                color:
-                    theme.isDark ? theme.themeColors[0] : theme.themeColors[1],
-                width: 2),
+              color: theme.isDark ? theme.themeColors[0] : theme.themeColors[1],
+              width: 2,
+            ),
             color: Colors.transparent,
           ),
           child: Padding(
-            padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
+            padding: const EdgeInsets.only(
+              top: 10,
+              left: 20,
+              right: 20,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -204,12 +218,16 @@ class LatelyPage extends StatelessWidget {
   Widget _dayDoneList(List itemList, theme) {
     //itemListは各日のDoneListの中の記録
     return Padding(
-      padding: const EdgeInsets.only(top: 10),
+      padding: const EdgeInsets.only(
+        top: 10,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(right: 10),
+            padding: const EdgeInsets.only(
+              right: 10,
+            ),
             child: Icon(
               IconData(
                 int.parse(itemList[0]),
