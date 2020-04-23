@@ -120,7 +120,7 @@ class RecordNotifier with ChangeNotifier {
     _title = "";
     _category = "57746";
     _time = 0;
-    _rating = 1;
+    _isGood = false;
     _timecheck = false;
     _isRecord = true;
     notifyListeners();
