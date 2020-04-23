@@ -59,8 +59,8 @@ class RecordNotifier with ChangeNotifier {
   bool get isRecord => _isRecord;
   String _category = "57746";
   String get category => _category;
-  int _rating = 1;
-  int get rating => _rating;
+  bool _isGood = false;
+  bool get isGood => _isGood;
   int _time = 0;
   int get time => _time;
   bool _timecheck = true;
@@ -82,10 +82,10 @@ class RecordNotifier with ChangeNotifier {
     notifyListeners();
   }
 
-  void changeValue(int i) {
-    if (_rating == i) {
+  void changeValue(bool b) {
+    if (_isGood == b) {
     } else {
-      _rating = i;
+      _isGood = b;
       notifyListeners();
     }
   }

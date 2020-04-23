@@ -413,7 +413,8 @@ class FinishRecordDialog extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  for (int i = 0; i < 3; i++) numberBloc(theme, record, i),
+                  numberBloc(theme, record, false),
+                  numberBloc(theme, record, true),
                 ],
               ),
               SizedBox(
@@ -441,8 +442,7 @@ class FinishRecordDialog extends StatelessWidget {
                           activity[3],
                           activity[2],
                           time.toString(),
-                          record.rating.toString(),
-                          (time * record.rating).toString(),
+                          record.isGood,
                         ],
                       );
                       activities.removeAt(index);
@@ -460,32 +460,39 @@ class FinishRecordDialog extends StatelessWidget {
     );
   }
 
-  Widget numberBloc(theme, record, i) {
-    return SizedBox(
+  Widget numberBloc(theme, record, isGood) {
+    return Container(
       height: displaySize.width / 8,
       width: displaySize.width / 8,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: (record.rating == i)
-                ? (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1]
-                : Colors.grey,
-            width: (record.rating == i) ? 3 : 1,
-          ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+          color: (record.rating == isGood)
+              ? (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1]
+              : Colors.grey,
+          width: (record.rating == isGood) ? 3 : 1,
         ),
-        child: FlatButton(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          onPressed: () => record.changeValue(i),
-          child: Text(
-            i.toString(),
-            style: TextStyle(
-              fontSize: FontSize.xsmall,
+      ),
+      child: Stack(
+        children: <Widget>[
+          Center(
+            child: Icon(
+              (isGood) ? Icons.trending_up : Icons.trending_flat,
             ),
           ),
-        ),
+          SizedBox(
+            height: displaySize.width / 8,
+            width: displaySize.width / 8,
+            child: FlatButton(
+              color: Colors.transparent,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              onPressed: () => record.changeValue(isGood),
+              child: Container(),
+            ),
+          ),
+        ],
       ),
     );
   }
