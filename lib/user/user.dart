@@ -1,48 +1,35 @@
 import 'package:flutter/material.dart';
-import '../home/home.dart';
+import 'package:provider/provider.dart';
+import '../data.dart';
+
+import '../items/drawer/drawer.dart';
 
 class UserPage extends StatelessWidget {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeNotifier>(context);
+    final userData = Provider.of<UserDataNotifier>(context);
     return Scaffold(
-      body: Container(
-        color: Colors.green[300],
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(100),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  'User',
-                  style: TextStyle(
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Container(
-                  height: 80,
-                  width: 200,
-                  color: Colors.black,
-                  child: RaisedButton(
-                    child: Icon(
-                      Icons.arrow_back,
-                      size: 80,
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => HomePage(),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
+      key: _scaffoldKey,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Text(
+          'ユーザー',
+          style: TextStyle(
+            fontWeight: FontWeight.w400,
+            color: theme.isDark ? Colors.white : Colors.black,
           ),
         ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.menu,
+          ),
+          onPressed: () => _scaffoldKey.currentState.openDrawer(),
+        ),
       ),
+      drawer: SlideMenu(),
+      body: Container(),
     );
   }
 }

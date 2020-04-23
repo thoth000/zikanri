@@ -43,9 +43,10 @@ class TotalScoreWidget extends StatelessWidget {
                 Text(
                   'Total Point',
                   style: TextStyle(
-                      color: Colors.white,
-                      fontSize: FontSize.xlarge, //12.5
-                      fontWeight: FontWeight.w300),
+                    color: Colors.white,
+                    fontSize: FontSize.xlarge, //12.5
+                    fontWeight: FontWeight.w300,
+                  ),
                 ),
                 IconButton(
                   highlightColor: Colors.transparent,
