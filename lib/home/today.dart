@@ -125,7 +125,7 @@ class TodayWidget extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      userData.todayPoint.toString() + ' ',
+                      userData.todayGood.toString() + ' ',
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: FontSize.xxlarge,
