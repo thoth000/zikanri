@@ -53,7 +53,9 @@ class _MinuteMeterState extends State<MinuteMeter> {
       SnackBar(
         duration: Duration(seconds: 1),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(50)),
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(50),
+          ),
         ),
         content: Text(
           'タイマーをスタートさせました',
@@ -76,7 +78,9 @@ class _MinuteMeterState extends State<MinuteMeter> {
         duration: Duration(seconds: 1),
         elevation: 5,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(50)),
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(50),
+          ),
         ),
         content: Text(
           'タイマーをストップさせました',
@@ -142,7 +146,11 @@ class _MinuteMeterState extends State<MinuteMeter> {
               ),
         for (int i = 0; i < activities.length; i++)
           Padding(
-            padding: EdgeInsets.only(bottom: 5, left: 10, right: 10),
+            padding: EdgeInsets.only(
+              bottom: 5,
+              left: 10,
+              right: 10,
+            ),
             child: Card(
               elevation: 5,
               shape: RoundedRectangleBorder(
@@ -154,8 +162,10 @@ class _MinuteMeterState extends State<MinuteMeter> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 10,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
@@ -375,7 +385,9 @@ class FinishRecordDialog extends StatelessWidget {
                 size: displaySize.width / 7,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 5.0,
+                ),
                 child: Text(
                   activity[2],
                   softWrap: true,
