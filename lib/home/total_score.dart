@@ -41,7 +41,7 @@ class TotalScoreWidget extends StatelessWidget {
                   icon: Icon(null),
                 ),
                 Text(
-                  'Total Point',
+                  'Good Rate',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: FontSize.xlarge, //12.5

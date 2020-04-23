@@ -45,7 +45,7 @@ class WelcomePage extends StatelessWidget {
       //theme
       await themeBox.put('isDark', false);
       await themeBox.put('themeColorsIndex', 0);
-      await themeBox.put('myColors', ['0', '1', '2']);
+      await themeBox.put('myColors', ['0', '1', '2', '3', '4', '5', '6', '7']);
       //userData
       await userDataBox.put('welcome', "Yey!");
       /*userValue=[
@@ -61,12 +61,12 @@ class WelcomePage extends StatelessWidget {
       await userDataBox.put(
         'shortCuts',
         [
-          ['57680', '数学の勉強', '60', '5', '300'],
-          ['58726', 'バスケの練習', '120', '4', '480'],
-          ['58168', 'ひと狩り', '120', '2', '240'],
+          ['57680', '数学の勉強', '60', '1', '300'],
+          ['58726', 'バスケの練習', '120', '1', '480'],
+          ['58168', 'ひと狩り', '120', '0', '240'],
         ],
       );
-      await userDataBox.put('activities',[]);
+      await userDataBox.put('activities', []);
       await userDataBox.put('userName', 'ゲスト');
       await userDataBox.put('userID', '');
       await userDataBox.put('resisterCheck', resistercheck);
@@ -91,7 +91,7 @@ class WelcomePage extends StatelessWidget {
                   reload.reloded();
                   makeDir(false);
                   Timer(Duration(milliseconds: 2000), reload.finishload);
-                  Timer(Duration(seconds: 3), changepage);
+                  Timer(Duration(seconds: 2500), changepage);
                 },
                 child: Container(),
               ),
@@ -102,8 +102,7 @@ class WelcomePage extends StatelessWidget {
                 ? Container(
                     height: 100,
                     width: 100,
-                    child: CircularProgressIndicator(
-                    ),
+                    child: CircularProgressIndicator(),
                   )
                 : Container(),
           ),

@@ -32,6 +32,9 @@ class LatelyPage extends StatelessWidget {
       body: ListView(
         children: <Widget>[
           SizedBox(
+            height: displaySize.width/15,
+          ),
+          SizedBox(
             height: displaySize.width / 2,
             child: PageView(
               onPageChanged: (i) => userData.setIndex(i),
@@ -175,13 +178,16 @@ class LatelyPage extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.symmetric(
                       vertical: (userData.latelyData[i][4].length == 0)
-                          ? displaySize.width / 5
+                          ? displaySize.width / 7
                           : 0,
                     ),
                     child: Text(
                       (userData.latelyData[i][4].length == 0)
                           ? 'この日の記録はありません'
                           : '',
+                      style: TextStyle(
+                        fontSize: FontSize.xsmall,
+                      ),
                     ),
                   ),
                 ),
