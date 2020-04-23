@@ -34,11 +34,12 @@ class TodayWidget extends StatelessWidget {
                   softWrap: false,
                   overflow: TextOverflow.fade,
                   style: TextStyle(
+                    fontSize: FontSize.small,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
                 Text(
-                  itemList[2] + '分',
+                  itemList[2].toString() + '分',
                   style: TextStyle(
                     fontSize: FontSize.xxsmall,
                   ),

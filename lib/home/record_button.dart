@@ -264,6 +264,9 @@ class _RButtonState extends State<RButton> {
                             ),
                             child: TextField(
                               keyboardType: TextInputType.multiline,
+                              style: TextStyle(
+                                fontSize: FontSize.small,
+                              ),
                               decoration: InputDecoration.collapsed(
                                 hintText: "タイトルを入力",
                               ),
@@ -289,11 +292,11 @@ class _RButtonState extends State<RButton> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                    '時間（分）',
+                                    '時間(分)',
                                     style: _headlineStyle,
                                   ),
                                   Container(
-                                    height: displaySize.width / 6.5,
+                                    height: displaySize.width / 7,
                                     width: displaySize.width / 2.5,
                                     margin: EdgeInsets.symmetric(vertical: 5),
                                     decoration: BoxDecoration(
@@ -304,21 +307,23 @@ class _RButtonState extends State<RButton> {
                                         horizontal: 5,
                                         vertical: 2,
                                       ),
-                                      child: Center(
-                                        child: TextField(
-                                          textAlignVertical: TextAlignVertical.center,
-                                          keyboardType: TextInputType.number,
-                                          inputFormatters: <TextInputFormatter>[
-                                            WhitelistingTextInputFormatter
-                                                .digitsOnly,
-                                          ],
-                                          textInputAction: TextInputAction.go,
-                                          decoration: InputDecoration.collapsed(
-                                            hintText: "60",
-                                          ),
-                                          onChanged: (s) =>
-                                              record.changeTime(s),
+                                      child: TextField(
+                                        style: TextStyle(
+                                          fontSize: FontSize.small,
                                         ),
+                                        textAlignVertical:
+                                            TextAlignVertical.top,
+                                        keyboardType: TextInputType.number,
+                                        inputFormatters: <TextInputFormatter>[
+                                          WhitelistingTextInputFormatter
+                                              .digitsOnly,
+                                        ],
+                                        textInputAction: TextInputAction.go,
+                                        decoration: InputDecoration.collapsed(
+                                          hintText: "60",
+                                        ),
+                                        onChanged: (s) =>
+                                            record.changeTime(s),
                                       ),
                                     ),
                                   ),
@@ -328,7 +333,7 @@ class _RButtonState extends State<RButton> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                    '価値',
+                                    '時間の価値',
                                     style: _headlineStyle,
                                   ),
                                   SizedBox(
@@ -340,17 +345,16 @@ class _RButtonState extends State<RButton> {
                                       scrollDirection: Axis.horizontal,
                                       child: Row(
                                         children: <Widget>[
-                                          for (int i = 0; i < 3; i++)
-                                            Row(
-                                              children: <Widget>[
-                                                //心配なのはstatefulでnotifierが動かないこと
-                                                blocButton(theme, record, false),
-                                                blocButton(theme,record,true),
-                                                SizedBox(
-                                                  width: 5,
-                                                )
-                                              ],
-                                            ),
+                                          Row(
+                                            children: <Widget>[
+                                              //心配なのはstatefulでnotifierが動かないこと
+                                              blocButton(theme, record, false),
+                                              SizedBox(
+                                                width: displaySize.width/50,
+                                              ),
+                                              blocButton(theme, record, true),
+                                            ],
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -413,7 +417,12 @@ class _RButtonState extends State<RButton> {
                                   );
                                   record.reset();
                                   Navigator.pop(context);
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomePage(),),);
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HomePage(),
+                                    ),
+                                  );
                                   //TODO:もともとここにHomePage遷移があった
                                 }
                               }
@@ -507,15 +516,15 @@ class _RButtonState extends State<RButton> {
 
   Widget blocButton(theme, record, isGood) {
     return Container(
-      height: displaySize.width / 8,
-      width: displaySize.width / 8,
+      height: displaySize.width / 7,
+      width: displaySize.width / 7,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
-          color: (record.rating == isGood)
+          color: (record.isGood == isGood)
               ? (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1]
               : Colors.grey,
-          width: (record.rating == isGood) ? 3 : 1,
+          width: (record.isGood == isGood) ? 3 : 1,
         ),
       ),
       child: Stack(
@@ -523,6 +532,8 @@ class _RButtonState extends State<RButton> {
           Center(
             child: Icon(
               (isGood) ? Icons.trending_up : Icons.trending_flat,
+              color: (isGood)?(theme.isDark) ? theme.themeColors[0] : theme.themeColors[1]:Colors.grey,
+              size: displaySize.width/10,
             ),
           ),
           SizedBox(

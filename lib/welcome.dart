@@ -92,7 +92,7 @@ class WelcomePage extends StatelessWidget {
                   reload.reloded();
                   makeDir(false);
                   Timer(Duration(milliseconds: 2000), reload.finishload);
-                  Timer(Duration(seconds: 2300), changepage);
+                  Timer(Duration(milliseconds: 2500), changepage);
                 },
                 child: Container(),
               ),

@@ -12,6 +12,8 @@ void main() async{
   await Hive.initFlutter();
   await Hive.openBox('theme');
   await Hive.openBox('userData');
+  await Hive.box('theme').clear();
+  await Hive.box('userData').clear();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,

@@ -467,10 +467,10 @@ class FinishRecordDialog extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
-          color: (record.rating == isGood)
+          color: (record.isGood == isGood)
               ? (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1]
               : Colors.grey,
-          width: (record.rating == isGood) ? 3 : 1,
+          width: (record.isGood == isGood) ? 3 : 1,
         ),
       ),
       child: Stack(

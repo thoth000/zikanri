@@ -239,25 +239,41 @@ class LatelyPage extends StatelessWidget {
                   : Colors.grey,
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                itemList[1], //タイトル
-                softWrap: false,
-                overflow: TextOverflow.fade,
-                style: TextStyle(
-                  fontSize: FontSize.xsmall,
-                  fontWeight: FontWeight.w700,
+          Expanded(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Flexible(
+                  child: Text(
+                    itemList[1], //タイトル
+                    softWrap: false,
+                    overflow: TextOverflow.fade,
+                    style: TextStyle(
+                      fontSize: FontSize.midium,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                 ),
-              ),
-              Text(
-                itemList[2] + '分',
-                style: TextStyle(
-                  fontSize: FontSize.xxsmall,
+                SizedBox(
+                  width: 10,
                 ),
-              ),
-            ],
+                Container(
+                  width: displaySize.width/7,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Text(
+                        itemList[2].toString() + '分',
+                        style: TextStyle(
+                          fontSize: FontSize.xsmall,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
