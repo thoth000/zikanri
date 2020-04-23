@@ -129,11 +129,11 @@ class _RButtonState extends State<RButton> {
       fontWeight: FontWeight.w700,
     );
     final record = Provider.of<RecordNotifier>(context);
-    void addActivities(
+    Future addActivities(
       DateTime startTime,
       String title,
       String category,
-    ) {
+    ) async {
       /*スタートした時刻、
     ストップ
     タイトル、
@@ -142,7 +142,7 @@ class _RButtonState extends State<RButton> {
     表示される時間
     */
       activities.add([startTime, false, title, category, 1, 1]);
-      Hive.box('userData').put('activities', activities);
+      await Hive.box('userData').put('activities', activities);
     }
 
     return Padding(
@@ -366,8 +366,8 @@ class _RButtonState extends State<RButton> {
                     SizedBox(
                       height: (record.isRecord) ? 30 : 0,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Container(
                           height: displaySize.width / 6.5,
@@ -387,8 +387,8 @@ class _RButtonState extends State<RButton> {
                             onPressed: () {
                               if (record.isRecord) {
                                 //記録モード
-                                if (record.title == "" || record.timecheck) {
-                                  //できませんのメッセージ
+                                if (record.titleCheck || record.timeCheck) {
+                                  record.click();
                                 } else {
                                   userData.recordDone([
                                     record.category,
@@ -401,15 +401,13 @@ class _RButtonState extends State<RButton> {
                                 }
                               } else {
                                 //開始モード
-                                if (record.title == "") {
-                                  //できませんのメッセージ
+                                if (record.titleCheck) {
+                                  record.click();
                                 } else {
-                                  setState(
-                                    () => addActivities(
-                                      DateTime.now(),
-                                      record.title,
-                                      record.category,
-                                    ),
+                                  addActivities(
+                                    DateTime.now(),
+                                    record.title,
+                                    record.category,
                                   );
                                   record.reset();
                                   Navigator.pop(context);
@@ -428,6 +426,32 @@ class _RButtonState extends State<RButton> {
                                   fontSize: FontSize.midium,
                                   fontWeight: FontWeight.bold),
                             ),
+                          ),
+                        ),
+                        Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              if (record.titleCheck && record.clickCheck)
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'タイトルを決めてください',
+                                  ),
+                                ),
+                              if (record.timeCheck && record.clickCheck)
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Text(
+                                        '時間の設定は1日の範囲までです',
+                                      ),
+                                      Text('その時間は設定できません'),
+                                    ],
+                                  ),
+                                ),
+                            ],
                           ),
                         ),
                       ],

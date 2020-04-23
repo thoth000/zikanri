@@ -63,20 +63,30 @@ class RecordNotifier with ChangeNotifier {
   bool get isGood => _isGood;
   int _time = 0;
   int get time => _time;
-  bool _timecheck = true;
-  bool get timecheck => _timecheck;
+  bool _timeCheck = true;
+  bool get timeCheck => _timeCheck;
+  bool _titleCheck = true;
+  bool get titleCheck => _titleCheck;
+  bool _clickCheck = false;
+  bool get clickCheck => _clickCheck;
 
   void changeTitle(String s) {
     _title = s;
+    if(_title==""){
+      _titleCheck=true;
+    }
+    else{
+      _titleCheck=false;
+    }
     notifyListeners();
   }
 
   void changeTime(String s) {
     int _minute = int.parse(s);
     if (_minute > 1440 || _minute == 0) {
-      _timecheck = true;
+      _timeCheck = true;
     } else {
-      _timecheck = false;
+      _timeCheck = false;
       _time = _minute;
     }
     notifyListeners();
@@ -88,6 +98,11 @@ class RecordNotifier with ChangeNotifier {
       _isGood = b;
       notifyListeners();
     }
+  }
+
+  void click(){
+    _clickCheck = true;
+    notifyListeners();
   }
 
   void changeCategory(String s) {
@@ -102,6 +117,9 @@ class RecordNotifier with ChangeNotifier {
     if (_isRecord == true) {
     } else {
       _isRecord = true;
+      _time = 0;
+      _timeCheck = true;
+      _clickCheck = false;
       notifyListeners();
     }
   }
@@ -111,7 +129,8 @@ class RecordNotifier with ChangeNotifier {
     } else {
       _isRecord = false;
       _time = 0;
-      _timecheck = false;
+      _timeCheck = false;
+      _clickCheck = false;
       notifyListeners();
     }
   }
@@ -121,8 +140,10 @@ class RecordNotifier with ChangeNotifier {
     _category = "57746";
     _time = 0;
     _isGood = false;
-    _timecheck = false;
+    _timeCheck = true;
+    _titleCheck=true;
     _isRecord = true;
+    _clickCheck = false;
     notifyListeners();
   }
 }
@@ -188,7 +209,7 @@ class UserDataNotifier with ChangeNotifier {
   String thisMonth = "01";
   int totalPassedDays = 1;
   int passedDays = 1;
-  
+
   int _allTime = 0;
   int get allTime => _allTime;
   int _allGood = 0;

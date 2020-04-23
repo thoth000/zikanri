@@ -76,7 +76,7 @@ class LatelyPage extends StatelessWidget {
             Icons.bubble_chart,
           ),
           Text(
-            value.toString(),
+            value,
             softWrap: false,
             overflow: TextOverflow.fade,
             style: TextStyle(
@@ -131,15 +131,15 @@ class LatelyPage extends StatelessWidget {
                 children: <Widget>[
                   _widget(
                     '記録時間',
-                    l[1],
+                    l[1].toString(),
                   ),
                   _widget(
                     '価値時間',
-                    l[2],
+                    l[2].toString(),
                   ),
                   _widget(
                     '価値の割合',
-                    l[3],
+                    l[3].toString()+'%',
                   ),
                 ],
               ),
@@ -218,8 +218,8 @@ class LatelyPage extends StatelessWidget {
   Widget _dayDoneList(List itemList, theme) {
     //itemListは各日のDoneListの中の記録
     return Padding(
-      padding: const EdgeInsets.only(
-        top: 10,
+      padding: const EdgeInsets.symmetric(
+        vertical: 8,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,

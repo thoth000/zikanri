@@ -8,7 +8,6 @@ class UserPage extends StatelessWidget {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
-    final userData = Provider.of<UserDataNotifier>(context);
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
