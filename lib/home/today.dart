@@ -158,6 +158,9 @@ class TodayWidget extends StatelessWidget {
                       (userData.todayDoneList.length == 0)
                           ? '今日の記録はまだありません'
                           : '',
+                      style: TextStyle(
+                        fontSize: FontSize.xsmall,
+                      ),
                     ),
                   ),
                 ),

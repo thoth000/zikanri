@@ -202,7 +202,7 @@ class LatelyPage extends StatelessWidget {
                           ? 'この日の記録はありません'
                           : '',
                       style: TextStyle(
-                        fontSize: FontSize.small,
+                        fontSize: FontSize.xsmall,
                       ),
                     ),
                   ),
