@@ -61,12 +61,13 @@ class WelcomePage extends StatelessWidget {
       await userDataBox.put(
         'shortCuts',
         [
-          ['57680', '数学の勉強', 60, true],
-          ['58726', 'バスケの練習', 120, true],
-          ['58168', 'ひと狩り', 120, false],
-          ['58143', 'プログラミング', 240, true],
+          ['57680', '数学の勉強', 60, true,1],
+          ['58726', 'バスケの練習', 120, true,2],
+          ['58168', 'ひと狩り', 120, false,3],
+          ['58143', 'Webプログラミング', 240, true,4],
         ],
       );
+      await userDataBox.put('keynum', 5);
       await userDataBox.put('activities', []);
       await userDataBox.put('userName', 'ゲスト');
       await userDataBox.put('userID', '');

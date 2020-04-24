@@ -69,6 +69,8 @@ class RecordNotifier with ChangeNotifier {
   bool get titleCheck => _titleCheck;
   bool _clickCheck = false;
   bool get clickCheck => _clickCheck;
+  bool _shortCut = false;
+  bool get shortCut => _shortCut;
 
   void changeTitle(String s) {
     _title = s;
@@ -77,6 +79,11 @@ class RecordNotifier with ChangeNotifier {
     } else {
       _titleCheck = false;
     }
+    notifyListeners();
+  }
+
+  void changeShortCut() {
+    _shortCut = !_shortCut;
     notifyListeners();
   }
 
@@ -134,7 +141,7 @@ class RecordNotifier with ChangeNotifier {
     }
   }
 
-  void copyData(tmpCategory,tmpTitle,tmpTime){
+  void copyData(tmpCategory, tmpTitle, tmpTime) {
     _title = tmpTitle;
     _category = tmpCategory;
     _time = tmpTime;
@@ -150,6 +157,7 @@ class RecordNotifier with ChangeNotifier {
     _titleCheck = true;
     _isRecord = true;
     _clickCheck = false;
+    _shortCut = false;
     notifyListeners();
   }
 }
@@ -215,6 +223,7 @@ class UserDataNotifier with ChangeNotifier {
   String thisMonth = "01";
   int totalPassedDays = 1;
   int passedDays = 1;
+  int keynum = 5;
 
   int _allTime = 0;
   int get allTime => _allTime;
@@ -255,19 +264,34 @@ class UserDataNotifier with ChangeNotifier {
   List get activities => _activities;
 
   Future addShortCuts(item) async {
+    keynum+=1;
     _shortCuts.add(item);
     notifyListeners();
     await Hive.box('userData').put('shortCuts', _shortCuts);
+    await Hive.box('userData').put('keynum', keynum);
   }
+
+  void sort(oldIndex, newIndex) {
+    if (oldIndex < newIndex) {
+      newIndex -= 1;
+    }
+    final model = _shortCuts.removeAt(oldIndex);
+    _shortCuts.insert(newIndex, model);
+    notifyListeners();
+  }
+
+  void deleteShortCut(index) {
+    _shortCuts.removeAt(index);
+    notifyListeners();
+  }
+
   //activity関連
   Future addActivity(
     DateTime startTime,
     String title,
     String category,
-  ) async{
-    _activities.add(
-      [startTime, false, title, category, 1, 1]
-    );
+  ) async {
+    _activities.add([startTime, false, title, category, 1, 1]);
     notifyListeners();
     await Hive.box('userData').put('activities', _activities);
   }
@@ -278,32 +302,32 @@ class UserDataNotifier with ChangeNotifier {
     await Hive.box('userData').put('activities', _activities);
   }
 
-  Future loopReflesh() async{
-    for(int i=0;i<_activities.length;i++){
-      if(_activities[i][1]){
-      }else{
-        _activities[i][5] = _activities[i][4] + DateTime.now().difference(_activities[i][0]).inMinutes;
+  Future loopReflesh() async {
+    for (int i = 0; i < _activities.length; i++) {
+      if (_activities[i][1]) {
+      } else {
+        _activities[i][5] = _activities[i][4] +
+            DateTime.now().difference(_activities[i][0]).inMinutes;
       }
     }
     notifyListeners();
     await Hive.box('userData').put('activities', _activities);
   }
 
-  Future startTimer(int i) async{
+  Future startTimer(int i) async {
     _activities[i][0] = DateTime.now();
     _activities[i][1] = false;
     notifyListeners();
     await Hive.box('userData').put('activities', _activities);
   }
 
-  Future stopTimer(int i) async{
+  Future stopTimer(int i) async {
     _activities[i][1] = true;
     _activities[i][4] += DateTime.now().difference(activities[i][0]).inMinutes;
     _activities[i][5] = _activities[i][4];
     notifyListeners();
     await Hive.box('userData').put('activities', _activities);
   }
-
 
   Future recordDone(listData) async {
     int time = listData[2];
@@ -410,6 +434,7 @@ class UserDataNotifier with ChangeNotifier {
     thisMonth = await box.get('thisMonth');
     totalPassedDays = await box.get('totalPassedDays');
     passedDays = await box.get('passedDays');
+    keynum = await box.get('keynum');
   }
 }
 
