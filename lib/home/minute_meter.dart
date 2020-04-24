@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
@@ -8,7 +7,6 @@ import 'package:intl/intl.dart';
 
 import '../data.dart';
 import '../splash.dart';
-import 'home.dart';
 
 class MinuteMeter extends StatefulWidget {
   @override
@@ -36,7 +34,7 @@ class _MinuteMeterState extends State<MinuteMeter> {
   }
 
   Future loopReflesh() async {
-    final userData = Provider.of<UserDataNotifier>(context,listen: false);
+    final userData = Provider.of<UserDataNotifier>(context, listen: false);
     Timer.periodic(Duration(seconds: 10), (t) => userData.loopReflesh());
   }
 
@@ -172,14 +170,18 @@ class _MinuteMeterState extends State<MinuteMeter> {
                                       child: FlatButton(
                                         splashColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
-                                        child: Container(), //TODO:start,stop
+                                        child: Container(),
                                         onPressed: () {
                                           if (userData.activities[i][1]) {
                                             userData.startTimer(i);
-                                            Scaffold.of(context).showSnackBar(notifySnackBar("タイマーをスタートさせました"));
+                                            Scaffold.of(context).showSnackBar(
+                                              notifySnackBar("タイマーをスタートさせました"),
+                                            );
                                           } else {
                                             userData.stopTimer(i);
-                                            Scaffold.of(context).showSnackBar(notifySnackBar("タイマーをストップさせました"));
+                                            Scaffold.of(context).showSnackBar(
+                                              notifySnackBar("タイマーをストップさせました"),
+                                            );
                                           }
                                         },
                                       ),
@@ -212,7 +214,10 @@ class _MinuteMeterState extends State<MinuteMeter> {
                                                   .difference(
                                                       userData.activities[i][0])
                                                   .inMinutes;
-                                          record.copyData(userData.activities[i][3],userData.activities[i][2],time);
+                                          record.copyData(
+                                              userData.activities[i][3],
+                                              userData.activities[i][2],
+                                              time);
                                           showDialog(
                                             context: context,
                                             builder: (context) =>
@@ -268,7 +273,7 @@ class _MinuteMeterState extends State<MinuteMeter> {
   }
 
   Widget notifySnackBar(String s) {
-    SnackBar(
+    return SnackBar(
       duration: Duration(seconds: 1),
       elevation: 5,
       shape: RoundedRectangleBorder(

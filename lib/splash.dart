@@ -96,8 +96,8 @@ class _SplashPageState extends State<SplashPage> {
         children: <Widget>[
           Center(
             child: Container(
-              height: displaySize.width / 2.5,
-              width: displaySize.width / 2.5,
+              height: displaySize.width / 2,
+              width: displaySize.width / 2,
               child: Image(
                 image: AssetImage('images/zikanri_shaped.png'),
               ),
@@ -110,7 +110,7 @@ class _SplashPageState extends State<SplashPage> {
               child: Text(
                 'Zikanri',
                 style: TextStyle(
-                  fontSize: FontSize.xxlarge,
+                  fontSize: FontSize.big,
                   fontWeight: FontWeight.w700,
                   color: Color(0XFF3A405A),
                 ),
