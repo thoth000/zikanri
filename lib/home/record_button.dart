@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
-import 'package:zikanri/home/home.dart';
 import '../splash.dart';
 
 import '../data.dart';
@@ -607,7 +606,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                     ),
                                   ],
                                 ),
-                              ), //TODO:並び替え対応
+                              ),
                           ],
                         ),
                       ],
