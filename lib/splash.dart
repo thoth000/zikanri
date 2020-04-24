@@ -23,7 +23,9 @@ class _SplashPageState extends State<SplashPage> {
     _initialize();
   }
 
-  void _initialize() async {
+  Future _initialize() async {
+    final theme = Provider.of<ThemeNotifier>(context, listen: false);
+    final userData = Provider.of<UserDataNotifier>(context, listen: false);
     await Hive.openBox('theme');
     await Hive.openBox('userData');
     if (Hive.box('userData').containsKey('welcome')) {
@@ -54,216 +56,68 @@ class _SplashPageState extends State<SplashPage> {
         await box.put('userValue', box2);
         await box.put('totalPassedDays', box.get('totalPassedDays') + 1);
       }
+      activities = Hive.box('userData').get('activities');
+      await theme.initialize();
+      await userData.initialize();
+      Future.delayed(
+        Duration(seconds: 1),
+        () => Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomePage(),
+          ),
+        ),
+      );
+    } else {
+      Future.delayed(
+        Duration(seconds: 1),
+        () => Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => WelcomePage(),
+          ),
+        ),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
     displaySize = MediaQuery.of(context).size;
-    final theme = Provider.of<ThemeNotifier>(context);
-    final userData = Provider.of<UserDataNotifier>(context);
-    final reload = Provider.of<ReloadNotifier>(context);
-    final bool firstcheck = Hive.box('userData').containsKey('welcome');
     var width = displaySize.width;
     var height = displaySize.height;
     if (width > height) {
       width = height;
     }
-    Route _createHomeRoute() {
-      return PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => HomePage(),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          var begin = Offset(1.0, 0.0);
-          var end = Offset.zero;
-          var curve = Curves.ease;
-          var tween =
-              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-          return SlideTransition(
-            position: animation.drive(tween),
-            child: child,
-          );
-        },
-      );
-    }
-
-    Future changepage() async {
-      await Navigator.pushReplacement(context, _createHomeRoute());
-    }
-
-    Route _createWelcomeRoute() {
-      return PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => WelcomePage(),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          var begin = Offset(1.0, 0.0);
-          var end = Offset.zero;
-          var curve = Curves.ease;
-          var tween =
-              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-          return SlideTransition(
-            position: animation.drive(tween),
-            child: child,
-          );
-        },
-      );
-    }
 
     return Scaffold(
-      body: Container(
-        color: Colors.white,
-        child: Stack(
-          children: <Widget>[
-            Align(
-              alignment: Alignment.topLeft,
-              child: Image.asset(
-                'images/splash_deco.png',
-                fit: BoxFit.fill,
+      backgroundColor: Colors.white,
+      body: Stack(
+        children: <Widget>[
+          Center(
+            child: Container(
+              height: displaySize.width / 2.5,
+              width: displaySize.width / 2.5,
+              child: Image(
+                image: AssetImage('images/zikanri_shaped.png'),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(25.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    'Zikanri',
-                    style: TextStyle(
-                      color: Color(0XFF3A405A),
-                      fontWeight: FontWeight.w700,
-                      fontSize: width / 8,
-                    ),
-                  ),
-                  Text(
-                    '毎日をより価値あるものに',
-                    style: TextStyle(
-                      fontSize: width / 25,
-                      color: Color(0XFF3A405A),
-                    ),
-                  ),
-                ],
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: EdgeInsets.only(bottom: displaySize.width / 10),
+              child: Text(
+                'Zikanri',
+                style: TextStyle(
+                  fontSize: FontSize.xxlarge,
+                  fontWeight: FontWeight.w700,
+                  color: Color(0XFF3A405A),
+                ),
               ),
             ),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    height: (firstcheck ^ reload.reload) ? 0 : width / 6.5 + 25,
-                  ),
-                  Container(
-                    height: width / 2,
-                    width: width / 2,
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          spreadRadius: 0,
-                          color: Colors.black38,
-                          offset: Offset(5, 10),
-                          blurRadius: 20,
-                        ),
-                      ],
-                    ),
-                    child: Stack(
-                      children: <Widget>[
-                        Image.asset('images/zikanri_shaped.png'),
-                        SizedBox(
-                          height: width / 2,
-                          width: width / 2,
-                          child: FlatButton(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            color: Colors.transparent,
-                            child: Container(),
-                            onPressed: () async {
-                              displaySize = MediaQuery.of(context).size;
-                              if (Hive.box('userData').containsKey('welcome')) {
-                                reload.reloded();
-                                //activitiesはsetStateでデータ変更されるので別取り
-                                activities = await Hive.box('userData')
-                                    .get('activities');
-                                await theme.initialize();
-                                await userData.initialize();
-                                Timer(Duration(seconds: 1), reload.finishload);
-                                Timer(Duration(milliseconds: 1300), changepage);
-                              } else {
-                                await Navigator.pushReplacement(
-                                  context,
-                                  _createWelcomeRoute(),
-                                );
-                              }
-                            },
-                            onLongPress: () async {
-                              if (Hive.box('userData').containsKey('welcome')) {
-                                displaySize = MediaQuery.of(context).size;
-                                activities = await Hive.box('userData')
-                                    .get('activities');
-                                await theme.initialize();
-                                await userData.initialize();
-                                showModalBottomSheet(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.vertical(
-                                        top: Radius.circular(30)),
-                                  ),
-                                  context: context,
-                                  isScrollControlled: true,
-                                  builder: (context) => RecordBottomSheet(true),
-                                );
-                              }
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  //アイコン下のウィジェット
-                  (firstcheck)
-                      ? (reload.reload)
-                          ? Padding(
-                              padding: const EdgeInsets.only(top: 25),
-                              child: Container(
-                                height: width / 6.5,
-                                width: width / 6.5,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 5,
-                                  valueColor: new AlwaysStoppedAnimation<Color>(
-                                      Colors.blue),
-                                ),
-                              ),
-                            )
-                          : Container()
-                      : Padding(
-                          padding: const EdgeInsets.only(top: 25),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            elevation: 5,
-                            child: Container(
-                              height: width / 6.5,
-                              width: width / 1.5,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: Color(0XFFa3daff),
-                                  width: 3.5,
-                                ),
-                              ),
-                              child: Center(
-                                  child: Text(
-                                'アイコンをタップして始めよう！',
-                                style: TextStyle(
-                                  fontSize: width / 25,
-                                ),
-                              )),
-                            ),
-                          ),
-                        ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

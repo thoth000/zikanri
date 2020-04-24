@@ -244,6 +244,9 @@ class UserDataNotifier with ChangeNotifier {
   List _shortCuts = [];
   List get shortCuts => _shortCuts;
 
+  List _activities = [];
+  List get activities => _activities;
+
   Future addShortCuts(item) async {
     _shortCuts.add(item);
     notifyListeners();
