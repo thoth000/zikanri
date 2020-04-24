@@ -72,11 +72,10 @@ class RecordNotifier with ChangeNotifier {
 
   void changeTitle(String s) {
     _title = s;
-    if(_title==""){
-      _titleCheck=true;
-    }
-    else{
-      _titleCheck=false;
+    if (_title == "") {
+      _titleCheck = true;
+    } else {
+      _titleCheck = false;
     }
     notifyListeners();
   }
@@ -100,7 +99,7 @@ class RecordNotifier with ChangeNotifier {
     }
   }
 
-  void click(){
+  void click() {
     _clickCheck = true;
     notifyListeners();
   }
@@ -141,7 +140,7 @@ class RecordNotifier with ChangeNotifier {
     _time = 0;
     _isGood = false;
     _timeCheck = true;
-    _titleCheck=true;
+    _titleCheck = true;
     _isRecord = true;
     _clickCheck = false;
     notifyListeners();
@@ -234,6 +233,7 @@ class UserDataNotifier with ChangeNotifier {
     index = i;
     notifyListeners();
   }
+
   //日付,記録時間,価値時間,価値の割合,DoneList
   List _latelyData = [];
   List get latelyData => _latelyData;
@@ -250,38 +250,69 @@ class UserDataNotifier with ChangeNotifier {
   Future addShortCuts(item) async {
     _shortCuts.add(item);
     notifyListeners();
-    await Hive.box('userName').put('shortCuts', _shortCuts);
+    await Hive.box('userData').put('shortCuts', _shortCuts);
   }
-
-  Future addActivities(
+  //activity関連
+  Future addActivity(
     DateTime startTime,
     String title,
     String category,
-  ) async {
-    /*スタートした時刻、
-    ストップ
-    タイトル、
-    カテゴリー、
-    ストップしたときに更新する時間（スタート時刻は再スタートした時刻に更新する）
-    */
-    activities.add([startTime, false, title, category, 0]);
-    await Hive.box('userData').put('activities', activities);
+  ) async{
+    _activities.add(
+      [startTime, false, title, category, 1, 1]
+    );
     notifyListeners();
+    await Hive.box('userData').put('activities', _activities);
   }
+
+  Future finishActivity(i) async {
+    _activities.removeAt(i);
+    notifyListeners();
+    await Hive.box('userData').put('activities', _activities);
+  }
+
+  Future loopReflesh() async{
+    for(int i=0;i<_activities.length;i++){
+      if(_activities[i][1]){
+      }else{
+        _activities[i][5] = _activities[i][4] + DateTime.now().difference(_activities[i][0]).inMinutes;
+      }
+    }
+    notifyListeners();
+    await Hive.box('userData').put('activities', _activities);
+  }
+
+  Future startTimer(int i) async{
+    _activities[i][0] = DateTime.now();
+    _activities[i][1] = false;
+    notifyListeners();
+    await Hive.box('userData').put('activities', _activities);
+  }
+
+  Future stopTimer(int i) async{
+    _activities[i][1] = true;
+    _activities[i][4] += DateTime.now().difference(activities[i][0]).inMinutes;
+    _activities[i][5] = _activities[i][4];
+    notifyListeners();
+    await Hive.box('userData').put('activities', _activities);
+  }
+
+
+
 
   Future recordDone(listData) async {
     int time = listData[2];
     _allTime += time;
     _thisMonthTime += time;
     _todayTime += time;
-    if(listData[3]){
+    if (listData[3]) {
       _allGood += time;
       _thisMonthGood += time;
       _todayGood += time;
     }
-    _allPer = (_allGood*100 / _allTime).round();
-    _thisMonthPer = (_thisMonthGood*100 / _thisMonthTime).round();
-    _todayPer = (_todayGood*100 / _todayTime).round();
+    _allPer = (_allGood * 100 / _allTime).round();
+    _thisMonthPer = (_thisMonthGood * 100 / _thisMonthTime).round();
+    _todayPer = (_todayGood * 100 / _todayTime).round();
     _todayDoneList.add(listData);
     _latelyData.removeAt(_latelyData.length - 1);
     _latelyData.add(
@@ -314,14 +345,16 @@ class UserDataNotifier with ChangeNotifier {
     _allTime -= time;
     _thisMonthTime -= time;
     _todayTime -= time;
-    if(listData[3]){
+    if (listData[3]) {
       _allGood -= time;
       _thisMonthGood -= time;
       _todayGood -= time;
     }
-    _allPer = (_allTime==0)?0:(_allGood*100 / _allTime).round();
-    _thisMonthPer = (_thisMonthTime==0)?0:(_thisMonthGood*100 / _thisMonthTime).round();
-    _todayPer = (_todayTime==0)?0:(_todayGood*100 / _todayTime).round();
+    _allPer = (_allTime == 0) ? 0 : (_allGood * 100 / _allTime).round();
+    _thisMonthPer = (_thisMonthTime == 0)
+        ? 0
+        : (_thisMonthGood * 100 / _thisMonthTime).round();
+    _todayPer = (_todayTime == 0) ? 0 : (_todayGood * 100 / _todayTime).round();
     _todayDoneList.removeAt(index);
     _latelyData.removeAt(_latelyData.length - 1);
     _latelyData.add(
@@ -349,13 +382,6 @@ class UserDataNotifier with ChangeNotifier {
     await Hive.box('userData').put('latelyData', _latelyData);
   }
 
-  Future finishActivity(itemList, i) async {
-    //これして
-    activities.removeAt(i);
-    notifyListeners();
-    await Hive.box('userData').put('activities', activities);
-  }
-
   Future initialize() async {
     var box = Hive.box('userData');
     var userValue = await box.get('userValue');
@@ -371,6 +397,7 @@ class UserDataNotifier with ChangeNotifier {
     _latelyData = await box.get('latelyData');
     _todayDoneList = await box.get('todayDoneList');
     _shortCuts = await box.get('shortCuts');
+    _activities = await box.get('activities');
     userName = await box.get('userName');
     userID = await box.get('userID');
     registerCheck = await box.get('resisterCheck');

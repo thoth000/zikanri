@@ -17,10 +17,11 @@ class MinuteMeter extends StatefulWidget {
 class _MinuteMeterState extends State<MinuteMeter> {
   void initState() {
     super.initState();
-    reflesh();
+    dateCheck();
+    loopReflesh();
   }
 
-  void reflesh() async {
+  void dateCheck() async {
     var now = DateTime.now();
     if (DateFormat("yyyy年MM月dd日").format(now) !=
         Hive.box('userData').get('previousDate')) {
@@ -30,17 +31,12 @@ class _MinuteMeterState extends State<MinuteMeter> {
         context: (context),
         builder: (context) => datecheckDialog(context),
       );
-    } else {
-      setState(() {
-        for (int i = 0; i < activities.length; i++) {
-          var activity = activities[i];
-          if (activity[1]) {
-          } else {
-            activity[5] = activity[4] + now.difference(activity[0]).inMinutes;
-          }
-        }
-      });
     }
+  }
+
+  Future loopReflesh() async {
+    final userData = Provider.of<UserDataNotifier>(context);
+    Timer.periodic(Duration(seconds: 10), (t) => userData.loopReflesh());
   }
 
   Future startTimer(int i) async {
@@ -90,15 +86,10 @@ class _MinuteMeterState extends State<MinuteMeter> {
     );
   }
 
-  Future finishActivity(i) async {
-    //これして
-    setState(() => activities.removeAt(i));
-    await Hive.box('userData').put('activities', activities);
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
+    final userData = Provider.of<UserDataNotifier>(context);
     return Column(
       children: <Widget>[
         (activities.length == 0)
@@ -118,33 +109,10 @@ class _MinuteMeterState extends State<MinuteMeter> {
                     SizedBox(
                       height: 5,
                     ),
-                    SizedBox(
-                      height: displaySize.width / 12,
-                      width: displaySize.width / 12,
-                      child: Stack(
-                        children: <Widget>[
-                          Icon(
-                            Icons.refresh,
-                            size: displaySize.width / 12,
-                          ),
-                          SizedBox(
-                            height: displaySize.width / 12,
-                            width: displaySize.width / 12,
-                            child: FlatButton(
-                              color: Colors.transparent,
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              child: Container(),
-                              onPressed: reflesh,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
                   ],
                 ),
               ),
-        for (int i = 0; i < activities.length; i++)
+        for (int i = 0; i < userData.activities.length; i++)
           Padding(
             padding: EdgeInsets.only(
               bottom: 5,
@@ -181,7 +149,8 @@ class _MinuteMeterState extends State<MinuteMeter> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
                                   Icon(
-                                    IconData(int.parse(activities[i][3]),
+                                    IconData(
+                                        int.parse(userData.activities[i][3]),
                                         fontFamily: "MaterialIcons"),
                                     size: displaySize.width / 10,
                                     color: Colors.grey,
@@ -191,7 +160,7 @@ class _MinuteMeterState extends State<MinuteMeter> {
                                   ),
                                   Flexible(
                                     child: Text(
-                                      activities[i][2],
+                                      userData.activities[i][2],
                                       overflow: TextOverflow.fade,
                                       softWrap: false,
                                       style: TextStyle(
@@ -209,7 +178,7 @@ class _MinuteMeterState extends State<MinuteMeter> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: <Widget>[
                                   Text(
-                                    activities[i][5].toString() + '分',
+                                    userData.activities[i][5].toString() + '分',
                                     style: TextStyle(fontSize: FontSize.midium),
                                   ),
                                 ],
@@ -234,7 +203,7 @@ class _MinuteMeterState extends State<MinuteMeter> {
                                 child: Stack(
                                   children: <Widget>[
                                     Icon(
-                                      (activities[i][1])
+                                      (userData.activities[i][1])
                                           ? Icons.play_circle_outline
                                           : Icons.pause_circle_outline,
                                       color: theme.isDark
@@ -248,10 +217,14 @@ class _MinuteMeterState extends State<MinuteMeter> {
                                       child: FlatButton(
                                         splashColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
-                                        child: Container(),
-                                        onPressed: () => (activities[i][1])
-                                            ? startTimer(i)
-                                            : stopTimer(i),
+                                        child: Container(), //TODO:start,stop
+                                        onPressed: () {
+                                          if (userData.activities[i][1]) {
+                                            userData.startTimer(i);
+                                          } else {
+                                            userData.stopTimer(i);
+                                          }
+                                        },
                                       ),
                                     ),
                                   ],
@@ -277,16 +250,15 @@ class _MinuteMeterState extends State<MinuteMeter> {
                                         splashColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
                                         onPressed: () {
-                                          var activity = activities[i];
-                                          int time = activity[4] +
+                                          int time = userData.activities[i][4] +
                                               DateTime.now()
-                                                  .difference(activity[0])
+                                                  .difference(
+                                                      userData.activities[i][0])
                                                   .inMinutes;
                                           showDialog(
                                             context: context,
                                             builder: (context) =>
-                                                FinishRecordDialog(
-                                                    activity, time, i),
+                                                FinishRecordDialog(time, i),
                                           );
                                         },
                                       ),
@@ -313,7 +285,8 @@ class _MinuteMeterState extends State<MinuteMeter> {
                                         child: Container(),
                                         splashColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
-                                        onPressed: () => finishActivity(i),
+                                        onPressed: () =>
+                                            userData.finishActivity(i),
                                       ),
                                     ),
                                   ],
@@ -362,11 +335,10 @@ class _MinuteMeterState extends State<MinuteMeter> {
 }
 
 class FinishRecordDialog extends StatelessWidget {
-  final activity;
   final time;
   final index;
   //activity[0:datetime 1:bool 2:title 3:category 4:tmp 5:tmp]
-  FinishRecordDialog(this.activity, this.time, this.index);
+  FinishRecordDialog(this.time, this.index);
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
@@ -387,7 +359,7 @@ class FinishRecordDialog extends StatelessWidget {
             children: <Widget>[
               Icon(
                 IconData(
-                  int.parse(activity[3]),
+                  int.parse(userData.activities[index][3]),
                   fontFamily: 'MaterialIcons',
                 ),
                 size: displaySize.width / 10,
@@ -397,7 +369,7 @@ class FinishRecordDialog extends StatelessWidget {
                   horizontal: 5.0,
                 ),
                 child: Text(
-                  activity[2],
+                  userData.activities[index][2],
                   softWrap: true,
                   style: TextStyle(
                     fontSize: FontSize.midium,
@@ -444,17 +416,16 @@ class FinishRecordDialog extends StatelessWidget {
                       '記録する',
                       style: TextStyle(fontSize: FontSize.xsmall),
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       userData.recordDone(
                         [
-                          activity[3],
-                          activity[2],
+                          userData.activities[index][3],
+                          userData.activities[index][2],
                           time.toInt(),
                           record.isGood,
                         ],
                       );
-                      activities.removeAt(index);
-                      Hive.box('userData').put('activities', activities);
+                      await userData.finishActivity(index);
                       Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (context) => HomePage()));
                       record.reset();
