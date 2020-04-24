@@ -60,7 +60,7 @@ class RButton extends StatelessWidget {
                     ),
                     context: context,
                     isScrollControlled: true,
-                    builder: (context) => RecordBottomSheet(false),
+                    builder: (context) => RecordBottomSheet(),
                   );
                 }
               },
@@ -144,15 +144,12 @@ class _DateChangeDialogState extends State<DateChangeDialog> {
 }
 
 class RecordBottomSheet extends StatefulWidget {
-  final splash;
-  RecordBottomSheet(this.splash);
+  RecordBottomSheet();
   @override
-  _RecordBottomSheetState createState() => _RecordBottomSheetState(splash);
+  _RecordBottomSheetState createState() => _RecordBottomSheetState();
 }
 
 class _RecordBottomSheetState extends State<RecordBottomSheet> {
-  final splash;
-  _RecordBottomSheetState(this.splash);
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
@@ -443,27 +440,9 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                 if (record.titleCheck) {
                                   record.click();
                                 } else {
-                                  addActivities(
-                                    DateTime.now(),
-                                    record.title,
-                                    record.category,
-                                  );
-                                  record.reset();
+                                  userData.addActivity(DateTime.now(), record.title, record.category);
                                   Navigator.pop(context);
-                                  if (splash) {
-                                    //TODO:スナックバーでもおいとこ
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                      content: Text('記録！'),
-                                    ));
-                                    Navigator.pop(context);
-                                  } else {
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => HomePage(),
-                                      ),
-                                    );
-                                  }
+                                  record.reset();
                                 }
                               }
                             },

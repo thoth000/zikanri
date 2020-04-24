@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
@@ -35,64 +36,18 @@ class _MinuteMeterState extends State<MinuteMeter> {
   }
 
   Future loopReflesh() async {
-    final userData = Provider.of<UserDataNotifier>(context);
+    final userData = Provider.of<UserDataNotifier>(context,listen: false);
     Timer.periodic(Duration(seconds: 10), (t) => userData.loopReflesh());
-  }
-
-  Future startTimer(int i) async {
-    setState(() {
-      activities[i][0] = DateTime.now();
-      activities[i][1] = false;
-    });
-    await Hive.box('userData').put('activities', activities);
-    Scaffold.of(context).showSnackBar(
-      SnackBar(
-        duration: Duration(seconds: 1),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(50),
-          ),
-        ),
-        content: Text(
-          'タイマーをスタートさせました',
-          textAlign: TextAlign.center,
-        ),
-      ),
-    );
-  }
-
-  Future stopTimer(int i) async {
-    //スタート時刻を更新して、時間に差分を加える
-    setState(() {
-      activities[i][4] += DateTime.now().difference(activities[i][0]).inMinutes;
-      activities[i][5] = activities[i][4];
-      activities[i][1] = true;
-    });
-    await Hive.box('userData').put('activities', activities);
-    Scaffold.of(context).showSnackBar(
-      SnackBar(
-        duration: Duration(seconds: 1),
-        elevation: 5,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(50),
-          ),
-        ),
-        content: Text(
-          'タイマーをストップさせました',
-          textAlign: TextAlign.center,
-        ),
-      ),
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
+    final record = Provider.of<RecordNotifier>(context);
     return Column(
       children: <Widget>[
-        (activities.length == 0)
+        (userData.activities.length == 0)
             ? Container()
             : Padding(
                 padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
@@ -221,8 +176,10 @@ class _MinuteMeterState extends State<MinuteMeter> {
                                         onPressed: () {
                                           if (userData.activities[i][1]) {
                                             userData.startTimer(i);
+                                            Scaffold.of(context).showSnackBar(notifySnackBar("タイマーをスタートさせました"));
                                           } else {
                                             userData.stopTimer(i);
+                                            Scaffold.of(context).showSnackBar(notifySnackBar("タイマーをストップさせました"));
                                           }
                                         },
                                       ),
@@ -255,10 +212,11 @@ class _MinuteMeterState extends State<MinuteMeter> {
                                                   .difference(
                                                       userData.activities[i][0])
                                                   .inMinutes;
+                                          record.copyData(userData.activities[i][3],userData.activities[i][2],time);
                                           showDialog(
                                             context: context,
                                             builder: (context) =>
-                                                FinishRecordDialog(time, i),
+                                                FinishRecordDialog(i),
                                           );
                                         },
                                       ),
@@ -309,6 +267,22 @@ class _MinuteMeterState extends State<MinuteMeter> {
     );
   }
 
+  Widget notifySnackBar(String s) {
+    SnackBar(
+      duration: Duration(seconds: 1),
+      elevation: 5,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(50),
+        ),
+      ),
+      content: Text(
+        s,
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+
   Widget datecheckDialog(context) {
     return AlertDialog(
       shape: RoundedRectangleBorder(
@@ -335,10 +309,9 @@ class _MinuteMeterState extends State<MinuteMeter> {
 }
 
 class FinishRecordDialog extends StatelessWidget {
-  final time;
   final index;
   //activity[0:datetime 1:bool 2:title 3:category 4:tmp 5:tmp]
-  FinishRecordDialog(this.time, this.index);
+  FinishRecordDialog(this.index);
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
@@ -359,7 +332,7 @@ class FinishRecordDialog extends StatelessWidget {
             children: <Widget>[
               Icon(
                 IconData(
-                  int.parse(userData.activities[index][3]),
+                  int.parse(record.category),
                   fontFamily: 'MaterialIcons',
                 ),
                 size: displaySize.width / 10,
@@ -369,7 +342,7 @@ class FinishRecordDialog extends StatelessWidget {
                   horizontal: 5.0,
                 ),
                 child: Text(
-                  userData.activities[index][2],
+                  record.title,
                   softWrap: true,
                   style: TextStyle(
                     fontSize: FontSize.midium,
@@ -419,15 +392,14 @@ class FinishRecordDialog extends StatelessWidget {
                     onPressed: () async {
                       userData.recordDone(
                         [
-                          userData.activities[index][3],
-                          userData.activities[index][2],
-                          time.toInt(),
+                          record.category,
+                          record.title,
+                          record.time,
                           record.isGood,
                         ],
                       );
-                      await userData.finishActivity(index);
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => HomePage()));
+                      userData.finishActivity(index);
+                      Navigator.pop(context);
                       record.reset();
                     },
                   ),

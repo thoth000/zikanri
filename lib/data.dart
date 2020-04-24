@@ -134,6 +134,13 @@ class RecordNotifier with ChangeNotifier {
     }
   }
 
+  void copyData(tmpCategory,tmpTitle,tmpTime){
+    _title = tmpTitle;
+    _category = tmpCategory;
+    _time = tmpTime;
+    notifyListeners();
+  }
+
   void reset() {
     _title = "";
     _category = "57746";
@@ -296,8 +303,6 @@ class UserDataNotifier with ChangeNotifier {
     notifyListeners();
     await Hive.box('userData').put('activities', _activities);
   }
-
-
 
 
   Future recordDone(listData) async {
