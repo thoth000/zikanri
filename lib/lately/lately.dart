@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+import 'package:flutter/rendering.dart';
+import 'package:esys_flutter_share/esys_flutter_share.dart';
+
 import 'package:zikanri/data.dart';
 import 'package:zikanri/items/drawer/drawer.dart';
 
 class LatelyPage extends StatelessWidget {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
@@ -32,120 +38,34 @@ class LatelyPage extends StatelessWidget {
       body: ListView(
         children: <Widget>[
           SizedBox(
-            height: displaySize.width / 15,
+            height: displaySize.width / 10,
           ),
           SizedBox(
-            height: displaySize.width / 2,
+            height: displaySize.width / 2+20,
             child: PageView(
-              onPageChanged: (i) => userData.setIndex(i),
-              controller:
-                  PageController(initialPage: userData.latelyData.length),
+              onPageChanged: (i) {
+                userData.setIndex(i);
+              },
+              controller: PageController(
+                initialPage: userData.latelyData.length,
+              ),
               children: <Widget>[
-                for (var itemList in userData.latelyData)
-                  _dayData(itemList, theme),
+                for (var itemList in userData.latelyData) DayData(itemList),
               ],
             ),
           ),
-          SizedBox(
-            height: displaySize.width / 15,
-          ),
-          _dayDone(
-            (userData.latelyData.length == 1) ? 0 : userData.index,
-            theme,
-            userData,
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 10.0),
+            child: _dayDone(
+              (userData.latelyData.length == 1) ? 0 : userData.index,
+              theme,
+              userData,
+            ),
           ),
           SizedBox(
             height: displaySize.width / 10,
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _widget(
-    String title,
-    var value,
-  ) {
-    return Container(
-      height: displaySize.width / 3.5,
-      width: displaySize.width / 3.7,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Icon(
-            Icons.bubble_chart,
-          ),
-          Text(
-            value,
-            softWrap: false,
-            overflow: TextOverflow.fade,
-            style: TextStyle(
-              fontSize: FontSize.large,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          Text(
-            title,
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: FontSize.xxsmall,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _dayData(List l, theme) {
-    //lはlatelyDataのリストアイテム
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10),
-      child: Card(
-        elevation: 5,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
-        child: Container(
-          height: displaySize.width / 2,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(
-              Radius.circular(30),
-            ),
-            border: Border.all(
-              color: theme.isDark ? theme.themeColors[0] : theme.themeColors[1],
-              width: 2,
-            ),
-          ),
-          child: Column(
-            children: <Widget>[
-              Text(
-                l[0], //日付
-                style: TextStyle(
-                  fontSize: FontSize.large,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              Divider(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  _widget(
-                    '記録時間',
-                    l[1].toString(),
-                  ),
-                  _widget(
-                    '価値時間',
-                    l[2].toString(),
-                  ),
-                  _widget(
-                    '価値の割合',
-                    l[3].toString()+'%',
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }
@@ -259,7 +179,7 @@ class LatelyPage extends StatelessWidget {
                   width: 10,
                 ),
                 Container(
-                  width: displaySize.width/7,
+                  width: displaySize.width / 7,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
@@ -273,6 +193,157 @@ class LatelyPage extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class DayData extends StatelessWidget {
+  final l;
+  DayData(this.l);
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeNotifier>(context);
+    GlobalKey _globalKey = GlobalKey();
+    Future _exportToImage() async {
+      RenderRepaintBoundary boundary =
+          _globalKey.currentContext.findRenderObject();
+      ui.Image image = await boundary.toImage(
+        pixelRatio: 1.0,
+      );
+      ByteData byteData = await image.toByteData(
+        format: ui.ImageByteFormat.png,
+      );
+      final _pngBytes = byteData.buffer.asUint8List();
+      try{await Share.file('今日の記録', 'esys.png', _pngBytes, '*/', text: 'これをツイートしたいのに…');}
+      catch(e){
+        print('error');
+      }
+    }
+
+    return RepaintBoundary(
+      key: _globalKey,
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: Card(
+          elevation: 5,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          child: Container(
+            height: displaySize.width / 2,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(
+                Radius.circular(30),
+              ),
+              border: Border.all(
+                color:
+                    theme.isDark ? theme.themeColors[0] : theme.themeColors[1],
+                width: 2,
+              ),
+            ),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  width: displaySize.width,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      SizedBox(
+                        width: displaySize.width / 15,
+                      ),
+                      Text(
+                        l[0], //日付
+                        style: TextStyle(
+                          fontSize: FontSize.large,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      SizedBox(
+                        height: displaySize.width / 15,
+                        width: displaySize.width / 15,
+                        child: Stack(
+                          children: <Widget>[
+                            Icon(
+                              Icons.share,
+                              size: displaySize.width / 15,
+                            ),
+                            SizedBox(
+                              height: displaySize.width / 15,
+                              width: displaySize.width / 15,
+                              child: FlatButton(
+                                color: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                child: Container(),
+                                onPressed: () async {
+                                  _exportToImage();
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    _widget(
+                      '記録時間',
+                      l[1].toString(),
+                    ),
+                    _widget(
+                      '価値時間',
+                      l[2].toString(),
+                    ),
+                    _widget(
+                      '価値の割合',
+                      l[3].toString() + '%',
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _widget(
+    String title,
+    var value,
+  ) {
+    return Container(
+      height: displaySize.width / 3.5,
+      width: displaySize.width / 3.7,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Icon(
+            Icons.bubble_chart,
+          ),
+          Text(
+            value,
+            softWrap: false,
+            overflow: TextOverflow.fade,
+            style: TextStyle(
+              fontSize: FontSize.large,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          Text(
+            title,
+            style: TextStyle(
+              color: Colors.grey,
+              fontSize: FontSize.xxsmall,
             ),
           ),
         ],

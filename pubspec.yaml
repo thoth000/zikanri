@@ -15,6 +15,7 @@ dependencies:
   hive: ^1.4.1+1
   hive_flutter: ^0.3.0+2
   path_provider: ^1.6.5
+  esys_flutter_share: ^1.0.2
   cupertino_icons: ^0.1.2
 
 dev_dependencies:
