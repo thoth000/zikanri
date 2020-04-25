@@ -38,7 +38,7 @@ class LatelyPage extends StatelessWidget {
       body: ListView(
         children: <Widget>[
           SizedBox(
-            height: displaySize.width / 10,
+            height: displaySize.width / 15,
           ),
           SizedBox(
             height: displaySize.width / 2+20,
