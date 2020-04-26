@@ -4,8 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
-import '../splash.dart';
+import 'package:vibration/vibration.dart';
 
+import '../splash.dart';
 import '../data.dart';
 
 class RButton extends StatelessWidget {
@@ -124,20 +125,6 @@ class _DateChangeDialogState extends State<DateChangeDialog> {
       ),
       title: Text('日付が変わっています'),
       content: Text('自動的にタイトル画面に戻ります'),
-      actions: <Widget>[
-        FlatButton(
-          child: Text('はい'),
-          onPressed: () {
-            Navigator.pop(context);
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => SplashPage(),
-              ),
-            );
-          },
-        ),
-      ],
     );
   }
 }

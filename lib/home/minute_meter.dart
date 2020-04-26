@@ -30,7 +30,22 @@ class _MinuteMeterState extends State<MinuteMeter> {
         context: (context),
         builder: (context) => datecheckDialog(context),
       );
+      await pagechange();
     }
+  }
+
+  Future pagechange() async {
+    Future.delayed(
+      Duration(milliseconds: 1500),
+      () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SplashPage(),
+          ),
+        );
+      },
+    );
   }
 
   Future loopReflesh() async {
@@ -294,24 +309,12 @@ class _MinuteMeterState extends State<MinuteMeter> {
         borderRadius: BorderRadius.circular(30),
       ),
       title: Text('日付が変わっています'),
-      content: Text('タイトル画面に戻ります'),
-      actions: <Widget>[
-        FlatButton(
-          child: Text('はい'),
-          onPressed: () {
-            Navigator.pop(context);
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => SplashPage(),
-              ),
-            );
-          },
-        ),
-      ],
+      content: Text('自動的にタイトル画面に戻ります'),
     );
   }
 }
+
+
 
 class FinishRecordDialog extends StatelessWidget {
   final index;
