@@ -18,7 +18,7 @@ class FontSize {
 
 class Vib {
   static void select(){
-    Vibration.vibrate(duration: 20);
+    Vibration.vibrate(duration: 30);
   }
   static void decide(){
     Vibration.vibrate(duration:50);
@@ -290,18 +290,20 @@ class UserDataNotifier with ChangeNotifier {
     await Hive.box('userData').put('keynum', keynum);
   }
 
-  void sort(oldIndex, newIndex) {
+  void sort(oldIndex, newIndex) async{
     if (oldIndex < newIndex) {
       newIndex -= 1;
     }
     final model = _shortCuts.removeAt(oldIndex);
     _shortCuts.insert(newIndex, model);
     notifyListeners();
+    await Hive.box('userData').put('shortCuts', _shortCuts);
   }
 
-  void deleteShortCut(index) {
+  void deleteShortCut(index) async{
     _shortCuts.removeAt(index);
     notifyListeners();
+    await Hive.box('userData').put('shortCuts', _shortCuts);
   }
 
   //activity関連

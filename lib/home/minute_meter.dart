@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
-import 'package:vibration/vibration.dart';
 
 import '../data.dart';
 import '../splash.dart';
