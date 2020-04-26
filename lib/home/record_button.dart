@@ -446,6 +446,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                 if (record.titleCheck || record.timeCheck) {
                                   record.click();
                                 } else {
+                                  Vibration.vibrate(duration: 100);
                                   if (record.shortCut) {
                                     userData.addShortCuts([
                                       record.category,
@@ -471,6 +472,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                 if (record.titleCheck) {
                                   record.click();
                                 } else {
+                                  Vibration.vibrate(duration: 100);
                                   userData.addActivity(DateTime.now(),
                                       record.title, record.category);
                                   Navigator.pop(context);

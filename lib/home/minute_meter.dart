@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
+import 'package:vibration/vibration.dart';
 
 import '../data.dart';
 import '../splash.dart';
@@ -186,14 +187,16 @@ class _MinuteMeterState extends State<MinuteMeter> {
                                         splashColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
                                         child: Container(),
-                                        onPressed: () {
+                                        onPressed: () async {
                                           if (userData.activities[i][1]) {
                                             userData.startTimer(i);
+                                            Vibration.vibrate(duration: 100);
                                             Scaffold.of(context).showSnackBar(
                                               notifySnackBar("タイマーをスタートさせました"),
                                             );
                                           } else {
                                             userData.stopTimer(i);
+                                            Vibration.vibrate(duration: 100);
                                             Scaffold.of(context).showSnackBar(
                                               notifySnackBar("タイマーをストップさせました"),
                                             );
@@ -313,8 +316,6 @@ class _MinuteMeterState extends State<MinuteMeter> {
     );
   }
 }
-
-
 
 class FinishRecordDialog extends StatelessWidget {
   final index;
