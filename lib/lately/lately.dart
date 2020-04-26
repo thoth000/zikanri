@@ -226,7 +226,7 @@ class DayData extends StatelessWidget {
       child: Container(
         height: displaySize.width/2+20,
         width: displaySize.width,
-        color: (theme.isDark) ? Color(0XFF303030) : Colors.white,
+        color: (theme.isDark) ? Color(0XFF303030) : Color(0XFFFAFAFA),
         child: Padding(
           padding: EdgeInsets.all(10),
           child: Card(
@@ -298,11 +298,11 @@ class DayData extends StatelessWidget {
                     children: <Widget>[
                       _widget(
                         '記録時間',
-                        l[1].toString(),
+                        l[1].toString()+'分',
                       ),
                       _widget(
                         '価値時間',
-                        l[2].toString(),
+                        l[2].toString()+'分',
                       ),
                       _widget(
                         '価値の割合',

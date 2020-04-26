@@ -90,7 +90,7 @@ class _SplashPageState extends State<SplashPage> {
     }
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0XFFFAFAFA),
       body: Stack(
         children: <Widget>[
           Center(

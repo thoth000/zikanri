@@ -29,9 +29,9 @@ class _TMWidgetState extends State<TMWidget> {
               children: <Widget>[
                 _widget(
                   '記録時間',
-                  userData.thisMonthTime.toString(),
+                  userData.thisMonthTime.toString()+'分',
                 ),
-                _widget('価値時間', userData.thisMonthGood.toString()),
+                _widget('価値時間', userData.thisMonthGood.toString()+'分'),
                 _widget('価値の割合', userData.thisMonthPer.toString()+'%'),
               ],
             ),

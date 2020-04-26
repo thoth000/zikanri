@@ -126,7 +126,7 @@ class TodayWidget extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      userData.todayGood.toString() + ' ',
+                      userData.todayGood.toString() + '分 ',
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: FontSize.xxlarge,
