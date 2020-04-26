@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import 'home/home.dart';
 import 'welcome.dart';
@@ -25,6 +26,7 @@ class _SplashPageState extends State<SplashPage> {
   Future _initialize() async {
     final theme = Provider.of<ThemeNotifier>(context, listen: false);
     final userData = Provider.of<UserDataNotifier>(context, listen: false);
+    await Hive.initFlutter();
     await Hive.openBox('theme');
     await Hive.openBox('userData');
     if (Hive.box('userData').containsKey('welcome')) {
