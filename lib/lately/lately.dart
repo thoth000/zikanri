@@ -40,7 +40,7 @@ class LatelyPage extends StatelessWidget {
             height: displaySize.width / 15,
           ),
           SizedBox(
-            height: displaySize.width / 2+20,
+            height: displaySize.width / 2 + 20,
             child: PageView(
               onPageChanged: (i) {
                 userData.setIndex(i);
@@ -209,6 +209,7 @@ class DayData extends StatelessWidget {
     final theme = Provider.of<ThemeNotifier>(context);
     GlobalKey _globalKey = GlobalKey();
     Future _exportToImage() async {
+      Vib.decide();
       RenderRepaintBoundary boundary =
           _globalKey.currentContext.findRenderObject();
       ui.Image image = await boundary.toImage(
@@ -218,13 +219,14 @@ class DayData extends StatelessWidget {
         format: ui.ImageByteFormat.png,
       );
       final _pngBytes = byteData.buffer.asUint8List();
-      await Share.file('今日の記録', 'today.png',_pngBytes, 'image/png', text: 'これをツイートしたいのに…');
+      await Share.file('今日の記録', 'today.png', _pngBytes, 'image/png',
+          text: '今日の記録です！！');
     }
 
     return RepaintBoundary(
       key: _globalKey,
       child: Container(
-        height: displaySize.width/2+20,
+        height: displaySize.width / 2 + 20,
         width: displaySize.width,
         color: (theme.isDark) ? Color(0XFF303030) : Color(0XFFFAFAFA),
         child: Padding(
@@ -241,8 +243,9 @@ class DayData extends StatelessWidget {
                   Radius.circular(30),
                 ),
                 border: Border.all(
-                  color:
-                      theme.isDark ? theme.themeColors[0] : theme.themeColors[1],
+                  color: theme.isDark
+                      ? theme.themeColors[0]
+                      : theme.themeColors[1],
                   width: 2,
                 ),
               ),
@@ -282,7 +285,7 @@ class DayData extends StatelessWidget {
                                   highlightColor: Colors.transparent,
                                   child: Container(),
                                   onPressed: () async {
-                                    _exportToImage();
+                                    await _exportToImage();
                                   },
                                 ),
                               ),
@@ -298,11 +301,11 @@ class DayData extends StatelessWidget {
                     children: <Widget>[
                       _widget(
                         '記録時間',
-                        l[1].toString()+'分',
+                        l[1].toString() + '分',
                       ),
                       _widget(
                         '価値時間',
-                        l[2].toString()+'分',
+                        l[2].toString() + '分',
                       ),
                       _widget(
                         '価値の割合',

@@ -16,6 +16,18 @@ class FontSize {
   static double big = displaySize.width / 6;
 }
 
+class Vib {
+  static void select(){
+    Vibration.vibrate(duration: 20);
+  }
+  static void decide(){
+    Vibration.vibrate(duration:50);
+  }
+  static void error(){
+    Vibration.vibrate(duration:100);
+  }
+}
+
 AssetImage userIcon = AssetImage('images/zikanri_icon.png');
 
 const List iconList = [
@@ -103,12 +115,14 @@ class RecordNotifier with ChangeNotifier {
     if (_isGood == b) {
     } else {
       _isGood = b;
+      Vib.select();
       notifyListeners();
     }
   }
 
   void click() {
     _clickCheck = true;
+    Vib.error();
     notifyListeners();
   }
 
@@ -123,6 +137,7 @@ class RecordNotifier with ChangeNotifier {
   void recordMode() {
     if (_isRecord == true) {
     } else {
+      Vib.select();
       _isRecord = true;
       _time = 0;
       _timeCheck = true;
@@ -134,6 +149,7 @@ class RecordNotifier with ChangeNotifier {
   void startMode() {
     if (_isRecord == false) {
     } else {
+      Vib.select();
       _isRecord = false;
       _time = 0;
       _timeCheck = false;
@@ -189,12 +205,14 @@ class ThemeNotifier with ChangeNotifier {
         ),
       );
   Future changeMode() async {
+    Vib.select();
     _isDark = !_isDark;
     await Hive.box('theme').put('isDark', _isDark);
     notifyListeners();
   }
 
   Future changeTheme(int i) async {
+    Vib.select();
     _themeColorsIndex = i;
     await Hive.box('theme').put('themeColorsIndex', _themeColorsIndex);
     notifyListeners();
@@ -292,6 +310,7 @@ class UserDataNotifier with ChangeNotifier {
     String title,
     String category,
   ) async {
+    Vib.decide();
     _activities.add([startTime, false, title, category, 1, 1]);
     notifyListeners();
     await Hive.box('userData').put('activities', _activities);
@@ -316,6 +335,7 @@ class UserDataNotifier with ChangeNotifier {
   }
 
   Future startTimer(int i) async {
+    Vib.select();
     _activities[i][0] = DateTime.now();
     _activities[i][1] = false;
     notifyListeners();
@@ -323,6 +343,7 @@ class UserDataNotifier with ChangeNotifier {
   }
 
   Future stopTimer(int i) async {
+    Vib.select();
     _activities[i][1] = true;
     _activities[i][4] += DateTime.now().difference(activities[i][0]).inMinutes;
     _activities[i][5] = _activities[i][4];
@@ -331,6 +352,7 @@ class UserDataNotifier with ChangeNotifier {
   }
 
   Future recordDone(listData) async {
+    Vib.decide();
     int time = listData[2];
     _allTime += time;
     _thisMonthTime += time;
@@ -371,6 +393,7 @@ class UserDataNotifier with ChangeNotifier {
   }
 
   Future deleteDone(listData, index) async {
+    Vib.select();
     int time = listData[2];
     _allTime -= time;
     _thisMonthTime -= time;

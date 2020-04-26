@@ -190,13 +190,11 @@ class _MinuteMeterState extends State<MinuteMeter> {
                                         onPressed: () async {
                                           if (userData.activities[i][1]) {
                                             userData.startTimer(i);
-                                            Vibration.vibrate(duration: 100);
                                             Scaffold.of(context).showSnackBar(
                                               notifySnackBar("タイマーをスタートさせました"),
                                             );
                                           } else {
                                             userData.stopTimer(i);
-                                            Vibration.vibrate(duration: 100);
                                             Scaffold.of(context).showSnackBar(
                                               notifySnackBar("タイマーをストップさせました"),
                                             );
@@ -227,6 +225,7 @@ class _MinuteMeterState extends State<MinuteMeter> {
                                         splashColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
                                         onPressed: () {
+                                          Vib.select();
                                           int time = userData.activities[i][4] +
                                               DateTime.now()
                                                   .difference(

@@ -15,6 +15,7 @@ class TotalScoreWidget extends StatelessWidget {
     GlobalKey _globalKey = GlobalKey();
 
     Future _exportToImage() async {
+      Vib.decide();
       RenderRepaintBoundary boundary =
           _globalKey.currentContext.findRenderObject();
       ui.Image image = await boundary.toImage(
