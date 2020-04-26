@@ -11,7 +11,6 @@ import 'package:zikanri/items/drawer/drawer.dart';
 
 class LatelyPage extends StatelessWidget {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
@@ -213,103 +212,106 @@ class DayData extends StatelessWidget {
       RenderRepaintBoundary boundary =
           _globalKey.currentContext.findRenderObject();
       ui.Image image = await boundary.toImage(
-        pixelRatio: 1.0,
+        pixelRatio: 3.0,
       );
       ByteData byteData = await image.toByteData(
         format: ui.ImageByteFormat.png,
       );
       final _pngBytes = byteData.buffer.asUint8List();
-      try{await Share.file('今日の記録', 'esys.png', _pngBytes, '*/', text: 'これをツイートしたいのに…');}
-      catch(e){
-        print('error');
-      }
+      await Share.file('今日の記録', 'today.png',_pngBytes, 'image/png', text: 'これをツイートしたいのに…');
     }
 
     return RepaintBoundary(
       key: _globalKey,
-      child: Padding(
-        padding: EdgeInsets.all(10),
-        child: Card(
-          elevation: 5,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
-          child: Container(
-            height: displaySize.width / 2,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(
-                Radius.circular(30),
-              ),
-              border: Border.all(
-                color:
-                    theme.isDark ? theme.themeColors[0] : theme.themeColors[1],
-                width: 2,
-              ),
+      child: Container(
+        height: displaySize.width/2+20,
+        width: displaySize.width,
+        color: (theme.isDark) ? Color(0XFF303030) : Colors.white,
+        child: Padding(
+          padding: EdgeInsets.all(10),
+          child: Card(
+            elevation: 5,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
             ),
-            child: Column(
-              children: <Widget>[
-                Container(
-                  width: displaySize.width,
-                  child: Row(
+            child: Container(
+              height: displaySize.width / 2,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(30),
+                ),
+                border: Border.all(
+                  color:
+                      theme.isDark ? theme.themeColors[0] : theme.themeColors[1],
+                  width: 2,
+                ),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    width: displaySize.width,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          width: displaySize.width / 15,
+                        ),
+                        Text(
+                          l[0], //日付
+                          style: TextStyle(
+                            fontSize: FontSize.large,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        SizedBox(
+                          height: displaySize.width / 15,
+                          width: displaySize.width / 15,
+                          child: Stack(
+                            children: <Widget>[
+                              Icon(
+                                Icons.share,
+                                size: displaySize.width / 15,
+                              ),
+                              SizedBox(
+                                height: displaySize.width / 15,
+                                width: displaySize.width / 15,
+                                child: FlatButton(
+                                  color: Colors.transparent,
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  child: Container(),
+                                  onPressed: () async {
+                                    _exportToImage();
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Divider(),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      SizedBox(
-                        width: displaySize.width / 15,
+                      _widget(
+                        '記録時間',
+                        l[1].toString(),
                       ),
-                      Text(
-                        l[0], //日付
-                        style: TextStyle(
-                          fontSize: FontSize.large,
-                          fontWeight: FontWeight.w700,
-                        ),
+                      _widget(
+                        '価値時間',
+                        l[2].toString(),
                       ),
-                      SizedBox(
-                        height: displaySize.width / 15,
-                        width: displaySize.width / 15,
-                        child: Stack(
-                          children: <Widget>[
-                            Icon(
-                              Icons.share,
-                              size: displaySize.width / 15,
-                            ),
-                            SizedBox(
-                              height: displaySize.width / 15,
-                              width: displaySize.width / 15,
-                              child: FlatButton(
-                                color: Colors.transparent,
-                                splashColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                child: Container(),
-                                onPressed: () async {
-                                  _exportToImage();
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
+                      _widget(
+                        '価値の割合',
+                        l[3].toString() + '%',
                       ),
                     ],
                   ),
-                ),
-                Divider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    _widget(
-                      '記録時間',
-                      l[1].toString(),
-                    ),
-                    _widget(
-                      '価値時間',
-                      l[2].toString(),
-                    ),
-                    _widget(
-                      '価値の割合',
-                      l[3].toString() + '%',
-                    ),
-                  ],
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
