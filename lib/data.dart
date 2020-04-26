@@ -237,6 +237,8 @@ class ThemeNotifier with ChangeNotifier {
 class UserDataNotifier with ChangeNotifier {
   String userName = "ゲスト";
   String userID = "";
+  String twitterID = "";
+  String introduction = "";
   bool registerCheck = false;
   String previousDate = "2020年01月01日";
   String thisMonth = "01";
@@ -455,6 +457,8 @@ class UserDataNotifier with ChangeNotifier {
     _activities = await box.get('activities');
     userName = await box.get('userName');
     userID = await box.get('userID');
+    introduction = await box.get('introduction');
+    twitterID = await box.get('twitterID');
     registerCheck = await box.get('resisterCheck');
     previousDate = await box.get('previousDate');
     thisMonth = await box.get('thisMonth');

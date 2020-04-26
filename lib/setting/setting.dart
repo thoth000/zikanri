@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
 
 import '../data.dart';
+import 'profile.dart';
 
 class SettingPage extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -19,26 +20,39 @@ class SettingPage extends StatelessWidget {
         ),
         backgroundColor: Colors.transparent,
       ),
-      body: ListView(
-        children: <Widget>[
-          Container(
-            child: Card(
-              child: Wrap(
-                children: <Widget>[
-                  for (int i = 0; i < theme.myColors.length; i++)
-                    Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: themeChanger(theme, i),
-                    ),
-                ],
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10.0),
+        child: ListView(
+          children: <Widget>[
+            RaisedButton(
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProfileSettingPage(),
+                ),
+              ),
+              child: Text('プロフィールを編集'),
+            ),
+            Text('テーマ一覧'),
+            Container(
+              child: Card(
+                child: Wrap(
+                  children: <Widget>[
+                    for (int i = 0; i < theme.myColors.length; i++)
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: themeChanger(theme, i),
+                      ),
+                  ],
+                ),
               ),
             ),
-          ),
-          RaisedButton(
-            color: Colors.red,
-            onPressed: () => showDialog(context: context,child:clearAlert(context))
-          ),
-        ],
+            RaisedButton(
+                color: Colors.red,
+                onPressed: () =>
+                    showDialog(context: context, child: clearAlert(context))),
+          ],
+        ),
       ),
     );
   }
@@ -49,8 +63,9 @@ class SettingPage extends StatelessWidget {
       width: displaySize.width / 8,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
-        gradient:
-            LinearGradient(colors: baseColors[int.parse(theme.myColors[i])],),
+        gradient: LinearGradient(
+          colors: baseColors[int.parse(theme.myColors[i])],
+        ),
       ),
       child: FlatButton(
         shape: RoundedRectangleBorder(
@@ -58,7 +73,7 @@ class SettingPage extends StatelessWidget {
         ),
         color: Colors.transparent,
         child: Container(),
-        onPressed: () async=> await theme.changeTheme(i),
+        onPressed: () async => await theme.changeTheme(i),
       ),
     );
   }
