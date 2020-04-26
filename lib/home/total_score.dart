@@ -1,89 +1,120 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+import 'package:flutter/rendering.dart';
+import 'package:esys_flutter_share/esys_flutter_share.dart';
+
 import '../data.dart';
-import 'package:share/share.dart';
 
 class TotalScoreWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
-    return Padding(
-      padding: EdgeInsets.all(displaySize.width / 20),
+    GlobalKey _globalKey = GlobalKey();
+
+    Future _exportToImage() async {
+      RenderRepaintBoundary boundary =
+          _globalKey.currentContext.findRenderObject();
+      ui.Image image = await boundary.toImage(
+        pixelRatio: 3.0,
+      );
+      ByteData byteData = await image.toByteData(
+        format: ui.ImageByteFormat.png,
+      );
+      final _pngBytes = byteData.buffer.asUint8List();
+      await Share.file(
+        '今までの記録',
+        'goodRate.png',
+        _pngBytes,
+        'image/png',
+        text: 'UserNameが${userData.allGood}分を価値ある時間として使いました！\n今度はあなたの時間の価値を高めませんか？\n【Android】\n ',
+      );
+    }
+
+    return RepaintBoundary(
+      key: _globalKey,
       child: Container(
-        height: displaySize.width / 2.2,
+        height: displaySize.width / 2.2 + displaySize.width / 10,
         width: displaySize.width,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(colors: theme.themeColors),
-          borderRadius:
-              BorderRadius.all(Radius.circular(displaySize.width / 12)),
-          boxShadow: [
-            BoxShadow(
-              spreadRadius: 1.0,
-              color: Colors.black26,
-              blurRadius: 10,
-              offset: Offset(10, 10),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              height: displaySize.width / 40,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                IconButton(
-                  onPressed: null,
-                  iconSize: displaySize.width / 15,
-                  icon: Icon(null),
-                ),
-                Text(
-                  'Good Rate',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: FontSize.xlarge, //12.5
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
-                IconButton(
-                  highlightColor: Colors.transparent,
-                  splashColor: Colors.transparent,
-                  icon: Icon(
-                    Icons.share,
-                    color: Colors.white,
-                    size: displaySize.width / 15,
-                  ),
-                  onPressed: () {
-                    Share.share(
-                      "ユーザー:${userData.userName}\n価値ある時間が${userData.allGood}分に到達しました！\n#ジカンリ",
-                    );
-                  },
+        color: (theme.isDark) ? Color(0XFF303030) : Color(0XFFFAFAFA),
+        child: Padding(
+          padding: EdgeInsets.all(displaySize.width / 20),
+          child: Container(
+            height: displaySize.width / 2.2,
+            width: displaySize.width,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(colors: theme.themeColors),
+              borderRadius:
+                  BorderRadius.all(Radius.circular(displaySize.width / 12)),
+              boxShadow: [
+                BoxShadow(
+                  spreadRadius: 1.0,
+                  color: Colors.black26,
+                  blurRadius: 10,
+                  offset: Offset(10, 10),
                 ),
               ],
             ),
-            SizedBox(
-              height: displaySize.width / 100,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: displaySize.width / 30),
-              child: Container(
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Text(
-                    userData.allGood.toString(),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: FontSize.big,
-                      fontWeight: FontWeight.w700,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
+                  height: displaySize.width / 40,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    IconButton(
+                      onPressed: null,
+                      iconSize: displaySize.width / 15,
+                      icon: Icon(null),
+                    ),
+                    Text(
+                      'Good Rate',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: FontSize.xlarge, //12.5
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                    IconButton(
+                      highlightColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                      icon: Icon(
+                        Icons.share,
+                        color: Colors.white,
+                        size: displaySize.width / 15,
+                      ),
+                      onPressed: () async{await _exportToImage();}
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: displaySize.width / 100,
+                ),
+                Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: displaySize.width / 30),
+                  child: Container(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Text(
+                        userData.allGood.toString(),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: FontSize.big,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
