@@ -99,67 +99,6 @@ class ProfileSettingPage extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            Text(
-              '自己紹介',
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: FontSize.xsmall,
-              ),
-            ),
-            Container(
-              height: displaySize.width / 6,
-              child: TextField(
-                cursorColor: (theme.isDark)
-                    ? theme.themeColors[0]
-                    : theme.themeColors[1],
-                decoration: InputDecoration(
-                  hintText: userData.introduction,
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: (theme.isDark)
-                          ? theme.themeColors[0]
-                          : theme.themeColors[1],
-                    ),
-                  ),
-                ),
-                style: TextStyle(fontSize: FontSize.small),
-                onChanged: (intro) {
-                  userData.introChange(intro);
-                },
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              'twitter ID',
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: FontSize.xsmall,
-              ),
-            ),
-            Container(
-              height: displaySize.width / 6,
-              child: TextField(
-                cursorColor: (theme.isDark)
-                    ? theme.themeColors[0]
-                    : theme.themeColors[1],
-                decoration: InputDecoration(
-                  hintText: userData.twitterID,
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: (theme.isDark)
-                          ? theme.themeColors[0]
-                          : theme.themeColors[1],
-                    ),
-                  ),
-                ),
-                style: TextStyle(fontSize: FontSize.small),
-                onChanged: (id) {
-                  userData.twitterChange(id);
-                },
-              ),
-            ),
           ],
         ),
       ),

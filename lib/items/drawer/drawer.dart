@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 
 import '../../previous_records/previous_records.dart';
 import '../../lately/lately.dart';
-import '../../user/user.dart';
 import '../../Setting/Setting.dart';
 import '../../home/home.dart';
 import '../../data.dart';
@@ -100,34 +99,6 @@ class SlideMenu extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => HomePage(),
-                ),
-              );
-            },
-          ),
-          FlatButton(
-            child: Padding(
-              padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
-              child: Row(
-                children: <Widget>[
-                  Icon(
-                    Icons.supervised_user_circle,
-                    size: displaySize.width / 8,
-                    color: Colors.grey[700],
-                  ),
-                  Text(
-                    '  ユーザー',
-                    style: TextStyle(
-                        fontSize: FontSize.small,
-                        fontWeight: FontWeight.w400),
-                  ),
-                ],
-              ),
-            ),
-            onPressed: () async{
-              await Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => UserPage(),
                 ),
               );
             },
