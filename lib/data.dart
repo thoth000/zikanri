@@ -289,6 +289,16 @@ class UserDataNotifier with ChangeNotifier {
   List _activities = [];
   List get activities => _activities;
 
+  Future sortCategory(oldIndex, newIndex) async {
+    if (oldIndex < newIndex) {
+      newIndex -= 1;
+    }
+    final model = _categories.removeAt(oldIndex);
+    _categories.insert(newIndex, model);
+    notifyListeners();
+    await Hive.box('userData').put('categories', _categories);
+  }
+
   void nameChange(s) {
     tmpName = s;
     notifyListeners();
@@ -300,11 +310,11 @@ class UserDataNotifier with ChangeNotifier {
     await Hive.box('userData').put('userName', userName);
   }
 
-  Future addCategory(item)async{
-    categorykey+=1;
+  Future addCategory(item) async {
+    categorykey += 1;
     _categories.add(item);
     notifyListeners();
-    await Hive.box('userData').put('categories',_categories);
+    await Hive.box('userData').put('categories', _categories);
     await Hive.box('userData').put('categorykey', categorykey);
   }
 
