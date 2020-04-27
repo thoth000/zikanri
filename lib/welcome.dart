@@ -70,9 +70,6 @@ class WelcomePage extends StatelessWidget {
       await userDataBox.put('keynum', 5);
       await userDataBox.put('activities', []);
       await userDataBox.put('userName', 'ゲスト');
-      await userDataBox.put('userID', '');
-      await userDataBox.put('twitterID','');
-      await userDataBox.put('introduction','');
       await userDataBox.put('resisterCheck', resistercheck);
       await userDataBox.put('previousDate', firstdate);
       await userDataBox.put('thisMonth', firstMonth);

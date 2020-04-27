@@ -238,9 +238,6 @@ class ThemeNotifier with ChangeNotifier {
 //changeNotifier for userData
 class UserDataNotifier with ChangeNotifier {
   String userName = "ゲスト";
-  String userID = "";
-  String twitterID = "";
-  String introduction = "";
   bool registerCheck = false;
   String previousDate = "2020年01月01日";
   String thisMonth = "01";
@@ -249,8 +246,6 @@ class UserDataNotifier with ChangeNotifier {
   int keynum = 5;
 
   String tmpName = '';
-  String tmptwitterID = '';
-  String tmpintroduction = '';
 
   int _allTime = 0;
   int get allTime => _allTime;
@@ -295,24 +290,10 @@ class UserDataNotifier with ChangeNotifier {
     notifyListeners();
   }
 
-  void introChange(s) {
-    tmpintroduction = s;
-    notifyListeners();
-  }
-
-  void twitterChange(s) {
-    tmptwitterID = s;
-    notifyListeners();
-  }
-
   Future editProfile() async {
     userName = tmpName;
-    introduction = tmpintroduction;
-    twitterID = tmptwitterID;
     notifyListeners();
     await Hive.box('userData').put('userName', userName);
-    await Hive.box('userData').put('introduction', introduction);
-    await Hive.box('userData').put('twitterID', twitterID);
   }
 
   Future addShortCuts(item) async {
@@ -487,9 +468,6 @@ class UserDataNotifier with ChangeNotifier {
     _shortCuts = await box.get('shortCuts');
     _activities = await box.get('activities');
     userName = await box.get('userName');
-    userID = await box.get('userID');
-    introduction = await box.get('introduction');
-    twitterID = await box.get('twitterID');
     registerCheck = await box.get('resisterCheck');
     previousDate = await box.get('previousDate');
     thisMonth = await box.get('thisMonth');
