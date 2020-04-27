@@ -7,6 +7,7 @@ class ProfileSettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
+    final userData = Provider.of<UserDataNotifier>(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -20,7 +21,9 @@ class ProfileSettingPage extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.check),
-            onPressed: () => print('check!'),
+            onPressed: () async {
+              await userData.editProfile();
+            },
           ),
         ],
       ),
@@ -72,10 +75,25 @@ class ProfileSettingPage extends StatelessWidget {
               ),
             ),
             Container(
-              height: displaySize.width/6,
+              height: displaySize.width / 6,
               child: TextField(
-                controller: TextEditingController(text: 'do you'),
+                cursorColor: (theme.isDark)
+                    ? theme.themeColors[0]
+                    : theme.themeColors[1],
+                decoration: InputDecoration(
+                  hintText: userData.userName,
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: (theme.isDark)
+                          ? theme.themeColors[0]
+                          : theme.themeColors[1],
+                    ),
+                  ),
+                ),
                 style: TextStyle(fontSize: FontSize.small),
+                onChanged: (name) {
+                  userData.nameChange(name);
+                },
               ),
             ),
             SizedBox(
@@ -89,10 +107,25 @@ class ProfileSettingPage extends StatelessWidget {
               ),
             ),
             Container(
-              height: displaySize.width/6,
+              height: displaySize.width / 6,
               child: TextField(
-                controller: TextEditingController(text: 'have you'),
+                cursorColor: (theme.isDark)
+                    ? theme.themeColors[0]
+                    : theme.themeColors[1],
+                decoration: InputDecoration(
+                  hintText: userData.introduction,
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: (theme.isDark)
+                          ? theme.themeColors[0]
+                          : theme.themeColors[1],
+                    ),
+                  ),
+                ),
                 style: TextStyle(fontSize: FontSize.small),
+                onChanged: (intro) {
+                  userData.introChange(intro);
+                },
               ),
             ),
             SizedBox(
@@ -106,10 +139,25 @@ class ProfileSettingPage extends StatelessWidget {
               ),
             ),
             Container(
-              height: displaySize.width/6,
+              height: displaySize.width / 6,
               child: TextField(
-                controller: TextEditingController(text: '@thoth000'),
+                cursorColor: (theme.isDark)
+                    ? theme.themeColors[0]
+                    : theme.themeColors[1],
+                decoration: InputDecoration(
+                  hintText: userData.twitterID,
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: (theme.isDark)
+                          ? theme.themeColors[0]
+                          : theme.themeColors[1],
+                    ),
+                  ),
+                ),
                 style: TextStyle(fontSize: FontSize.small),
+                onChanged: (id) {
+                  userData.twitterChange(id);
+                },
               ),
             ),
           ],

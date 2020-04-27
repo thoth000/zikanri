@@ -17,14 +17,16 @@ class FontSize {
 }
 
 class Vib {
-  static void select(){
+  static void select() {
     Vibration.vibrate(duration: 30);
   }
-  static void decide(){
-    Vibration.vibrate(duration:50);
+
+  static void decide() {
+    Vibration.vibrate(duration: 50);
   }
-  static void error(){
-    Vibration.vibrate(duration:100);
+
+  static void error() {
+    Vibration.vibrate(duration: 100);
   }
 }
 
@@ -207,15 +209,15 @@ class ThemeNotifier with ChangeNotifier {
   Future changeMode() async {
     Vib.select();
     _isDark = !_isDark;
-    await Hive.box('theme').put('isDark', _isDark);
     notifyListeners();
+    await Hive.box('theme').put('isDark', _isDark);
   }
 
   Future changeTheme(int i) async {
     Vib.select();
     _themeColorsIndex = i;
-    await Hive.box('theme').put('themeColorsIndex', _themeColorsIndex);
     notifyListeners();
+    await Hive.box('theme').put('themeColorsIndex', _themeColorsIndex);
   }
 
   Future addTheme(int i) async {
@@ -245,6 +247,10 @@ class UserDataNotifier with ChangeNotifier {
   int totalPassedDays = 1;
   int passedDays = 1;
   int keynum = 5;
+
+  String tmpName = '';
+  String tmptwitterID = '';
+  String tmpintroduction = '';
 
   int _allTime = 0;
   int get allTime => _allTime;
@@ -284,15 +290,40 @@ class UserDataNotifier with ChangeNotifier {
   List _activities = [];
   List get activities => _activities;
 
+  void nameChange(s) {
+    tmpName = s;
+    notifyListeners();
+  }
+
+  void introChange(s) {
+    tmpintroduction = s;
+    notifyListeners();
+  }
+
+  void twitterChange(s) {
+    tmptwitterID = s;
+    notifyListeners();
+  }
+
+  Future editProfile() async {
+    userName = tmpName;
+    introduction = tmpintroduction;
+    twitterID = tmptwitterID;
+    notifyListeners();
+    await Hive.box('userData').put('userName', userName);
+    await Hive.box('userData').put('introduction', introduction);
+    await Hive.box('userData').put('twitterID', twitterID);
+  }
+
   Future addShortCuts(item) async {
-    keynum+=1;
+    keynum += 1;
     _shortCuts.add(item);
     notifyListeners();
     await Hive.box('userData').put('shortCuts', _shortCuts);
     await Hive.box('userData').put('keynum', keynum);
   }
 
-  void sort(oldIndex, newIndex) async{
+  void sort(oldIndex, newIndex) async {
     if (oldIndex < newIndex) {
       newIndex -= 1;
     }
@@ -302,7 +333,7 @@ class UserDataNotifier with ChangeNotifier {
     await Hive.box('userData').put('shortCuts', _shortCuts);
   }
 
-  void deleteShortCut(index) async{
+  void deleteShortCut(index) async {
     _shortCuts.removeAt(index);
     notifyListeners();
     await Hive.box('userData').put('shortCuts', _shortCuts);

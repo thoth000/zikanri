@@ -5,6 +5,8 @@ import 'package:hive/hive.dart';
 
 import '../data.dart';
 import 'profile.dart';
+import 'theme.dart';
+import '../home/record_button.dart';
 
 class SettingPage extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -24,33 +26,183 @@ class SettingPage extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 10.0),
         child: ListView(
           children: <Widget>[
-            RaisedButton(
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ProfileSettingPage(),
-                ),
-              ),
-              child: Text('プロフィールを編集'),
+            SizedBox(
+              height: 10,
             ),
-            Text('テーマ一覧'),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                '基本設定',
+                style: TextStyle(
+                    fontSize: FontSize.small),
+              ),
+            ),
+            Divider(
+              height: 1,
+              thickness: 1,
+            ),
             Container(
-              child: Card(
-                child: Wrap(
+              height: displaySize.width / 6,
+              width: displaySize.width,
+              child: FlatButton(
+                color: Colors.transparent,
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProfileSettingPage(),
+                    ),
+                  );
+                },
+                child: Row(
                   children: <Widget>[
-                    for (int i = 0; i < theme.myColors.length; i++)
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: themeChanger(theme, i),
-                      ),
+                    Text(
+                      'プロフィールを変更',
+                      style: TextStyle(fontSize: FontSize.xsmall,fontWeight: FontWeight.w700,),
+                    ),
                   ],
                 ),
               ),
             ),
-            RaisedButton(
-                color: Colors.red,
-                onPressed: () =>
-                    showDialog(context: context, child: clearAlert(context))),
+            Divider(
+              height: 1,
+              thickness: 1,
+            ),
+            Container(
+              height: displaySize.width / 6,
+              width: displaySize.width,
+              child: FlatButton(
+                color: Colors.transparent,
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ThemeSettingPage(),
+                    ),
+                  );
+                },
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      'テーマを変更',
+                      style: TextStyle(fontSize: FontSize.xsmall,fontWeight: FontWeight.w700,),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Divider(
+              height: 1,
+              thickness: 2,
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                'データの設定',
+                style: TextStyle(
+                    fontSize: FontSize.small),
+              ),
+            ),
+            Divider(
+              height: 1,
+              thickness: 1,
+            ),
+            Container(
+              height: displaySize.width / 6,
+              width: displaySize.width,
+              child: FlatButton(
+                color: Colors.transparent,
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProfileSettingPage(),
+                    ),
+                  );
+                },
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      'カテゴリーの編集',
+                      style: TextStyle(fontSize: FontSize.xsmall,fontWeight: FontWeight.w700,),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Divider(
+              height: 1,
+              thickness: 1,
+            ),
+            Container(
+              height: displaySize.width / 6,
+              width: displaySize.width,
+              child: FlatButton(
+                color: Colors.transparent,
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ShortCutsEditPage(),
+                    ),
+                  );
+                },
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      'ショートカットを編集',
+                      style: TextStyle(fontSize: FontSize.xsmall,fontWeight: FontWeight.w700,),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Divider(
+              height: 1,
+              thickness: 2,
+            ),
+            SizedBox(
+              height: 100,
+            ),
+            Divider(
+              height: 1,
+              thickness: 1,
+            ),
+            Container(
+              height: displaySize.width / 6,
+              width: displaySize.width,
+              child: FlatButton(
+                color: Colors.transparent,
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onPressed: () {
+                  showDialog(context: context,builder: (context)=>clearAlert(context));
+                },
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      'アプリデータの削除',
+                      style: TextStyle(fontSize: FontSize.xsmall,fontWeight: FontWeight.w700,color: Colors.red),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Divider(
+              height: 1,
+              thickness: 2,
+            ),
           ],
         ),
       ),

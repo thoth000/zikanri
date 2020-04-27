@@ -267,6 +267,9 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                               vertical: 2,
                             ),
                             child: TextField(
+                              cursorColor: (theme.isDark)
+                                  ? theme.themeColors[0]
+                                  : theme.themeColors[1],
                               keyboardType: TextInputType.multiline,
                               style: TextStyle(
                                 fontSize: FontSize.small,
@@ -312,6 +315,9 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                         vertical: 2,
                                       ),
                                       child: TextField(
+                                        cursorColor: (theme.isDark)
+                                            ? theme.themeColors[0]
+                                            : theme.themeColors[1],
                                         style: TextStyle(
                                           fontSize: FontSize.small,
                                         ),
@@ -707,7 +713,7 @@ class ShortCutSheet extends StatelessWidget {
                   onPressed: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => EditPage(),
+                      builder: (context) => ShortCutsEditPage(),
                     ),
                   ),
                   child: Center(
@@ -801,7 +807,7 @@ class ShortCutSheet extends StatelessWidget {
   }
 }
 
-class EditPage extends StatelessWidget {
+class ShortCutsEditPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);

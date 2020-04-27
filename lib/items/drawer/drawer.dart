@@ -38,30 +38,22 @@ class SlideMenu extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: EdgeInsets.only(bottom: displaySize.width / 8 + 10.0),
-              child: Divider(height: 1,),
+              child: Divider(height: 1,thickness: 1,),
             ),
           ),
           Align(
             alignment: Alignment.bottomLeft,
-            child: Row(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.all(5.0),
-                  child: isDarkButton(theme,context),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical:5.0),
-                  child: IconButton(
-                    iconSize: displaySize.width/11,
-                    icon: Icon(Icons.settings),
-                    color: Colors.grey[700],
-                    onPressed: () async{
-                      Navigator.pop(context);
-                      await Navigator.push(context,_createRoute(SettingPage()));
-                    }
-                  ),
-                ),
-              ],
+            child: Padding(
+              padding: EdgeInsets.only(bottom:5.0,left: 10),
+              child: IconButton(
+                iconSize: displaySize.width/11,
+                icon: Icon(Icons.settings),
+                color: Colors.grey[700],
+                onPressed: () async{
+                  Navigator.pop(context);
+                  await Navigator.push(context,_createRoute(SettingPage()));
+                }
+              ),
             ),
           ),
           Align(
@@ -197,7 +189,8 @@ class SlideMenu extends StatelessWidget {
             },
           ),
           Divider(
-            height: 20,
+            height: 1,
+            thickness: 1,
             endIndent: 20,
           ),
         ],
