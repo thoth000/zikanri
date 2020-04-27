@@ -830,9 +830,7 @@ class ShortCutsEditPage extends StatelessWidget {
               style: TextStyle(fontSize: FontSize.xsmall),
             ),
           ),
-          Container(
-            height: displaySize.height / 1.5,
-            width: displaySize.width,
+          Expanded(
             child: ReorderableListView(
               children: [
                 for (int i = 0; i < userData.shortCuts.length; i++)
@@ -873,6 +871,34 @@ class ShortCutsEditPage extends StatelessWidget {
                   userData.sort(oldIndex, newIndex),
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class EditCategoryPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeNotifier>(context);
+    final userData = Provider.of<UserDataNotifier>(context);
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        title: Text(
+          'カテゴリーの編集',
+          style: TextStyle(
+            color: theme.isDark ? Colors.white : Colors.black,
+          ),
+        ),
+      ),
+      body: ListView(
+        children: <Widget>[
+          SizedBox(
+            height: 10,
+          ),
+          
         ],
       ),
     );

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:provider/provider.dart';
 
 import '../../previous_records/previous_records.dart';
 import '../../lately/lately.dart';
@@ -27,8 +26,6 @@ class SlideMenu extends StatelessWidget {
       );
     }
   Widget build(BuildContext context) {
-    final theme = Provider.of<ThemeNotifier>(context);
-    final userData = Provider.of<UserDataNotifier>(context);
     return Drawer(
       child: Stack(
         children: <Widget>[
@@ -53,13 +50,6 @@ class SlideMenu extends StatelessWidget {
                   await Navigator.push(context,_createRoute(SettingPage()));
                 }
               ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: resisterButton(context, theme, userData),
             ),
           ),
         ],
@@ -179,46 +169,5 @@ class SlideMenu extends StatelessWidget {
         theme.changeMode();
         },
     );
-  }
-
-  Widget resisterButton(context, theme, userData) {
-    if (userData.registerCheck == false) {
-      return Container(
-        height: displaySize.width / 8,
-        width: displaySize.width / 3,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(colors: theme.themeColors),
-          borderRadius:
-              BorderRadius.all(Radius.circular(100)),
-        ),
-        child: Stack(
-          children: <Widget>[
-            Center(
-              child: Text(
-                'アカウント登録',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: FontSize.xsmall,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-            SizedBox(
-              height: displaySize.width/8,
-              width: displaySize.width/3,
-              child: FlatButton(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100),
-                ),
-                onPressed: null,//TODO:登録ページ
-                child: Container(),
-                color: Colors.transparent,
-              ),
-            ),
-          ],
-        ),
-      );
-    } else {
-      return Container();
-    }
   }
 }

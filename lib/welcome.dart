@@ -36,7 +36,7 @@ class WelcomePage extends StatelessWidget {
       Navigator.pushReplacement(context, _createRoute());
     }
 
-    void makeDir(resistercheck) async {
+    void makeDir() async {
       //アプリ初回起動時の動作
       var firstdate = DateFormat("yyyy年MM月dd日").format(DateTime.now());
       var firstMonth = DateFormat("MM").format(DateTime.now());
@@ -54,6 +54,13 @@ class WelcomePage extends StatelessWidget {
         tTime,tGood,tPer
       ]*/
       await userDataBox.put('userValue', [0, 0, 0, 0, 0, 0, 0, 0, 0]);
+      await userDataBox.put('categories',
+      [
+        ["0",57746, "指定なし",[0,0,0]],
+        ["1",57680, "勉強",[0,0,0]],
+        ["2",58726, "運動",[0,0,0]],
+        ["3",57519, "仕事",[0,0,0]],
+      ]);
       await userDataBox.put('latelyData', [
         [firstdate, 0, 0, 0, []],
       ]);
@@ -68,9 +75,9 @@ class WelcomePage extends StatelessWidget {
         ],
       );
       await userDataBox.put('keynum', 5);
+      await userDataBox.put('categorykey',4);
       await userDataBox.put('activities', []);
       await userDataBox.put('userName', 'ゲスト');
-      await userDataBox.put('resisterCheck', resistercheck);
       await userDataBox.put('previousDate', firstdate);
       await userDataBox.put('thisMonth', firstMonth);
       await userDataBox.put('passedDays', 1);
@@ -90,7 +97,7 @@ class WelcomePage extends StatelessWidget {
                 color: Colors.green,
                 onPressed: () async {
                   reload.reloded();
-                  makeDir(false);
+                  makeDir();
                   Timer(Duration(milliseconds: 2000), reload.finishload);
                   Timer(Duration(milliseconds: 2500), changepage);
                 },

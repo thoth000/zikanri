@@ -33,8 +33,7 @@ class SettingPage extends StatelessWidget {
               padding: const EdgeInsets.all(10.0),
               child: Text(
                 '基本設定',
-                style: TextStyle(
-                    fontSize: FontSize.small),
+                style: TextStyle(fontSize: FontSize.small),
               ),
             ),
             Divider(
@@ -60,7 +59,10 @@ class SettingPage extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       'プロフィールを変更',
-                      style: TextStyle(fontSize: FontSize.xsmall,fontWeight: FontWeight.w700,),
+                      style: TextStyle(
+                        fontSize: FontSize.xsmall,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ],
                 ),
@@ -89,7 +91,10 @@ class SettingPage extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       'テーマを変更',
-                      style: TextStyle(fontSize: FontSize.xsmall,fontWeight: FontWeight.w700,),
+                      style: TextStyle(
+                        fontSize: FontSize.xsmall,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ],
                 ),
@@ -106,8 +111,7 @@ class SettingPage extends StatelessWidget {
               padding: const EdgeInsets.all(10.0),
               child: Text(
                 'データの設定',
-                style: TextStyle(
-                    fontSize: FontSize.small),
+                style: TextStyle(fontSize: FontSize.small),
               ),
             ),
             Divider(
@@ -125,7 +129,7 @@ class SettingPage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ProfileSettingPage(),
+                      builder: (context) => EditCategoryPage(),
                     ),
                   );
                 },
@@ -133,7 +137,10 @@ class SettingPage extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       'カテゴリーの編集',
-                      style: TextStyle(fontSize: FontSize.xsmall,fontWeight: FontWeight.w700,),
+                      style: TextStyle(
+                        fontSize: FontSize.xsmall,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ],
                 ),
@@ -162,7 +169,10 @@ class SettingPage extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       'ショートカットを編集',
-                      style: TextStyle(fontSize: FontSize.xsmall,fontWeight: FontWeight.w700,),
+                      style: TextStyle(
+                        fontSize: FontSize.xsmall,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ],
                 ),
@@ -187,13 +197,18 @@ class SettingPage extends StatelessWidget {
                 splashColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onPressed: () {
-                  showDialog(context: context,builder: (context)=>clearAlert(context));
+                  showDialog(
+                      context: context,
+                      builder: (context) => clearAlert(context));
                 },
                 child: Row(
                   children: <Widget>[
                     Text(
                       'アプリデータの削除',
-                      style: TextStyle(fontSize: FontSize.xsmall,fontWeight: FontWeight.w700,color: Colors.red),
+                      style: TextStyle(
+                          fontSize: FontSize.xsmall,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.red),
                     ),
                   ],
                 ),

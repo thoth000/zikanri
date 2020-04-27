@@ -31,7 +31,7 @@ class Vib {
 }
 
 AssetImage userIcon = AssetImage('images/zikanri_icon.png');
-
+//TODO:うえ
 const List iconList = [
   ["57746", "指定なし"],
   ["57680", "勉強"],
@@ -238,12 +238,12 @@ class ThemeNotifier with ChangeNotifier {
 //changeNotifier for userData
 class UserDataNotifier with ChangeNotifier {
   String userName = "ゲスト";
-  bool registerCheck = false;
   String previousDate = "2020年01月01日";
   String thisMonth = "01";
   int totalPassedDays = 1;
   int passedDays = 1;
   int keynum = 5;
+  int categorykey = 5;
 
   String tmpName = '';
 
@@ -279,6 +279,10 @@ class UserDataNotifier with ChangeNotifier {
   List _todayDoneList = [];
   List get todayDoneList => _todayDoneList;
 
+  //[アイコン、名前、[total,good,per],]
+  List _categories = [];
+  List get categories => _categories;
+
   List _shortCuts = [];
   List get shortCuts => _shortCuts;
 
@@ -294,6 +298,14 @@ class UserDataNotifier with ChangeNotifier {
     userName = tmpName;
     notifyListeners();
     await Hive.box('userData').put('userName', userName);
+  }
+
+  Future addCategory(item)async{
+    categorykey+=1;
+    _categories.add(item);
+    notifyListeners();
+    await Hive.box('userData').put('categories',_categories);
+    await Hive.box('userData').put('categorykey', categorykey);
   }
 
   Future addShortCuts(item) async {
@@ -463,17 +475,18 @@ class UserDataNotifier with ChangeNotifier {
     _todayTime = userValue[6];
     _todayGood = userValue[7];
     _todayPer = userValue[8];
+    _categories = await box.get('categories');
     _latelyData = await box.get('latelyData');
     _todayDoneList = await box.get('todayDoneList');
     _shortCuts = await box.get('shortCuts');
     _activities = await box.get('activities');
     userName = await box.get('userName');
-    registerCheck = await box.get('resisterCheck');
     previousDate = await box.get('previousDate');
     thisMonth = await box.get('thisMonth');
     totalPassedDays = await box.get('totalPassedDays');
     passedDays = await box.get('passedDays');
     keynum = await box.get('keynum');
+    categorykey = await box.get('categorykey');
   }
 }
 
