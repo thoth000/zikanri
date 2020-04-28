@@ -7,7 +7,6 @@ import '../data.dart';
 import 'profile.dart';
 import 'theme.dart';
 import '../home/record_button.dart';
-import 'category.dart';
 
 class SettingPage extends StatelessWidget {
   Widget build(BuildContext context) {

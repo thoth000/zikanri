@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
-import 'package:flutter/foundation.dart';
 
 import '../splash.dart';
 import '../data.dart';
@@ -885,9 +884,6 @@ class ShortCutsEditPage extends StatelessWidget {
       ),
     );
   }
-<<<<<<< HEAD
-}
-=======
 }
 
 class EditCategoryPage extends StatelessWidget {
@@ -896,7 +892,6 @@ class EditCategoryPage extends StatelessWidget {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
     final record = Provider.of<RecordNotifier>(context);
-    var _controller = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -957,7 +952,8 @@ class EditCategoryPage extends StatelessWidget {
                                 children: <Widget>[
                                   Center(
                                     child: Icon(
-                                      Icons.settings, //TODO:アイコンは選択したものに
+                                      IconData(record.icon,
+                                          fontFamily: "MaterialIcons"),
                                       size: displaySize.width / 8,
                                     ),
                                   ),
@@ -1013,6 +1009,7 @@ class EditCategoryPage extends StatelessWidget {
                                 ),
                               ),
                               textInputAction: TextInputAction.go,
+                              onChanged: (s) => record.setCategoryTitle(s),
                             ),
                           ),
                         ],
@@ -1021,7 +1018,9 @@ class EditCategoryPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
-                            'タイトルを決めてください',
+                            (record.categoryError && record.categoryTitle == "")
+                                ? 'タイトルを決めてください'
+                                : '',
                             style: TextStyle(color: Colors.red),
                           ),
                           Card(
@@ -1042,12 +1041,13 @@ class EditCategoryPage extends StatelessWidget {
                                       fontWeight: FontWeight.w700),
                                 ),
                                 onPressed: () async {
-                                  if (record.title == "") {
+                                  if (record.categoryTitle == "") {
+                                    Vib.error();
                                     record.cErrorCheck();
                                   } else {
                                     Vib.decide();
                                     await userData.addCategory([
-                                      userData.categorykey,
+                                      userData.categorykey.toString(),
                                       record.icon,
                                       record.categoryTitle,
                                       [0, 0, 0],
@@ -1105,7 +1105,7 @@ class EditCategoryPage extends StatelessWidget {
                           color: theme.isDark
                               ? theme.themeColors[0]
                               : theme.themeColors[1],
-                          onPressed: () => userData.deleteShortCut(i),
+                          onPressed: () => userData.deleteCategory(i),
                         ),
                       ),
                     ),
@@ -1125,6 +1125,7 @@ class SelectIconPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
+    final record = Provider.of<RecordNotifier>(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -1135,14 +1136,6 @@ class SelectIconPage extends StatelessWidget {
             color: theme.isDark ? Colors.white : Colors.black,
           ),
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.check),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Wrap(
@@ -1161,15 +1154,30 @@ class SelectIconPage extends StatelessWidget {
                       ),
                     ),
                     Center(
-                      child: SizedBox(
+                      child: Container(
                         height: displaySize.width / 6,
                         width: displaySize.width / 6,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: (record.icon == int.parse(iconList[i][0]))
+                                ? (theme.isDark)
+                                    ? theme.themeColors[0]
+                                    : theme.themeColors[1]
+                                : Colors.grey,
+                            width: (record.icon == int.parse(iconList[i][0]))
+                                ? 3
+                                : 1,
+                          ),
+                        ),
                         child: FlatButton(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Container(),
-                          onPressed: () => print('ok'),
+                          onPressed: () {
+                            record.setIcon(i);
+                          },
                         ),
                       ),
                     ),
@@ -1182,4 +1190,3 @@ class SelectIconPage extends StatelessWidget {
     );
   }
 }
->>>>>>> parent of 8d2b4b6... カテゴリー追加オッケー
