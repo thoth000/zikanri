@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 
 import 'Splash.dart';
 import 'data.dart';
+import 'setting/category.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
