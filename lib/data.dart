@@ -86,6 +86,19 @@ class RecordNotifier with ChangeNotifier {
   bool get clickCheck => _clickCheck;
   bool _shortCut = false;
   bool get shortCut => _shortCut;
+  //addcategory
+  int icon = 0;
+  String categoryTitle='';
+  bool categoryError=false;
+
+  void resetIconandTitle(){
+    icon = 1111;
+    categoryTitle = '';
+  }
+
+  void cErrorCheck(){
+    categoryError=true;
+  }
 
   void changeTitle(String s) {
     _title = s;

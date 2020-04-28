@@ -891,6 +891,7 @@ class EditCategoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
+    final record = Provider.of<RecordNotifier>(context);
     var _controller = TextEditingController();
     return Scaffold(
       appBar: AppBar(
@@ -1036,7 +1037,19 @@ class EditCategoryPage extends StatelessWidget {
                                       fontSize: FontSize.small,
                                       fontWeight: FontWeight.w700),
                                 ),
-                                onPressed: () => print('追加！！！'),
+                                onPressed: () async {
+                                  if (record.title == "") {
+                                    record.cErrorCheck();
+                                  } else {
+                                    Vib.decide();
+                                    await userData.addCategory([
+                                      userData.categorykey,
+                                      record.icon,
+                                      record.categoryTitle,
+                                      [0, 0, 0],
+                                    ]);
+                                  }
+                                },
                               ),
                             ),
                           ),
