@@ -544,11 +544,12 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                           height: 5,
                         ),
                         Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.start,
                           children: <Widget>[
-                            for (var itemList in iconList)
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(right: 5, bottom: 10),
+                            for (var itemList in userData.categories)
+                              Container(
+                                width: displaySize.width / 4 - 10,
+                                margin: EdgeInsets.only(bottom: 10),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
@@ -564,10 +565,10 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                                       ? theme.themeColors[0]
                                                       : theme.themeColors[1]
                                                   : Colors.grey,
-                                          width:
-                                              (record.category == itemList[0])
-                                                  ? 3
-                                                  : 1,
+                                          width: (int.parse(record.category) ==
+                                                  itemList[1])
+                                              ? 3
+                                              : 1,
                                         ),
                                       ),
                                       child: Stack(
@@ -575,7 +576,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                           Center(
                                             child: Icon(
                                               IconData(
-                                                int.parse(itemList[0]),
+                                                itemList[1],
                                                 fontFamily: "MaterialIcons",
                                               ),
                                               color: (theme.isDark)
@@ -602,7 +603,9 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                       ),
                                     ),
                                     Text(
-                                      itemList[1],
+                                      itemList[2],
+                                      softWrap: false,
+                                      overflow: TextOverflow.fade,
                                       style: TextStyle(
                                         fontSize: FontSize.xxsmall,
                                       ),
@@ -610,6 +613,59 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                   ],
                                 ),
                               ),
+                            Container(
+                              width: displaySize.width / 4-10,
+                              margin: EdgeInsets.only(bottom:20),
+                              child: Column(
+                                children: <Widget>[
+                                  Container(
+                                    height: displaySize.width / 6.5,
+                                    width: displaySize.width / 6.5,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                        color: Colors.grey,
+                                        width: 1,
+                                      ),
+                                    ),
+                                    child: Stack(
+                                      children: <Widget>[
+                                        Center(
+                                          child: Icon(
+                                            Icons.more_horiz,
+                                            color: (theme.isDark)
+                                                ? Colors.white
+                                                : Colors.black,
+                                            size: displaySize.width / 15,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: displaySize.width / 6.5,
+                                          width: displaySize.width / 6.5,
+                                          child: FlatButton(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            child: Container(),
+                                            color: Colors.transparent,
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      EditCategoryPage(),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ],
@@ -1068,7 +1124,7 @@ class EditCategoryPage extends StatelessWidget {
               height: 20,
             ),
             Text(
-              'カテゴリー一覧',
+              'カテゴリーリスト',
               style: TextStyle(
                   fontSize: FontSize.small, fontWeight: FontWeight.w700),
             ),
