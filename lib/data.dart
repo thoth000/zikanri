@@ -87,32 +87,18 @@ class RecordNotifier with ChangeNotifier {
   bool _shortCut = false;
   bool get shortCut => _shortCut;
   //addcategory
-  int icon = 57746;
+  int icon = 0;
   String categoryTitle='';
   bool categoryError=false;
 
-  void setIcon(i){
-    icon = int.parse(iconList[i][0]);
-    notifyListeners();
-  }
-
-  void setCategoryTitle(s){
-    categoryTitle=s;
-    notifyListeners();
-  }
-
   void resetIconandTitle(){
-    icon = 57746;
+    icon = 1111;
     categoryTitle = '';
-    categoryError=false;
-    notifyListeners();
   }
 
   void cErrorCheck(){
     categoryError=true;
-    notifyListeners();
   }
-  //
 
   void changeTitle(String s) {
     _title = s;
@@ -316,6 +302,16 @@ class UserDataNotifier with ChangeNotifier {
   List _activities = [];
   List get activities => _activities;
 
+  Future sortCategory(oldIndex, newIndex) async {
+    if (oldIndex < newIndex) {
+      newIndex -= 1;
+    }
+    final model = _categories.removeAt(oldIndex);
+    _categories.insert(newIndex, model);
+    notifyListeners();
+    await Hive.box('userData').put('categories', _categories);
+  }
+
   void nameChange(s) {
     tmpName = s;
     notifyListeners();
@@ -326,7 +322,7 @@ class UserDataNotifier with ChangeNotifier {
     notifyListeners();
     await Hive.box('userData').put('userName', userName);
   }
-  //category
+
   Future addCategory(item) async {
     categorykey += 1;
     _categories.add(item);
@@ -334,23 +330,6 @@ class UserDataNotifier with ChangeNotifier {
     await Hive.box('userData').put('categories', _categories);
     await Hive.box('userData').put('categorykey', categorykey);
   }
-
-  Future deleteCategory(index)async{
-    _categories.removeAt(index);
-    notifyListeners();
-    await Hive.box('userData').put('categories', _categories);
-  }
-
-  Future sortCategory(oldIndex, newIndex) async {
-    if (oldIndex < newIndex) {
-      newIndex -= 1;
-    }
-    final model = _categories.removeAt(oldIndex);
-    _categories.insert(newIndex, model);
-    notifyListeners();
-    await Hive.box('userData').put('categories', _categories);
-  }
-  //
 
   Future addShortCuts(item) async {
     keynum += 1;

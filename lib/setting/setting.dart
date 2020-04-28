@@ -12,7 +12,6 @@ import 'category.dart';
 class SettingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
-    final record = Provider.of<RecordNotifier>(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -128,7 +127,6 @@ class SettingPage extends StatelessWidget {
                 splashColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onPressed: () {
-                  record.resetIconandTitle();
                   Navigator.push(
                     context,
                     MaterialPageRoute(
