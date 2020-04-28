@@ -6,6 +6,7 @@ import 'Splash.dart';
 import 'data.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
     ChangeNotifierProvider(
       create: (_) => ThemeNotifier(),
