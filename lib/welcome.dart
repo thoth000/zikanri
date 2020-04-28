@@ -54,13 +54,6 @@ class WelcomePage extends StatelessWidget {
         tTime,tGood,tPer
       ]*/
       await userDataBox.put('userValue', [0, 0, 0, 0, 0, 0, 0, 0, 0]);
-      await userDataBox.put('categories',
-      [
-        ["0",57746, "指定なし",[0,0,0]],
-        ["1",57680, "勉強",[0,0,0]],
-        ["2",58726, "運動",[0,0,0]],
-        ["3",57519, "仕事",[0,0,0]],
-      ]);
       await userDataBox.put('latelyData', [
         [firstdate, 0, 0, 0, []],
       ]);

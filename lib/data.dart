@@ -87,34 +87,6 @@ class RecordNotifier with ChangeNotifier {
   bool _shortCut = false;
   bool get shortCut => _shortCut;
 
-  //category
-  int icon = 57746;
-  String categoryTitle='';
-  bool categoryError=false;
-
-  void setIcon(i){
-    icon = int.parse(iconList[i][0]);
-    notifyListeners();
-  }
-
-  void setCategoryTitle(s){
-    categoryTitle=s;
-    notifyListeners();
-  }
-
-  void resetIconandTitle(){
-    icon = 57746;
-    categoryTitle = '';
-    categoryError=false;
-    notifyListeners();
-  }
-
-  void cErrorCheck(){
-    categoryError=true;
-    notifyListeners();
-  }
-  //
-
   void changeTitle(String s) {
     _title = s;
     if (_title == "") {
@@ -307,25 +279,11 @@ class UserDataNotifier with ChangeNotifier {
   List _todayDoneList = [];
   List get todayDoneList => _todayDoneList;
 
-  //[アイコン、名前、[total,good,per],]
-  List _categories = [];
-  List get categories => _categories;
-
   List _shortCuts = [];
   List get shortCuts => _shortCuts;
 
   List _activities = [];
   List get activities => _activities;
-
-  Future sortCategory(oldIndex, newIndex) async {
-    if (oldIndex < newIndex) {
-      newIndex -= 1;
-    }
-    final model = _categories.removeAt(oldIndex);
-    _categories.insert(newIndex, model);
-    notifyListeners();
-    await Hive.box('userData').put('categories', _categories);
-  }
 
   void nameChange(s) {
     tmpName = s;
@@ -337,21 +295,6 @@ class UserDataNotifier with ChangeNotifier {
     notifyListeners();
     await Hive.box('userData').put('userName', userName);
   }
-  //category
-  Future addCategory(item) async {
-    categorykey += 1;
-    _categories.add(item);
-    notifyListeners();
-    await Hive.box('userData').put('categories', _categories);
-    await Hive.box('userData').put('categorykey', categorykey);
-  }
-
-  Future deleteCategory(index)async{
-    _categories.removeAt(index);
-    notifyListeners();
-    await Hive.box('userData').put('categories', _categories);
-  }
-  //
 
   Future addShortCuts(item) async {
     keynum += 1;
@@ -520,7 +463,6 @@ class UserDataNotifier with ChangeNotifier {
     _todayTime = userValue[6];
     _todayGood = userValue[7];
     _todayPer = userValue[8];
-    _categories = await box.get('categories');
     _latelyData = await box.get('latelyData');
     _todayDoneList = await box.get('todayDoneList');
     _shortCuts = await box.get('shortCuts');

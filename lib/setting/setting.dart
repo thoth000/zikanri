@@ -129,38 +129,6 @@ class SettingPage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => EditCategoryPage(),
-                    ),
-                  );
-                },
-                child: Row(
-                  children: <Widget>[
-                    Text(
-                      'カテゴリーの編集',
-                      style: TextStyle(
-                        fontSize: FontSize.xsmall,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Divider(
-              height: 1,
-              thickness: 1,
-            ),
-            Container(
-              height: displaySize.width / 6,
-              width: displaySize.width,
-              child: FlatButton(
-                color: Colors.transparent,
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
                       builder: (context) => ShortCutsEditPage(),
                     ),
                   );
@@ -220,27 +188,6 @@ class SettingPage extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget themeChanger(theme, i) {
-    return Container(
-      height: displaySize.width / 8,
-      width: displaySize.width / 8,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        gradient: LinearGradient(
-          colors: baseColors[int.parse(theme.myColors[i])],
-        ),
-      ),
-      child: FlatButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5),
-        ),
-        color: Colors.transparent,
-        child: Container(),
-        onPressed: () async => await theme.changeTheme(i),
       ),
     );
   }

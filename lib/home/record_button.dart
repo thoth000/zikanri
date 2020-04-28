@@ -544,12 +544,11 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                           height: 5,
                         ),
                         Wrap(
-                          crossAxisAlignment: WrapCrossAlignment.start,
                           children: <Widget>[
-                            for (var itemList in userData.categories)
-                              Container(
-                                width: displaySize.width / 4 - 10,
-                                margin: EdgeInsets.only(bottom: 10),
+                            for (var itemList in iconList)
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(right: 5, bottom: 10),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
@@ -565,10 +564,10 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                                       ? theme.themeColors[0]
                                                       : theme.themeColors[1]
                                                   : Colors.grey,
-                                          width: (int.parse(record.category) ==
-                                                  itemList[1])
-                                              ? 3
-                                              : 1,
+                                          width:
+                                              (record.category == itemList[0])
+                                                  ? 3
+                                                  : 1,
                                         ),
                                       ),
                                       child: Stack(
@@ -576,7 +575,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                           Center(
                                             child: Icon(
                                               IconData(
-                                                itemList[1],
+                                                int.parse(itemList[0]),
                                                 fontFamily: "MaterialIcons",
                                               ),
                                               color: (theme.isDark)
@@ -603,9 +602,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                       ),
                                     ),
                                     Text(
-                                      itemList[2],
-                                      softWrap: false,
-                                      overflow: TextOverflow.fade,
+                                      itemList[1],
                                       style: TextStyle(
                                         fontSize: FontSize.xxsmall,
                                       ),
@@ -613,59 +610,6 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                   ],
                                 ),
                               ),
-                            Container(
-                              width: displaySize.width / 4-10,
-                              margin: EdgeInsets.only(bottom:20),
-                              child: Column(
-                                children: <Widget>[
-                                  Container(
-                                    height: displaySize.width / 6.5,
-                                    width: displaySize.width / 6.5,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(
-                                        color: Colors.grey,
-                                        width: 1,
-                                      ),
-                                    ),
-                                    child: Stack(
-                                      children: <Widget>[
-                                        Center(
-                                          child: Icon(
-                                            Icons.more_horiz,
-                                            color: (theme.isDark)
-                                                ? Colors.white
-                                                : Colors.black,
-                                            size: displaySize.width / 15,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: displaySize.width / 6.5,
-                                          width: displaySize.width / 6.5,
-                                          child: FlatButton(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                            child: Container(),
-                                            color: Colors.transparent,
-                                            onPressed: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      EditCategoryPage(),
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
                           ],
                         ),
                       ],
@@ -937,311 +881,6 @@ class ShortCutsEditPage extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class EditCategoryPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final theme = Provider.of<ThemeNotifier>(context);
-    final userData = Provider.of<UserDataNotifier>(context);
-    final record = Provider.of<RecordNotifier>(context);
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        title: Text(
-          'カテゴリーの編集',
-          style: TextStyle(
-            color: theme.isDark ? Colors.white : Colors.black,
-          ),
-        ),
-      ),
-      body: Container(
-        width: displaySize.width,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              'カテゴリーの追加',
-              style: TextStyle(
-                  fontSize: FontSize.small, fontWeight: FontWeight.w700),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Container(
-                height: displaySize.width / 1.8,
-                width: displaySize.width / 1.2,
-                child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text(
-                            ' アイコン',
-                            style: TextStyle(
-                              fontSize: FontSize.small,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: SizedBox(
-                              height: displaySize.width / 7,
-                              width: displaySize.width / 7,
-                              child: Stack(
-                                children: <Widget>[
-                                  Center(
-                                    child: Icon(
-                                      IconData(record.icon,
-                                          fontFamily: "MaterialIcons"),
-                                      size: displaySize.width / 8,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: displaySize.width / 7,
-                                    width: displaySize.width / 7,
-                                    child: FlatButton(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      child: Container(),
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                SelectIconPage(),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text(
-                            ' タイトル',
-                            style: TextStyle(
-                              fontSize: FontSize.small,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          Container(
-                            width: displaySize.width / 2,
-                            child: TextField(
-                              cursorColor: (theme.isDark)
-                                  ? theme.themeColors[0]
-                                  : theme.themeColors[1],
-                              decoration: InputDecoration(
-                                hintText: 'タイトルを入力',
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: (theme.isDark)
-                                          ? theme.themeColors[0]
-                                          : theme.themeColors[1],
-                                      width: 2),
-                                ),
-                              ),
-                              textInputAction: TextInputAction.go,
-                              onChanged: (s) => record.setCategoryTitle(s),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text(
-                            (record.categoryError && record.categoryTitle == "")
-                                ? 'タイトルを決めてください'
-                                : '',
-                            style: TextStyle(color: Colors.red),
-                          ),
-                          Card(
-                            elevation: 5,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(100),
-                            ),
-                            child: Container(
-                              height: displaySize.width / 10,
-                              child: FlatButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(100),
-                                ),
-                                child: Text(
-                                  '追加',
-                                  style: TextStyle(
-                                      fontSize: FontSize.small,
-                                      fontWeight: FontWeight.w700),
-                                ),
-                                onPressed: () async {
-                                  if (record.categoryTitle == "") {
-                                    Vib.error();
-                                    record.cErrorCheck();
-                                  } else {
-                                    Vib.decide();
-                                    await userData.addCategory([
-                                      userData.categorykey.toString(),
-                                      record.icon,
-                                      record.categoryTitle,
-                                      [0, 0, 0],
-                                    ]);
-                                  }
-                                },
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              'カテゴリーリスト',
-              style: TextStyle(
-                  fontSize: FontSize.small, fontWeight: FontWeight.w700),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Expanded(
-              child: ReorderableListView(
-                children: <Widget>[
-                  for (int i = 1; i < userData.categories.length; i++)
-                    Card(
-                      key: Key(userData.categories[i][0]),
-                      child: ListTile(
-                        leading: Icon(
-                          IconData(
-                            userData.categories[i][1],
-                            fontFamily: 'MaterialIcons',
-                          ),
-                          color: (theme.isDark)
-                              ? theme.themeColors[0]
-                              : theme.themeColors[1],
-                          size: displaySize.width / 12,
-                        ),
-                        title: Text(
-                          userData.categories[i][2],
-                          overflow: TextOverflow.fade,
-                          softWrap: false,
-                        ),
-                        trailing: IconButton(
-                          icon: Icon(
-                            Icons.remove_circle_outline,
-                          ),
-                          iconSize: displaySize.width / 12,
-                          color: theme.isDark
-                              ? theme.themeColors[0]
-                              : theme.themeColors[1],
-                          onPressed: () => userData.deleteCategory(i),
-                        ),
-                      ),
-                    ),
-                ],
-                onReorder: (oldIndex, newIndex) =>
-                    userData.sortCategory(oldIndex + 1, newIndex + 1),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class SelectIconPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final theme = Provider.of<ThemeNotifier>(context);
-    final record = Provider.of<RecordNotifier>(context);
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        title: Text(
-          'アイコンの選択',
-          style: TextStyle(
-            color: theme.isDark ? Colors.white : Colors.black,
-          ),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Wrap(
-          children: <Widget>[
-            for (int i = 0; i < iconList.length; i++)
-              SizedBox(
-                height: displaySize.width / 4,
-                width: displaySize.width / 4,
-                child: Stack(
-                  children: <Widget>[
-                    Center(
-                      child: Icon(
-                        IconData(int.parse(iconList[i][0]),
-                            fontFamily: 'MaterialIcons'),
-                        size: displaySize.width / 8,
-                      ),
-                    ),
-                    Center(
-                      child: Container(
-                        height: displaySize.width / 6,
-                        width: displaySize.width / 6,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            color: (record.icon == int.parse(iconList[i][0]))
-                                ? (theme.isDark)
-                                    ? theme.themeColors[0]
-                                    : theme.themeColors[1]
-                                : Colors.grey,
-                            width: (record.icon == int.parse(iconList[i][0]))
-                                ? 3
-                                : 1,
-                          ),
-                        ),
-                        child: FlatButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Container(),
-                          onPressed: () {
-                            record.setIcon(i);
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-          ],
-        ),
       ),
     );
   }
