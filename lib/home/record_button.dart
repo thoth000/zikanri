@@ -354,7 +354,6 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                         children: <Widget>[
                                           Row(
                                             children: <Widget>[
-                                              //心配なのはstatefulでnotifierが動かないこと
                                               blocButton(theme, record, false),
                                               SizedBox(
                                                 width: displaySize.width / 50,
@@ -545,7 +544,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                         ),
                         Wrap(
                           children: <Widget>[
-                            for (var itemList in iconList)
+                            for (var itemList in userData.categories)
                               Padding(
                                 padding:
                                     const EdgeInsets.only(right: 5, bottom: 10),
@@ -575,7 +574,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                           Center(
                                             child: Icon(
                                               IconData(
-                                                int.parse(itemList[0]),
+                                                itemList[0],
                                                 fontFamily: "MaterialIcons",
                                               ),
                                               color: (theme.isDark)
@@ -776,7 +775,7 @@ class ShortCutSheet extends StatelessWidget {
                                 children: <Widget>[
                                   Icon(
                                     IconData(
-                                      int.parse(itemList[0]),
+                                      itemList[0],
                                       fontFamily: "MaterialIcons",
                                     ),
                                     color: (itemList[3])
@@ -848,7 +847,7 @@ class ShortCutsEditPage extends StatelessWidget {
                     child: ListTile(
                       leading: Icon(
                         IconData(
-                          int.parse(userData.shortCuts[i][0]),
+                          userData.shortCuts[i][0],
                           fontFamily: 'MaterialIcons',
                         ),
                         color: (userData.shortCuts[i][3])
@@ -880,6 +879,183 @@ class ShortCutsEditPage extends StatelessWidget {
                   userData.sort(oldIndex, newIndex),
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class CategoryEditPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeNotifier>(context);
+    final userData = Provider.of<UserDataNotifier>(context);
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        title: Text(
+          'カテゴリーを編集',
+          style: TextStyle(
+            color: theme.isDark ? Colors.white : Colors.black,
+          ),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        child: ListView(
+          children: <Widget>[for (int i = 0; i < 4; i++) CategoryCard(i)],
+        ),
+      ),
+    );
+  }
+}
+
+class CategoryCard extends StatelessWidget {
+  final int index;
+  CategoryCard(this.index);
+  @override
+  Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeNotifier>(context);
+    final userData = Provider.of<UserDataNotifier>(context);
+    final category = Provider.of<CategoryNotifier>(context);
+    return Container(
+      height: displaySize.width / 3,
+      width: displaySize.width,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Container(
+              width: displaySize.width / 1.7,
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    (index + 1).toString() + '.',
+                    style: TextStyle(
+                      fontSize: FontSize.midium,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                          height: displaySize.width / 8,
+                          width: displaySize.width / 8,
+                          child: Stack(
+                            children: <Widget>[
+                              Center(
+                                child: Icon(
+                                  IconData(userData.categories[index+4][0], fontFamily: "MaterialIcons"),
+                                  size: displaySize.width / 8,
+                                ),
+                              ),
+                            ],
+                          )),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        userData.categories[index+4][1],
+                        style: TextStyle(fontSize: FontSize.small),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              SizedBox(
+                height: displaySize.width / 8,
+                child: RaisedButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: Text('変更'),
+                  color: theme.isDark ? Color(0XFF424242) : Colors.white,
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SelectIconPage(index),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: displaySize.width / 8,
+                child: RaisedButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  color: Colors.red,
+                  child: Text('リセット',style: TextStyle(color: Colors.white),),
+                  onPressed: () => tmp = 1,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SelectIconPage extends StatelessWidget {
+  final int index;
+  SelectIconPage(this.index);
+  @override
+  Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeNotifier>(context);
+    final userData = Provider.of<UserDataNotifier>(context);
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        title: Text(
+          'アイコンの選択',
+          style: TextStyle(color: theme.isDark ? Colors.white : Colors.black),
+        ),
+      ),
+      body: GridView.count(
+        crossAxisCount: 3,
+        childAspectRatio: 1.5,
+        crossAxisSpacing: displaySize.width / 25,
+        mainAxisSpacing: 10,
+        children: <Widget>[
+          for (int i = 0; i < iconList.length; i++)
+            SizedBox(
+              width: displaySize.width / 4,
+              height: displaySize.width / 4,
+              child: FlatButton(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      IconData(iconList[i][0],
+                          fontFamily: "MaterialIcons"),
+                      size: displaySize.width / 8,
+                    ),
+                    Text(iconList[i][1]),
+                  ],
+                ),
+                onPressed: () => userData.editCategory(
+                    index, iconList[i][0], iconList[i][1]),
+              ),
+            ),
         ],
       ),
     );

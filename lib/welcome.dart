@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:zikanri/data.dart';
 
+
+import 'data.dart';
 import 'home/home.dart';
 
 class WelcomePage extends StatelessWidget {
@@ -61,14 +62,25 @@ class WelcomePage extends StatelessWidget {
       await userDataBox.put(
         'shortCuts',
         [
-          ['57680', '数学の勉強', 60, true,1],
-          ['58726', 'バスケの練習', 120, true,2],
-          ['58168', 'ひと狩り', 120, false,3],
-          ['58143', 'Webプログラミング', 240, true,4],
+          [57680, '数学の勉強', 60, true,1],
+          [58726, 'バスケの練習', 120, true,2],
+          [58168, 'ひと狩り', 120, false,3],
+          [58143, 'Webプログラミング', 240, true,4],
         ],
       );
+      await userDataBox.put('categories',
+      [
+        [57746, "指定なし",[0,0,0]],
+        [57680, "勉強",[0,0,0]],
+        [59601, "生活",[0,0,0]],
+        [57519, "仕事",[0,0,0]],
+        [58320,"趣味1",[0,0,0]],
+        [58321,"趣味2",[0,0,0]],
+        [58322,"趣味3",[0,0,0]],
+        [58324,"趣味4",[0,0,0]],
+      ],
+      );
       await userDataBox.put('keynum', 5);
-      await userDataBox.put('categorykey',4);
       await userDataBox.put('activities', []);
       await userDataBox.put('userName', 'ゲスト');
       await userDataBox.put('previousDate', firstdate);

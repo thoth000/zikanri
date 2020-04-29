@@ -118,7 +118,7 @@ class _MinuteMeterState extends State<MinuteMeter> {
                                 children: <Widget>[
                                   Icon(
                                     IconData(
-                                        int.parse(userData.activities[i][3]),
+                                        userData.activities[i][3],
                                         fontFamily: "MaterialIcons"),
                                     size: displaySize.width / 10,
                                     color: Colors.grey,
@@ -339,7 +339,7 @@ class FinishRecordDialog extends StatelessWidget {
             children: <Widget>[
               Icon(
                 IconData(
-                  int.parse(record.category),
+                  record.category,
                   fontFamily: 'MaterialIcons',
                 ),
                 size: displaySize.width / 10,

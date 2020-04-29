@@ -33,20 +33,50 @@ class Vib {
 AssetImage userIcon = AssetImage('images/zikanri_icon.png');
 //TODO:うえ
 const List iconList = [
-  ["57746", "指定なし",[0,0,0]],
-  ["57680", "勉強",[0,0,0]],
-  ["58726", "運動",[0,0,0]],
-  ["57519", "仕事",[0,0,0]],
-  ["59601", "生活",[0,0,0]],
-  ["58373", "音楽",[0,0,0]],
-  ["58378", "イラスト",[0,0,0]],
-  ["58168", "ゲーム",[0,0,0]],
-  ["58937", "メディア",[0,0,0]],
-  ["58917", "SNS",[0,0,0]],
-  ["58143", "IT",[0,0,0]],
-  ["58386", "カメラ",[0,0,0]],
-  ["58899", "ドライブ",[0,0,0]],
-  ["58699", "読書",[0,0,0]],
+  [
+    58726,
+    "運動",
+  ],
+  [
+    59601,
+    "生活",
+  ],
+  [
+    58373,
+    "音楽",
+  ],
+  [
+    58378,
+    "イラスト",
+  ],
+  [
+    58168,
+    "ゲーム",
+  ],
+  [
+    58937,
+    "メディア",
+  ],
+  [
+    58917,
+    "SNS",
+  ],
+  [
+    58143,
+    "IT",
+  ],
+  [
+    58386,
+    "カメラ",
+  ],
+  [
+    58899,
+    "ドライブ",
+  ],
+  [
+    58699,
+    "読書",
+  ],
 ];
 
 //BaseColor
@@ -72,8 +102,8 @@ class RecordNotifier with ChangeNotifier {
   String get title => _title;
   bool _isRecord = true;
   bool get isRecord => _isRecord;
-  String _category = "57746";
-  String get category => _category;
+  int _category = 57746;
+  int get category => _category;
   bool _isGood = false;
   bool get isGood => _isGood;
   int _time = 0;
@@ -128,10 +158,10 @@ class RecordNotifier with ChangeNotifier {
     notifyListeners();
   }
 
-  void changeCategory(String s) {
-    if (_category == s) {
+  void changeCategory(int icon) {
+    if (_category == icon) {
     } else {
-      _category = s;
+      _category = icon;
       notifyListeners();
     }
   }
@@ -169,7 +199,7 @@ class RecordNotifier with ChangeNotifier {
 
   void reset() {
     _title = "";
-    _category = "57746";
+    _category = 57746;
     _time = 0;
     _isGood = false;
     _timeCheck = true;
@@ -243,7 +273,6 @@ class UserDataNotifier with ChangeNotifier {
   int totalPassedDays = 1;
   int passedDays = 1;
   int keynum = 5;
-  int categorykey = 5;
 
   String tmpName = '';
 
@@ -272,7 +301,9 @@ class UserDataNotifier with ChangeNotifier {
     notifyListeners();
   }
 
-  //日付,記録時間,価値時間,価値の割合,DoneList
+  List _categories = [];
+  List get categories => _categories;
+
   List _latelyData = [];
   List get latelyData => _latelyData;
 
@@ -296,7 +327,14 @@ class UserDataNotifier with ChangeNotifier {
     await Hive.box('userData').put('userName', userName);
   }
 
-  Future addShortCuts(item) async {
+  Future editCategory(int index, int icon, String title) async {
+    _categories[index + 4][0] = icon;
+    _categories[index + 4][1] = title;
+    notifyListeners();
+    await Hive.box('userData').put('categories', _categories);
+  }
+
+  Future addShortCuts(List item) async {
     keynum += 1;
     _shortCuts.add(item);
     notifyListeners();
@@ -304,7 +342,7 @@ class UserDataNotifier with ChangeNotifier {
     await Hive.box('userData').put('keynum', keynum);
   }
 
-  void sort(oldIndex, newIndex) async {
+  void sort(int oldIndex, int newIndex) async {
     if (oldIndex < newIndex) {
       newIndex -= 1;
     }
@@ -314,7 +352,7 @@ class UserDataNotifier with ChangeNotifier {
     await Hive.box('userData').put('shortCuts', _shortCuts);
   }
 
-  void deleteShortCut(index) async {
+  void deleteShortCut(int index) async {
     _shortCuts.removeAt(index);
     notifyListeners();
     await Hive.box('userData').put('shortCuts', _shortCuts);
@@ -324,7 +362,7 @@ class UserDataNotifier with ChangeNotifier {
   Future addActivity(
     DateTime startTime,
     String title,
-    String category,
+    int category,
   ) async {
     Vib.decide();
     _activities.add([startTime, false, title, category, 1, 1]);
@@ -332,7 +370,7 @@ class UserDataNotifier with ChangeNotifier {
     await Hive.box('userData').put('activities', _activities);
   }
 
-  Future finishActivity(i) async {
+  Future finishActivity(int i) async {
     _activities.removeAt(i);
     notifyListeners();
     await Hive.box('userData').put('activities', _activities);
@@ -367,7 +405,7 @@ class UserDataNotifier with ChangeNotifier {
     await Hive.box('userData').put('activities', _activities);
   }
 
-  Future recordDone(listData) async {
+  Future recordDone(List listData) async {
     Vib.decide();
     int time = listData[2];
     _allTime += time;
@@ -408,7 +446,7 @@ class UserDataNotifier with ChangeNotifier {
     await Hive.box('userData').put('latelyData', _latelyData);
   }
 
-  Future deleteDone(listData, index) async {
+  Future deleteDone(List listData, int index) async {
     Vib.select();
     int time = listData[2];
     _allTime -= time;
@@ -465,6 +503,7 @@ class UserDataNotifier with ChangeNotifier {
     _todayPer = userValue[8];
     _latelyData = await box.get('latelyData');
     _todayDoneList = await box.get('todayDoneList');
+    _categories = await box.get('categories');
     _shortCuts = await box.get('shortCuts');
     _activities = await box.get('activities');
     userName = await box.get('userName');
@@ -473,7 +512,6 @@ class UserDataNotifier with ChangeNotifier {
     totalPassedDays = await box.get('totalPassedDays');
     passedDays = await box.get('passedDays');
     keynum = await box.get('keynum');
-    categorykey = await box.get('categorykey');
   }
 }
 
@@ -487,6 +525,53 @@ class ReloadNotifier with ChangeNotifier {
 
   void finishload() {
     _reload = false;
+    notifyListeners();
+  }
+}
+
+class CategoryNotifier with ChangeNotifier {
+  int c1;
+  int c2;
+  int c3;
+  int c4;
+  String t1;
+  String t2;
+  String t3;
+  String t4;
+  void change1(category, title) {
+    c1 = category;
+    t1 = title;
+    notifyListeners();
+  }
+
+  void change2(category, title) {
+    c2 = category;
+    t2 = title;
+    notifyListeners();
+  }
+
+  void change3(category, title) {
+    c3 = category;
+    t3 = title;
+    notifyListeners();
+  }
+
+  void change4(category, title) {
+    c4 = category;
+    t4 = title;
+    notifyListeners();
+  }
+
+  Future initilize() async {
+    var _categories = await Hive.box('userData').get('categories');
+    t1 = _categories[4][1];
+    t2 = _categories[5][1];
+    t3 = _categories[6][1];
+    t4 = _categories[7][1];
+    c1 = _categories[4][0];
+    c2 = _categories[5][0];
+    c3 = _categories[6][0];
+    c4 = _categories[7][0];
     notifyListeners();
   }
 }

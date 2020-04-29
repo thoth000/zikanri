@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/rendering.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 
 import 'package:zikanri/data.dart';
 import 'package:zikanri/items/drawer/drawer.dart';
@@ -37,29 +38,26 @@ class LatelyPage extends StatelessWidget {
       body: ListView(
         children: <Widget>[
           SizedBox(
-            height: displaySize.width / 15,
-          ),
-          SizedBox(
-            height: displaySize.width / 2 + 20,
-            child: PageView(
-              onPageChanged: (i) {
+            height: displaySize.width / 2+20,
+            child: Swiper(
+              itemCount: userData.latelyData.length,
+              onIndexChanged: (i) {
                 userData.setIndex(i);
               },
-              controller: PageController(
-                initialPage: userData.latelyData.length,
+              loop: false,
+              customLayoutOption: CustomLayoutOption(
+                startIndex: userData.latelyData.length-1
               ),
-              children: <Widget>[
-                for (var itemList in userData.latelyData) DayData(itemList),
-              ],
+              controller: SwiperController(),
+              itemBuilder: (context,index){
+                return DayData(userData.latelyData[index]);
+              },
             ),
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 10.0),
-            child: _dayDone(
-              (userData.latelyData.length == 1) ? 0 : userData.index,
-              theme,
-              userData,
-            ),
+          _dayDone(
+            (userData.latelyData.length == 1) ? 0 : userData.index,
+            theme,
+            userData,
           ),
           SizedBox(
             height: displaySize.width / 10,
@@ -149,7 +147,7 @@ class LatelyPage extends StatelessWidget {
             ),
             child: Icon(
               IconData(
-                int.parse(itemList[0]),
+                itemList[0],
                 fontFamily: 'MaterialIcons',
               ),
               size: displaySize.width / 12,
