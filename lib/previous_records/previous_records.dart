@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 
 import '../data.dart';
 import '../items/drawer/drawer.dart';
@@ -51,16 +52,17 @@ class PRPage extends StatelessWidget {
                     width: 3,
                   ),
                 ),
-                child: PageView.builder(
+                child:Swiper(
                   itemCount: 3,
-                  controller: PageController(
-                    initialPage: 1,
-                  ),
+                  autoplay: true,
+                  autoplayDelay: 10000,
+                  duration: 1000,
+                  controller: SwiperController(),
                   itemBuilder: (context, index) {
-                    if (index % 3 == 1)
+                    if (index % 3 == 0)
                       return topCard(
                           '総記録時間', userData.allTime.toString() + '分');
-                    else if (index % 3 == 0)
+                    else if (index % 3 == 1)
                       return topCard(
                           '総価値時間', userData.allGood.toString() + '分');
                     return topCard('価値の割合', userData.allPer.toString() + '%');

@@ -29,6 +29,8 @@ class _SplashPageState extends State<SplashPage> {
     await Hive.initFlutter();
     await Hive.openBox('theme');
     await Hive.openBox('userData');
+    await Hive.box('theme').clear();
+    await Hive.box('userData').clear();
     if (Hive.box('userData').containsKey('welcome')) {
       final date = DateFormat("yyyy年MM月dd日").format(DateTime.now());
       final month = DateFormat("MM").format(DateTime.now());
