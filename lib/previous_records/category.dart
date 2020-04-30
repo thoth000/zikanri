@@ -37,29 +37,44 @@ class CategoryPage extends StatelessWidget {
       ),
     ];
     return Scaffold(
-      appBar: AppBar(),
-      body: ListView(
-        children: <Widget>[
-          SizedBox(
-            height: 10,
-          ),
-          Hero(
-            tag: index.toString(),
-            child: AnimatedCircularChart(
-              edgeStyle: SegmentEdgeStyle.round,
-              duration: Duration.zero,
-              initialChartData: data,
-              key: _chartKey,
-              size: Size(displaySize.width / 2, displaySize.width / 2),
-              holeLabel: list[2][2].toString() + '%',
-              labelStyle: TextStyle(
-                fontSize: FontSize.large,
-                fontWeight: FontWeight.w700,
-                color: theme.isDark ? Colors.white : Colors.black,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+      ),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal:displaySize.width/20),
+        child: Column(
+          children: <Widget>[
+            SizedBox(height: 10,),
+            Row(
+              children: <Widget>[
+                Icon(IconData(icon,fontFamily: 'MaterialIcons'),
+                size: displaySize.width/10,
+                ),
+                Text(" "+title,style: TextStyle(fontSize: FontSize.xlarge,fontWeight: FontWeight.w700),),
+              ],
+            ),
+            SizedBox(height: 10,),
+            Hero(
+              tag: index.toString(),
+              child: AnimatedCircularChart(
+                edgeStyle: SegmentEdgeStyle.round,
+                duration: Duration.zero,
+                initialChartData: data,
+                key: _chartKey,
+                size: Size(displaySize.width / 2, displaySize.width / 2),
+                holeLabel: list[2][2].toString() + '%',
+                labelStyle: TextStyle(
+                  fontSize: FontSize.large,
+                  fontWeight: FontWeight.w700,
+                  color: theme.isDark ? Colors.white : Colors.black,
+                ),
               ),
             ),
-          ),
-        ],
+            Text("記録時間:"+values[0].toString()+"分"),
+            Text("価値時間:"+values[1].toString()+"分"),
+          ],
+        ),
       ),
     );
   }
