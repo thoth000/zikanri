@@ -546,7 +546,6 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                         ),
                         Wrap(
                           children: <Widget>[
-                            //ここをint iにおきかえることが必要
                             for(int i=0;i<userData.categories.length;i++)
                               Padding(
                                 padding:
@@ -1046,8 +1045,14 @@ class SelectIconPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Icon(
-                      IconData(iconList[i][0],
-                          fontFamily: "MaterialIcons"),
+                      IconData(
+                        iconList[i][0],
+                        fontFamily: "MaterialIcons",
+                      ),
+                      color: (userData.categories[index+4][0]==iconList[i][0])?(theme.isDark)
+                                ? theme.themeColors[0]
+                                : theme.themeColors[1]
+                            : Colors.grey,
                       size: displaySize.width / 8,
                     ),
                     Text(iconList[i][1]),

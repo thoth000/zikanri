@@ -258,6 +258,9 @@ class SettingPage extends StatelessWidget {
 
   Widget clearAlert(BuildContext context) {
     return AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
       title: Text('データの永久削除'),
       content: Text('データを削除しますか？\n削除すると自動的にアプリが終了します。'),
       actions: <Widget>[
