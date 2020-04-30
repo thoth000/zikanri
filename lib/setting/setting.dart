@@ -10,6 +10,22 @@ import '../home/record_button.dart';
 
 class SettingPage extends StatelessWidget {
   Widget build(BuildContext context) {
+    Route _createRoute(page) {
+      return PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) => page,
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          var begin = Offset(1.0, 0.0);
+          var end = Offset.zero;
+          var curve = Curves.ease;
+          var tween =
+              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+          return SlideTransition(
+            position: animation.drive(tween),
+            child: child,
+          );
+        },
+      );
+    }
     final theme = Provider.of<ThemeNotifier>(context);
     return Scaffold(
       appBar: AppBar(
@@ -50,19 +66,23 @@ class SettingPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => ProfileSettingPage(),
-                    ),
+                    _createRoute(ProfileSettingPage(),),
                   );
                 },
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      'プロフィールを変更',
+                      'ユーザー名を変更',
                       style: TextStyle(
                         fontSize: FontSize.xsmall,
                         fontWeight: FontWeight.w700,
                       ),
+                    ),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.grey,
+                      size: displaySize.width/20,
                     ),
                   ],
                 ),
@@ -82,12 +102,11 @@ class SettingPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => ThemeSettingPage(),
-                    ),
+                    _createRoute(ThemeSettingPage(),),
                   );
                 },
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
                       'テーマを変更',
@@ -95,6 +114,11 @@ class SettingPage extends StatelessWidget {
                         fontSize: FontSize.xsmall,
                         fontWeight: FontWeight.w700,
                       ),
+                    ),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.grey,
+                      size: displaySize.width/20,
                     ),
                   ],
                 ),
@@ -128,12 +152,11 @@ class SettingPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => ShortCutsEditPage(),
-                    ),
+                    _createRoute(ShortCutsEditPage(),),
                   );
                 },
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
                       'ショートカットを編集',
@@ -141,6 +164,11 @@ class SettingPage extends StatelessWidget {
                         fontSize: FontSize.xsmall,
                         fontWeight: FontWeight.w700,
                       ),
+                    ),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.grey,
+                      size: displaySize.width/20,
                     ),
                   ],
                 ),
@@ -160,12 +188,11 @@ class SettingPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => CategoryEditPage(),
-                    ),
+                    _createRoute(CategoryEditPage(),),
                   );
                 },
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
                       'カテゴリーを編集',
@@ -173,6 +200,11 @@ class SettingPage extends StatelessWidget {
                         fontSize: FontSize.xsmall,
                         fontWeight: FontWeight.w700,
                       ),
+                    ),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.grey,
+                      size: displaySize.width/20,
                     ),
                   ],
                 ),

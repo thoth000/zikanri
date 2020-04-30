@@ -13,7 +13,7 @@ class ProfileSettingPage extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.transparent,
         title: Text(
-          'プロフィールを編集',
+          'ユーザー名の変更',
           style: TextStyle(
             color: (theme.isDark) ? Colors.white : Colors.black,
           ),
@@ -34,41 +34,29 @@ class ProfileSettingPage extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  height: displaySize.width / 3,
-                  width: displaySize.width / 3,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(image: userIcon),
-                  ),
-                  child: FlatButton(
-                    shape: CircleBorder(),
-                    child: Container(),
-                    onPressed: () => print('変更'),
-                  ),
-                ),
-                FlatButton(
-                  color: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  splashColor: Colors.transparent,
-                  child: Text(
-                    'プロフィール画像を変更',
-                    style: TextStyle(
-                      fontSize: FontSize.small,
-                    ),
-                  ),
-                  onPressed: () => print('変更'),
-                ),
-              ],
+            Text(
+              '今のユーザー名',
+              style: TextStyle(
+                color: Colors.grey,
+                fontSize: FontSize.small,
+
+              ),
             ),
             SizedBox(
               height: 10,
             ),
             Text(
-              'ユーザー名',
+              userData.userName,
+              style: TextStyle(
+                fontSize: FontSize.midium,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Text(
+              '新しいユーザー名',
               style: TextStyle(
                 color: Colors.grey,
                 fontSize: FontSize.xsmall,
@@ -81,7 +69,6 @@ class ProfileSettingPage extends StatelessWidget {
                     ? theme.themeColors[0]
                     : theme.themeColors[1],
                 decoration: InputDecoration(
-                  hintText: userData.userName,
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: (theme.isDark)
@@ -90,7 +77,7 @@ class ProfileSettingPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                style: TextStyle(fontSize: FontSize.small),
+                style: TextStyle(fontSize: FontSize.midium,fontWeight: FontWeight.w700,),
                 onChanged: (name) {
                   userData.nameChange(name);
                 },

@@ -31,7 +31,6 @@ class Vib {
 }
 
 AssetImage userIcon = AssetImage('images/zikanri_icon.png');
-//TODO:うえ
 const List iconList = [
   [
     58726,
@@ -102,8 +101,6 @@ class RecordNotifier with ChangeNotifier {
   String get title => _title;
   bool _isRecord = true;
   bool get isRecord => _isRecord;
-  int _category = 57746;
-  int get category => _category;
   int _categoryIndex = 0;
   int get categoryIndex => _categoryIndex;
   bool _isGood = false;
@@ -160,14 +157,6 @@ class RecordNotifier with ChangeNotifier {
     notifyListeners();
   }
 
-  void changeCategory(int icon) {
-    if (_category == icon) {
-    } else {
-      _category = icon;
-      notifyListeners();
-    }
-  }
-
   void changeCategoryIndex(int index) {
     _categoryIndex = index;
     notifyListeners();
@@ -206,7 +195,6 @@ class RecordNotifier with ChangeNotifier {
 
   void reset() {
     _title = "";
-    _category = 57746;
     _categoryIndex = 0;
     _time = 0;
     _isGood = false;
@@ -357,7 +345,6 @@ class UserDataNotifier with ChangeNotifier {
   }
 
   Future addShortCuts(List item) async {
-    print(item);
     keynum += 1;
     _shortCuts.add(item);
     notifyListeners();
