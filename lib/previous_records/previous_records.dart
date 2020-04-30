@@ -124,6 +124,7 @@ class GridCard extends StatelessWidget {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context, listen: false);
     Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
+    Color subcolor = (theme.isDark)?Colors.grey[700]:Colors.grey[200];
     final GlobalKey<AnimatedCircularChartState> _chartKey =
         new GlobalKey<AnimatedCircularChartState>();
     final list = userData.categories[index];
@@ -140,7 +141,7 @@ class GridCard extends StatelessWidget {
           ),
           new CircularSegmentEntry(
             (values[0] == 0) ? 1 : (values[0] - values[1]).toDouble(),
-            Colors.grey,
+            subcolor,
             rankKey: 'Q2',
           ),
         ],
