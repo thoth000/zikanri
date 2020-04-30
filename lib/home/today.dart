@@ -15,6 +15,7 @@ class TodayWidget extends StatelessWidget {
             child: Icon(
               IconData(
                 itemList[0],
+                //userData.categories[itemList[0]][0]
                 fontFamily: 'MaterialIcons',
               ),
               size: displaySize.width / 10,
@@ -48,14 +49,16 @@ class TodayWidget extends StatelessWidget {
             ),
           ),
           IconButton(
-              icon: Icon(
-                Icons.remove_circle_outline,
-              ),
-              iconSize: displaySize.width / 12,
-              color: theme.isDark ? theme.themeColors[0] : theme.themeColors[1],
-              onPressed: () => showDialog(
-                  context: context,
-                  child: _deleteAlert(context, itemList, index, userData))),
+            icon: Icon(
+              Icons.remove_circle_outline,
+            ),
+            iconSize: displaySize.width / 12,
+            color: theme.isDark ? theme.themeColors[0] : theme.themeColors[1],
+            onPressed: () => showDialog(
+              context: context,
+              child: _deleteAlert(context, itemList, index, userData),
+            ),
+          ),
         ],
       ),
     );

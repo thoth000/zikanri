@@ -12,6 +12,7 @@ class RButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
+    final record = Provider.of<RecordNotifier>(context);
     return Container(
       height: displaySize.width / 5,
       width: displaySize.width / 5,
@@ -53,6 +54,7 @@ class RButton extends StatelessWidget {
                   );
                 } else {
                   Vib.select();
+                  record.reset();
                   showModalBottomSheet(
                     shape: RoundedRectangleBorder(
                       borderRadius:
@@ -544,7 +546,9 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                         ),
                         Wrap(
                           children: <Widget>[
+                            //ここをint iにおきかえることが必要
                             for (var itemList in userData.categories)
+                            //fot(int i=0;i<userData.categories.length;i++)
                               Padding(
                                 padding:
                                     const EdgeInsets.only(right: 5, bottom: 10),
@@ -559,12 +563,14 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                         border: Border.all(
                                           color:
                                               (record.category == itemList[0])
+                                              //(record.categoryIndex==i)
                                                   ? (theme.isDark)
                                                       ? theme.themeColors[0]
                                                       : theme.themeColors[1]
                                                   : Colors.grey,
                                           width:
                                               (record.category == itemList[0])
+                                              //(record.categoryIndex==i)
                                                   ? 3
                                                   : 1,
                                         ),
@@ -575,6 +581,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                             child: Icon(
                                               IconData(
                                                 itemList[0],
+                                                //userData.categories[i][0]
                                                 fontFamily: "MaterialIcons",
                                               ),
                                               color: (theme.isDark)
@@ -595,6 +602,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                               color: Colors.transparent,
                                               onPressed: () => record
                                                   .changeCategory(itemList[0]),
+                                              //record.changeCategoryIndex(i)
                                             ),
                                           ),
                                         ],
@@ -602,6 +610,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                     ),
                                     Text(
                                       itemList[1],
+                                      //userData.categories[i][1]
                                       style: TextStyle(
                                         fontSize: FontSize.xxsmall,
                                       ),
@@ -918,7 +927,6 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
-    final category = Provider.of<CategoryNotifier>(context);
     return Container(
       height: displaySize.width / 3,
       width: displaySize.width,

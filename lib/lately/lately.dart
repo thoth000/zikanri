@@ -148,6 +148,7 @@ class LatelyPage extends StatelessWidget {
             child: Icon(
               IconData(
                 itemList[0],
+                //userData.categories[itemList[0]][0]
                 fontFamily: 'MaterialIcons',
               ),
               size: displaySize.width / 12,

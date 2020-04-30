@@ -119,6 +119,7 @@ class _MinuteMeterState extends State<MinuteMeter> {
                                   Icon(
                                     IconData(
                                         userData.activities[i][3],
+                                        //userData.categories[usereData.activities[i][3]][0]
                                         fontFamily: "MaterialIcons"),
                                     size: displaySize.width / 10,
                                     color: Colors.grey,
@@ -233,7 +234,7 @@ class _MinuteMeterState extends State<MinuteMeter> {
                                           record.copyData(
                                               userData.activities[i][3],
                                               userData.activities[i][2],
-                                              time);
+                                              time,);
                                           showDialog(
                                             context: context,
                                             builder: (context) =>
@@ -340,6 +341,7 @@ class FinishRecordDialog extends StatelessWidget {
               Icon(
                 IconData(
                   record.category,
+                  //userData.catgories[record.category][0]
                   fontFamily: 'MaterialIcons',
                 ),
                 size: displaySize.width / 10,
@@ -407,7 +409,6 @@ class FinishRecordDialog extends StatelessWidget {
                       );
                       userData.finishActivity(index);
                       Navigator.pop(context);
-                      record.reset();
                     },
                   ),
                 ),

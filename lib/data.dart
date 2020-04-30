@@ -104,6 +104,8 @@ class RecordNotifier with ChangeNotifier {
   bool get isRecord => _isRecord;
   int _category = 57746;
   int get category => _category;
+  int _categoryIndex = 0;
+  int get categoryIndex => _categoryIndex;
   bool _isGood = false;
   bool get isGood => _isGood;
   int _time = 0;
@@ -166,6 +168,11 @@ class RecordNotifier with ChangeNotifier {
     }
   }
 
+  void changeCategoryIndex(int index){
+    _categoryIndex = index;
+    notifyListeners();
+  }
+
   void recordMode() {
     if (_isRecord == true) {
     } else {
@@ -200,6 +207,7 @@ class RecordNotifier with ChangeNotifier {
   void reset() {
     _title = "";
     _category = 57746;
+    _categoryIndex=0;
     _time = 0;
     _isGood = false;
     _timeCheck = true;
@@ -404,8 +412,13 @@ class UserDataNotifier with ChangeNotifier {
     notifyListeners();
     await Hive.box('userData').put('activities', _activities);
   }
+  //ListDataとカテゴリーのインデックスを渡す。
+  //つまりカテゴリーのインデックスの変数を作る必要がある。
+  //つまりカテゴリーの変数ではなくて
+  //カテゴリーインデックスからcategoriesにアクセスをして
+  //アイコンデータを取得して表示する必要がある。
 
-  Future recordDone(List listData) async {
+  Future recordDone(List listData,) async {
     Vib.decide();
     int time = listData[2];
     _allTime += time;
@@ -529,49 +542,3 @@ class ReloadNotifier with ChangeNotifier {
   }
 }
 
-class CategoryNotifier with ChangeNotifier {
-  int c1;
-  int c2;
-  int c3;
-  int c4;
-  String t1;
-  String t2;
-  String t3;
-  String t4;
-  void change1(category, title) {
-    c1 = category;
-    t1 = title;
-    notifyListeners();
-  }
-
-  void change2(category, title) {
-    c2 = category;
-    t2 = title;
-    notifyListeners();
-  }
-
-  void change3(category, title) {
-    c3 = category;
-    t3 = title;
-    notifyListeners();
-  }
-
-  void change4(category, title) {
-    c4 = category;
-    t4 = title;
-    notifyListeners();
-  }
-
-  Future initilize() async {
-    var _categories = await Hive.box('userData').get('categories');
-    t1 = _categories[4][1];
-    t2 = _categories[5][1];
-    t3 = _categories[6][1];
-    t4 = _categories[7][1];
-    c1 = _categories[4][0];
-    c2 = _categories[5][0];
-    c3 = _categories[6][0];
-    c4 = _categories[7][0];
-    notifyListeners();
-  }
-}

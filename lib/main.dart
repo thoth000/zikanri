@@ -15,10 +15,7 @@ void main() {
           create: (_) => RecordNotifier(),
           child: ChangeNotifierProvider(
             create: (_) => ReloadNotifier(),
-            child: ChangeNotifierProvider(
-              create: (_) => CategoryNotifier(),
-              child: MyApp(),
-            ),
+            child: MyApp(),
           ),
         ),
       ),

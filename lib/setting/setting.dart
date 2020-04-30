@@ -11,7 +11,6 @@ import '../home/record_button.dart';
 class SettingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
-    final category = Provider.of<CategoryNotifier>(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -158,8 +157,7 @@ class SettingPage extends StatelessWidget {
                 color: Colors.transparent,
                 splashColor: Colors.transparent,
                 highlightColor: Colors.transparent,
-                onPressed: () async{
-                  await category.initilize();
+                onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
