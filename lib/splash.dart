@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'home/home.dart';
+import 'mypage.dart';
 import 'welcome.dart';
 import 'data.dart';
 
@@ -65,7 +66,7 @@ class _SplashPageState extends State<SplashPage> {
         () => Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => HomePage(),
+            builder: (context) => MyAppPage(),
           ),
         ),
       );
