@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
+import 'package:zikanri/previous_records/category.dart';
 
 import '../data.dart';
 
@@ -11,63 +12,63 @@ class PRPage extends StatelessWidget {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
     return Container(
-        width: displaySize.width,
-        child: ListView(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: displaySize.width / 5.5, vertical: 10),
-              child: Card(
-                elevation: 5,
-                shape: RoundedRectangleBorder(
+      width: displaySize.width,
+      child: ListView(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: displaySize.width / 5.5, vertical: 10),
+            child: Card(
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Container(
+                height: displaySize.width / 2.9,
+                decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: theme.isDark
+                        ? theme.themeColors[0]
+                        : theme.themeColors[1],
+                    width: 3,
+                  ),
                 ),
-                child: Container(
-                  height: displaySize.width / 2.9,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: theme.isDark
-                          ? theme.themeColors[0]
-                          : theme.themeColors[1],
-                      width: 3,
-                    ),
-                  ),
-                  child: Swiper(
-                    itemCount: 3,
-                    autoplay: true,
-                    autoplayDelay: 10000,
-                    duration: 1000,
-                    controller: SwiperController(),
-                    itemBuilder: (context, index) {
-                      if (index % 3 == 0)
-                        return topCard(
-                            '総記録時間', userData.allTime.toString() + '分');
-                      else if (index % 3 == 1)
-                        return topCard(
-                            '総価値時間', userData.allGood.toString() + '分');
-                      return topCard('価値の割合', userData.allPer.toString() + '%');
-                    },
-                  ),
+                child: Swiper(
+                  itemCount: 3,
+                  autoplay: true,
+                  autoplayDelay: 10000,
+                  duration: 1000,
+                  controller: SwiperController(),
+                  itemBuilder: (context, index) {
+                    if (index % 3 == 0)
+                      return topCard(
+                          '総記録時間', userData.allTime.toString() + '分');
+                    else if (index % 3 == 1)
+                      return topCard(
+                          '総価値時間', userData.allGood.toString() + '分');
+                    return topCard('価値の割合', userData.allPer.toString() + '%');
+                  },
                 ),
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
-            for (int i = 0; i < userData.categories.length; i += 2)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[GridCard(i), GridCard(i + 1)],
-                ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          for (int i = 0; i < userData.categories.length; i += 2)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[GridCard(i), GridCard(i + 1)],
               ),
-            SizedBox(
-              height: displaySize.width/10,
             ),
-          ],
-        ),
+          SizedBox(
+            height: displaySize.width / 10,
+          ),
+        ],
+      ),
     );
   }
 
@@ -80,11 +81,11 @@ class PRPage extends StatelessWidget {
           size: displaySize.width / 10,
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal:5.0),
+          padding: const EdgeInsets.symmetric(horizontal: 5.0),
           child: Text(
             value,
-            style:
-                TextStyle(fontSize: FontSize.xlarge, fontWeight: FontWeight.w700),
+            style: TextStyle(
+                fontSize: FontSize.xlarge, fontWeight: FontWeight.w700),
           ),
         ),
         Text(
@@ -104,7 +105,7 @@ class GridCard extends StatelessWidget {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context, listen: false);
     Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
-    Color subcolor = (theme.isDark)?Colors.grey[700]:Colors.grey[200];
+    Color subcolor = (theme.isDark) ? Colors.grey[700] : Colors.grey[200];
     final GlobalKey<AnimatedCircularChartState> _chartKey =
         new GlobalKey<AnimatedCircularChartState>();
     final list = userData.categories[index];
@@ -139,7 +140,9 @@ class GridCard extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          onPressed: () => tmp = 1,
+          onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>CategoryPage(index)));
+          },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -168,17 +171,21 @@ class GridCard extends StatelessWidget {
                 ),
               ),
               Center(
-                child: AnimatedCircularChart(
-                  edgeStyle: SegmentEdgeStyle.round,
-                  duration: Duration(seconds: 1),
-                  initialChartData: data,
-                  key: _chartKey,
-                  size: Size(displaySize.width / 4.5, displaySize.width / 4.5),
-                  holeLabel: list[2][2].toString() + '%',
-                  labelStyle: TextStyle(
-                    fontSize: FontSize.small,
-                    fontWeight: FontWeight.w700,
-                    color: theme.isDark ? Colors.white : Colors.black,
+                child: Hero(
+                  tag: index.toString(),
+                  child: AnimatedCircularChart(
+                    edgeStyle: SegmentEdgeStyle.round,
+                    duration: Duration.zero,
+                    initialChartData: data,
+                    key: _chartKey,
+                    size:
+                        Size(displaySize.width / 4.5, displaySize.width / 4.5),
+                    holeLabel: list[2][2].toString() + '%',
+                    labelStyle: TextStyle(
+                      fontSize: FontSize.small,
+                      fontWeight: FontWeight.w700,
+                      color: theme.isDark ? Colors.white : Colors.black,
+                    ),
                   ),
                 ),
               ),
