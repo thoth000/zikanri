@@ -14,8 +14,7 @@ class TodayWidget extends StatelessWidget {
             padding: const EdgeInsets.only(right: 5.0),
             child: Icon(
               IconData(
-                itemList[0],
-                //userData.categories[itemList[0]][0]
+                userData.categories[itemList[0]][0],
                 fontFamily: 'MaterialIcons',
               ),
               size: displaySize.width / 10,

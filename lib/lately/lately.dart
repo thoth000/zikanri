@@ -106,7 +106,7 @@ class LatelyPage extends StatelessWidget {
                   height: 5,
                 ),
                 for (int j = 0; j < userData.latelyData[i][4].length; j++)
-                  _dayDoneList(userData.latelyData[i][4][j], theme),
+                  _dayDoneList(userData.latelyData[i][4][j], theme,userData),
                 Center(
                   child: Padding(
                     padding: EdgeInsets.symmetric(
@@ -132,7 +132,7 @@ class LatelyPage extends StatelessWidget {
     );
   }
 
-  Widget _dayDoneList(List itemList, theme) {
+  Widget _dayDoneList(List itemList, theme,userData) {
     //itemListは各日のDoneListの中の記録
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -147,8 +147,7 @@ class LatelyPage extends StatelessWidget {
             ),
             child: Icon(
               IconData(
-                itemList[0],
-                //userData.categories[itemList[0]][0]
+                userData.categories[itemList[0]][0],
                 fontFamily: 'MaterialIcons',
               ),
               size: displaySize.width / 12,

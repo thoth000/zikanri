@@ -118,8 +118,7 @@ class _MinuteMeterState extends State<MinuteMeter> {
                                 children: <Widget>[
                                   Icon(
                                     IconData(
-                                        userData.activities[i][3],
-                                        //userData.categories[usereData.activities[i][3]][0]
+                                        userData.categories[userData.activities[i][3]][0],
                                         fontFamily: "MaterialIcons"),
                                     size: displaySize.width / 10,
                                     color: Colors.grey,
@@ -318,7 +317,7 @@ class _MinuteMeterState extends State<MinuteMeter> {
 
 class FinishRecordDialog extends StatelessWidget {
   final index;
-  //activity[0:datetime 1:bool 2:title 3:category 4:tmp 5:tmp]
+  //activity[0:datetime 1:bool 2:title 3:categoryIndex 4:tmp 5:tmp]
   FinishRecordDialog(this.index);
   @override
   Widget build(BuildContext context) {
@@ -340,8 +339,7 @@ class FinishRecordDialog extends StatelessWidget {
             children: <Widget>[
               Icon(
                 IconData(
-                  record.category,
-                  //userData.catgories[record.category][0]
+                  userData.categories[record.categoryIndex][0],
                   fontFamily: 'MaterialIcons',
                 ),
                 size: displaySize.width / 10,
@@ -401,7 +399,7 @@ class FinishRecordDialog extends StatelessWidget {
                     onPressed: () async {
                       userData.recordDone(
                         [
-                          record.category,
+                          record.categoryIndex,
                           record.title,
                           record.time,
                           record.isGood,

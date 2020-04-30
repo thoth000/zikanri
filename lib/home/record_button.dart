@@ -456,7 +456,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                 } else {
                                   if (record.shortCut) {
                                     userData.addShortCuts([
-                                      record.category,
+                                      record.categoryIndex,
                                       record.title,
                                       record.time,
                                       record.isGood,
@@ -465,7 +465,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                   }
                                   userData.recordDone(
                                     [
-                                      record.category,
+                                      record.categoryIndex,
                                       record.title,
                                       record.time,
                                       record.isGood,
@@ -480,7 +480,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                   record.click();
                                 } else {
                                   userData.addActivity(DateTime.now(),
-                                      record.title, record.category);
+                                      record.title, record.categoryIndex);
                                   Navigator.pop(context);
                                   record.reset();
                                 }
@@ -547,8 +547,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                         Wrap(
                           children: <Widget>[
                             //ここをint iにおきかえることが必要
-                            for (var itemList in userData.categories)
-                            //fot(int i=0;i<userData.categories.length;i++)
+                            for(int i=0;i<userData.categories.length;i++)
                               Padding(
                                 padding:
                                     const EdgeInsets.only(right: 5, bottom: 10),
@@ -562,15 +561,13 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                         borderRadius: BorderRadius.circular(10),
                                         border: Border.all(
                                           color:
-                                              (record.category == itemList[0])
-                                              //(record.categoryIndex==i)
+                                              (record.categoryIndex==i)
                                                   ? (theme.isDark)
                                                       ? theme.themeColors[0]
                                                       : theme.themeColors[1]
                                                   : Colors.grey,
                                           width:
-                                              (record.category == itemList[0])
-                                              //(record.categoryIndex==i)
+                                              (record.categoryIndex==i)
                                                   ? 3
                                                   : 1,
                                         ),
@@ -580,8 +577,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                           Center(
                                             child: Icon(
                                               IconData(
-                                                itemList[0],
-                                                //userData.categories[i][0]
+                                                userData.categories[i][0],
                                                 fontFamily: "MaterialIcons",
                                               ),
                                               color: (theme.isDark)
@@ -600,17 +596,15 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                               ),
                                               child: Container(),
                                               color: Colors.transparent,
-                                              onPressed: () => record
-                                                  .changeCategory(itemList[0]),
-                                              //record.changeCategoryIndex(i)
+                                              onPressed: () =>
+                                              record.changeCategoryIndex(i),
                                             ),
                                           ),
                                         ],
                                       ),
                                     ),
                                     Text(
-                                      itemList[1],
-                                      //userData.categories[i][1]
+                                      userData.categories[i][1],
                                       style: TextStyle(
                                         fontSize: FontSize.xxsmall,
                                       ),
@@ -784,7 +778,7 @@ class ShortCutSheet extends StatelessWidget {
                                 children: <Widget>[
                                   Icon(
                                     IconData(
-                                      itemList[0],
+                                      userData.categories[itemList[0]][0],
                                       fontFamily: "MaterialIcons",
                                     ),
                                     color: (itemList[3])
@@ -856,7 +850,7 @@ class ShortCutsEditPage extends StatelessWidget {
                     child: ListTile(
                       leading: Icon(
                         IconData(
-                          userData.shortCuts[i][0],
+                          userData.categories[userData.shortCuts[i][0]][0],
                           fontFamily: 'MaterialIcons',
                         ),
                         color: (userData.shortCuts[i][3])
@@ -898,7 +892,6 @@ class CategoryEditPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
-    final userData = Provider.of<UserDataNotifier>(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -1011,7 +1004,7 @@ class CategoryCard extends StatelessWidget {
                   ),
                   color: Colors.red,
                   child: Text('リセット',style: TextStyle(color: Colors.white),),
-                  onPressed: () => tmp = 1,
+                  onPressed: () =>userData.resetCategory(index),
                 ),
               ),
             ],

@@ -168,7 +168,7 @@ class RecordNotifier with ChangeNotifier {
     }
   }
 
-  void changeCategoryIndex(int index){
+  void changeCategoryIndex(int index) {
     _categoryIndex = index;
     notifyListeners();
   }
@@ -197,9 +197,9 @@ class RecordNotifier with ChangeNotifier {
     }
   }
 
-  void copyData(tmpCategory, tmpTitle, tmpTime) {
+  void copyData(tmpCategoryIndex, tmpTitle, tmpTime) {
     _title = tmpTitle;
-    _category = tmpCategory;
+    _categoryIndex = tmpCategoryIndex;
     _time = tmpTime;
     notifyListeners();
   }
@@ -207,7 +207,7 @@ class RecordNotifier with ChangeNotifier {
   void reset() {
     _title = "";
     _category = 57746;
-    _categoryIndex=0;
+    _categoryIndex = 0;
     _time = 0;
     _isGood = false;
     _timeCheck = true;
@@ -342,7 +342,22 @@ class UserDataNotifier with ChangeNotifier {
     await Hive.box('userData').put('categories', _categories);
   }
 
+  Future resetCategory(int index)async{
+    if(index==0){
+      _categories[4]=[58320,"趣味1",[0,0,0]];
+    }else if(index==1){
+      _categories[5]=[58321,"趣味2",[0,0,0]];
+    }else if(index==2){
+      _categories[6]=[58322,"趣味3",[0,0,0]];
+    }else{
+      _categories[7]=[58324,"趣味4",[0,0,0]];
+    }
+    notifyListeners();
+    await Hive.box('userData').put('categories', _categories);
+  }
+
   Future addShortCuts(List item) async {
+    print(item);
     keynum += 1;
     _shortCuts.add(item);
     notifyListeners();
@@ -370,10 +385,10 @@ class UserDataNotifier with ChangeNotifier {
   Future addActivity(
     DateTime startTime,
     String title,
-    int category,
+    int categoryIndex,
   ) async {
     Vib.decide();
-    _activities.add([startTime, false, title, category, 1, 1]);
+    _activities.add([startTime, false, title, categoryIndex, 1, 1]);
     notifyListeners();
     await Hive.box('userData').put('activities', _activities);
   }
@@ -418,20 +433,27 @@ class UserDataNotifier with ChangeNotifier {
   //カテゴリーインデックスからcategoriesにアクセスをして
   //アイコンデータを取得して表示する必要がある。
 
-  Future recordDone(List listData,) async {
+  Future recordDone(
+    List listData,
+  ) async {
     Vib.decide();
     int time = listData[2];
     _allTime += time;
     _thisMonthTime += time;
     _todayTime += time;
+    _categories[listData[0]][2][0] += time;
     if (listData[3]) {
       _allGood += time;
       _thisMonthGood += time;
       _todayGood += time;
+      _categories[listData[0]][2][1] += time;
     }
     _allPer = (_allGood * 100 / _allTime).round();
     _thisMonthPer = (_thisMonthGood * 100 / _thisMonthTime).round();
     _todayPer = (_todayGood * 100 / _todayTime).round();
+    _categories[listData[0]][2][2] =
+        (_categories[listData[0]][2][1] * 100 / _categories[listData[0]][2][0])
+            .round();
     _todayDoneList.add(listData);
     _latelyData.removeAt(_latelyData.length - 1);
     _latelyData.add(
@@ -457,6 +479,7 @@ class UserDataNotifier with ChangeNotifier {
     ]);
     await Hive.box('userData').put('todayDoneList', _todayDoneList);
     await Hive.box('userData').put('latelyData', _latelyData);
+    await Hive.box('userData').put('cateogries', _categories);
   }
 
   Future deleteDone(List listData, int index) async {
@@ -465,16 +488,24 @@ class UserDataNotifier with ChangeNotifier {
     _allTime -= time;
     _thisMonthTime -= time;
     _todayTime -= time;
+    _categories[listData[0]][2][0] -= time;
     if (listData[3]) {
       _allGood -= time;
       _thisMonthGood -= time;
       _todayGood -= time;
+      _categories[listData[0]][2][1] -= time;
     }
     _allPer = (_allTime == 0) ? 0 : (_allGood * 100 / _allTime).round();
     _thisMonthPer = (_thisMonthTime == 0)
         ? 0
         : (_thisMonthGood * 100 / _thisMonthTime).round();
     _todayPer = (_todayTime == 0) ? 0 : (_todayGood * 100 / _todayTime).round();
+    _categories[listData[0]][2][2] = (_categories[listData[0]][2][0] == 0)
+        ? 0
+        : (_categories[listData[0]][2][1] *
+                100 /
+                _categories[listData[0]][2][0])
+            .round();
     _todayDoneList.removeAt(index);
     _latelyData.removeAt(_latelyData.length - 1);
     _latelyData.add(
@@ -500,6 +531,7 @@ class UserDataNotifier with ChangeNotifier {
     ]);
     await Hive.box('userData').put('todayDoneList', _todayDoneList);
     await Hive.box('userData').put('latelyData', _latelyData);
+    await Hive.box('userData').put('categories', _categories);
   }
 
   Future initialize() async {
@@ -541,4 +573,3 @@ class ReloadNotifier with ChangeNotifier {
     notifyListeners();
   }
 }
-
