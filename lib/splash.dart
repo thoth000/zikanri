@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'home/home.dart';
 import 'mypage.dart';
 import 'welcome.dart';
 import 'data.dart';

@@ -5,9 +5,8 @@ import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-
 import 'data.dart';
-import 'home/home.dart';
+import 'mypage.dart';
 
 class WelcomePage extends StatelessWidget {
   @override
@@ -15,27 +14,6 @@ class WelcomePage extends StatelessWidget {
     final reload = Provider.of<ReloadNotifier>(context);
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
-    Route _createRoute() {
-      return PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => HomePage(),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          var begin = Offset(1.0, 0.0);
-          var end = Offset.zero;
-          var curve = Curves.ease;
-          var tween =
-              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-          return SlideTransition(
-            position: animation.drive(tween),
-            child: child,
-          );
-        },
-      );
-    }
-
-    void changepage() {
-      Navigator.pushReplacement(context, _createRoute());
-    }
 
     void makeDir() async {
       //アプリ初回起動時の動作
@@ -62,23 +40,56 @@ class WelcomePage extends StatelessWidget {
       await userDataBox.put(
         'shortCuts',
         [
-          [1, '数学の勉強', 60, true,1],
-          [0, 'バスケの練習', 120, true,2],
-          [0, 'ひと狩り', 120, false,3],
-          [0, 'Webプログラミング', 240, true,4],
+          [1, '受験勉強', 60, true, 1],
+          [2, '二度寝', 120, false, 2],
+          [4, 'ひと狩り', 120, false, 3],
+          [5, 'バスケ', 240, true, 4],
         ],
       );
-      await userDataBox.put('categories',
-      [
-        [57746, "指定なし",[0,0,0]],
-        [57680, "勉強",[0,0,0]],
-        [59601, "生活",[0,0,0]],
-        [57519, "仕事",[0,0,0]],
-        [58368,"指定1",[0,0,0]],
-        [58369,"指定2",[0,0,0]],
-        [58363,"指定3",[0,0,0]],
-        [58365,"指定4",[0,0,0]],
-      ],
+      await userDataBox.put(
+        'categories',
+        [
+          [
+            57746,
+            "指定なし",
+            [0, 0, 0]
+          ],
+          [
+            57680,
+            "勉強",
+            [0, 0, 0]
+          ],
+          [
+            59601,
+            "生活",
+            [0, 0, 0]
+          ],
+          [
+            57519,
+            "仕事",
+            [0, 0, 0]
+          ],
+          [
+            58368,
+            "指定1",
+            [0, 0, 0]
+          ],
+          [
+            58369,
+            "指定2",
+            [0, 0, 0]
+          ],
+          [
+            58363,
+            "指定3",
+            [0, 0, 0]
+          ],
+          [
+            58365,
+            "指定4",
+            [0, 0, 0]
+          ],
+        ],
       );
       await userDataBox.put('keynum', 5);
       await userDataBox.put('activities', []);
@@ -104,7 +115,14 @@ class WelcomePage extends StatelessWidget {
                   reload.reloded();
                   makeDir();
                   Timer(Duration(milliseconds: 2000), reload.finishload);
-                  Timer(Duration(milliseconds: 2500), changepage);
+                  Timer(Duration(milliseconds: 2500), () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MyAppPage(),
+                      ),
+                    );
+                  });
                 },
                 child: Container(),
               ),

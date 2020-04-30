@@ -32,7 +32,9 @@ class _MyAppPageState extends State<MyAppPage> {
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
     Color color = theme.isDark ? theme.themeColors[0] : theme.themeColors[1];
+    double iconsize = displaySize.width/11;
     return Scaffold(
+      body: SafeArea(child:pages[_currentIndex]),
       floatingActionButton: RButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
@@ -43,6 +45,7 @@ class _MyAppPageState extends State<MyAppPage> {
           children: <Widget>[
             IconButton(
               icon: Icon(Icons.home),
+              iconSize: iconsize,
               color: (_currentIndex == 0) ? color : Colors.grey,
               onPressed: () {
                 setState(
@@ -53,7 +56,8 @@ class _MyAppPageState extends State<MyAppPage> {
               },
             ),
             IconButton(
-              icon: Icon(Icons.home),
+              icon: Icon(Icons.today),
+              iconSize: iconsize,
               color: (_currentIndex == 1) ? color : Colors.grey,
               onPressed: () {
                 setState(
@@ -67,7 +71,8 @@ class _MyAppPageState extends State<MyAppPage> {
               width: displaySize.width/5,
             ),
             IconButton(
-              icon: Icon(Icons.home),
+              icon: Icon(Icons.assessment),
+              iconSize: iconsize,
               color: (_currentIndex == 2) ? color : Colors.grey,
               onPressed: () {
                 setState(
@@ -78,7 +83,8 @@ class _MyAppPageState extends State<MyAppPage> {
               },
             ),
             IconButton(
-              icon: Icon(Icons.home),
+              icon: Icon(Icons.settings),
+              iconSize: iconsize,
               color: (_currentIndex == 3) ? color : Colors.grey,
               onPressed: () {
                 setState(

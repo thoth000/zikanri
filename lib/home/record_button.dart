@@ -23,8 +23,8 @@ class RButton extends StatelessWidget {
           BoxShadow(
             spreadRadius: 1.0,
             color: Colors.black38,
-            blurRadius: 7,
-            offset: Offset(5, 5),
+            blurRadius: 2,
+            offset: Offset(0, 2),
           ),
         ],
       ),
@@ -546,7 +546,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                         ),
                         Wrap(
                           children: <Widget>[
-                            for(int i=0;i<userData.categories.length;i++)
+                            for (int i = 0; i < userData.categories.length; i++)
                               Padding(
                                 padding:
                                     const EdgeInsets.only(right: 5, bottom: 10),
@@ -559,16 +559,14 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
                                         border: Border.all(
-                                          color:
-                                              (record.categoryIndex==i)
-                                                  ? (theme.isDark)
-                                                      ? theme.themeColors[0]
-                                                      : theme.themeColors[1]
-                                                  : Colors.grey,
-                                          width:
-                                              (record.categoryIndex==i)
-                                                  ? 3
-                                                  : 1,
+                                          color: (record.categoryIndex == i)
+                                              ? (theme.isDark)
+                                                  ? theme.themeColors[0]
+                                                  : theme.themeColors[1]
+                                              : Colors.grey,
+                                          width: (record.categoryIndex == i)
+                                              ? 3
+                                              : 1,
                                         ),
                                       ),
                                       child: Stack(
@@ -596,7 +594,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                               child: Container(),
                                               color: Colors.transparent,
                                               onPressed: () =>
-                                              record.changeCategoryIndex(i),
+                                                  record.changeCategoryIndex(i),
                                             ),
                                           ),
                                         ],
@@ -956,7 +954,8 @@ class CategoryCard extends StatelessWidget {
                             children: <Widget>[
                               Center(
                                 child: Icon(
-                                  IconData(userData.categories[index+4][0], fontFamily: "MaterialIcons"),
+                                  IconData(userData.categories[index + 4][0],
+                                      fontFamily: "MaterialIcons"),
                                   size: displaySize.width / 8,
                                 ),
                               ),
@@ -966,8 +965,11 @@ class CategoryCard extends StatelessWidget {
                         width: 10,
                       ),
                       Text(
-                        userData.categories[index+4][1],
-                        style: TextStyle(fontSize: FontSize.small),
+                        userData.categories[index + 4][1],
+                        style: TextStyle(
+                          fontSize: FontSize.small,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ],
                   ),
@@ -1002,8 +1004,11 @@ class CategoryCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(100),
                   ),
                   color: Colors.red,
-                  child: Text('リセット',style: TextStyle(color: Colors.white),),
-                  onPressed: () =>userData.resetCategory(index),
+                  child: Text(
+                    'リセット',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () => userData.resetCategory(index),
                 ),
               ),
             ],
@@ -1049,10 +1054,12 @@ class SelectIconPage extends StatelessWidget {
                         iconList[i][0],
                         fontFamily: "MaterialIcons",
                       ),
-                      color: (userData.categories[index+4][0]==iconList[i][0])?(theme.isDark)
-                                ? theme.themeColors[0]
-                                : theme.themeColors[1]
-                            : Colors.grey,
+                      color:
+                          (userData.categories[index + 4][0] == iconList[i][0])
+                              ? (theme.isDark)
+                                  ? theme.themeColors[0]
+                                  : theme.themeColors[1]
+                              : Colors.grey,
                       size: displaySize.width / 8,
                     ),
                     Text(iconList[i][1]),

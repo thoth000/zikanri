@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
 
 import '../data.dart';
@@ -26,19 +25,7 @@ class SettingPage extends StatelessWidget {
         },
       );
     }
-    final theme = Provider.of<ThemeNotifier>(context);
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        title: Text(
-          '設定',
-          style: TextStyle(
-            color: theme.isDark ? Colors.white : Colors.black,
-          ),
-        ),
-        backgroundColor: Colors.transparent,
-      ),
-      body: Padding(
+    return Padding(
         padding: EdgeInsets.symmetric(horizontal: 10.0),
         child: ListView(
           children: <Widget>[
@@ -215,7 +202,7 @@ class SettingPage extends StatelessWidget {
               thickness: 2,
             ),
             SizedBox(
-              height: 100,
+              height: 80,
             ),
             Divider(
               height: 1,
@@ -250,9 +237,11 @@ class SettingPage extends StatelessWidget {
               height: 1,
               thickness: 2,
             ),
+            SizedBox(
+              height: displaySize.width/10,
+            ),
           ],
         ),
-      ),
     );
   }
 
