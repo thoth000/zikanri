@@ -58,6 +58,30 @@ class _MinuteMeterState extends State<MinuteMeter> {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
     final record = Provider.of<RecordNotifier>(context);
+    void checkDelete(int index){
+      showDialog(context: context,
+      builder: (context)=>AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        title: Text('削除'),
+        content: Text('この記録を削除しますか？'),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('いいえ'),
+            onPressed: (){Navigator.pop(context);}
+          ),
+          FlatButton(
+            child: Text('はい'),
+            onPressed: (){
+              userData.finishActivity(index);
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+      );
+    }
     return Column(
       children: <Widget>[
         (userData.activities.length == 0)
@@ -264,8 +288,7 @@ class _MinuteMeterState extends State<MinuteMeter> {
                                         child: Container(),
                                         splashColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
-                                        onPressed: () =>
-                                            userData.finishActivity(i),
+                                        onPressed: () => checkDelete(i),
                                       ),
                                     ),
                                   ],
@@ -307,7 +330,7 @@ class _MinuteMeterState extends State<MinuteMeter> {
   Widget datecheckDialog(context) {
     return AlertDialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(10),
       ),
       title: Text('日付が変わっています'),
       content: Text('自動的にタイトル画面に戻ります'),

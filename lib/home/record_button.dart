@@ -124,7 +124,7 @@ class _DateChangeDialogState extends State<DateChangeDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(10),
       ),
       title: Text('日付が変わっています'),
       content: Text('自動的にタイトル画面に戻ります'),
@@ -971,6 +971,34 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
+    void resetCheck(int index) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          title: Text('リセット'),
+          content: Text('このカテゴリーの記録が全てリセットされます\nそれでもよろしいですか？'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('いいえ'),
+              onPressed: (){
+                Navigator.pop(context);
+              },
+            ),
+            FlatButton(
+              child: Text('はい'),
+              onPressed: (){
+                userData.resetCategory(index);
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      );
+    }
+
     return Container(
       height: displaySize.width / 3,
       width: displaySize.width,
@@ -1062,7 +1090,7 @@ class CategoryCard extends StatelessWidget {
                     'リセット',
                     style: TextStyle(color: Colors.white),
                   ),
-                  onPressed: () => userData.resetCategory(index),
+                  onPressed: () => resetCheck(index),
                 ),
               ),
             ],
@@ -1097,7 +1125,6 @@ class SelectIconPage extends StatelessWidget {
         children: <Widget>[
           for (int i = 0; i < iconList.length; i++)
             SizedBox(
-              width: displaySize.width / 4,
               height: displaySize.width / 4,
               child: FlatButton(
                 child: Column(
@@ -1116,7 +1143,7 @@ class SelectIconPage extends StatelessWidget {
                               : Colors.grey,
                       size: displaySize.width / 8,
                     ),
-                    Text(iconList[i][1]),
+                    Text(iconList[i][1],style:TextStyle(fontSize: FontSize.xsmall),),
                   ],
                 ),
                 onPressed: () => userData.editCategory(

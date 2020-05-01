@@ -66,13 +66,13 @@ class TodayWidget extends StatelessWidget {
   Widget _deleteAlert(context, itemList, index, userData) {
     return AlertDialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(10),
       ),
       title: Text(
-        '記録の削除',
+        '削除',
         style: TextStyle(fontWeight: FontWeight.w700),
       ),
-      content: Text('タイトル:\n' + itemList[1] + '\n\nこの記録を削除しますか？'),
+      content: Text('この記録を削除しますか？'),
       actions: <Widget>[
         FlatButton(
           child: Text('いいえ'),

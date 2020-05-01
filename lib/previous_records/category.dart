@@ -42,19 +42,28 @@ class CategoryPage extends StatelessWidget {
         backgroundColor: Colors.transparent,
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal:displaySize.width/20),
+        padding: EdgeInsets.symmetric(horizontal: displaySize.width / 20),
         child: Column(
           children: <Widget>[
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             Row(
               children: <Widget>[
-                Icon(IconData(icon,fontFamily: 'MaterialIcons'),
-                size: displaySize.width/10,
+                Icon(
+                  IconData(icon, fontFamily: 'MaterialIcons'),
+                  size: displaySize.width / 10,
                 ),
-                Text(" "+title,style: TextStyle(fontSize: FontSize.xlarge,fontWeight: FontWeight.w700),),
+                Text(
+                  " " + title,
+                  style: TextStyle(
+                      fontSize: FontSize.xlarge, fontWeight: FontWeight.w700),
+                ),
               ],
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             Hero(
               tag: index.toString(),
               child: AnimatedCircularChart(
@@ -71,8 +80,74 @@ class CategoryPage extends StatelessWidget {
                 ),
               ),
             ),
-            Text("記録時間:"+values[0].toString()+"分"),
-            Text("価値時間:"+values[1].toString()+"分"),
+            SizedBox(
+              height: 10,
+            ),
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Container(
+                    height: displaySize.width / 3.5,
+                    width: displaySize.width/2.6,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          values[0].toString() + "分",
+                          softWrap: false,
+                          overflow: TextOverflow.fade,
+                          style: TextStyle(
+                            fontSize: FontSize.large,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        Text(
+                          "記録時間",
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: FontSize.xxsmall,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    width: 0.5,
+                    height: displaySize.width/3.5-10,
+                    color: Colors.grey,
+                  ),
+                  Container(
+                    height: displaySize.width / 3.5,
+                    width: displaySize.width/2.6,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          values[1].toString() + "分",
+                          softWrap: false,
+                          overflow: TextOverflow.fade,
+                          style: TextStyle(
+                            fontSize: FontSize.large,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        Text(
+                          "価値時間",
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: FontSize.xxsmall,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
