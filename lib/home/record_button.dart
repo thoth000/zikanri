@@ -609,6 +609,60 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                   ],
                                 ),
                               ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(right: 5, bottom: 20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Container(
+                                    height: displaySize.width / 6.5,
+                                    width: displaySize.width / 6.5,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                        color: Colors.grey,
+                                        width: 1,
+                                      ),
+                                    ),
+                                    child: Stack(
+                                      children: <Widget>[
+                                        Center(
+                                          child: Icon(
+                                            Icons.more_horiz,
+                                            color: (theme.isDark)
+                                                ? Colors.white
+                                                : Colors.black,
+                                            size: displaySize.width / 15,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: displaySize.width / 6.5,
+                                          width: displaySize.width / 6.5,
+                                          child: FlatButton(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            child: Container(),
+                                            color: Colors.transparent,
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      CategoryEditPage(),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ],
