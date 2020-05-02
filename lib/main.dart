@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import 'Splash.dart';
 import 'data.dart';
@@ -22,6 +23,14 @@ void main() {
     ),
   );
 }
+
+/*Future a()async{
+  await Hive.initFlutter();
+  await Hive.openBox('theme');
+  await Hive.openBox('userData');
+  await Hive.box('theme').clear();
+  await Hive.box('userData').clear();
+}*/
 
 class MyApp extends StatefulWidget {
   @override

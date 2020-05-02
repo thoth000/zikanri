@@ -180,7 +180,7 @@ class ThemeSettingPage extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
         gradient: LinearGradient(
-          colors: baseColors[int.parse(theme.myColors[i])],
+          colors: baseColors[theme.myColors[i]],
         ),
       ),
       child: FlatButton(

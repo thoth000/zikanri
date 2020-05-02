@@ -36,10 +36,7 @@ const List iconList = [
     58726,
     "運動",
   ],
-  [
-    58128,
-    "音楽"
-  ],
+  [58128, "音楽"],
   [
     58699,
     "読書",
@@ -52,10 +49,7 @@ const List iconList = [
     58168,
     "ゲーム",
   ],
-  [
-    59677,
-    "ペット"
-  ],
+  [59677, "ペット"],
   [
     58937,
     "メディア",
@@ -68,58 +62,22 @@ const List iconList = [
     58143,
     "IT",
   ],
-  [
-    59497,
-    "創作"
-  ],
-  [
-    60231,
-    "料理"
-  ],
-  [
-    60227,
-    "筋トレ"
-  ],
-  [
-    60236,
-    "リラックス"
-  ],
-  [
-    59471,
-    "鑑賞"
-  ],
-  [
-    59540,
-    "ネット"
-  ],
+  [59497, "創作"],
+  [60231, "料理"],
+  [60227, "筋トレ"],
+  [60236, "リラックス"],
+  [59471, "鑑賞"],
+  [59540, "ネット"],
   [
     58373,
     "演奏",
   ],
-  [
-    58693,
-    "園芸"
-  ],
-  [
-    57388,
-    "映画"
-  ],
-  [
-    60222,
-    "バカンス"
-  ],
-  [
-    60224,
-    "ギャンブル"
-  ],
-  [
-    59517,
-    "恋愛"
-  ],
-  [
-    59596,
-    "買い物"
-  ],
+  [58693, "園芸"],
+  [57388, "映画"],
+  [60222, "バカンス"],
+  [60224, "ギャンブル"],
+  [59517, "恋愛"],
+  [59596, "買い物"],
   [
     58386,
     "カメラ",
@@ -132,16 +90,21 @@ const List iconList = [
 
 //BaseColor
 //単色をベースにしていく
+//今なんこ,９
 const List baseColors = [
-  [Color(0XFF1DA1F2), Color(0XFF1DA1F2)], //単色
-  [Color(0XFFea7070), Color(0XFFea7070)], //単色
-  [Color(0XFF3b8686), Color(0XFF3b8686)], //単色
-  [Color(0XFF39BAE8), Color(0XFF0000A1)],
-  [Color(0XFFffcccc), Color(0XFFcaabd8)],
-  [Color(0XFFa2a9af), Color(0XFF4c5870)],
-  [Color(0XFF08ffc8), Color(0XFF204969)],
-  [Color(0XFF947B89), Color(0XFF4E0E2E)],
-  [Color(0XFFe8f044), Color(0XFF21bf73)],
+  //[Color(0XFF1DA1F2), Color(0XFF1DA1F2)], //0
+  //[Color(0XFFea7070), Color(0XFFea7070)], //1
+  //[Color(0XFF00CDAC), Color(0XFF02AAB0)], //2
+  [Color(0XFF39BAE8), Color(0XFF0000A1)], //3
+  [Color(0XFFef473a), Color(0XFFcb2d3e)], //4
+  [Color(0XFF08ffc8), Color(0XFF204969)], //緑
+  [Color(0XFFffcccc), Color(0XFFcaabd8)],//ピンク
+  [Color(0XFF4776E6), Color(0XFF8E54E9)], //紫
+  [Color(0XFFFFFDE4), Color(0XFF005AA7)], //7
+  [Color(0XFFfffbd5),Color(0XFFb20a2c)], //9
+  [Color(0XFFe4e4d9),Color(0XFF215f00)], //9
+  [Color(0XFFFFB75E),Color(0XFFED8F03)], //9
+  [Color(0XFFffc0cb),Color(0XFF800080)], //9
 ];
 //userHasColors => call baseColors
 
@@ -265,9 +228,9 @@ class ThemeNotifier with ChangeNotifier {
   bool _isDark = false;
   bool get isDark => _isDark;
   int _themeColorsIndex = 0;
-  List _myColors = ['0', '1', '2', '3', '4', '5', '6', '7'];
+  List _myColors = [0];
   List get myColors => _myColors;
-  List _themeColors() => baseColors[int.parse(_myColors[_themeColorsIndex])];
+  List _themeColors() => baseColors[_myColors[_themeColorsIndex]];
   List get themeColors => _themeColors();
   ThemeData buildTheme() => ThemeData(
         fontFamily: 'NotoSansJP',
@@ -382,15 +345,31 @@ class UserDataNotifier with ChangeNotifier {
     await Hive.box('userData').put('categories', _categories);
   }
 
-  Future resetCategory(int index)async{
-    if(index==0){
-      _categories[4]=[58368,"指定1",[0,0,0]];
-    }else if(index==1){
-      _categories[5]=[58369,"指定2",[0,0,0]];
-    }else if(index==2){
-      _categories[6]=[58363,"指定3",[0,0,0]];
-    }else{
-      _categories[7]=[58365,"指定4",[0,0,0]];
+  Future resetCategory(int index) async {
+    if (index == 0) {
+      _categories[4] = [
+        58368,
+        "指定1",
+        [0, 0, 0]
+      ];
+    } else if (index == 1) {
+      _categories[5] = [
+        58369,
+        "指定2",
+        [0, 0, 0]
+      ];
+    } else if (index == 2) {
+      _categories[6] = [
+        58363,
+        "指定3",
+        [0, 0, 0]
+      ];
+    } else {
+      _categories[7] = [
+        58365,
+        "指定4",
+        [0, 0, 0]
+      ];
     }
     notifyListeners();
     await Hive.box('userData').put('categories', _categories);
