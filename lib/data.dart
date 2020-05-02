@@ -516,9 +516,9 @@ class UserDataNotifier with ChangeNotifier {
       _todayGood,
       _todayPer,
     ]);
+    await Hive.box('userData').put('categories', _categories);
     await Hive.box('userData').put('todayDoneList', _todayDoneList);
     await Hive.box('userData').put('latelyData', _latelyData);
-    await Hive.box('userData').put('cateogries', _categories);
   }
 
   Future deleteDone(List listData, int index) async {
