@@ -155,6 +155,9 @@ class GridCard extends StatelessWidget {
                       IconData(icon, fontFamily: "MaterialIcons"),
                       size: displaySize.width / 15,
                     ),
+                    SizedBox(
+                      width: 5,
+                    ),
                     Expanded(
                       child: Text(
                         title,

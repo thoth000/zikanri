@@ -304,9 +304,6 @@ class _MinuteMeterState extends State<MinuteMeter> {
               ),
             ),
           ),
-        SizedBox(
-          height: (activities.length == 0) ? 0 : 20,
-        ),
       ],
     );
   }

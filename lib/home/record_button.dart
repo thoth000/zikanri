@@ -153,8 +153,9 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
       fontWeight: FontWeight.w700,
     );
     return Padding(
-      padding:
-          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
       child: FractionallySizedBox(
         heightFactor: 0.7,
         child: Padding(
@@ -263,28 +264,27 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                         Container(
                           margin: EdgeInsets.symmetric(vertical: 5),
                           decoration: _decorationStyle,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 5,
-                              vertical: 2,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 5,
+                          ),
+                          child: TextField(
+                            textAlignVertical: TextAlignVertical.center,
+                            cursorColor: (theme.isDark)
+                                ? theme.themeColors[0]
+                                : theme.themeColors[1],
+                            keyboardType: TextInputType.multiline,
+                            style: TextStyle(
+                              fontSize: FontSize.small,
                             ),
-                            child: TextField(
-                              cursorColor: (theme.isDark)
-                                  ? theme.themeColors[0]
-                                  : theme.themeColors[1],
-                              keyboardType: TextInputType.multiline,
-                              style: TextStyle(
-                                fontSize: FontSize.small,
-                              ),
-                              decoration: InputDecoration.collapsed(
-                                hintText: "タイトルを入力",
-                              ),
-                              inputFormatters: [
-                                LengthLimitingTextInputFormatter(20)
-                              ],
-                              textInputAction: TextInputAction.go,
-                              onChanged: (s) => record.changeTitle(s),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "タイトルを入力",
                             ),
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(20)
+                            ],
+                            textInputAction: TextInputAction.go,
+                            onChanged: (s) => record.changeTitle(s),
                           ),
                         ),
                       ],
@@ -308,32 +308,29 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                     height: displaySize.width / 7,
                                     width: displaySize.width / 2.5,
                                     margin: EdgeInsets.symmetric(vertical: 5),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(color: Colors.grey)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 5,
-                                        vertical: 2,
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 5),
+                                    decoration: _decorationStyle,
+                                    child: TextField(
+                                      textAlignVertical:
+                                          TextAlignVertical.center,
+                                      cursorColor: (theme.isDark)
+                                          ? theme.themeColors[0]
+                                          : theme.themeColors[1],
+                                      style: TextStyle(
+                                        fontSize: FontSize.small,
                                       ),
-                                      child: TextField(
-                                        cursorColor: (theme.isDark)
-                                            ? theme.themeColors[0]
-                                            : theme.themeColors[1],
-                                        style: TextStyle(
-                                          fontSize: FontSize.small,
-                                        ),
-                                        keyboardType: TextInputType.number,
-                                        inputFormatters: <TextInputFormatter>[
-                                          WhitelistingTextInputFormatter
-                                              .digitsOnly,
-                                        ],
-                                        textInputAction: TextInputAction.go,
-                                        decoration: InputDecoration.collapsed(
-                                          hintText: "60",
-                                        ),
-                                        onChanged: (s) => record.changeTime(s),
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: <TextInputFormatter>[
+                                        WhitelistingTextInputFormatter
+                                            .digitsOnly,
+                                      ],
+                                      textInputAction: TextInputAction.go,
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintText: "60",
                                       ),
+                                      onChanged: (s) => record.changeTime(s),
                                     ),
                                   ),
                                 ],
@@ -600,10 +597,16 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                         ],
                                       ),
                                     ),
-                                    Text(
-                                      userData.categories[i][1],
-                                      style: TextStyle(
-                                        fontSize: FontSize.xxsmall,
+                                    SizedBox(
+                                      width: displaySize.width / 5,
+                                      child: Text(
+                                        userData.categories[i][1],
+                                        textAlign: TextAlign.center,
+                                        softWrap: false,
+                                        overflow: TextOverflow.fade,
+                                        style: TextStyle(
+                                          fontSize: FontSize.xxsmall,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -611,10 +614,13 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                               ),
                             Padding(
                               padding:
-                                  const EdgeInsets.only(right: 5, bottom: 20),
+                                  const EdgeInsets.only(bottom: 20),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
+                                  SizedBox(
+                                    width: displaySize.width / 5,
+                                  ),
                                   Container(
                                     height: displaySize.width / 6.5,
                                     width: displaySize.width / 6.5,
@@ -957,7 +963,7 @@ class CategoryEditPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: ListView(
-          children: <Widget>[for (int i = 0; i < 4; i++) CategoryCard(i)],
+          children: <Widget>[for (int i = 1; i < 8; i++) CategoryCard(i)],
         ),
       ),
     );
@@ -979,17 +985,17 @@ class CategoryCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           title: Text('リセット'),
-          content: Text('このカテゴリーの記録が全てリセットされます\nそれでもよろしいですか？'),
+          content: Text('このカテゴリーの記録が全てリセットされます。\nそれでもよろしいですか？'),
           actions: <Widget>[
             FlatButton(
               child: Text('いいえ'),
-              onPressed: (){
+              onPressed: () {
                 Navigator.pop(context);
               },
             ),
             FlatButton(
               child: Text('はい'),
-              onPressed: (){
+              onPressed: () {
                 userData.resetCategory(index);
                 Navigator.pop(context);
               },
@@ -1020,7 +1026,7 @@ class CategoryCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    (index + 1).toString() + '.',
+                    (index).toString() + '.',
                     style: TextStyle(
                       fontSize: FontSize.midium,
                       fontWeight: FontWeight.w700,
@@ -1032,25 +1038,24 @@ class CategoryCard extends StatelessWidget {
                       Container(
                           height: displaySize.width / 8,
                           width: displaySize.width / 8,
-                          child: Stack(
-                            children: <Widget>[
-                              Center(
-                                child: Icon(
-                                  IconData(userData.categories[index + 4][0],
-                                      fontFamily: "MaterialIcons"),
-                                  size: displaySize.width / 8,
-                                ),
-                              ),
-                            ],
+                          child: Icon(
+                            IconData(userData.categories[index][0],
+                                fontFamily: "MaterialIcons"),
+                            size: displaySize.width / 8,
                           )),
                       SizedBox(
                         width: 10,
                       ),
-                      Text(
-                        userData.categories[index + 4][1],
-                        style: TextStyle(
-                          fontSize: FontSize.small,
-                          fontWeight: FontWeight.w700,
+                      Flexible(
+                        child: Text(
+                          userData.categories[index][1],
+                          maxLines: 2,
+                          softWrap: true,
+                          overflow: TextOverflow.fade,
+                          style: TextStyle(
+                            fontSize: FontSize.small,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                     ],
@@ -1116,40 +1121,121 @@ class SelectIconPage extends StatelessWidget {
           'アイコンの選択',
           style: TextStyle(color: theme.isDark ? Colors.white : Colors.black),
         ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () async {
+            await userData.dicideCategory();
+            Navigator.pop(context);
+          },
+        ),
       ),
-      body: GridView.count(
-        crossAxisCount: 3,
-        childAspectRatio: 1.5,
-        crossAxisSpacing: displaySize.width / 25,
-        mainAxisSpacing: 10,
+      body: Column(
         children: <Widget>[
-          for (int i = 0; i < iconList.length; i++)
-            SizedBox(
-              height: displaySize.width / 4,
-              child: FlatButton(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Icon(
-                      IconData(
-                        iconList[i][0],
-                        fontFamily: "MaterialIcons",
-                      ),
-                      color:
-                          (userData.categories[index + 4][0] == iconList[i][0])
-                              ? (theme.isDark)
-                                  ? theme.themeColors[0]
-                                  : theme.themeColors[1]
-                              : Colors.grey,
-                      size: displaySize.width / 8,
-                    ),
-                    Text(iconList[i][1],style:TextStyle(fontSize: FontSize.xsmall),),
-                  ],
+          Container(
+            padding: EdgeInsets.all(displaySize.width / 20),
+            width: displaySize.width,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  'タイトル',
+                  style: TextStyle(
+                    fontSize: FontSize.midium,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-                onPressed: () => userData.editCategory(
-                    index, iconList[i][0], iconList[i][1]),
-              ),
+                Container(
+                  height: displaySize.width / 7.5,
+                  width: displaySize.width / 2,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 5,
+                  ),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: TextField(
+                    textAlignVertical: TextAlignVertical.center,
+                    textInputAction: TextInputAction.go,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                    ),
+                    cursorColor: theme.isDark
+                        ? theme.themeColors[0]
+                        : theme.themeColors[1],
+                    inputFormatters: [LengthLimitingTextInputFormatter(18)],
+                    style: TextStyle(fontSize: FontSize.small),
+                    onChanged: (s) {
+                      userData.editCategoryTitle(index, s);
+                      print(s);
+                    },
+                  ),
+                ),
+              ],
             ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: <Widget>[
+              SizedBox(
+                width: displaySize.width / 20,
+              ),
+              Text(
+                'アイコン',
+                style: TextStyle(
+                  fontSize: FontSize.midium,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Divider(
+            height: 1,
+          ),
+          Expanded(
+            child: GridView.count(
+              crossAxisCount: 3,
+              childAspectRatio: 1.5,
+              crossAxisSpacing: displaySize.width / 25,
+              mainAxisSpacing: 10,
+              children: <Widget>[
+                for (var icon in iconList)
+                  SizedBox(
+                    height: displaySize.width / 4,
+                    child: FlatButton(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            IconData(
+                              icon,
+                              fontFamily: "MaterialIcons",
+                            ),
+                            color: (userData.categories[index][0] == icon)
+                                ? (theme.isDark)
+                                    ? theme.themeColors[0]
+                                    : theme.themeColors[1]
+                                : Colors.grey,
+                            size: displaySize.width / 8,
+                          ),
+                        ],
+                      ),
+                      onPressed: () => userData.editCategoryIcon(
+                        index,
+                        icon,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
         ],
       ),
     );

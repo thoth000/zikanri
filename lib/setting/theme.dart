@@ -108,31 +108,29 @@ class ThemeSettingPage extends StatelessWidget {
             indent: 10,
             endIndent: 10,
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
-            child: Container(
-              height: displaySize.width / 6,
-              width: displaySize.width,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'ダークモード',
-                    style: TextStyle(
-                      fontSize: FontSize.midium,
-                      fontWeight: FontWeight.bold,
-                    ),
+          Container(
+            height: displaySize.width / 9,
+            width: displaySize.width,
+            padding: EdgeInsets.symmetric(horizontal:10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  'ダークモード',
+                  style: TextStyle(
+                    fontSize: FontSize.midium,
+                    fontWeight: FontWeight.bold,
                   ),
-                  Switch(
-                    value: theme.isDark,
-                    onChanged: (boolean) => theme.changeMode(),
-                    activeColor: (theme.isDark)
-                        ? theme.themeColors[0]
-                        : theme.themeColors[1],
-                  ),
-                ],
-              ),
+                ),
+                Switch(
+                  value: theme.isDark,
+                  onChanged: (boolean) => theme.changeMode(),
+                  activeColor: (theme.isDark)
+                      ? theme.themeColors[0]
+                      : theme.themeColors[1],
+                ),
+              ],
             ),
           ),
           Divider(

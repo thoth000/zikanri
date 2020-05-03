@@ -57,7 +57,6 @@ class _SplashPageState extends State<SplashPage> {
         await box.put('userValue', box2);
         await box.put('totalPassedDays', box.get('totalPassedDays') + 1);
       }
-      activities = Hive.box('userData').get('activities');
       await theme.initialize();
       await userData.initialize();
       Future.delayed(

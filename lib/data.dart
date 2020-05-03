@@ -32,60 +32,32 @@ class Vib {
 
 AssetImage userIcon = AssetImage('images/zikanri_icon.png');
 const List iconList = [
-  [
-    58726,
-    "運動",
-  ],
-  [58128, "音楽"],
-  [
-    58699,
-    "読書",
-  ],
-  [
-    58378,
-    "イラスト",
-  ],
-  [
-    58168,
-    "ゲーム",
-  ],
-  [59677, "ペット"],
-  [
-    58937,
-    "メディア",
-  ],
-  [
-    58917,
-    "SNS",
-  ],
-  [
-    58143,
-    "IT",
-  ],
-  [59497, "創作"],
-  [60231, "料理"],
-  [60227, "筋トレ"],
-  [60236, "リラックス"],
-  [59471, "鑑賞"],
-  [59540, "ネット"],
-  [
-    58373,
-    "演奏",
-  ],
-  [58693, "園芸"],
-  [57388, "映画"],
-  [60222, "バカンス"],
-  [60224, "ギャンブル"],
-  [59517, "恋愛"],
-  [59596, "買い物"],
-  [
-    58386,
-    "カメラ",
-  ],
-  [
-    58899,
-    "ドライブ",
-  ],
+  57746,
+  57680,
+  58726,
+  58128,
+  58699,
+  58378,
+  58168,
+  59677,
+  58937,
+  58917,
+  58143,
+  59497,
+  60231,
+  60227,
+  60236,
+  59471,
+  59540,
+  58373,
+  58693,
+  57388,
+  60222,
+  60224,
+  59517,
+  59596,
+  58386,
+  58899,
 ];
 
 //BaseColor
@@ -98,17 +70,16 @@ const List baseColors = [
   [Color(0XFF39BAE8), Color(0XFF0000A1)], //3
   [Color(0XFFef473a), Color(0XFFcb2d3e)], //4
   [Color(0XFF08ffc8), Color(0XFF204969)], //緑
-  [Color(0XFFffcccc), Color(0XFFcaabd8)],//ピンク
+  [Color(0XFFffcccc), Color(0XFFcaabd8)], //ピンク
   [Color(0XFF4776E6), Color(0XFF8E54E9)], //紫
   [Color(0XFFFFFDE4), Color(0XFF005AA7)], //7
-  [Color(0XFFfffbd5),Color(0XFFb20a2c)], //9
-  [Color(0XFFe4e4d9),Color(0XFF215f00)], //9
-  [Color(0XFFFFB75E),Color(0XFFED8F03)], //9
-  [Color(0XFFffc0cb),Color(0XFF800080)], //9
+  [Color(0XFFfffbd5), Color(0XFFb20a2c)], //9
+  [Color(0XFFe4e4d9), Color(0XFF215f00)], //9
+  [Color(0XFFFFB75E), Color(0XFFED8F03)], //9
+  [Colors.white,Colors.black],
 ];
-//userHasColors => call baseColors
 
-List activities = [];
+
 
 //changeNotifier for record
 class RecordNotifier with ChangeNotifier {
@@ -338,39 +309,25 @@ class UserDataNotifier with ChangeNotifier {
     await Hive.box('userData').put('userName', userName);
   }
 
-  Future editCategory(int index, int icon, String title) async {
-    _categories[index + 4][0] = icon;
-    _categories[index + 4][1] = title;
-    notifyListeners();
+  Future dicideCategory() async {
     await Hive.box('userData').put('categories', _categories);
   }
 
+  void editCategoryIcon(int index, int icon) {
+    _categories[index][0] = icon;
+    notifyListeners();
+  }
+
+  void editCategoryTitle(int index, String s) {
+    _categories[index][1] = s;
+  }
+
   Future resetCategory(int index) async {
-    if (index == 0) {
-      _categories[4] = [
-        58368,
-        "指定1",
-        [0, 0, 0]
-      ];
-    } else if (index == 1) {
-      _categories[5] = [
-        58369,
-        "指定2",
-        [0, 0, 0]
-      ];
-    } else if (index == 2) {
-      _categories[6] = [
-        58363,
-        "指定3",
-        [0, 0, 0]
-      ];
-    } else {
-      _categories[7] = [
-        58365,
-        "指定4",
-        [0, 0, 0]
-      ];
-    }
+    _categories[index] = [
+      57746,
+      index.toString(),
+      [0, 0, 0]
+    ];
     notifyListeners();
     await Hive.box('userData').put('categories', _categories);
   }

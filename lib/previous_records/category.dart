@@ -54,10 +54,16 @@ class CategoryPage extends StatelessWidget {
                   IconData(icon, fontFamily: 'MaterialIcons'),
                   size: displaySize.width / 10,
                 ),
-                Text(
-                  " " + title,
-                  style: TextStyle(
-                      fontSize: FontSize.xlarge, fontWeight: FontWeight.w700),
+                SizedBox(
+                  width: 10,
+                ),
+                Flexible(
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                        fontSize: FontSize.xlarge,
+                        fontWeight: FontWeight.w700),
+                  ),
                 ),
               ],
             ),
@@ -92,7 +98,7 @@ class CategoryPage extends StatelessWidget {
                 children: <Widget>[
                   Container(
                     height: displaySize.width / 3.5,
-                    width: displaySize.width/2.6,
+                    width: displaySize.width / 2.6,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -117,12 +123,12 @@ class CategoryPage extends StatelessWidget {
                   ),
                   Container(
                     width: 0.5,
-                    height: displaySize.width/3.5-10,
+                    height: displaySize.width / 3.5 - 10,
                     color: Colors.grey,
                   ),
                   Container(
                     height: displaySize.width / 3.5,
-                    width: displaySize.width/2.6,
+                    width: displaySize.width / 2.6,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
