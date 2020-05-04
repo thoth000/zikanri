@@ -14,8 +14,8 @@ class LatelyPage extends StatelessWidget {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
     return ListView(
-        children: <Widget>[
-          SizedBox(
+      children: <Widget>[
+          /*SizedBox(
             height: displaySize.width / 2+20,
             child: Swiper(
               itemCount: userData.latelyData.length,
@@ -23,24 +23,36 @@ class LatelyPage extends StatelessWidget {
                 userData.setIndex(i);
               },
               loop: false,
-              customLayoutOption: CustomLayoutOption(
-                startIndex: userData.latelyData.length-1
-              ),
               controller: SwiperController(),
               itemBuilder: (context,index){
                 return DayData(userData.latelyData[index]);
               },
             ),
+          ),*/
+        SizedBox(
+          height: displaySize.width / 2 + 20,
+          child: PageView(
+            scrollDirection: Axis.horizontal,
+            onPageChanged: (i) {
+              userData.setIndex(i);
+            },
+            controller:
+                PageController(initialPage: userData.latelyData.length),
+            children: <Widget>[
+              for (var itemList in userData.latelyData)
+                DayData(itemList)
+            ],
           ),
-          _dayDone(
-            (userData.latelyData.length == 1) ? 0 : userData.index,
-            theme,
-            userData,
-          ),
-          SizedBox(
-            height: displaySize.width / 10,
-          ),
-        ],
+        ),
+        _dayDone(
+          (userData.latelyData.length == 1) ? 0 : userData.index,
+          theme,
+          userData,
+        ),
+        SizedBox(
+          height: displaySize.width / 10,
+        ),
+      ],
     );
   }
 
@@ -82,8 +94,8 @@ class LatelyPage extends StatelessWidget {
                 Divider(
                   height: 5,
                 ),
-                for (int j = 0; j < userData.latelyData[i][4].length; j++)
-                  _dayDoneList(userData.latelyData[i][4][j], theme,userData),
+                for (int j = userData.latelyData[i][4].length - 1; j >= 0; j--)
+                  _dayDoneList(userData.latelyData[i][4][j], theme, userData),
                 Center(
                   child: Padding(
                     padding: EdgeInsets.symmetric(
@@ -109,7 +121,7 @@ class LatelyPage extends StatelessWidget {
     );
   }
 
-  Widget _dayDoneList(List itemList, theme,userData) {
+  Widget _dayDoneList(List itemList, theme, userData) {
     //itemListは各日のDoneListの中の記録
     return Padding(
       padding: const EdgeInsets.symmetric(

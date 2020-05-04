@@ -40,10 +40,10 @@ class WelcomePage extends StatelessWidget {
       await userDataBox.put(
         'shortCuts',
         [
-          [1, '受験勉強', 60, true, 1],
-          [2, '二度寝', 120, false, 2],
-          [4, 'ひと狩り', 120, false, 3],
-          [5, 'バスケ', 240, true, 4],
+          [1, '受験勉強', 0, false,1,false],
+          [2, 'バスケ', 240, true, 2,true],
+          [3, '二度寝', 120, false, 3,true],
+          [5, 'ひと狩り', 0, false, 4,false],
         ],
       );
       await userDataBox.put(

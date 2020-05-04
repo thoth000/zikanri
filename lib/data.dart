@@ -25,8 +25,8 @@ class Vib {
     Vibration.vibrate(duration: 50);
   }
 
-  static void error() {
-    Vibration.vibrate(duration: 100);
+  static void add(){
+    Vibration.vibrate(duration: 150);
   }
 }
 
@@ -35,6 +35,7 @@ const List iconList = [
   57746,
   57680,
   58726,
+  59601,
   58128,
   58699,
   58378,
@@ -139,7 +140,6 @@ class RecordNotifier with ChangeNotifier {
 
   void click() {
     _clickCheck = true;
-    Vib.error();
     notifyListeners();
   }
 
@@ -333,6 +333,7 @@ class UserDataNotifier with ChangeNotifier {
   }
 
   Future addShortCuts(List item) async {
+    Vib.add();
     keynum += 1;
     _shortCuts.add(item);
     notifyListeners();

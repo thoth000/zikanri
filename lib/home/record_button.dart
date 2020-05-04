@@ -372,57 +372,6 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                             ],
                           )
                         : Container(),
-                    (record.isRecord)
-                        ? Padding(
-                            padding: const EdgeInsets.only(top: 15.0),
-                            child: Container(
-                              width: displaySize.width,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  SizedBox(
-                                    height: displaySize.width / 12,
-                                    width: displaySize.width / 12,
-                                    child: Stack(
-                                      children: <Widget>[
-                                        Icon(
-                                          (record.shortCut)
-                                              ? Icons.check_circle_outline
-                                              : Icons.radio_button_unchecked,
-                                          color: (record.shortCut)
-                                              ? (theme.isDark)
-                                                  ? theme.themeColors[0]
-                                                  : theme.themeColors[1]
-                                              : Colors.grey,
-                                          size: displaySize.width / 12,
-                                        ),
-                                        SizedBox(
-                                          height: displaySize.width / 12,
-                                          width: displaySize.width / 12,
-                                          child: FlatButton(
-                                            color: Colors.transparent,
-                                            splashColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            child: Container(),
-                                            onPressed: record.changeShortCut,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    '記録をショートカットに追加',
-                                    style: TextStyle(fontSize: FontSize.xsmall),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
-                        : Container(),
                     SizedBox(
                       height: (record.isRecord) ? 20 : 0,
                     ),
@@ -445,21 +394,62 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(500),
                             ),
+                            onLongPress: () {
+                              if (record.isRecord) {
+                                if (record.titleCheck || record.timeCheck) {
+                                  record.click();
+                                } else {
+                                  userData.addShortCuts(
+                                    [
+                                      record.categoryIndex,
+                                      record.title,
+                                      record.time,
+                                      record.isGood,
+                                      userData.keynum,
+                                      true,
+                                    ],
+                                  );
+                                  userData.recordDone(
+                                    [
+                                      record.categoryIndex,
+                                      record.title,
+                                      record.time,
+                                      record.isGood,
+                                    ],
+                                  );
+                                  Navigator.pop(context);
+                                  record.reset();
+                                }
+                              } else {
+                                if (record.titleCheck) {
+                                  record.click();
+                                } else {
+                                  userData.addShortCuts(
+                                    [
+                                      record.categoryIndex,
+                                      record.title,
+                                      0,
+                                      false,
+                                      userData.keynum,
+                                      false,
+                                    ],
+                                  );
+                                  userData.addActivity(
+                                    DateTime.now(),
+                                    record.title,
+                                    record.categoryIndex,
+                                  );
+                                  Navigator.pop(context);
+                                  record.reset();
+                                }
+                              }
+                            },
                             onPressed: () {
                               if (record.isRecord) {
                                 //記録モード
                                 if (record.titleCheck || record.timeCheck) {
                                   record.click();
                                 } else {
-                                  if (record.shortCut) {
-                                    userData.addShortCuts([
-                                      record.categoryIndex,
-                                      record.title,
-                                      record.time,
-                                      record.isGood,
-                                      userData.keynum,
-                                    ]);
-                                  }
                                   userData.recordDone(
                                     [
                                       record.categoryIndex,
@@ -613,8 +603,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                 ),
                               ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.only(bottom: 20),
+                              padding: const EdgeInsets.only(bottom: 20),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
@@ -826,35 +815,67 @@ class ShortCutSheet extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10),
                             ),
                             onPressed: () {
-                              userData.recordDone(itemList);
+                              if (itemList[5]) {
+                                userData.recordDone(itemList);
+                              } else {
+                                userData.addActivity(
+                                    DateTime.now(), itemList[1], itemList[0]);
+                              }
                               Navigator.pop(context);
                             },
                             child: Container(
                               width: displaySize.width,
                               child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
-                                  Icon(
-                                    IconData(
-                                      userData.categories[itemList[0]][0],
-                                      fontFamily: "MaterialIcons",
+                                  Expanded(
+                                    child: Row(
+                                      children: <Widget>[
+                                        Icon(
+                                          IconData(
+                                            userData.categories[itemList[0]][0],
+                                            fontFamily: "MaterialIcons",
+                                          ),
+                                          color: (itemList[3])
+                                              ? (theme.isDark)
+                                                  ? theme.themeColors[0]
+                                                  : theme.themeColors[1]
+                                              : Colors.grey,
+                                          size: displaySize.width / 10,
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Flexible(
+                                          child: Text(
+                                            itemList[1],
+                                            overflow: TextOverflow.fade,
+                                            softWrap: false,
+                                            style: TextStyle(
+                                              fontSize: FontSize.xsmall,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    color: (itemList[3])
-                                        ? (theme.isDark)
-                                            ? theme.themeColors[0]
-                                            : theme.themeColors[1]
-                                        : Colors.grey,
-                                    size: displaySize.width / 10,
                                   ),
                                   SizedBox(
                                     width: 10,
                                   ),
-                                  Flexible(
+                                  Container(
+                                    padding: EdgeInsets.all(5),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.grey[300],
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
                                     child: Text(
-                                      itemList[1],
-                                      overflow: TextOverflow.fade,
-                                      softWrap: false,
+                                      (itemList[5]) ? '記録' : '開始',
                                       style: TextStyle(
-                                        fontSize: FontSize.xsmall,
+                                        fontSize: FontSize.small,
+                                        fontWeight: FontWeight.w700,
                                       ),
                                     ),
                                   ),
@@ -880,6 +901,34 @@ class ShortCutsEditPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
+    void deleteCheck(int index) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          title: Text('削除'),
+          content: Text('ショートカットを削除しますか？'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('いいえ'),
+              onPressed: (){
+                Navigator.pop(context);
+              },
+            ),
+            FlatButton(
+              child: Text('はい'),
+              onPressed: (){
+                userData.deleteShortCut(index);
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -902,36 +951,67 @@ class ShortCutsEditPage extends StatelessWidget {
             child: ReorderableListView(
               children: [
                 for (int i = 0; i < userData.shortCuts.length; i++)
-                  Card(
+                  SizedBox(
                     key: Key(userData.shortCuts[i][4].toString()),
-                    child: ListTile(
-                      leading: Icon(
-                        IconData(
-                          userData.categories[userData.shortCuts[i][0]][0],
-                          fontFamily: 'MaterialIcons',
+                    width: displaySize.width,
+                    child: Row(
+                      children: <Widget>[
+                        const SizedBox(
+                          width: 5,
                         ),
-                        color: (userData.shortCuts[i][3])
-                            ? (theme.isDark)
-                                ? theme.themeColors[0]
-                                : theme.themeColors[1]
-                            : Colors.grey,
-                        size: displaySize.width / 12,
-                      ),
-                      title: Text(
-                        userData.shortCuts[i][1],
-                        overflow: TextOverflow.fade,
-                        softWrap: false,
-                      ),
-                      trailing: IconButton(
-                        icon: Icon(
-                          Icons.remove_circle_outline,
+                        Expanded(
+                          child: Card(
+                            child: ListTile(
+                              leading: Icon(
+                                IconData(
+                                  userData.categories[userData.shortCuts[i][0]]
+                                      [0],
+                                  fontFamily: 'MaterialIcons',
+                                ),
+                                color: (userData.shortCuts[i][3])
+                                    ? (theme.isDark)
+                                        ? theme.themeColors[0]
+                                        : theme.themeColors[1]
+                                    : Colors.grey,
+                                size: displaySize.width / 12,
+                              ),
+                              title: Text(
+                                userData.shortCuts[i][1],
+                                overflow: TextOverflow.fade,
+                                softWrap: false,
+                              ),
+                              trailing: Container(
+                                padding: const EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.grey[300],
+                                    ),
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Text(
+                                  (userData.shortCuts[i][5]) ? '記録' : '開始',
+                                  style: TextStyle(
+                                    fontSize: FontSize.small,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
-                        iconSize: displaySize.width / 12,
-                        color: theme.isDark
-                            ? theme.themeColors[0]
-                            : theme.themeColors[1],
-                        onPressed: () => userData.deleteShortCut(i),
-                      ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.remove_circle_outline,
+                          ),
+                          iconSize: displaySize.width / 12,
+                          color: theme.isDark
+                              ? theme.themeColors[0]
+                              : theme.themeColors[1],
+                          onPressed: () => deleteCheck(i)//userData.deleteShortCut(i),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                      ],
                     ),
                   ),
               ],
@@ -1145,7 +1225,6 @@ class SelectIconPage extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  height: displaySize.width / 7.5,
                   width: displaySize.width / 2,
                   padding: EdgeInsets.symmetric(
                     horizontal: 5,
@@ -1153,6 +1232,7 @@ class SelectIconPage extends StatelessWidget {
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: Colors.grey,
+                      width: 3,
                     ),
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -1160,6 +1240,7 @@ class SelectIconPage extends StatelessWidget {
                     textAlignVertical: TextAlignVertical.center,
                     textInputAction: TextInputAction.go,
                     decoration: InputDecoration(
+                      hintText: '入力',
                       border: InputBorder.none,
                     ),
                     cursorColor: theme.isDark
@@ -1169,7 +1250,6 @@ class SelectIconPage extends StatelessWidget {
                     style: TextStyle(fontSize: FontSize.small),
                     onChanged: (s) {
                       userData.editCategoryTitle(index, s);
-                      print(s);
                     },
                   ),
                 ),
