@@ -5,7 +5,6 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/rendering.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
 
 import 'package:zikanri/data.dart';
 
