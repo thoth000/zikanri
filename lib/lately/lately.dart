@@ -14,20 +14,6 @@ class LatelyPage extends StatelessWidget {
     final userData = Provider.of<UserDataNotifier>(context);
     return ListView(
       children: <Widget>[
-          /*SizedBox(
-            height: displaySize.width / 2+20,
-            child: Swiper(
-              itemCount: userData.latelyData.length,
-              onIndexChanged: (i) {
-                userData.setIndex(i);
-              },
-              loop: false,
-              controller: SwiperController(),
-              itemBuilder: (context,index){
-                return DayData(userData.latelyData[index]);
-              },
-            ),
-          ),*/
         SizedBox(
           height: displaySize.width / 2 + 20,
           child: PageView(

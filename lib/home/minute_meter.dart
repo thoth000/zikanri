@@ -58,30 +58,33 @@ class _MinuteMeterState extends State<MinuteMeter> {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
     final record = Provider.of<RecordNotifier>(context);
-    void checkDelete(int index){
-      showDialog(context: context,
-      builder: (context)=>AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+    void checkDelete(int index) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          title: Text('削除'),
+          content: Text('この記録を削除しますか？'),
+          actions: <Widget>[
+            FlatButton(
+                child: Text('いいえ'),
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
+            FlatButton(
+              child: Text('はい'),
+              onPressed: () {
+                userData.finishActivity(index);
+                Navigator.pop(context);
+              },
+            ),
+          ],
         ),
-        title: Text('削除'),
-        content: Text('この記録を削除しますか？'),
-        actions: <Widget>[
-          FlatButton(
-            child: Text('いいえ'),
-            onPressed: (){Navigator.pop(context);}
-          ),
-          FlatButton(
-            child: Text('はい'),
-            onPressed: (){
-              userData.finishActivity(index);
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      ),
       );
     }
+
     return Column(
       children: <Widget>[
         (userData.activities.length == 0)
@@ -142,8 +145,10 @@ class _MinuteMeterState extends State<MinuteMeter> {
                                 children: <Widget>[
                                   Icon(
                                     IconData(
-                                        userData.categories[userData.activities[i][3]][0],
-                                        fontFamily: "MaterialIcons"),
+                                      userData.categories[userData.activities[i]
+                                          [3]][0],
+                                      fontFamily: "MaterialIcons",
+                                    ),
                                     size: displaySize.width / 10,
                                     color: Colors.grey,
                                   ),
@@ -249,15 +254,11 @@ class _MinuteMeterState extends State<MinuteMeter> {
                                         highlightColor: Colors.transparent,
                                         onPressed: () {
                                           Vib.select();
-                                          int time = userData.activities[i][4] +
-                                              DateTime.now()
-                                                  .difference(
-                                                      userData.activities[i][0])
-                                                  .inMinutes;
                                           record.copyData(
-                                              userData.activities[i][3],
-                                              userData.activities[i][2],
-                                              time,);
+                                            userData.activities[i][3],
+                                            userData.activities[i][2],
+                                            userData.activities[i][5],
+                                          );
                                           showDialog(
                                             context: context,
                                             builder: (context) =>
