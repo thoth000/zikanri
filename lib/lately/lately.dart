@@ -6,7 +6,8 @@ import 'dart:ui' as ui;
 import 'package:flutter/rendering.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 
-import 'package:zikanri/data.dart';
+import '../data.dart';
+import '../setting/tutorial.dart';
 
 class LatelyPage extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -14,6 +15,7 @@ class LatelyPage extends StatelessWidget {
     final userData = Provider.of<UserDataNotifier>(context);
     return ListView(
       children: <Widget>[
+        (userData.tutorial[3]) ? SizedBox() : LatelyTutorial(),
         SizedBox(
           height: displaySize.width / 2 + 20,
           child: PageView(
@@ -21,11 +23,9 @@ class LatelyPage extends StatelessWidget {
             onPageChanged: (i) {
               userData.setIndex(i);
             },
-            controller:
-                PageController(initialPage: userData.latelyData.length),
+            controller: PageController(initialPage: userData.latelyData.length),
             children: <Widget>[
-              for (var itemList in userData.latelyData)
-                DayData(itemList)
+              for (var itemList in userData.latelyData) DayData(itemList)
             ],
           ),
         ),

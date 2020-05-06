@@ -33,7 +33,6 @@ class TotalScoreWidget extends StatelessWidget {
         text: '${userData.userName}さんの価値時間が${userData.allGood}分に到達しました！\n今度はあなたの時間の価値を高めませんか？\n【Android】\n ',
       );
     }
-
     return RepaintBoundary(
       key: _globalKey,
       child: Container(

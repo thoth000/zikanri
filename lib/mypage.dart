@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+
 import 'home/home.dart';
 import 'lately/lately.dart';
 import 'previous_records/previous_records.dart';
@@ -21,13 +22,10 @@ class _MyAppPageState extends State<MyAppPage> {
     PRPage(),
     SettingPage(),
   ];
-
-  List tmp = [
-    Container(color: Colors.red,),
-    Container(color: Colors.blue,),
-    Container(color: Colors.green,),
-    Container(color: Colors.yellow,),
-  ];
+  @override
+  void initState(){
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);

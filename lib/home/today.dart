@@ -158,7 +158,7 @@ class TodayWidget extends StatelessWidget {
                     ),
                     child: Text(
                       (userData.todayDoneList.length == 0)
-                          ? '今日の記録はまだありません'
+                          ? '今日の活動を記録しよう！'
                           : '',
                       style: TextStyle(
                         fontSize: FontSize.xsmall,

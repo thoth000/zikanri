@@ -80,7 +80,6 @@ const List baseColors = [
 ];
 
 
-
 //changeNotifier for record
 class RecordNotifier with ChangeNotifier {
   String _title = "";
@@ -252,6 +251,9 @@ class UserDataNotifier with ChangeNotifier {
   String previousDate = "2020年01月01日";
   String thisMonth = "01";
   int totalPassedDays = 1;
+
+  List tutorial = [true,true,true,true,true];
+
   int passedDays = 1;
   int keynum = 5;
 
@@ -340,7 +342,7 @@ class UserDataNotifier with ChangeNotifier {
     await Hive.box('userData').put('keynum', keynum);
   }
 
-  void sort(int oldIndex, int newIndex) async {
+  Future sort(int oldIndex, int newIndex) async {
     if (oldIndex < newIndex) {
       newIndex -= 1;
     }
@@ -350,12 +352,17 @@ class UserDataNotifier with ChangeNotifier {
     await Hive.box('userData').put('shortCuts', _shortCuts);
   }
 
-  void deleteShortCut(int index) async {
+  Future deleteShortCut(int index) async {
     _shortCuts.removeAt(index);
     notifyListeners();
     await Hive.box('userData').put('shortCuts', _shortCuts);
   }
 
+  Future finishTutorial(int index)async{
+    tutorial[index] = true;
+    notifyListeners();
+    await Hive.box('userData').put('tutorial', tutorial);
+  }
   //activity関連
   Future addActivity(
     DateTime startTime,
@@ -441,6 +448,7 @@ class UserDataNotifier with ChangeNotifier {
       ],
     );
     notifyListeners();
+    //保存メソッド
     await Hive.box('userData').put('userValue', [
       _allTime,
       _allGood,
@@ -493,6 +501,7 @@ class UserDataNotifier with ChangeNotifier {
       ],
     );
     notifyListeners();
+    //保存メソッド
     await Hive.box('userData').put('userValue', [
       _allTime,
       _allGood,
@@ -527,6 +536,7 @@ class UserDataNotifier with ChangeNotifier {
     _shortCuts = await box.get('shortCuts');
     _activities = await box.get('activities');
     userName = await box.get('userName');
+    tutorial = await box.get('tutorial');
     previousDate = await box.get('previousDate');
     thisMonth = await box.get('thisMonth');
     totalPassedDays = await box.get('totalPassedDays');

@@ -27,6 +27,7 @@ class WelcomePage extends StatelessWidget {
       await themeBox.put('myColors', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
       // userData
       await userDataBox.put('welcome', "Yey!");
+      await userDataBox.put('tutorial',[false,false,false,false,false,false]);
       /*userValue=[
         aTime,aGood,aPer,
         tmTime,tmGood,tmPer,

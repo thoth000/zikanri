@@ -5,6 +5,7 @@ import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 import 'package:zikanri/previous_records/category.dart';
 
 import '../data.dart';
+import '../setting/tutorial.dart';
 
 class PRPage extends StatelessWidget {
   @override
@@ -15,6 +16,7 @@ class PRPage extends StatelessWidget {
       width: displaySize.width,
       child: ListView(
         children: <Widget>[
+          (userData.tutorial[4]) ? SizedBox() : PreviousTutorial(),
           Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: displaySize.width / 5.5, vertical: 10),
@@ -140,8 +142,9 @@ class GridCard extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>CategoryPage(index)));
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => CategoryPage(index)));
           },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

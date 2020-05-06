@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
 
+import '../setting/tutorial.dart';
 import '../splash.dart';
 import '../data.dart';
 
@@ -257,6 +258,9 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                         SizedBox(
                           height: 10,
                         ),
+                        (record.isRecord)
+                            ? (userData.tutorial[1]) ? SizedBox() : RecordTutorial()
+                            : (userData.tutorial[2]) ? SizedBox() : StartTutorial(),
                         Text(
                           'タイトル',
                           style: _headlineStyle,
@@ -913,13 +917,13 @@ class ShortCutsEditPage extends StatelessWidget {
           actions: <Widget>[
             FlatButton(
               child: Text('いいえ'),
-              onPressed: (){
+              onPressed: () {
                 Navigator.pop(context);
               },
             ),
             FlatButton(
               child: Text('はい'),
-              onPressed: (){
+              onPressed: () {
                 userData.deleteShortCut(index);
                 Navigator.pop(context);
               },
@@ -940,13 +944,7 @@ class ShortCutsEditPage extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Text(
-              '長押しで並び替え',
-              style: TextStyle(fontSize: FontSize.xsmall),
-            ),
-          ),
+          (userData.tutorial[5])?SizedBox():ShortCutEditTutorial(),
           Expanded(
             child: ReorderableListView(
               children: [
@@ -999,15 +997,16 @@ class ShortCutsEditPage extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                          icon: Icon(
-                            Icons.remove_circle_outline,
-                          ),
-                          iconSize: displaySize.width / 12,
-                          color: theme.isDark
-                              ? theme.themeColors[0]
-                              : theme.themeColors[1],
-                          onPressed: () => deleteCheck(i)//userData.deleteShortCut(i),
-                        ),
+                            icon: Icon(
+                              Icons.remove_circle_outline,
+                            ),
+                            iconSize: displaySize.width / 12,
+                            color: theme.isDark
+                                ? theme.themeColors[0]
+                                : theme.themeColors[1],
+                            onPressed: () =>
+                                deleteCheck(i) //userData.deleteShortCut(i),
+                            ),
                         const SizedBox(
                           width: 5,
                         ),
