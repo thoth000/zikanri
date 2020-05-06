@@ -30,7 +30,6 @@ class Vib {
   }
 }
 
-AssetImage userIcon = AssetImage('images/zikanri_icon.png');
 const List iconList = [
   57746,
   57680,

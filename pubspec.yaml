@@ -19,6 +19,7 @@ dependencies:
   vibration: ^1.2.4
   flutter_circular_chart: ^0.1.0
   flutter_swiper : ^1.1.6
+  introduction_screen: ^1.0.8
   cupertino_icons: ^0.1.2
 
 dev_dependencies:
@@ -41,7 +42,9 @@ flutter:
       - asset: fonts/NotoSansJP-Thin.otf
         weight: 100
   assets:
-    - images/zikanri_icon.png
     - images/zikanri_shaped.png
-    - images/mark1.png
-    - images/splash_deco.png
+    - images/1.png
+    - images/2.png
+    - images/3.png
+    - images/4.png
+    - images/5.png
