@@ -89,7 +89,7 @@ class _MinuteMeterState extends State<MinuteMeter> {
     return Column(
       children: <Widget>[
         (userData.activities.length == 0)
-            ? Container()
+            ? SizedBox()
             : Padding(
                 padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                 child: Column(
@@ -125,59 +125,169 @@ class _MinuteMeterState extends State<MinuteMeter> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: 10,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        height: displaySize.width / 10,
-                        width: displaySize.width,
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      height: displaySize.width / 10,
+                      width: displaySize.width,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          SizedBox(
+                            width: displaySize.width / 1.6,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Icon(
+                                  IconData(
+                                    userData.categories[userData.activities[i]
+                                        [3]][0],
+                                    fontFamily: "MaterialIcons",
+                                  ),
+                                  size: displaySize.width / 10,
+                                  color: Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    userData.activities[i][2],
+                                    overflow: TextOverflow.fade,
+                                    softWrap: false,
+                                    style: TextStyle(
+                                      fontSize: FontSize.small,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: displaySize.width / 5.5,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: <Widget>[
+                                Text(
+                                  userData.activities[i][5].toString() + '分',
+                                  style: TextStyle(fontSize: FontSize.midium),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: displaySize.width / 36,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: displaySize.width / 125),
+                      child: SizedBox(
+                        width: displaySize.width / 2.5,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Container(
-                              width: displaySize.width / 1.6,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
+                            SizedBox(
+                              height: displaySize.width / 12,
+                              width: displaySize.width / 12,
+                              child: Stack(
                                 children: <Widget>[
                                   Icon(
-                                    IconData(
-                                      userData.categories[userData.activities[i]
-                                          [3]][0],
-                                      fontFamily: "MaterialIcons",
-                                    ),
-                                    size: displaySize.width / 10,
-                                    color: Colors.grey,
+                                    (userData.activities[i][1])
+                                        ? Icons.play_circle_outline
+                                        : Icons.pause_circle_outline,
+                                    color: theme.isDark
+                                        ? theme.themeColors[0]
+                                        : theme.themeColors[1],
+                                    size: displaySize.width / 12,
                                   ),
                                   SizedBox(
-                                    width: 10,
-                                  ),
-                                  Flexible(
-                                    child: Text(
-                                      userData.activities[i][2],
-                                      overflow: TextOverflow.fade,
-                                      softWrap: false,
-                                      style: TextStyle(
-                                        fontSize: FontSize.small,
-                                        fontWeight: FontWeight.w700,
-                                      ),
+                                    height: displaySize.width / 12,
+                                    width: displaySize.width / 12,
+                                    child: FlatButton(
+                                      splashColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      child: SizedBox(),
+                                      onPressed: () async {
+                                        if (userData.activities[i][1]) {
+                                          userData.startTimer(i);
+                                          Scaffold.of(context).showSnackBar(
+                                            notifySnackBar("タイマーをスタートさせました"),
+                                          );
+                                        } else {
+                                          userData.stopTimer(i);
+                                          Scaffold.of(context).showSnackBar(
+                                            notifySnackBar("タイマーをストップさせました"),
+                                          );
+                                        }
+                                      },
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                            Container(
-                              width: displaySize.width / 5.5,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
+                            SizedBox(
+                              height: displaySize.width / 12,
+                              width: displaySize.width / 12,
+                              child: Stack(
                                 children: <Widget>[
-                                  Text(
-                                    userData.activities[i][5].toString() + '分',
-                                    style: TextStyle(fontSize: FontSize.midium),
+                                  Icon(
+                                    Icons.check_circle_outline,
+                                    color: theme.isDark
+                                        ? theme.themeColors[0]
+                                        : theme.themeColors[1],
+                                    size: displaySize.width / 12,
+                                  ),
+                                  SizedBox(
+                                    height: displaySize.width / 12,
+                                    width: displaySize.width / 12,
+                                    child: FlatButton(
+                                      child: SizedBox(),
+                                      splashColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onPressed: () {
+                                        Vib.select();
+                                        record.copyData(
+                                          userData.activities[i][3],
+                                          userData.activities[i][2],
+                                          userData.activities[i][5],
+                                        );
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) =>
+                                              FinishRecordDialog(i),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: displaySize.width / 12,
+                              width: displaySize.width / 12,
+                              child: Stack(
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.remove_circle_outline,
+                                    color: theme.isDark
+                                        ? theme.themeColors[0]
+                                        : theme.themeColors[1],
+                                    size: displaySize.width / 12,
+                                  ),
+                                  SizedBox(
+                                    height: displaySize.width / 12,
+                                    width: displaySize.width / 12,
+                                    child: FlatButton(
+                                      child: SizedBox(),
+                                      splashColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onPressed: () => checkDelete(i),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -185,123 +295,8 @@ class _MinuteMeterState extends State<MinuteMeter> {
                           ],
                         ),
                       ),
-                      SizedBox(
-                        height: displaySize.width / 36,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: displaySize.width / 125),
-                        child: Container(
-                          width: displaySize.width / 2.5,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              SizedBox(
-                                height: displaySize.width / 12,
-                                width: displaySize.width / 12,
-                                child: Stack(
-                                  children: <Widget>[
-                                    Icon(
-                                      (userData.activities[i][1])
-                                          ? Icons.play_circle_outline
-                                          : Icons.pause_circle_outline,
-                                      color: theme.isDark
-                                          ? theme.themeColors[0]
-                                          : theme.themeColors[1],
-                                      size: displaySize.width / 12,
-                                    ),
-                                    SizedBox(
-                                      height: displaySize.width / 12,
-                                      width: displaySize.width / 12,
-                                      child: FlatButton(
-                                        splashColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        child: Container(),
-                                        onPressed: () async {
-                                          if (userData.activities[i][1]) {
-                                            userData.startTimer(i);
-                                            Scaffold.of(context).showSnackBar(
-                                              notifySnackBar("タイマーをスタートさせました"),
-                                            );
-                                          } else {
-                                            userData.stopTimer(i);
-                                            Scaffold.of(context).showSnackBar(
-                                              notifySnackBar("タイマーをストップさせました"),
-                                            );
-                                          }
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: displaySize.width / 12,
-                                width: displaySize.width / 12,
-                                child: Stack(
-                                  children: <Widget>[
-                                    Icon(
-                                      Icons.check_circle_outline,
-                                      color: theme.isDark
-                                          ? theme.themeColors[0]
-                                          : theme.themeColors[1],
-                                      size: displaySize.width / 12,
-                                    ),
-                                    SizedBox(
-                                      height: displaySize.width / 12,
-                                      width: displaySize.width / 12,
-                                      child: FlatButton(
-                                        child: Container(),
-                                        splashColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onPressed: () {
-                                          Vib.select();
-                                          record.copyData(
-                                            userData.activities[i][3],
-                                            userData.activities[i][2],
-                                            userData.activities[i][5],
-                                          );
-                                          showDialog(
-                                            context: context,
-                                            builder: (context) =>
-                                                FinishRecordDialog(i),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: displaySize.width / 12,
-                                width: displaySize.width / 12,
-                                child: Stack(
-                                  children: <Widget>[
-                                    Icon(
-                                      Icons.remove_circle_outline,
-                                      color: theme.isDark
-                                          ? theme.themeColors[0]
-                                          : theme.themeColors[1],
-                                      size: displaySize.width / 12,
-                                    ),
-                                    SizedBox(
-                                      height: displaySize.width / 12,
-                                      width: displaySize.width / 12,
-                                      child: FlatButton(
-                                        child: Container(),
-                                        splashColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onPressed: () => checkDelete(i),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -473,7 +468,7 @@ class FinishRecordDialog extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
               onPressed: () => record.changeValue(isGood),
-              child: Container(),
+              child: SizedBox(),
             ),
           ),
         ],

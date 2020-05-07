@@ -72,7 +72,7 @@ class HomePage extends StatelessWidget {
           ),
         ),
         TodayWidget(),
-        Container(
+        SizedBox(
           height: displaySize.width / 10,
           width: displaySize.width,
         ),

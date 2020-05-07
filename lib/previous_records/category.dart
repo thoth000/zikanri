@@ -96,7 +96,7 @@ class CategoryPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Container(
+                  SizedBox(
                     height: displaySize.width / 3.5,
                     width: displaySize.width / 2.6,
                     child: Column(
@@ -126,7 +126,7 @@ class CategoryPage extends StatelessWidget {
                     height: displaySize.width / 3.5 - 10,
                     color: Colors.grey,
                   ),
-                  Container(
+                  SizedBox(
                     height: displaySize.width / 3.5,
                     width: displaySize.width / 2.6,
                     child: Column(

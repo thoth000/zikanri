@@ -97,7 +97,7 @@ class _SplashPageState extends State<SplashPage> {
       body: Stack(
         children: <Widget>[
           Center(
-            child: Container(
+            child: SizedBox(
               height: displaySize.width / 2,
               width: displaySize.width / 2,
               child: Image(

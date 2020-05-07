@@ -24,7 +24,7 @@ class TodayWidget extends StatelessWidget {
                   : Colors.grey,
             ),
           ),
-          Container(
+          SizedBox(
             width: displaySize.width / 2,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

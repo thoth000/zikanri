@@ -149,7 +149,7 @@ class LatelyPage extends StatelessWidget {
                 SizedBox(
                   width: 10,
                 ),
-                Container(
+                SizedBox(
                   width: displaySize.width / 7,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -223,7 +223,7 @@ class DayData extends StatelessWidget {
               ),
               child: Column(
                 children: <Widget>[
-                  Container(
+                  SizedBox(
                     width: displaySize.width,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -255,7 +255,7 @@ class DayData extends StatelessWidget {
                                   color: Colors.transparent,
                                   splashColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
-                                  child: Container(),
+                                  child: SizedBox(),
                                   onPressed: () async {
                                     await _exportToImage();
                                   },
@@ -298,7 +298,7 @@ class DayData extends StatelessWidget {
     String title,
     var value,
   ) {
-    return Container(
+    return SizedBox(
       height: displaySize.width / 3.5,
       width: displaySize.width / 3.7,
       child: Column(

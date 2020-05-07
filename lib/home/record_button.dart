@@ -44,7 +44,7 @@ class RButton extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(500),
               ),
-              child: Container(),
+              child: SizedBox(),
               onPressed: () {
                 var date = DateFormat("yyyy年MM月dd日").format(DateTime.now());
                 if (date != Hive.box('userData').get('previousDate')) {
@@ -166,6 +166,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              //ボトムシートの上のグレーのとこ
               Container(
                 height: 5,
                 width: 50,
@@ -259,8 +260,12 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                           height: 10,
                         ),
                         (record.isRecord)
-                            ? (userData.tutorial[1]) ? SizedBox() : RecordTutorial()
-                            : (userData.tutorial[2]) ? SizedBox() : StartTutorial(),
+                            ? (userData.tutorial[1])
+                                ? SizedBox()
+                                : RecordTutorial()
+                            : (userData.tutorial[2])
+                                ? SizedBox()
+                                : StartTutorial(),
                         Text(
                           'タイトル',
                           style: _headlineStyle,
@@ -349,7 +354,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                   SizedBox(
                                     height: 5,
                                   ),
-                                  Container(
+                                  SizedBox(
                                     width: displaySize.width / 2.5,
                                     child: SingleChildScrollView(
                                       scrollDirection: Axis.horizontal,
@@ -375,7 +380,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                               ),
                             ],
                           )
-                        : Container(),
+                        : SizedBox(),
                     SizedBox(
                       height: (record.isRecord) ? 20 : 0,
                     ),
@@ -485,41 +490,39 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                             ),
                           ),
                         ),
-                        Container(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              if (record.titleCheck && record.clickCheck)
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'タイトルを決めてください',
-                                    style: TextStyle(color: Colors.red),
-                                  ),
-                                ),
-                              if (record.timeCheck && record.clickCheck)
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 8.0),
-                                  child: Column(
-                                    children: <Widget>[
-                                      Text(
-                                        '時間の設定は1日の範囲までです',
-                                        style: TextStyle(
-                                          color: Colors.red,
-                                        ),
-                                      ),
-                                      Text(
-                                        'その時間は設定できません',
-                                        style: TextStyle(
-                                          color: Colors.red,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                            ],
+                        if (record.titleCheck && record.clickCheck)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: Text(
+                              'タイトルを決めてください',
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontSize: FontSize.xsmall,
+                              ),
+                            ),
                           ),
-                        ),
+                        if (record.timeCheck && record.clickCheck)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  '時間の設定は1日の範囲までです',
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                    fontSize: FontSize.xsmall,
+                                  ),
+                                ),
+                                Text(
+                                  'その時間は設定できません',
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                    fontSize: FontSize.xsmall,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                       ],
                     ),
                     Divider(
@@ -582,7 +585,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                                 borderRadius:
                                                     BorderRadius.circular(10),
                                               ),
-                                              child: Container(),
+                                              child: SizedBox(),
                                               color: Colors.transparent,
                                               onPressed: () =>
                                                   record.changeCategoryIndex(i),
@@ -643,7 +646,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                               borderRadius:
                                                   BorderRadius.circular(10),
                                             ),
-                                            child: Container(),
+                                            child: SizedBox(),
                                             color: Colors.transparent,
                                             onPressed: () {
                                               Navigator.push(
@@ -709,7 +712,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                 borderRadius: BorderRadius.circular(10),
               ),
               onPressed: () => record.changeValue(isGood),
-              child: Container(),
+              child: SizedBox(),
             ),
           ),
         ],
@@ -827,7 +830,7 @@ class ShortCutSheet extends StatelessWidget {
                               }
                               Navigator.pop(context);
                             },
-                            child: Container(
+                            child: SizedBox(
                               width: displaySize.width,
                               child: Row(
                                 mainAxisAlignment:
@@ -944,7 +947,7 @@ class ShortCutsEditPage extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
-          (userData.tutorial[5])?SizedBox():ShortCutEditTutorial(),
+          (userData.tutorial[5]) ? SizedBox() : ShortCutEditTutorial(),
           Expanded(
             child: ReorderableListView(
               children: [
@@ -1084,7 +1087,7 @@ class CategoryCard extends StatelessWidget {
       );
     }
 
-    return Container(
+    return SizedBox(
       height: displaySize.width / 3,
       width: displaySize.width,
       child: Row(
@@ -1114,7 +1117,7 @@ class CategoryCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      Container(
+                      SizedBox(
                           height: displaySize.width / 8,
                           width: displaySize.width / 8,
                           child: Icon(

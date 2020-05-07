@@ -98,7 +98,7 @@ class TotalScoreWidget extends StatelessWidget {
                 Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: displaySize.width / 30),
-                  child: Container(
+                  child: SizedBox(
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Text(

@@ -39,7 +39,6 @@ class ProfileSettingPage extends StatelessWidget {
               style: TextStyle(
                 color: Colors.grey,
                 fontSize: FontSize.small,
-
               ),
             ),
             SizedBox(
@@ -62,7 +61,7 @@ class ProfileSettingPage extends StatelessWidget {
                 fontSize: FontSize.xsmall,
               ),
             ),
-            Container(
+            SizedBox(
               height: displaySize.width / 6,
               child: TextField(
                 cursorColor: (theme.isDark)
@@ -77,7 +76,10 @@ class ProfileSettingPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                style: TextStyle(fontSize: FontSize.midium,fontWeight: FontWeight.w700,),
+                style: TextStyle(
+                  fontSize: FontSize.midium,
+                  fontWeight: FontWeight.w700,
+                ),
                 onChanged: (name) {
                   userData.nameChange(name);
                 },

@@ -82,7 +82,7 @@ class ThemeSettingPage extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: displaySize.width / 30),
-                        child: Container(
+                        child: SizedBox(
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Text(
@@ -152,16 +152,14 @@ class ThemeSettingPage extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                Container(
-                  child: Wrap(
-                    children: <Widget>[
-                      for (int i = 0; i < theme.myColors.length; i++)
-                        Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: themeChanger(theme, i),
-                        ),
-                    ],
-                  ),
+                Wrap(
+                  children: <Widget>[
+                    for (int i = 0; i < theme.myColors.length; i++)
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: themeChanger(theme, i),
+                      ),
+                  ],
                 ),
               ],
             ),
@@ -186,7 +184,7 @@ class ThemeSettingPage extends StatelessWidget {
           borderRadius: BorderRadius.circular(5),
         ),
         color: Colors.transparent,
-        child: Container(),
+        child: SizedBox(),
         onPressed: () async => await theme.changeTheme(i),
       ),
     );

@@ -12,7 +12,7 @@ class PRPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
-    return Container(
+    return SizedBox(
       width: displaySize.width,
       child: ListView(
         children: <Widget>[

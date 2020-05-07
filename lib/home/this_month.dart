@@ -43,7 +43,7 @@ class _TMWidgetState extends State<TMWidget> {
     String title,
     var value,
   ) {
-    return Container(
+    return SizedBox(
       width: displaySize.width / 3.7,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
