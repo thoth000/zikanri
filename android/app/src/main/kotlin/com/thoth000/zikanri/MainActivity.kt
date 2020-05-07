@@ -1,4 +1,4 @@
-package com.example.zikanri
+package com.thoth000.zikanri
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
