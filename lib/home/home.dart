@@ -15,7 +15,6 @@ class HomePage extends StatelessWidget {
     final userData = Provider.of<UserDataNotifier>(context);
     return ListView(
       children: <Widget>[
-        (userData.tutorial[0]) ? SizedBox() : HomeTutorial(),
         TotalScoreWidget(),
         Divider(
           height: 20,
@@ -23,6 +22,7 @@ class HomePage extends StatelessWidget {
           indent: 10,
           endIndent: 10,
         ),
+        (userData.tutorial[0]) ? SizedBox() : HomeTutorial(),
         MinuteMeter(),
         Padding(
           padding: const EdgeInsets.all(10),

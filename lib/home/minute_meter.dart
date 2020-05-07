@@ -20,11 +20,11 @@ class _MinuteMeterState extends State<MinuteMeter> {
     loopReflesh();
   }
 
-  void dateCheck() async {
+  Future dateCheck() async {
     var now = DateTime.now();
     if (DateFormat("yyyy年MM月dd日").format(now) !=
         Hive.box('userData').get('previousDate')) {
-      await Future.delayed(Duration());
+      await Future.delayed(Duration.zero);
       showDialog(
         barrierDismissible: false,
         context: (context),
@@ -50,11 +50,8 @@ class _MinuteMeterState extends State<MinuteMeter> {
 
   Future loopReflesh() async {
     final userData = Provider.of<UserDataNotifier>(context, listen: false);
-    if (userData.activities.length == 0) {
-    } else {
-      await userData.loopReflesh();
-      Timer.periodic(Duration(seconds: 10), (t) => userData.loopReflesh());
-    }
+    Future.delayed(Duration.zero,userData.loopReflesh);
+    Timer.periodic(Duration(seconds: 10), (t) => userData.loopReflesh());
   }
 
   @override
