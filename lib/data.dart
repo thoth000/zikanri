@@ -60,6 +60,9 @@ const List iconList = [
   58899,
 ];
 
+List achiveM=[1000,5000,10000,50000,100000];
+List achiveD=[1,2,7,30,100];
+
 //BaseColor
 //単色をベースにしていく
 //今なんこ,９
@@ -193,7 +196,6 @@ class RecordNotifier with ChangeNotifier {
 
 //changeNotifier for theme
 class ThemeNotifier with ChangeNotifier {
-  //Theme
   bool _isDark = false;
   bool get isDark => _isDark;
   int _themeColorsIndex = 0;
@@ -252,6 +254,10 @@ class UserDataNotifier with ChangeNotifier {
   String thisMonth = "01";
   int totalPassedDays = 1;
 
+  int myPoint=0;
+  List checkM=[false,false,false,false,false];
+  List checkD=[true,false,false,false,false];
+
   List tutorial = [true,true,true,true,true];
 
   int passedDays = 1;
@@ -298,6 +304,20 @@ class UserDataNotifier with ChangeNotifier {
 
   List _activities = [];
   List get activities => _activities;
+
+  Future checkDay() async{
+    for(int i=0;i<achiveD.length;i++){
+      if(!checkD[i]){
+        if(totalPassedDays>=achiveD[i]){
+          checkD[i]=true;
+          myPoint++;
+        }
+      }
+    }
+    notifyListeners();
+    await Hive.box('userData').put('myPoint', myPoint);
+    await Hive.box('userData').put('checkD', checkD);
+  }
 
   void nameChange(s) {
     tmpName = s;
@@ -447,6 +467,14 @@ class UserDataNotifier with ChangeNotifier {
         _todayDoneList,
       ],
     );
+    for(int i=0;i<achiveM.length;i++){
+      if(!checkM[i]){
+        if(allTime>=achiveM[i]){
+          checkM[i]=true;
+          myPoint++;
+        }
+      }
+    }
     notifyListeners();
     //保存メソッド
     await Hive.box('userData').put('userValue', [
@@ -463,6 +491,8 @@ class UserDataNotifier with ChangeNotifier {
     await Hive.box('userData').put('categories', _categories);
     await Hive.box('userData').put('todayDoneList', _todayDoneList);
     await Hive.box('userData').put('latelyData', _latelyData);
+    await Hive.box('userData').put('myPoint', myPoint);
+    await Hive.box('userData').put('checkM', checkM);
   }
 
   Future deleteDone(List listData, int index) async {
@@ -537,6 +567,9 @@ class UserDataNotifier with ChangeNotifier {
     _activities = await box.get('activities');
     userName = await box.get('userName');
     tutorial = await box.get('tutorial');
+    myPoint = await box.get('myPoint');
+    checkM = await box.get('checkM');
+    checkD = await box.get('checkD');
     previousDate = await box.get('previousDate');
     thisMonth = await box.get('thisMonth');
     totalPassedDays = await box.get('totalPassedDays');

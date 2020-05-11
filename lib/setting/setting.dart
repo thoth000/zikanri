@@ -5,6 +5,7 @@ import 'package:hive/hive.dart';
 import '../data.dart';
 import 'profile.dart';
 import 'theme.dart';
+import 'achieve.dart';
 import 'tutorial.dart';
 import '../home/record_button.dart';
 
@@ -207,13 +208,56 @@ class SettingPage extends StatelessWidget {
               ),
             ),
           ),
+          const Divider(
+            height: 1,
+            thickness: 2,
+          ),
+          const SizedBox(
+            height: 50,
+          ),
+          const Divider(
+            height: 1,
+            thickness: 1,
+          ),
+          SizedBox(
+            height: displaySize.width / 6,
+            width: displaySize.width,
+            child: FlatButton(
+              color: Colors.transparent,
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  _createRoute(
+                    AchievePage(),
+                  ),
+                );
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    '実績',
+                    style: TextStyle(
+                      fontSize: FontSize.xsmall,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.grey,
+                    size: displaySize.width / 20,
+                  ),
+                ],
+              ),
+            ),
+          ),
           Divider(
             height: 1,
             thickness: 2,
           ),
-          SizedBox(
-            height: 50,
-          ),
+          SizedBox(height: 50,),
           Divider(
             height: 1,
             thickness: 1,

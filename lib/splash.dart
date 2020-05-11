@@ -61,6 +61,7 @@ class _SplashPageState extends State<SplashPage> {
       }
       await theme.initialize();
       await userData.initialize();
+      await userData.checkDay();
       Future.delayed(
         Duration(seconds: 1),
         () => Navigator.pushReplacement(

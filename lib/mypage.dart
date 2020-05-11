@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 import 'home/home.dart';
 import 'lately/lately.dart';
 import 'previous_records/previous_records.dart';
@@ -23,16 +22,17 @@ class _MyAppPageState extends State<MyAppPage> {
     SettingPage(),
   ];
   @override
-  void initState(){
+  void initState() {
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
     Color color = theme.isDark ? theme.themeColors[0] : theme.themeColors[1];
-    double iconsize = displaySize.width/11;
+    double iconsize = displaySize.width / 11;
     return Scaffold(
-      body: SafeArea(child:pages[_currentIndex]),
+      body: SafeArea(child: pages[_currentIndex]),
       floatingActionButton: RButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
@@ -54,7 +54,9 @@ class _MyAppPageState extends State<MyAppPage> {
               },
             ),
             IconButton(
-              icon: Icon(Icons.today),
+              icon: Icon(
+                Icons.today,
+              ),
               iconSize: iconsize,
               color: (_currentIndex == 1) ? color : Colors.grey,
               onPressed: () {
@@ -66,7 +68,7 @@ class _MyAppPageState extends State<MyAppPage> {
               },
             ),
             SizedBox(
-              width: displaySize.width/5,
+              width: displaySize.width / 5,
             ),
             IconButton(
               icon: Icon(Icons.assessment),

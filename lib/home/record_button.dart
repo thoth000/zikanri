@@ -184,65 +184,61 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
               SizedBox(
                 height: 10,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Container(
-                          height: displaySize.width / 7.5,
-                          width: displaySize.width / 2.5,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                              color: (record.isRecord)
-                                  ? (theme.isDark)
-                                      ? theme.themeColors[0]
-                                      : theme.themeColors[1]
-                                  : Colors.grey,
-                              width: (record.isRecord) ? 3 : 1,
-                            ),
-                          ),
-                          child: FlatButton(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Center(
-                              child: Text('記録する'),
-                            ),
-                            onPressed: record.recordMode,
-                          ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical:10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Container(
+                      height: displaySize.width / 7.5,
+                      width: displaySize.width / 2.5,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: (record.isRecord)
+                              ? (theme.isDark)
+                                  ? theme.themeColors[0]
+                                  : theme.themeColors[1]
+                              : Colors.grey,
+                          width: (record.isRecord) ? 3 : 1,
                         ),
                       ),
-                    ],
-                  ),
-                  Container(
-                    height: displaySize.width / 7.5,
-                    width: displaySize.width / 2.5,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: (!record.isRecord)
-                            ? (theme.isDark)
-                                ? theme.themeColors[0]
-                                : theme.themeColors[1]
-                            : Colors.grey,
-                        width: (!record.isRecord) ? 3 : 1,
+                      child: FlatButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: Text('記録する'),
+                        ),
+                        onPressed: record.recordMode,
                       ),
                     ),
-                    child: FlatButton(
-                      shape: RoundedRectangleBorder(
+                    Container(
+                      height: displaySize.width / 7.5,
+                      width: displaySize.width / 2.5,
+                      decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: (!record.isRecord)
+                              ? (theme.isDark)
+                                  ? theme.themeColors[0]
+                                  : theme.themeColors[1]
+                              : Colors.grey,
+                          width: (!record.isRecord) ? 3 : 1,
+                        ),
                       ),
-                      child: Center(
-                        child: Text('開始する'),
+                      child: FlatButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: Text('開始する'),
+                        ),
+                        onPressed: record.startMode,
                       ),
-                      onPressed: record.startMode,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               SizedBox(
                 height: 10,

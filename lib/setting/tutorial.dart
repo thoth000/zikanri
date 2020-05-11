@@ -96,6 +96,9 @@ class HomeTutorial extends StatelessWidget {
       padding: EdgeInsets.all(displaySize.width / 20),
       child: Card(
         elevation: 3,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
         child: Column(
           children: <Widget>[
             Row(
@@ -166,6 +169,9 @@ class RecordTutorial extends StatelessWidget {
       ),
       child: Card(
         elevation: 3,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
         child: Column(
           children: <Widget>[
             Row(
@@ -232,6 +238,9 @@ class StartTutorial extends StatelessWidget {
       ),
       child: Card(
         elevation: 3,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
         child: Column(
           children: <Widget>[
             Row(
@@ -300,6 +309,9 @@ class LatelyTutorial extends StatelessWidget {
       padding: EdgeInsets.all(displaySize.width / 20),
       child: Card(
         elevation: 3,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
         child: Column(
           children: <Widget>[
             Row(
@@ -360,6 +372,9 @@ class PreviousTutorial extends StatelessWidget {
       padding: EdgeInsets.all(displaySize.width / 20),
       child: Card(
         elevation: 3,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
         child: Column(
           children: <Widget>[
             Row(
@@ -420,6 +435,9 @@ class ShortCutEditTutorial extends StatelessWidget {
       padding: EdgeInsets.all(displaySize.width / 20),
       child: Card(
         elevation: 3,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
         child: Column(
           children: <Widget>[
             Row(

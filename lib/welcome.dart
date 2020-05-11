@@ -28,6 +28,9 @@ class WelcomePage extends StatelessWidget {
       // userData
       await userDataBox.put('welcome', "Yey!");
       await userDataBox.put('tutorial',[false,false,false,false,false,false]);
+      await userDataBox.put('myPoint', 1);
+      await userDataBox.put('checkM', [false,false,false,false,false]);
+      await userDataBox.put('checkD', [true,false,false,false,false]);
       /*userValue=[
         aTime,aGood,aPer,
         tmTime,tmGood,tmPer,
