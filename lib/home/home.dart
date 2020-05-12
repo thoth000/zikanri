@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
     return ListView(
       children: <Widget>[
         TotalScoreWidget(),
-        Divider(
+        const Divider(
           height: 20,
           thickness: 1,
           indent: 10,

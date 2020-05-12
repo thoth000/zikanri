@@ -136,7 +136,7 @@ class TodayWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-                Divider(
+                const Divider(
                   height: 20,
                 ),
                 Text(

@@ -24,11 +24,10 @@ class WelcomePage extends StatelessWidget {
       // theme
       await themeBox.put('isDark', false);
       await themeBox.put('themeColorsIndex', 0);
-      await themeBox.put('myColors', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
       // userData
       await userDataBox.put('welcome', "Yey!");
-      await userDataBox.put('tutorial',[false,false,false,false,false,false]);
-      await userDataBox.put('myPoint', 1);
+      await userDataBox.put('tutorial',[false,false,false,false,false,false,false,false]);
+      await userDataBox.put('myColors', [true,true,true,false,false,false,false,false,false,false,false,false,false,false]);
       await userDataBox.put('checkM', [false,false,false,false,false]);
       await userDataBox.put('checkD', [true,false,false,false,false]);
       /*userValue=[

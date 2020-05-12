@@ -65,23 +65,23 @@ List achiveD=[1,2,7,30,100];
 
 //BaseColor
 //単色をベースにしていく
-//今なんこ,９
-const List baseColors = [
-  //[Color(0XFF1DA1F2), Color(0XFF1DA1F2)], //0
-  //[Color(0XFFea7070), Color(0XFFea7070)], //1
-  //[Color(0XFF00CDAC), Color(0XFF02AAB0)], //2
-  [Color(0XFF39BAE8), Color(0XFF0000A1)], //3
-  [Color(0XFFef473a), Color(0XFFcb2d3e)], //4
+//今なんこ,14
+List baseColors = [
+  [Color(0XFF39BAE8), Color(0XFF0000A1)], //青
+  [Color(0XFFef473a), Color(0XFFcb2d3e)], //赤
   [Color(0XFF08ffc8), Color(0XFF204969)], //緑
+  [Colors.white,Colors.black],//モノクロ
   [Color(0XFFffcccc), Color(0XFFcaabd8)], //ピンク
+  [Color(0XFFffe259), Color(0XFFffa751)],//マンゴー
+  [Color(0XFFFFFDE4), Color(0XFF005AA7)], //白青
+  [Color(0XFFfffbd5), Color(0XFFb20a2c)], //白赤
+  [Color(0XFFe4e4d9), Color(0XFF215f00)], //白緑
+  [Color(0XFF00ecbc),Color(0XFF007adf)], //風
+  [Color(0XFF21D4FD), Color(0XFFB721FF)], //紫グラ
+  [Color(0XFFDBE6F6), Color(0XFFC5796D)], //ジュピター
+  [Color(0XFF81FBB8),Color(0XFF28C76F)], //鮮緑
   [Color(0XFF4776E6), Color(0XFF8E54E9)], //紫
-  [Color(0XFFFFFDE4), Color(0XFF005AA7)], //7
-  [Color(0XFFfffbd5), Color(0XFFb20a2c)], //9
-  [Color(0XFFe4e4d9), Color(0XFF215f00)], //9
-  [Color(0XFFFFB75E), Color(0XFFED8F03)], //9
-  [Colors.white,Colors.black],
 ];
-
 
 //changeNotifier for record
 class RecordNotifier with ChangeNotifier {
@@ -199,9 +199,9 @@ class ThemeNotifier with ChangeNotifier {
   bool _isDark = false;
   bool get isDark => _isDark;
   int _themeColorsIndex = 0;
-  List _myColors = [0];
-  List get myColors => _myColors;
-  List _themeColors() => baseColors[_myColors[_themeColorsIndex]];
+  //List _myColors = [true,true,true,false,false,false,false,false,false,false];
+  //List get myColors => _myColors;
+  List _themeColors() => baseColors[_themeColorsIndex];
   List get themeColors => _themeColors();
   ThemeData buildTheme() => ThemeData(
         fontFamily: 'NotoSansJP',
@@ -232,17 +232,10 @@ class ThemeNotifier with ChangeNotifier {
     await Hive.box('theme').put('themeColorsIndex', _themeColorsIndex);
   }
 
-  Future addTheme(int i) async {
-    _myColors.add(i);
-    await Hive.box('theme').put('myColors', _myColors);
-    notifyListeners();
-  }
-
   Future initialize() async {
     var box = Hive.box('theme');
     _isDark = await box.get('isDark');
     _themeColorsIndex = await box.get('themeColorsIndex');
-    _myColors = await box.get('myColors');
     notifyListeners();
   }
 }
@@ -254,9 +247,11 @@ class UserDataNotifier with ChangeNotifier {
   String thisMonth = "01";
   int totalPassedDays = 1;
 
-  int myPoint=0;
   List checkM=[false,false,false,false,false];
   List checkD=[true,false,false,false,false];
+
+  List _myColors = [true,true,true,false,false,false,false,false,false,false];
+  List get myColors => _myColors;
 
   List tutorial = [true,true,true,true,true];
 
@@ -310,13 +305,19 @@ class UserDataNotifier with ChangeNotifier {
       if(!checkD[i]){
         if(totalPassedDays>=achiveD[i]){
           checkD[i]=true;
-          myPoint++;
+          myColors[2*i+2]=true;
         }
       }
     }
     notifyListeners();
-    await Hive.box('userData').put('myPoint', myPoint);
+    await Hive.box('userData').put('myColors', _myColors);
     await Hive.box('userData').put('checkD', checkD);
+  }
+
+  Future addTheme(int i) async {
+    _myColors[i]=true;
+    await Hive.box('userData').put('myColors', _myColors);
+    notifyListeners();
   }
 
   void nameChange(s) {
@@ -471,7 +472,9 @@ class UserDataNotifier with ChangeNotifier {
       if(!checkM[i]){
         if(allTime>=achiveM[i]){
           checkM[i]=true;
-          myPoint++;
+          _myColors[2*i+3]=true;
+        }else{
+          break;
         }
       }
     }
@@ -491,8 +494,8 @@ class UserDataNotifier with ChangeNotifier {
     await Hive.box('userData').put('categories', _categories);
     await Hive.box('userData').put('todayDoneList', _todayDoneList);
     await Hive.box('userData').put('latelyData', _latelyData);
-    await Hive.box('userData').put('myPoint', myPoint);
     await Hive.box('userData').put('checkM', checkM);
+    await Hive.box('userData').put('myColors', _myColors);
   }
 
   Future deleteDone(List listData, int index) async {
@@ -567,7 +570,7 @@ class UserDataNotifier with ChangeNotifier {
     _activities = await box.get('activities');
     userName = await box.get('userName');
     tutorial = await box.get('tutorial');
-    myPoint = await box.get('myPoint');
+    _myColors = await box.get('myColors');
     checkM = await box.get('checkM');
     checkD = await box.get('checkD');
     previousDate = await box.get('previousDate');

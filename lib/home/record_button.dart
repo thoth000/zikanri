@@ -240,10 +240,10 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Divider(
+              const Divider(
                 height: 1,
               ),
               Expanded(
@@ -521,7 +521,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                           ),
                       ],
                     ),
-                    Divider(
+                    const Divider(
                       height: 30,
                     ),
                     Column(
@@ -785,10 +785,10 @@ class ShortCutSheet extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Divider(
+            const Divider(
               height: 1,
             ),
             Expanded(
@@ -1271,10 +1271,10 @@ class SelectIconPage extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
-          Divider(
+          const Divider(
             height: 1,
           ),
           Expanded(

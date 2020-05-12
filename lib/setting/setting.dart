@@ -33,7 +33,7 @@ class SettingPage extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           SizedBox(
-            height: 10,
+            height: 30,
           ),
           Padding(
             padding: const EdgeInsets.all(10.0),
@@ -42,7 +42,7 @@ class SettingPage extends StatelessWidget {
               style: TextStyle(fontSize: FontSize.small),
             ),
           ),
-          Divider(
+          const Divider(
             height: 1,
             thickness: 1,
           ),
@@ -80,7 +80,7 @@ class SettingPage extends StatelessWidget {
               ),
             ),
           ),
-          Divider(
+          const Divider(
             height: 1,
             thickness: 1,
           ),
@@ -118,21 +118,7 @@ class SettingPage extends StatelessWidget {
               ),
             ),
           ),
-          Divider(
-            height: 1,
-            thickness: 2,
-          ),
-          SizedBox(
-            height: 50,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text(
-              'データの設定',
-              style: TextStyle(fontSize: FontSize.small),
-            ),
-          ),
-          Divider(
+          const Divider(
             height: 1,
             thickness: 1,
           ),
@@ -170,7 +156,7 @@ class SettingPage extends StatelessWidget {
               ),
             ),
           ),
-          Divider(
+          const Divider(
             height: 1,
             thickness: 1,
           ),
@@ -213,7 +199,14 @@ class SettingPage extends StatelessWidget {
             thickness: 2,
           ),
           const SizedBox(
-            height: 50,
+            height: 30,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Text(
+              'その他',
+              style: TextStyle(fontSize: FontSize.small),
+            ),
           ),
           const Divider(
             height: 1,
@@ -253,12 +246,7 @@ class SettingPage extends StatelessWidget {
               ),
             ),
           ),
-          Divider(
-            height: 1,
-            thickness: 2,
-          ),
-          SizedBox(height: 50,),
-          Divider(
+          const Divider(
             height: 1,
             thickness: 1,
           ),
@@ -296,14 +284,7 @@ class SettingPage extends StatelessWidget {
               ),
             ),
           ),
-          Divider(
-            height: 1,
-            thickness: 2,
-          ),
-          SizedBox(
-            height: 50,
-          ),
-          Divider(
+          const Divider(
             height: 1,
             thickness: 1,
           ),
@@ -332,7 +313,7 @@ class SettingPage extends StatelessWidget {
               ),
             ),
           ),
-          Divider(
+          const Divider(
             height: 1,
             thickness: 2,
           ),

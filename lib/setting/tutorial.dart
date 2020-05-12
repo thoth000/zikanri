@@ -19,10 +19,10 @@ class TutorialPage extends StatelessWidget {
       ),
       body: ListView(
         children: <Widget>[
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
-          Divider(
+          const Divider(
             height: 1,
             indent: 10,
             endIndent: 10,
@@ -61,13 +61,13 @@ class TutorialPage extends StatelessWidget {
               ),
             ),
           ),
-          Divider(
+          const Divider(
             height: 1,
             thickness: 2,
             indent: 10,
             endIndent: 10,
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           HomeTutorial(),
@@ -82,6 +82,8 @@ class TutorialPage extends StatelessWidget {
           LatelyTutorial(),
           PreviousTutorial(),
           ShortCutEditTutorial(),
+          ThemeTutorial(),
+          AchiveTutorial(),
         ],
       ),
     );
@@ -123,7 +125,7 @@ class HomeTutorial extends StatelessWidget {
                 ),
               ],
             ),
-            Divider(
+            const Divider(
               height: 1,
             ),
             SizedBox(
@@ -196,7 +198,7 @@ class RecordTutorial extends StatelessWidget {
                 ),
               ],
             ),
-            Divider(
+            const Divider(
               height: 1,
             ),
             SizedBox(
@@ -265,7 +267,7 @@ class StartTutorial extends StatelessWidget {
                 ),
               ],
             ),
-            Divider(
+            const Divider(
               height: 1,
             ),
             SizedBox(
@@ -336,7 +338,7 @@ class LatelyTutorial extends StatelessWidget {
                 ),
               ],
             ),
-            Divider(
+            const Divider(
               height: 1,
             ),
             SizedBox(
@@ -399,7 +401,7 @@ class PreviousTutorial extends StatelessWidget {
                 ),
               ],
             ),
-            Divider(
+            const Divider(
               height: 1,
             ),
             SizedBox(
@@ -462,7 +464,7 @@ class ShortCutEditTutorial extends StatelessWidget {
                 ),
               ],
             ),
-            Divider(
+            const Divider(
               height: 1,
             ),
             SizedBox(
@@ -482,6 +484,132 @@ class ShortCutEditTutorial extends StatelessWidget {
             ),
             Text(
               '一番右のボタンでそれぞれ行えます。',
+              style: TextStyle(fontSize: FontSize.xsmall),
+            ),
+            SizedBox(
+              height: displaySize.width / 20,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ThemeTutorial extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final userData = Provider.of<UserDataNotifier>(context, listen: false);
+    return Padding(
+      padding: EdgeInsets.all(displaySize.width / 20),
+      child: Card(
+        elevation: 3,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(null),
+                  onPressed: null,
+                ),
+                Text(
+                  'テーマ',
+                  style: TextStyle(
+                    fontSize: FontSize.small,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.clear),
+                  onPressed: () async {
+                    await userData.finishTutorial(6);
+                  },
+                ),
+              ],
+            ),
+            const Divider(
+              height: 1,
+            ),
+            SizedBox(
+              height: displaySize.width / 20,
+            ),
+            Text(
+              'アプリのテーマを設定できます。',
+              style: TextStyle(fontSize: FontSize.xsmall),
+            ),
+            Text(
+              '実績を達成することで新しいテーマを',
+              style: TextStyle(fontSize: FontSize.xsmall),
+            ),
+            Text(
+              '獲得することができます。',
+              style: TextStyle(fontSize: FontSize.xsmall),
+            ),
+            SizedBox(
+              height: displaySize.width / 20,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class AchiveTutorial extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final userData = Provider.of<UserDataNotifier>(context, listen: false);
+    return Padding(
+      padding: EdgeInsets.all(displaySize.width / 20),
+      child: Card(
+        elevation: 3,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(null),
+                  onPressed: null,
+                ),
+                Text(
+                  '実績',
+                  style: TextStyle(
+                    fontSize: FontSize.small,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.clear),
+                  onPressed: () async {
+                    await userData.finishTutorial(7);
+                  },
+                ),
+              ],
+            ),
+            const Divider(
+              height: 1,
+            ),
+            SizedBox(
+              height: displaySize.width / 20,
+            ),
+            Text(
+              '記録を続けると実績を達成できます。',
+              style: TextStyle(fontSize: FontSize.xsmall),
+            ),
+            Text(
+              '実績を達成するごとに',
+              style: TextStyle(fontSize: FontSize.xsmall),
+            ),
+            Text(
+              '新しいテーマを獲得できます。',
               style: TextStyle(fontSize: FontSize.xsmall),
             ),
             SizedBox(

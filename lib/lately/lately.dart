@@ -76,7 +76,7 @@ class LatelyPage extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                Divider(
+                const Divider(
                   height: 5,
                 ),
                 for (int j = userData.latelyData[i][4].length - 1; j >= 0; j--)
@@ -267,7 +267,7 @@ class DayData extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Divider(),
+                  const Divider(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[

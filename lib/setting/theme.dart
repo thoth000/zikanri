@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../data.dart';
+import 'tutorial.dart';
 
 class ThemeSettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
+    final userData = Provider.of<UserDataNotifier>(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
         title: Text(
-          'テーマの変更',
+          'テーマ',
           style: TextStyle(
             color: theme.isDark ? Colors.white : Colors.black,
           ),
@@ -20,11 +22,17 @@ class ThemeSettingPage extends StatelessWidget {
       ),
       body: ListView(
         children: <Widget>[
+          userData.tutorial[6]
+              ? SizedBox(
+                  height: displaySize.width / 20,
+                )
+              : ThemeTutorial(),
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.all(displaySize.width / 20),
+                padding:
+                    EdgeInsets.symmetric(horizontal: displaySize.width / 20),
                 child: Container(
                   height: displaySize.width / 2.2,
                   width: displaySize.width,
@@ -102,7 +110,10 @@ class ThemeSettingPage extends StatelessWidget {
               ),
             ],
           ),
-          Divider(
+          SizedBox(
+            height: displaySize.width / 20,
+          ),
+          const Divider(
             height: 30,
             thickness: 1,
             indent: 10,
@@ -111,7 +122,7 @@ class ThemeSettingPage extends StatelessWidget {
           Container(
             height: displaySize.width / 9,
             width: displaySize.width,
-            padding: EdgeInsets.symmetric(horizontal:10),
+            padding: EdgeInsets.symmetric(horizontal: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -133,7 +144,7 @@ class ThemeSettingPage extends StatelessWidget {
               ],
             ),
           ),
-          Divider(
+          const Divider(
             height: 30,
             thickness: 1,
             indent: 10,
@@ -154,11 +165,13 @@ class ThemeSettingPage extends StatelessWidget {
                 ),
                 Wrap(
                   children: <Widget>[
-                    for (int i = 0; i < theme.myColors.length; i++)
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: themeChanger(theme, i),
-                      ),
+                    for (int i = 0; i < baseColors.length; i++)
+                      (userData.myColors[i])
+                          ? Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: themeChanger(theme, i),
+                            )
+                          : SizedBox(),
                   ],
                 ),
               ],
@@ -176,7 +189,7 @@ class ThemeSettingPage extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
         gradient: LinearGradient(
-          colors: baseColors[theme.myColors[i]],
+          colors: baseColors[i],
         ),
       ),
       child: FlatButton(
