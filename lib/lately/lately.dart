@@ -191,8 +191,8 @@ class DayData extends StatelessWidget {
         format: ui.ImageByteFormat.png,
       );
       final _pngBytes = byteData.buffer.asUint8List();
-      await Share.file('今日の記録', 'today.png', _pngBytes, 'image/png',
-          text: '今日の記録です！！');
+      await Share.file('ジカンリ', 'image.png', _pngBytes, 'image/png',
+          text: '毎日の記録　#ジカンリ');
     }
 
     return RepaintBoundary(
@@ -224,6 +224,7 @@ class DayData extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   SizedBox(
+                    height: displaySize.width/10,
                     width: displaySize.width,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -30,7 +30,7 @@ class TotalScoreWidget extends StatelessWidget {
         'goodRate.png',
         _pngBytes,
         'image/png',
-        text: '${userData.userName}さんの価値時間が${userData.allGood}分に到達しました！\n今度はあなたの時間の価値を高めませんか？\n【Android】\n ',
+        text: '${userData.userName}さんの価値時間が${userData.allGood}分に到達！\n#ジカンリ',
       );
     }
     return RepaintBoundary(
