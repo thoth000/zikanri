@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
+import 'package:provider/provider.dart';
 
 import '../data.dart';
 import 'profile.dart';
@@ -28,8 +29,10 @@ class SettingPage extends StatelessWidget {
       );
     }
 
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10.0),
+    final theme = Provider.of<ThemeNotifier>(context);
+
+    return Container(
+      color: theme.isDark ? null : Color(0XFFe7ecf0),
       child: ListView(
         children: <Widget>[
           SizedBox(
@@ -39,164 +42,109 @@ class SettingPage extends StatelessWidget {
             padding: const EdgeInsets.all(10.0),
             child: Text(
               '基本設定',
-              style: TextStyle(fontSize: FontSize.small),
+              style: TextStyle(
+                fontSize: FontSize.xsmall,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-          const Divider(
-            height: 1,
-            thickness: 1,
-          ),
-          SizedBox(
-            height: displaySize.width / 6,
-            width: displaySize.width,
-            child: FlatButton(
-              color: Colors.transparent,
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  _createRoute(
-                    ProfileSettingPage(),
+          Container(
+            color: theme.isDark ? Color(0XFF424242) : Colors.white,
+            child: Column(
+              children: <Widget>[
+                ListTile(
+                  title: Text(
+                    'ユーザ名を変更する',
+                    style: TextStyle(fontSize: FontSize.xsmall),
                   ),
-                );
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    'ユーザー名を変更',
-                    style: TextStyle(
-                      fontSize: FontSize.xsmall,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  Icon(
+                  trailing: Icon(
                     Icons.arrow_forward_ios,
                     color: Colors.grey,
                     size: displaySize.width / 20,
                   ),
-                ],
-              ),
-            ),
-          ),
-          const Divider(
-            height: 1,
-            thickness: 1,
-          ),
-          SizedBox(
-            height: displaySize.width / 6,
-            width: displaySize.width,
-            child: FlatButton(
-              color: Colors.transparent,
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  _createRoute(
-                    ThemeSettingPage(),
-                  ),
-                );
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    'テーマを変更',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      _createRoute(
+                        ProfileSettingPage(),
+                      ),
+                    );
+                  },
+                ),
+                const Divider(
+                  height: 0,
+                ),
+                ListTile(
+                  title: Text(
+                    'テーマを変更する',
                     style: TextStyle(
                       fontSize: FontSize.xsmall,
-                      fontWeight: FontWeight.w700,
                     ),
                   ),
-                  Icon(
+                  trailing: Icon(
                     Icons.arrow_forward_ios,
                     color: Colors.grey,
                     size: displaySize.width / 20,
                   ),
-                ],
-              ),
-            ),
-          ),
-          const Divider(
-            height: 1,
-            thickness: 1,
-          ),
-          SizedBox(
-            height: displaySize.width / 6,
-            width: displaySize.width,
-            child: FlatButton(
-              color: Colors.transparent,
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  _createRoute(
-                    ShortCutsEditPage(),
-                  ),
-                );
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    'ショートカットを編集',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      _createRoute(
+                        ThemeSettingPage(),
+                      ),
+                    );
+                  },
+                ),
+                const Divider(
+                  height: 0,
+                ),
+                ListTile(
+                  title: Text(
+                    'ショートカットを編集する',
                     style: TextStyle(
                       fontSize: FontSize.xsmall,
-                      fontWeight: FontWeight.w700,
                     ),
                   ),
-                  Icon(
+                  trailing: Icon(
                     Icons.arrow_forward_ios,
                     color: Colors.grey,
                     size: displaySize.width / 20,
                   ),
-                ],
-              ),
-            ),
-          ),
-          const Divider(
-            height: 1,
-            thickness: 1,
-          ),
-          SizedBox(
-            height: displaySize.width / 6,
-            width: displaySize.width,
-            child: FlatButton(
-              color: Colors.transparent,
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  _createRoute(
-                    CategoryEditPage(),
-                  ),
-                );
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    'カテゴリーを編集',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      _createRoute(
+                        ShortCutsEditPage(),
+                      ),
+                    );
+                  },
+                ),
+                const Divider(
+                  height: 0,
+                ),
+                ListTile(
+                  title: Text(
+                    'カテゴリーを編集する',
                     style: TextStyle(
                       fontSize: FontSize.xsmall,
-                      fontWeight: FontWeight.w700,
                     ),
                   ),
-                  Icon(
+                  trailing: Icon(
                     Icons.arrow_forward_ios,
                     color: Colors.grey,
                     size: displaySize.width / 20,
                   ),
-                ],
-              ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      _createRoute(
+                        CategoryEditPage(),
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
-          ),
-          const Divider(
-            height: 1,
-            thickness: 2,
           ),
           const SizedBox(
             height: 30,
@@ -205,120 +153,87 @@ class SettingPage extends StatelessWidget {
             padding: const EdgeInsets.all(10.0),
             child: Text(
               'その他',
-              style: TextStyle(fontSize: FontSize.small),
+              style: TextStyle(
+                fontSize: FontSize.xsmall,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-          const Divider(
-            height: 1,
-            thickness: 1,
-          ),
-          SizedBox(
-            height: displaySize.width / 6,
-            width: displaySize.width,
-            child: FlatButton(
-              color: Colors.transparent,
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  _createRoute(
-                    AchievePage(),
-                  ),
-                );
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    '実績',
+          Container(
+            color: theme.isDark ? Color(0XFF424242) : Colors.white,
+            child: Column(
+              children: <Widget>[
+                ListTile(
+                  title: Text(
+                    '実績を確認する',
                     style: TextStyle(
                       fontSize: FontSize.xsmall,
-                      fontWeight: FontWeight.w700,
                     ),
                   ),
-                  Icon(
+                  trailing: Icon(
                     Icons.arrow_forward_ios,
                     color: Colors.grey,
                     size: displaySize.width / 20,
                   ),
-                ],
-              ),
-            ),
-          ),
-          const Divider(
-            height: 1,
-            thickness: 1,
-          ),
-          SizedBox(
-            height: displaySize.width / 6,
-            width: displaySize.width,
-            child: FlatButton(
-              color: Colors.transparent,
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  _createRoute(
-                    TutorialPage(),
-                  ),
-                );
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      _createRoute(
+                        AchievePage(),
+                      ),
+                    );
+                  },
+                ),
+                const Divider(
+                  height: 0,
+                ),
+                ListTile(
+                  title: Text(
                     'チュートリアルを見る',
                     style: TextStyle(
                       fontSize: FontSize.xsmall,
-                      fontWeight: FontWeight.w700,
                     ),
                   ),
-                  Icon(
+                  trailing: Icon(
                     Icons.arrow_forward_ios,
                     color: Colors.grey,
                     size: displaySize.width / 20,
                   ),
-                ],
-              ),
-            ),
-          ),
-          const Divider(
-            height: 1,
-            thickness: 1,
-          ),
-          SizedBox(
-            height: displaySize.width / 6,
-            width: displaySize.width,
-            child: FlatButton(
-              color: Colors.transparent,
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (context) => clearAlert(context));
-              },
-              child: Row(
-                children: <Widget>[
-                  Text(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      _createRoute(
+                        TutorialPage(),
+                      ),
+                    );
+                  },
+                ),
+                const Divider(
+                  height: 0,
+                ),
+                ListTile(
+                  title: Text(
                     'アプリデータの削除',
                     style: TextStyle(
-                        fontSize: FontSize.xsmall,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.red),
+                      fontSize: FontSize.xsmall,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.redAccent,
+                    ),
                   ),
-                ],
-              ),
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) => clearAlert(context));
+                  },
+                ),
+                const Divider(
+                  height: 0,
+                ),
+              ],
             ),
           ),
-          const Divider(
-            height: 1,
-            thickness: 2,
-          ),
           SizedBox(
-            height: displaySize.width / 10,
+            height: displaySize.width / 8,
           ),
         ],
       ),

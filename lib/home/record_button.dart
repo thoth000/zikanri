@@ -185,7 +185,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                 height: 10,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical:10.0),
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -267,7 +267,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                           style: _headlineStyle,
                         ),
                         Container(
-                          margin: EdgeInsets.symmetric(vertical: 5),
+                          margin: EdgeInsets.only(top: 5),
                           decoration: _decorationStyle,
                           padding: const EdgeInsets.symmetric(
                             horizontal: 5,
@@ -283,7 +283,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                             ),
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: "タイトルを入力",
+                              hintText: "なにしたの？",
                             ),
                             inputFormatters: [
                               LengthLimitingTextInputFormatter(20)
@@ -294,9 +294,6 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
                     (record.isRecord)
                         ? Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -305,14 +302,19 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
+                                  const SizedBox(
+                                    height: 25,
+                                  ),
                                   Text(
                                     '時間(分)',
                                     style: _headlineStyle,
                                   ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
                                   Container(
                                     height: displaySize.width / 7,
                                     width: displaySize.width / 2.5,
-                                    margin: EdgeInsets.symmetric(vertical: 5),
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 5),
                                     decoration: _decorationStyle,
@@ -333,7 +335,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                       textInputAction: TextInputAction.go,
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
-                                        hintText: "60",
+                                        hintText: "何分？",
                                       ),
                                       onChanged: (s) => record.changeTime(s),
                                     ),
@@ -343,11 +345,14 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
+                                  const SizedBox(
+                                    height: 25,
+                                  ),
                                   Text(
                                     '時間の価値',
                                     style: _headlineStyle,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
                                   SizedBox(
@@ -369,7 +374,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
                                 ],
@@ -378,7 +383,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                           )
                         : SizedBox(),
                     SizedBox(
-                      height: (record.isRecord) ? 20 : 0,
+                      height: 20,
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -390,8 +395,12 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                             borderRadius: BorderRadius.circular(500),
                             border: Border.all(
                               color: (theme.isDark)
-                                  ? theme.themeColors[0]
-                                  : theme.themeColors[1],
+                                  ? record.check()
+                                      ? theme.themeColors[0].withOpacity(0.5) //opacityを無効時につける
+                                      : theme.themeColors[0]
+                                  : record.check()
+                                      ? theme.themeColors[1].withOpacity(0.5) //opacityを無効時につける
+                                      : theme.themeColors[1],
                               width: 3,
                             ),
                           ),
@@ -399,90 +408,79 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(500),
                             ),
-                            onLongPress: () {
-                              if (record.isRecord) {
-                                if (record.titleCheck || record.timeCheck) {
-                                  record.click();
-                                } else {
-                                  userData.addShortCuts(
-                                    [
-                                      record.categoryIndex,
-                                      record.title,
-                                      record.time,
-                                      record.isGood,
-                                      userData.keynum,
-                                      true,
-                                    ],
-                                  );
-                                  userData.recordDone(
-                                    [
-                                      record.categoryIndex,
-                                      record.title,
-                                      record.time,
-                                      record.isGood,
-                                    ],
-                                  );
-                                  Navigator.pop(context);
-                                  record.reset();
-                                }
-                              } else {
-                                if (record.titleCheck) {
-                                  record.click();
-                                } else {
-                                  userData.addShortCuts(
-                                    [
-                                      record.categoryIndex,
-                                      record.title,
-                                      0,
-                                      false,
-                                      userData.keynum,
-                                      false,
-                                    ],
-                                  );
-                                  userData.addActivity(
-                                    DateTime.now(),
-                                    record.title,
-                                    record.categoryIndex,
-                                  );
-                                  Navigator.pop(context);
-                                  record.reset();
-                                }
-                              }
-                            },
-                            onPressed: () {
-                              if (record.isRecord) {
-                                //記録モード
-                                if (record.titleCheck || record.timeCheck) {
-                                  record.click();
-                                } else {
-                                  userData.recordDone(
-                                    [
-                                      record.categoryIndex,
-                                      record.title,
-                                      record.time,
-                                      record.isGood,
-                                    ],
-                                  );
-                                  record.reset();
-                                  Navigator.pop(context);
-                                }
-                              } else {
-                                //開始モード
-                                if (record.titleCheck) {
-                                  record.click();
-                                } else {
-                                  userData.addActivity(DateTime.now(),
-                                      record.title, record.categoryIndex);
-                                  Navigator.pop(context);
-                                  record.reset();
-                                }
-                              }
-                            },
+                            onLongPress: record.check()
+                                ? null
+                                : () {
+                                    if (record.isRecord) {
+                                      userData.addShortCuts(
+                                        [
+                                          record.categoryIndex,
+                                          record.title,
+                                          record.time,
+                                          record.isGood,
+                                          userData.keynum,
+                                          true,
+                                        ],
+                                      );
+                                      userData.recordDone(
+                                        [
+                                          record.categoryIndex,
+                                          record.title,
+                                          record.time,
+                                          record.isGood,
+                                        ],
+                                      );
+                                      Navigator.pop(context);
+                                      record.reset();
+                                    } else {
+                                      userData.addShortCuts(
+                                        [
+                                          record.categoryIndex,
+                                          record.title,
+                                          0,
+                                          false,
+                                          userData.keynum,
+                                          false,
+                                        ],
+                                      );
+                                      userData.addActivity(
+                                        DateTime.now(),
+                                        record.title,
+                                        record.categoryIndex,
+                                      );
+                                      Navigator.pop(context);
+                                      record.reset();
+                                    }
+                                  },
+                            onPressed: record.check()
+                                ? null
+                                : () {
+                                    if (record.isRecord) {
+                                      //記録モード
+                                      userData.recordDone(
+                                        [
+                                          record.categoryIndex,
+                                          record.title,
+                                          record.time,
+                                          record.isGood,
+                                        ],
+                                      );
+                                      record.reset();
+                                      Navigator.pop(context);
+                                    } else {
+                                      //開始モード
+                                      userData.addActivity(DateTime.now(),
+                                          record.title, record.categoryIndex);
+                                      Navigator.pop(context);
+                                      record.reset();
+                                    }
+                                  },
                             child: Text(
                               (record.isRecord) ? '記録する' : '開始する',
                               style: TextStyle(
-                                  fontSize: FontSize.midium,
-                                  fontWeight: FontWeight.bold),
+                                fontSize: FontSize.midium,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),

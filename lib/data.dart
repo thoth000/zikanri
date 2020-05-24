@@ -25,7 +25,7 @@ class Vib {
     Vibration.vibrate(duration: 50);
   }
 
-  static void add(){
+  static void add() {
     Vibration.vibrate(duration: 150);
   }
 }
@@ -60,8 +60,8 @@ const List iconList = [
   58899,
 ];
 
-List achiveM=[1000,5000,10000,50000,100000];
-List achiveD=[1,2,7,30,100];
+List achiveM = [1000, 5000, 10000, 50000, 100000];
+List achiveD = [1, 2, 7, 30, 100];
 
 //BaseColor
 //単色をベースにしていく
@@ -70,16 +70,16 @@ List baseColors = [
   [Color(0XFF39BAE8), Color(0XFF0000A1)], //青
   [Color(0XFFef473a), Color(0XFFcb2d3e)], //赤
   [Color(0XFF08ffc8), Color(0XFF204969)], //緑
-  [Colors.white,Colors.black],//モノクロ
+  [Colors.white, Colors.black], //モノクロ
   [Color(0XFFffcccc), Color(0XFFcaabd8)], //ピンク
-  [Color(0XFFffe259), Color(0XFFffa751)],//マンゴー
+  [Color(0XFFffe259), Color(0XFFffa751)], //マンゴー
   [Color(0XFFFFFDE4), Color(0XFF005AA7)], //白青
   [Color(0XFFfffbd5), Color(0XFFb20a2c)], //白赤
   [Color(0XFFe4e4d9), Color(0XFF215f00)], //白緑
-  [Color(0XFF00ecbc),Color(0XFF007adf)], //風
+  [Color(0XFF00ecbc), Color(0XFF007adf)], //風
   [Color(0XFF21D4FD), Color(0XFFB721FF)], //紫グラ
   [Color(0XFFDBE6F6), Color(0XFFC5796D)], //ジュピター
-  [Color(0XFF81FBB8),Color(0XFF28C76F)], //鮮緑
+  [Color(0XFF81FBB8), Color(0XFF28C76F)], //鮮緑
   [Color(0XFF4776E6), Color(0XFF8E54E9)], //紫
 ];
 
@@ -101,8 +101,7 @@ class RecordNotifier with ChangeNotifier {
   bool get titleCheck => _titleCheck;
   bool _clickCheck = false;
   bool get clickCheck => _clickCheck;
-  bool _shortCut = false;
-  bool get shortCut => _shortCut;
+  bool check() => _isRecord ? (_titleCheck || _timeCheck) : _titleCheck;
 
   void changeTitle(String s) {
     _title = s;
@@ -111,11 +110,6 @@ class RecordNotifier with ChangeNotifier {
     } else {
       _titleCheck = false;
     }
-    notifyListeners();
-  }
-
-  void changeShortCut() {
-    _shortCut = !_shortCut;
     notifyListeners();
   }
 
@@ -137,11 +131,6 @@ class RecordNotifier with ChangeNotifier {
       Vib.select();
       notifyListeners();
     }
-  }
-
-  void click() {
-    _clickCheck = true;
-    notifyListeners();
   }
 
   void changeCategoryIndex(int index) {
@@ -188,8 +177,6 @@ class RecordNotifier with ChangeNotifier {
     _timeCheck = true;
     _titleCheck = true;
     _isRecord = true;
-    _clickCheck = false;
-    _shortCut = false;
     notifyListeners();
   }
 }
@@ -247,13 +234,24 @@ class UserDataNotifier with ChangeNotifier {
   String thisMonth = "01";
   int totalPassedDays = 1;
 
-  List checkM=[false,false,false,false,false];
-  List checkD=[true,false,false,false,false];
+  List checkM = [false, false, false, false, false];
+  List checkD = [true, false, false, false, false];
 
-  List _myColors = [true,true,true,false,false,false,false,false,false,false];
+  List _myColors = [
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ];
   List get myColors => _myColors;
 
-  List tutorial = [true,true,true,true,true];
+  List tutorial = [true, true, true, true, true];
 
   int passedDays = 1;
   int keynum = 5;
@@ -300,12 +298,12 @@ class UserDataNotifier with ChangeNotifier {
   List _activities = [];
   List get activities => _activities;
 
-  Future checkDay() async{
-    for(int i=0;i<achiveD.length;i++){
-      if(!checkD[i]){
-        if(totalPassedDays>=achiveD[i]){
-          checkD[i]=true;
-          myColors[2*i+2]=true;
+  Future checkDay() async {
+    for (int i = 0; i < achiveD.length; i++) {
+      if (!checkD[i]) {
+        if (totalPassedDays >= achiveD[i]) {
+          checkD[i] = true;
+          myColors[2 * i + 2] = true;
         }
       }
     }
@@ -315,7 +313,7 @@ class UserDataNotifier with ChangeNotifier {
   }
 
   Future addTheme(int i) async {
-    _myColors[i]=true;
+    _myColors[i] = true;
     await Hive.box('userData').put('myColors', _myColors);
     notifyListeners();
   }
@@ -379,11 +377,12 @@ class UserDataNotifier with ChangeNotifier {
     await Hive.box('userData').put('shortCuts', _shortCuts);
   }
 
-  Future finishTutorial(int index)async{
+  Future finishTutorial(int index) async {
     tutorial[index] = true;
     notifyListeners();
     await Hive.box('userData').put('tutorial', tutorial);
   }
+
   //activity関連
   Future addActivity(
     DateTime startTime,
@@ -468,12 +467,12 @@ class UserDataNotifier with ChangeNotifier {
         _todayDoneList,
       ],
     );
-    for(int i=0;i<achiveM.length;i++){
-      if(!checkM[i]){
-        if(allTime>=achiveM[i]){
-          checkM[i]=true;
-          _myColors[2*i+3]=true;
-        }else{
+    for (int i = 0; i < achiveM.length; i++) {
+      if (!checkM[i]) {
+        if (allTime >= achiveM[i]) {
+          checkM[i] = true;
+          _myColors[2 * i + 3] = true;
+        } else {
           break;
         }
       }

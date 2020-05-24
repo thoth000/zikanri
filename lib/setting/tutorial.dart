@@ -209,15 +209,15 @@ class RecordTutorial extends StatelessWidget {
               style: TextStyle(fontSize: FontSize.xsmall),
             ),
             Text(
-              '決めて活動を記録します。',
+              'それぞれ決めて活動を記録します。',
               style: TextStyle(fontSize: FontSize.xsmall),
             ),
             Text(
-              '記録のとき長押しすると記録すると同時に',
+              '記録ボタンをタップで記録、長押しすると',
               style: TextStyle(fontSize: FontSize.xsmall),
             ),
             Text(
-              'ショートカットにも追加できます。',
+              '加えてショートカットにも追加できます。',
               style: TextStyle(fontSize: FontSize.xsmall),
             ),
             SizedBox(
@@ -274,23 +274,19 @@ class StartTutorial extends StatelessWidget {
               height: displaySize.width / 20,
             ),
             Text(
-              'タイトルとカテゴリーを決めて',
+              'タイトルとカテゴリーを決めると',
               style: TextStyle(fontSize: FontSize.xsmall),
             ),
             Text(
-              '活動を開始します。時間と時間価値は',
+              '活動時間を計るタイマーが開始します。',
               style: TextStyle(fontSize: FontSize.xsmall),
             ),
             Text(
-              '活動が終わってから決定します。',
+              '開始ボタンをタップで記録、長押しすると',
               style: TextStyle(fontSize: FontSize.xsmall),
             ),
             Text(
-              '開始のとき長押しすると記録すると同時に',
-              style: TextStyle(fontSize: FontSize.xsmall),
-            ),
-            Text(
-              'ショートカットにも追加できます。',
+              '加えてショートカットにも追加できます。',
               style: TextStyle(fontSize: FontSize.xsmall),
             ),
             SizedBox(
@@ -345,7 +341,7 @@ class LatelyTutorial extends StatelessWidget {
               height: displaySize.width / 20,
             ),
             Text(
-              '今日を含めた最大2週間の記録を',
+              'ログインした日の1週間分の記録を',
               style: TextStyle(fontSize: FontSize.xsmall),
             ),
             Text(
