@@ -580,17 +580,3 @@ class UserDataNotifier with ChangeNotifier {
     keynum = await box.get('keynum');
   }
 }
-
-class ReloadNotifier with ChangeNotifier {
-  bool _reload = false;
-  bool get reload => _reload;
-  void reloded() {
-    _reload = true;
-    notifyListeners();
-  }
-
-  void finishload() {
-    _reload = false;
-    notifyListeners();
-  }
-}

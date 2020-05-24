@@ -8,18 +8,13 @@ import 'data.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => ThemeNotifier(),
-      child: ChangeNotifierProvider(
-        create: (_) => UserDataNotifier(),
-        child: ChangeNotifierProvider(
-          create: (_) => RecordNotifier(),
-          child: ChangeNotifierProvider(
-            create: (_) => ReloadNotifier(),
-            child: MyApp(),
-          ),
-        ),
-      ),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_)=>ThemeNotifier(),),
+        ChangeNotifierProvider(create: (_)=>UserDataNotifier(),),
+        ChangeNotifierProvider(create: (_)=>RecordNotifier(),),
+      ],
+      child: MyApp(),
     ),
   );
 }
