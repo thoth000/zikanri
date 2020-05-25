@@ -39,7 +39,7 @@ class _SplashPageState extends State<SplashPage> {
         await box.put('previousDate', date);
         await box.put('todayDoneList', []);
         box1 = box.get('latelyData');
-        if (box1.length >= 14) {
+        if (box1.length >= 8) {
           box1.removeAt(0);
         }
         box1.add([date, 0, 0, 0, []]);

@@ -283,7 +283,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                             ),
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: "なにしたの？",
+                              hintText: "なにをしたの？",
                             ),
                             inputFormatters: [
                               LengthLimitingTextInputFormatter(20)
@@ -1030,7 +1030,7 @@ class CategoryEditPage extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.transparent,
         title: Text(
-          'カテゴリーを編集',
+          'カテゴリーの編集',
           style: TextStyle(
             color: theme.isDark ? Colors.white : Colors.black,
           ),

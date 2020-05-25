@@ -14,7 +14,7 @@ class ThemeSettingPage extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.transparent,
         title: Text(
-          'テーマ',
+          'テーマの変更',
           style: TextStyle(
             color: theme.isDark ? Colors.white : Colors.black,
           ),
