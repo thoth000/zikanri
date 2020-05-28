@@ -114,12 +114,16 @@ class RecordNotifier with ChangeNotifier {
   }
 
   void changeTime(String s) {
-    int _minute = int.parse(s);
-    if (_minute > 1440 || _minute == 0) {
+    if (s == "") {
       _timeCheck = true;
     } else {
-      _timeCheck = false;
-      _time = _minute;
+      int _minute = int.parse(s);
+      if (_minute > 1440 || _minute == 0) {
+        _timeCheck = true;
+      } else {
+        _timeCheck = false;
+        _time = _minute;
+      }
     }
     notifyListeners();
   }
