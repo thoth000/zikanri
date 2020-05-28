@@ -283,7 +283,8 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                             ),
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: "なにをしたの？",
+                              //ヒント文:記録モード:開始モード
+                              hintText: record.isRecord ? "なにをしたの？" : "なにをするの？",
                             ),
                             inputFormatters: [
                               LengthLimitingTextInputFormatter(20)
@@ -396,10 +397,12 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                             border: Border.all(
                               color: (theme.isDark)
                                   ? record.check()
-                                      ? theme.themeColors[0].withOpacity(0.5) //opacityを無効時につける
+                                      ? theme.themeColors[0]
+                                          .withOpacity(0.5) //opacityを無効時につける
                                       : theme.themeColors[0]
                                   : record.check()
-                                      ? theme.themeColors[1].withOpacity(0.5) //opacityを無効時につける
+                                      ? theme.themeColors[1]
+                                          .withOpacity(0.5) //opacityを無効時につける
                                       : theme.themeColors[1],
                               width: 3,
                             ),
