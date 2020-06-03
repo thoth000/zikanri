@@ -492,6 +492,73 @@ class ShortCutEditTutorial extends StatelessWidget {
   }
 }
 
+class CategoryEditTutorial extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final userData = Provider.of<UserDataNotifier>(context, listen: false);
+    return Padding(
+      padding: EdgeInsets.all(displaySize.width / 20),
+      child: Card(
+        elevation: 3,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(null),
+                  onPressed: null,
+                ),
+                Text(
+                  'カテゴリーの編集',
+                  style: TextStyle(
+                    fontSize: FontSize.small,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.clear),
+                  onPressed: () async {
+                    await userData.finishTutorial(7);
+                  },
+                ),
+              ],
+            ),
+            const Divider(
+              height: 1,
+            ),
+            SizedBox(
+              height: displaySize.width / 20,
+            ),
+            Text(
+              '複数のカテゴリーを設定できます',
+              style: TextStyle(fontSize: FontSize.xsmall),
+            ),
+            Text(
+              '使わないカテゴリーはリセットを押すと',
+              style: TextStyle(fontSize: FontSize.xsmall),
+            ),
+            Text(
+              'データがリセットされ、カテゴリー選択から',
+              style: TextStyle(fontSize: FontSize.xsmall),
+            ),
+            Text(
+              '表示させないようにできます。',
+              style: TextStyle(fontSize: FontSize.xsmall),
+            ),
+            SizedBox(
+              height: displaySize.width / 20,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class ThemeTutorial extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

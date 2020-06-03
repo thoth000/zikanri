@@ -538,74 +538,86 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                         Wrap(
                           children: <Widget>[
                             for (int i = 0; i < userData.categories.length; i++)
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(right: 5, bottom: 10),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Container(
-                                      height: displaySize.width / 6.5,
-                                      width: displaySize.width / 6.5,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(
-                                          color: (record.categoryIndex == i)
-                                              ? (theme.isDark)
-                                                  ? theme.themeColors[0]
-                                                  : theme.themeColors[1]
-                                              : Colors.grey,
-                                          width: (record.categoryIndex == i)
-                                              ? 3
-                                              : 1,
-                                        ),
-                                      ),
-                                      child: Stack(
+                              (userData.categories[i][1] == "")
+                                  ? const SizedBox()
+                                  : Padding(
+                                      padding: const EdgeInsets.only(
+                                          right: 5, bottom: 10),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
                                         children: <Widget>[
-                                          Center(
-                                            child: Icon(
-                                              IconData(
-                                                userData.categories[i][0],
-                                                fontFamily: "MaterialIcons",
+                                          Container(
+                                            height: displaySize.width / 6.5,
+                                            width: displaySize.width / 6.5,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              border: Border.all(
+                                                color: (record.categoryIndex ==
+                                                        i)
+                                                    ? (theme.isDark)
+                                                        ? theme.themeColors[0]
+                                                        : theme.themeColors[1]
+                                                    : Colors.grey,
+                                                width:
+                                                    (record.categoryIndex == i)
+                                                        ? 3
+                                                        : 1,
                                               ),
-                                              color: (theme.isDark)
-                                                  ? Colors.white
-                                                  : Colors.black,
-                                              size: displaySize.width / 15,
+                                            ),
+                                            child: Stack(
+                                              children: <Widget>[
+                                                Center(
+                                                  child: Icon(
+                                                    IconData(
+                                                      userData.categories[i][0],
+                                                      fontFamily:
+                                                          "MaterialIcons",
+                                                    ),
+                                                    color: (theme.isDark)
+                                                        ? Colors.white
+                                                        : Colors.black,
+                                                    size:
+                                                        displaySize.width / 15,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height:
+                                                      displaySize.width / 6.5,
+                                                  width:
+                                                      displaySize.width / 6.5,
+                                                  child: FlatButton(
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                    ),
+                                                    child: SizedBox(),
+                                                    color: Colors.transparent,
+                                                    onPressed: () => record
+                                                        .changeCategoryIndex(i),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                           SizedBox(
-                                            height: displaySize.width / 6.5,
-                                            width: displaySize.width / 6.5,
-                                            child: FlatButton(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
+                                            width: displaySize.width / 5,
+                                            child: Text(
+                                              userData.categories[i][1],
+                                              textAlign: TextAlign.center,
+                                              softWrap: false,
+                                              overflow: TextOverflow.fade,
+                                              style: TextStyle(
+                                                fontSize: FontSize.xxsmall,
                                               ),
-                                              child: SizedBox(),
-                                              color: Colors.transparent,
-                                              onPressed: () =>
-                                                  record.changeCategoryIndex(i),
                                             ),
                                           ),
                                         ],
                                       ),
                                     ),
-                                    SizedBox(
-                                      width: displaySize.width / 5,
-                                      child: Text(
-                                        userData.categories[i][1],
-                                        textAlign: TextAlign.center,
-                                        softWrap: false,
-                                        overflow: TextOverflow.fade,
-                                        style: TextStyle(
-                                          fontSize: FontSize.xxsmall,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
                             Padding(
                               padding: const EdgeInsets.only(bottom: 20),
                               child: Column(
