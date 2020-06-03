@@ -1040,6 +1040,7 @@ class CategoryEditPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
+    final userData = Provider.of<UserDataNotifier>(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -1054,7 +1055,10 @@ class CategoryEditPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: ListView(
-          children: <Widget>[for (int i = 1; i < 8; i++) CategoryCard(i)],
+          children: <Widget>[
+            (userData.tutorial[8]) ? SizedBox() : CategoryEditTutorial(),
+            for (int i = 1; i < 8; i++) CategoryCard(i)
+          ],
         ),
       ),
     );

@@ -82,6 +82,7 @@ class TutorialPage extends StatelessWidget {
           LatelyTutorial(),
           PreviousTutorial(),
           ShortCutEditTutorial(),
+          CategoryEditTutorial(),
           ThemeTutorial(),
           AchiveTutorial(),
         ],
@@ -522,7 +523,7 @@ class CategoryEditTutorial extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.clear),
                   onPressed: () async {
-                    await userData.finishTutorial(7);
+                    await userData.finishTutorial(8);
                   },
                 ),
               ],
@@ -538,11 +539,11 @@ class CategoryEditTutorial extends StatelessWidget {
               style: TextStyle(fontSize: FontSize.xsmall),
             ),
             Text(
-              '使わないカテゴリーはリセットを押すと',
+              'リセットを押すとデータのリセットと',
               style: TextStyle(fontSize: FontSize.xsmall),
             ),
             Text(
-              'データがリセットされ、カテゴリー選択から',
+              '同時にカテゴリー選択の画面に',
               style: TextStyle(fontSize: FontSize.xsmall),
             ),
             Text(

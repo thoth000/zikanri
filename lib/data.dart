@@ -349,7 +349,7 @@ class UserDataNotifier with ChangeNotifier {
   Future resetCategory(int index) async {
     _categories[index] = [
       57746,
-      index.toString(),
+      "",
       [0, 0, 0]
     ];
     notifyListeners();
