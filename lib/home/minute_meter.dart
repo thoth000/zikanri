@@ -166,8 +166,7 @@ class _MinuteMeterState extends State<MinuteMeter> {
                               ],
                             ),
                           ),
-                          SizedBox(
-                            width: displaySize.width / 5.5,
+                          Expanded(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: <Widget>[

@@ -204,7 +204,7 @@ class ThemeNotifier with ChangeNotifier {
           color: _isDark ? _themeColors()[0] : _themeColors()[1],
         ),
         textTheme: TextTheme(
-          body1: TextStyle(
+          bodyText2: TextStyle(
             color: _isDark ? Colors.white : Colors.black,
           ),
         ),
