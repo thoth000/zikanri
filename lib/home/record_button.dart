@@ -38,7 +38,9 @@ class RButton extends StatelessWidget {
               size: displaySize.width / 7,
             ),
           ),
-          Center(
+          SizedBox(
+            height: displaySize.width / 5,
+            width: displaySize.width / 5,
             child: FlatButton(
               color: Colors.transparent,
               shape: RoundedRectangleBorder(
