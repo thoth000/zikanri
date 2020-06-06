@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../data.dart';
+import 'tutorial.dart';
 
 class AchievePage extends StatefulWidget {
   @override
@@ -19,6 +20,7 @@ class _AchievePageState extends State<AchievePage> {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
+    final userData = Provider.of<UserDataNotifier>(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -32,9 +34,10 @@ class _AchievePageState extends State<AchievePage> {
       ),
       body: Column(
         children: <Widget>[
+          (userData.tutorial[7])?
           SizedBox(
             height: displaySize.width / 20,
-          ),
+          ):AchiveTutorial(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
