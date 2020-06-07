@@ -81,7 +81,7 @@ class ProfileSettingPage extends StatelessWidget {
                   fontSize: FontSize.midium,
                   fontWeight: FontWeight.w700,
                 ),
-                inputFormatters: [
+                inputFormatters:[
                   LengthLimitingTextInputFormatter(94),
                 ],
                 onChanged: (name) {
