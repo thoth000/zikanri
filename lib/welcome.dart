@@ -36,19 +36,20 @@ class WelcomePage extends StatelessWidget {
         tTime,tGood,tPer
       ]*/
       await userDataBox.put('userValue', [0, 0, 0, 0, 0, 0, 0, 0, 0]);
+      //latelyData=[date,totaltime,goodtime,percent,donelist]
       await userDataBox.put('latelyData', [
         [firstdate, 0, 0, 0, []],
       ]);
       await userDataBox.put('todayDoneList', []);
+      //shortcut=[icon,title,time,isGood,keynum,isRecord]
       await userDataBox.put(
         'shortCuts',
         [
-          [1, '勉強', 0, false, 1, false],
-          [2, '運動', 240, true, 2, true],
-          [3, '二度寝', 120, false, 3, true],
-          [5, 'ひと狩り', 0, false, 4, false],
+          [0, '二度寝', 120, false, 3, true],
+          [0, 'ひと狩り', 0, false, 4, false],
         ],
       );
+      //category=[iconNumber,title,data[total,good,percent]]
       await userDataBox.put(
         'categories',
         [
