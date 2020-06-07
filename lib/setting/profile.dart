@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../data.dart';
@@ -80,6 +81,9 @@ class ProfileSettingPage extends StatelessWidget {
                   fontSize: FontSize.midium,
                   fontWeight: FontWeight.w700,
                 ),
+                inputFormatters: [
+                  LengthLimitingTextInputFormatter(94),
+                ],
                 onChanged: (name) {
                   userData.nameChange(name);
                 },
