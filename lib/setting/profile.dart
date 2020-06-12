@@ -29,7 +29,9 @@ class ProfileSettingPage extends StatelessWidget {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 10.0,
+        ),
         child: ListView(
           children: <Widget>[
             SizedBox(
@@ -81,7 +83,7 @@ class ProfileSettingPage extends StatelessWidget {
                   fontSize: FontSize.midium,
                   fontWeight: FontWeight.w700,
                 ),
-                inputFormatters:[
+                inputFormatters: [
                   LengthLimitingTextInputFormatter(94),
                 ],
                 onChanged: (name) {
