@@ -1,5 +1,7 @@
 # Zikanri
 
+<img width="30%" src="./images/zikanri_shaped.png">
+
 アプリ甲子園2020年大会に応募するアプリ。
 
 Flutterを用いたクロスプラットフォームアプリで
