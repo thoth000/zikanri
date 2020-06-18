@@ -5,6 +5,7 @@ import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'data.dart';
 import 'mypage.dart';
@@ -120,9 +121,13 @@ class WelcomePage extends StatelessWidget {
         pages: [
           PageViewModel(
             image: Center(
-              child: Image(
+              child: /*Image(
                 image: AssetImage('images/1.png'),
                 height: displaySize.width / 2,
+              ),*/
+              SvgPicture.asset(
+                'images/1.svg',
+                height: displaySize.width/2,
               ),
             ),
             title: 'ジカンリへようこそ！',
@@ -142,9 +147,13 @@ class WelcomePage extends StatelessWidget {
           ),
           PageViewModel(
             image: Center(
-              child: Image(
+              child: /*Image(
                 image: AssetImage('images/2.png'),
                 height: displaySize.width / 2,
+              ),*/
+              SvgPicture.asset(
+                'images/2.svg',
+                height: displaySize.width/2,
               ),
             ),
             title: '記録をデータ化',
@@ -164,9 +173,13 @@ class WelcomePage extends StatelessWidget {
           ),
           PageViewModel(
             image: Center(
-              child: Image(
+              child: /*Image(
                 image: AssetImage('images/3.png'),
                 height: displaySize.width / 2,
+              ),*/
+              SvgPicture.asset(
+                'images/3.svg',
+                height: displaySize.width/2,
               ),
             ),
             title: 'カテゴリーに分けて記録',
@@ -186,9 +199,13 @@ class WelcomePage extends StatelessWidget {
           ),
           PageViewModel(
             image: Center(
-              child: Image(
+              child: /*Image(
                 image: AssetImage('images/4.png'),
                 height: displaySize.width / 2,
+              ),*/
+              SvgPicture.asset(
+                'images/4.svg',
+                height: displaySize.width/2,
               ),
             ),
             title: 'あなたの記録をシェア',
@@ -207,9 +224,13 @@ class WelcomePage extends StatelessWidget {
           ),
           PageViewModel(
             image: Center(
-              child: Image(
+              child: /*Image(
                 image: AssetImage('images/5.png'),
                 height: displaySize.width / 2,
+              ),*/
+              SvgPicture.asset(
+                'images/5.svg',
+                height: displaySize.width/2,
               ),
             ),
             title: 'ジカンリを始めよう',

@@ -21,6 +21,7 @@ dependencies:
   flutter_swiper : ^1.1.6
   introduction_screen: ^1.0.8
   cupertino_icons: ^0.1.2
+  flutter_svg: ^0.17.4
 
 dependency_overrides:
   dartx: ^0.3.0
@@ -45,9 +46,4 @@ flutter:
       - asset: fonts/NotoSansJP-Thin.otf
         weight: 100
   assets:
-    - images/zikanri_shaped.png
-    - images/1.png
-    - images/2.png
-    - images/3.png
-    - images/4.png
-    - images/5.png
+    - images/
