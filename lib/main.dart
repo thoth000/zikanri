@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 //import 'package:hive_flutter/hive_flutter.dart';
 
 import 'Splash.dart';
@@ -10,9 +11,15 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_)=>ThemeNotifier(),),
-        ChangeNotifierProvider(create: (_)=>UserDataNotifier(),),
-        ChangeNotifierProvider(create: (_)=>RecordNotifier(),),
+        ChangeNotifierProvider(
+          create: (_) => ThemeNotifier(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => UserDataNotifier(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => RecordNotifier(),
+        ),
       ],
       child: MyApp(),
     ),
@@ -33,6 +40,19 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+  @override
+  void initState() {
+    super.initState();
+    var initializationSettingsAndroid =
+        new AndroidInitializationSettings('app_icon');
+    var initializationSettingsIOS = new IOSInitializationSettings();
+    var initializationSettings = new InitializationSettings(
+        initializationSettingsAndroid, initializationSettingsIOS);
+    flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
+    flutterNotification = flutterLocalNotificationsPlugin;
+    flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
