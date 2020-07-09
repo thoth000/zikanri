@@ -66,6 +66,7 @@ class ProfileSettingPage extends StatelessWidget {
             ),
             SizedBox(
               height: displaySize.width / 6,
+              //プロフィール名
               child: TextField(
                 cursorColor: (theme.isDark)
                     ? theme.themeColors[0]
