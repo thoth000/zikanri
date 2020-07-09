@@ -155,7 +155,6 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
       fontSize: FontSize.small,
       fontWeight: FontWeight.w700,
     );
-
     return Padding(
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
@@ -275,7 +274,6 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                           padding: const EdgeInsets.symmetric(
                             horizontal: 5,
                           ),
-                          //タイトル
                           child: TextField(
                             textAlignVertical: TextAlignVertical.center,
                             cursorColor: (theme.isDark)
@@ -323,7 +321,6 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 5),
                                     decoration: _decorationStyle,
-                                    //時間
                                     child: TextField(
                                       textAlignVertical:
                                           TextAlignVertical.center,
@@ -1213,9 +1210,6 @@ class SelectIconPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
-
-    TextEditingController _categoryEditingController = new TextEditingController();
-
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -1227,7 +1221,7 @@ class SelectIconPage extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () async {
-            await userData.dicideCategory(index,_categoryEditingController.text);
+            await userData.dicideCategory();
             Navigator.pop(context);
           },
         ),
@@ -1259,9 +1253,7 @@ class SelectIconPage extends StatelessWidget {
                     ),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  //カテゴリー名変更
                   child: TextField(
-                    controller: _categoryEditingController,
                     textAlignVertical: TextAlignVertical.center,
                     textInputAction: TextInputAction.go,
                     decoration: InputDecoration(
@@ -1273,6 +1265,9 @@ class SelectIconPage extends StatelessWidget {
                         : theme.themeColors[1],
                     inputFormatters: [LengthLimitingTextInputFormatter(18)],
                     style: TextStyle(fontSize: FontSize.small),
+                    onChanged: (s) {
+                      userData.editCategoryTitle(index, s);
+                    },
                   ),
                 ),
               ],

@@ -333,14 +333,17 @@ class UserDataNotifier with ChangeNotifier {
     await Hive.box('userData').put('userName', userName);
   }
 
-  Future dicideCategory(int index,String title) async {
-    _categories[index][1] = title;
+  Future dicideCategory() async {
     await Hive.box('userData').put('categories', _categories);
   }
 
   void editCategoryIcon(int index, int icon) {
     _categories[index][0] = icon;
     notifyListeners();
+  }
+
+  void editCategoryTitle(int index, String s) {
+    _categories[index][1] = s;
   }
 
   Future resetCategory(int index) async {
