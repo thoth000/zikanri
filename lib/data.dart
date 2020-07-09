@@ -60,8 +60,8 @@ const List iconList = [
   58899,
 ];
 
-List achiveM = [1000, 5000, 10000, 50000, 100000];
-List achiveD = [1, 2, 7, 30, 100];
+List achiveM = [1000, 5000, 10000, 30000, 50000];
+List achiveD = [1, 3, 7, 30, 50];
 
 //BaseColor
 //単色をベースにしていく
