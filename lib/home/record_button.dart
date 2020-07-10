@@ -1319,30 +1319,26 @@ class SelectIconPage extends StatelessWidget {
               crossAxisSpacing: displaySize.width / 25,
               mainAxisSpacing: 10,
               children: <Widget>[
-                for (var icon in iconList)
+                for(int i=0;i<iconList.length;i++)
                   SizedBox(
                     height: displaySize.width / 4,
-                    child: FlatButton(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            IconData(
-                              icon,
-                              fontFamily: "MaterialIcons",
-                            ),
-                            color: (userData.categories[index][0] == icon)
-                                ? (theme.isDark)
-                                    ? theme.themeColors[0]
-                                    : theme.themeColors[1]
-                                : Colors.grey,
-                            size: displaySize.width / 8,
-                          ),
-                        ],
+                    child: IconButton(
+                      tooltip: iconHintList[i],
+                      icon: Icon(
+                        IconData(
+                          iconList[i],
+                          fontFamily: "MaterialIcons",
+                        ),
+                        color: (userData.categories[index][0] == iconList[i])
+                            ? (theme.isDark)
+                                ? theme.themeColors[0]
+                                : theme.themeColors[1]
+                            : Colors.grey,
+                        size: displaySize.width / 8,
                       ),
                       onPressed: () => userData.editCategoryIcon(
                         index,
-                        icon,
+                        iconList[i],
                       ),
                     ),
                   ),

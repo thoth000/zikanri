@@ -5,7 +5,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 Size displaySize;
 FlutterLocalNotificationsPlugin flutterNotification;
-var tmp;
 
 class FontSize {
   static double xxsmall = displaySize.width / 30;
@@ -32,7 +31,7 @@ class Vib {
   }
 }
 
-const List iconList = [
+const List<int> iconList = [
   57746,
   57680,
   58726,
@@ -62,13 +61,43 @@ const List iconList = [
   58899,
 ];
 
-List achiveM = [1000, 5000, 10000, 30000, 50000];
-List achiveD = [1, 3, 7, 30, 50];
+const List<String> iconHintList = [
+  "時間",
+  "勉強",
+  "運動",
+  "家事",
+  "音楽",
+  "読書",
+  "イラスト",
+  "ゲーム",
+  "ペット",
+  "メディア",
+  "SNS",
+  "パソコン",
+  "DIY",
+  "料理",
+  "筋トレ",
+  "リラックス",
+  "博物館",
+  "インターネット",
+  "音",
+  "園芸",
+  "映画",
+  "バカンス",
+  "ギャンブル",
+  "恋愛",
+  "買い物",
+  "カメラ",
+  "ドライブ",
+];
+
+List<int> achiveM = [1000, 5000, 10000, 30000, 50000];
+List<int> achiveD = [1, 3, 7, 30, 50];
 
 //BaseColor
 //単色をベースにしていく
 //今なんこ,14
-List baseColors = [
+List<List<Color>> baseColors = [
   [Color(0XFF39BAE8), Color(0XFF0000A1)], //青
   [Color(0XFFef473a), Color(0XFFcb2d3e)], //赤
   [Color(0XFF08ffc8), Color(0XFF204969)], //緑
@@ -240,10 +269,10 @@ class UserDataNotifier with ChangeNotifier {
   String thisMonth = "01";
   int totalPassedDays = 1;
 
-  List checkM = [false, false, false, false, false];
-  List checkD = [true, false, false, false, false];
+  List<bool> checkM = [false, false, false, false, false];
+  List<bool> checkD = [true, false, false, false, false];
 
-  List _myColors = [
+  List<bool> _myColors = [
     true,
     true,
     true,
@@ -255,9 +284,9 @@ class UserDataNotifier with ChangeNotifier {
     false,
     false
   ];
-  List get myColors => _myColors;
+  List<bool> get myColors => _myColors;
 
-  List tutorial = [true, true, true, true, true];
+  List<bool> tutorial = [];
 
   int passedDays = 1;
   int keynum = 5;
