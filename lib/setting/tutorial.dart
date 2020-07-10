@@ -539,15 +539,15 @@ class CategoryEditTutorial extends StatelessWidget {
               style: TextStyle(fontSize: FontSize.xsmall),
             ),
             Text(
-              'リセットを押すとデータのリセットと',
+              'リセットを押すとデータがリセットされます',
               style: TextStyle(fontSize: FontSize.xsmall),
             ),
             Text(
-              '同時にカテゴリー選択の画面に',
+              'カテゴリーの名前を消すと記録のときに',
               style: TextStyle(fontSize: FontSize.xsmall),
             ),
             Text(
-              '表示させないようにできます。',
+              'カテゴリーアイコンを表示しません',
               style: TextStyle(fontSize: FontSize.xsmall),
             ),
             SizedBox(
