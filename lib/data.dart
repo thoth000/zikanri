@@ -336,6 +336,7 @@ class UserDataNotifier with ChangeNotifier {
   }
 
   Future dicideCategory() async {
+    notifyListeners();
     await Hive.box('userData').put('categories', _categories);
   }
 
