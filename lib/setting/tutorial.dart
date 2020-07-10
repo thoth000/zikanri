@@ -535,11 +535,11 @@ class CategoryEditTutorial extends StatelessWidget {
               height: displaySize.width / 20,
             ),
             Text(
-              '複数のカテゴリーを設定できます',
+              '複数のカテゴリーを設定できます。',
               style: TextStyle(fontSize: FontSize.xsmall),
             ),
             Text(
-              'リセットを押すとデータがリセットされます',
+              'リセットを押すとデータがリセットされます。',
               style: TextStyle(fontSize: FontSize.xsmall),
             ),
             Text(
@@ -547,7 +547,7 @@ class CategoryEditTutorial extends StatelessWidget {
               style: TextStyle(fontSize: FontSize.xsmall),
             ),
             Text(
-              'カテゴリーアイコンを表示しません',
+              'カテゴリーアイコンを表示しません。',
               style: TextStyle(fontSize: FontSize.xsmall),
             ),
             SizedBox(
