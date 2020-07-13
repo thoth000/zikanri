@@ -49,6 +49,7 @@ class _SplashPageState extends State<SplashPage> {
           box2[3] = 0;
           box2[4] = 0;
           box2[5] = 0;
+          await box.put('thisMonth', month);
           await box.put('passedDays', 1);
         } else {
           await box.put('passedDays', box.get('passedDays') + 1);
