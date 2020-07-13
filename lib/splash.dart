@@ -23,7 +23,7 @@ class _SplashPageState extends State<SplashPage> {
     _initialize();
   }
 
-  Future _initialize() async {
+  void _initialize() async {
     final theme = Provider.of<ThemeNotifier>(context, listen: false);
     final userData = Provider.of<UserDataNotifier>(context, listen: false);
     await Hive.initFlutter();
