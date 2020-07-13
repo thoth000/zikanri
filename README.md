@@ -1,16 +1,16 @@
-# Zikanri
+# zikanri
 
-<img width="30%" src="./images/zikanri_shaped.png">
+A new Flutter application.
 
-アプリ甲子園2020年大会に応募するアプリ。
+## Getting Started
 
-Flutterを用いたクロスプラットフォームアプリで
-iOSとAndroidに両対応している。
+This project is a starting point for a Flutter application.
 
-時間を価値アリ・価値ナシに分けて記録することができ
-毎日を効率的に振り返ることができる。
+A few resources to get you started if this is your first Flutter project:
 
-## Picture
-![1](https://user-images.githubusercontent.com/51738889/84248112-efa5cb00-ab43-11ea-897a-17c308708c6b.png)
+- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-![2](https://user-images.githubusercontent.com/51738889/84248157-03513180-ab44-11ea-82a0-990f72c6deb0.png)
+For help getting started with Flutter, view our
+[online documentation](https://flutter.dev/docs), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
