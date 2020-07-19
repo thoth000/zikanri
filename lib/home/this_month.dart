@@ -16,27 +16,27 @@ class _TMWidgetState extends State<TMWidget> {
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context);
     return Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Card(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-          elevation: 5,
-          child: Container(
-            padding: EdgeInsets.all(10),
-            height: displaySize.width / 2.2,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                _widget(
-                  '記録時間',
-                  userData.thisMonthTime.toString() + '分',
-                ),
-                _widget('価値時間', userData.thisMonthGood.toString() + '分'),
-                _widget('価値の割合', userData.thisMonthPer.toString() + '%'),
-              ],
-            ),
+      padding: const EdgeInsets.all(10.0),
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+        elevation: 5,
+        child: Container(
+          padding: EdgeInsets.all(10),
+          height: displaySize.width / 2.2,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              _widget(
+                '記録時間',
+                userData.thisMonthTime.toString() + '分',
+              ),
+              _widget('価値時間', userData.thisMonthGood.toString() + '分'),
+              _widget('価値の割合', userData.thisMonthPer.toString() + '%'),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   Widget _widget(

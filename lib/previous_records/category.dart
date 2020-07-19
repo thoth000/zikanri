@@ -61,8 +61,7 @@ class CategoryPage extends StatelessWidget {
                   child: Text(
                     title,
                     style: TextStyle(
-                        fontSize: FontSize.xlarge,
-                        fontWeight: FontWeight.w700),
+                        fontSize: FontSize.xlarge, fontWeight: FontWeight.w700),
                   ),
                 ),
               ],

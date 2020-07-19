@@ -83,7 +83,8 @@ class HomePage extends StatelessWidget {
 class _HomeTutorial extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final isTutorialFinished = Provider.of<UserDataNotifier>(context).tutorial[0];
+    final isTutorialFinished =
+        Provider.of<UserDataNotifier>(context).tutorial[0];
     if (isTutorialFinished) {
       return SizedBox();
     } else {

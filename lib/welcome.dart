@@ -27,10 +27,26 @@ class WelcomePage extends StatelessWidget {
       await themeBox.put('themeColorsIndex', 0);
       // userData
       await userDataBox.put('welcome', "Yey!");
-      await userDataBox.put('tutorial',[false,false,false,false,false,false,false,false,false]);
-      await userDataBox.put('myColors', [true,true,true,false,false,false,false,false,false,false,false,false,false,false]);
-      await userDataBox.put('checkM', [false,false,false,false,false]);
-      await userDataBox.put('checkD', [true,false,false,false,false]);
+      await userDataBox.put('tutorial',
+          [false, false, false, false, false, false, false, false, false]);
+      await userDataBox.put('myColors', [
+        true,
+        true,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]);
+      await userDataBox.put('checkM', [false, false, false, false, false]);
+      await userDataBox.put('checkD', [true, false, false, false, false]);
       /*userValue=[
         aTime,aGood,aPer,
         tmTime,tmGood,tmPer,
@@ -121,13 +137,14 @@ class WelcomePage extends StatelessWidget {
         pages: [
           PageViewModel(
             image: Center(
-              child: /*Image(
+              child:
+                  /*Image(
                 image: AssetImage('images/1.png'),
                 height: displaySize.width / 2,
               ),*/
-              SvgPicture.asset(
+                  SvgPicture.asset(
                 'images/1.svg',
-                height: displaySize.width/2,
+                height: displaySize.width / 2,
               ),
             ),
             title: 'ジカンリへようこそ！',
@@ -147,13 +164,14 @@ class WelcomePage extends StatelessWidget {
           ),
           PageViewModel(
             image: Center(
-              child: /*Image(
+              child:
+                  /*Image(
                 image: AssetImage('images/2.png'),
                 height: displaySize.width / 2,
               ),*/
-              SvgPicture.asset(
+                  SvgPicture.asset(
                 'images/2.svg',
-                height: displaySize.width/2,
+                height: displaySize.width / 2,
               ),
             ),
             title: '記録をデータ化',
@@ -173,13 +191,14 @@ class WelcomePage extends StatelessWidget {
           ),
           PageViewModel(
             image: Center(
-              child: /*Image(
+              child:
+                  /*Image(
                 image: AssetImage('images/3.png'),
                 height: displaySize.width / 2,
               ),*/
-              SvgPicture.asset(
+                  SvgPicture.asset(
                 'images/3.svg',
-                height: displaySize.width/2,
+                height: displaySize.width / 2,
               ),
             ),
             title: 'カテゴリーに分けて記録',
@@ -199,13 +218,14 @@ class WelcomePage extends StatelessWidget {
           ),
           PageViewModel(
             image: Center(
-              child: /*Image(
+              child:
+                  /*Image(
                 image: AssetImage('images/4.png'),
                 height: displaySize.width / 2,
               ),*/
-              SvgPicture.asset(
+                  SvgPicture.asset(
                 'images/4.svg',
-                height: displaySize.width/2,
+                height: displaySize.width / 2,
               ),
             ),
             title: 'あなたの記録をシェア',
@@ -224,13 +244,14 @@ class WelcomePage extends StatelessWidget {
           ),
           PageViewModel(
             image: Center(
-              child: /*Image(
+              child:
+                  /*Image(
                 image: AssetImage('images/5.png'),
                 height: displaySize.width / 2,
               ),*/
-              SvgPicture.asset(
+                  SvgPicture.asset(
                 'images/5.svg',
-                height: displaySize.width/2,
+                height: displaySize.width / 2,
               ),
             ),
             title: 'ジカンリを始めよう',

@@ -52,6 +52,7 @@ class _MyAppState extends State<MyApp> {
     flutterNotification = flutterLocalNotificationsPlugin;
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
