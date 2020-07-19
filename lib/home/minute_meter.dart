@@ -50,7 +50,7 @@ class _MinuteMeterState extends State<MinuteMeter> {
 
   Future loopReflesh() async {
     final userData = Provider.of<UserDataNotifier>(context, listen: false);
-    Future.delayed(Duration.zero,userData.loopReflesh);
+    Future.delayed(Duration.zero, userData.loopReflesh);
     Timer.periodic(Duration(seconds: 10), (t) => userData.loopReflesh());
   }
 

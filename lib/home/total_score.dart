@@ -33,6 +33,7 @@ class TotalScoreWidget extends StatelessWidget {
         text: '${userData.userName}さんの価値時間が${userData.allGood}分に到達！\n#ジカンリ',
       );
     }
+
     return RepaintBoundary(
       key: _globalKey,
       child: Container(
@@ -81,15 +82,16 @@ class TotalScoreWidget extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                      highlightColor: Colors.transparent,
-                      splashColor: Colors.transparent,
-                      icon: Icon(
-                        Icons.share,
-                        color: Colors.white,
-                        size: displaySize.width / 15,
-                      ),
-                      onPressed: () async{await _exportToImage();}
-                    ),
+                        highlightColor: Colors.transparent,
+                        splashColor: Colors.transparent,
+                        icon: Icon(
+                          Icons.share,
+                          color: Colors.white,
+                          size: displaySize.width / 15,
+                        ),
+                        onPressed: () async {
+                          await _exportToImage();
+                        }),
                   ],
                 ),
                 SizedBox(

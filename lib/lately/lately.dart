@@ -224,7 +224,7 @@ class DayData extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   SizedBox(
-                    height: displaySize.width/10,
+                    height: displaySize.width / 10,
                     width: displaySize.width,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,

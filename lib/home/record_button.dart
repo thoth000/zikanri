@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
 
-
 import '../setting/tutorial.dart';
 import '../splash.dart';
 import '../data.dart';
@@ -157,18 +156,27 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
       fontSize: FontSize.small,
       fontWeight: FontWeight.w700,
     );
-    Future<void> notification(String s) async{
-      AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
-        "Channel ID", "Channel title", "channel body",
+    Future<void> notification(String s) async {
+      AndroidNotificationDetails androidNotificationDetails =
+          AndroidNotificationDetails(
+        "Channel ID",
+        "Channel title",
+        "channel body",
         priority: Priority.Max,
         importance: Importance.Max,
         ticker: 'test',
       );
       IOSNotificationDetails iosNotificationDetails = IOSNotificationDetails();
 
-      NotificationDetails notificationDetails = NotificationDetails(androidNotificationDetails,iosNotificationDetails);
-      await flutterNotification.show(0,"活動",(userData.activities.length+1).toString()+"件目: "+s,notificationDetails);
+      NotificationDetails notificationDetails = NotificationDetails(
+          androidNotificationDetails, iosNotificationDetails);
+      await flutterNotification.show(
+          0,
+          "活動",
+          (userData.activities.length + 1).toString() + "件目: " + s,
+          notificationDetails);
     }
+
     return Padding(
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
@@ -429,7 +437,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                             ),
                             onLongPress: record.check()
                                 ? null
-                                : () async{
+                                : () async {
                                     if (record.isRecord) {
                                       userData.addShortCuts(
                                         [
@@ -474,7 +482,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                   },
                             onPressed: record.check()
                                 ? null
-                                : () async{
+                                : () async {
                                     if (record.isRecord) {
                                       //記録モード
                                       userData.recordDone(
@@ -487,7 +495,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                       );
                                       record.reset();
                                       Navigator.pop(context);
-                                    } else{
+                                    } else {
                                       notification(record.title);
                                       //開始モード
                                       userData.addActivity(DateTime.now(),
@@ -1319,7 +1327,7 @@ class SelectIconPage extends StatelessWidget {
               crossAxisSpacing: displaySize.width / 25,
               mainAxisSpacing: 10,
               children: <Widget>[
-                for(int i=0;i<iconList.length;i++)
+                for (int i = 0; i < iconList.length; i++)
                   SizedBox(
                     height: displaySize.width / 4,
                     child: IconButton(

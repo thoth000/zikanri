@@ -8,7 +8,6 @@ class ThemeSettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
-    final userData = Provider.of<UserDataNotifier>(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -22,11 +21,7 @@ class ThemeSettingPage extends StatelessWidget {
       ),
       body: ListView(
         children: <Widget>[
-          userData.tutorial[6]
-              ? SizedBox(
-                  height: displaySize.width / 20,
-                )
-              : ThemeTutorial(),
+          _ThemeTutorial(),
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -166,12 +161,7 @@ class ThemeSettingPage extends StatelessWidget {
                 Wrap(
                   children: <Widget>[
                     for (int i = 0; i < baseColors.length; i++)
-                      (userData.myColors[i])
-                          ? Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: themeChanger(theme, i),
-                            )
-                          : SizedBox(),
+                      _ThemeChanger(i),
                   ],
                 ),
               ],
@@ -181,25 +171,52 @@ class ThemeSettingPage extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget themeChanger(theme, i) {
-    return Container(
-      height: displaySize.width / 8,
-      width: displaySize.width / 8,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        gradient: LinearGradient(
-          colors: baseColors[i],
-        ),
-      ),
-      child: FlatButton(
-        shape: RoundedRectangleBorder(
+class _ThemeTutorial extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final isTutorialFinished =
+        Provider.of<UserDataNotifier>(context).tutorial[6];
+    if (isTutorialFinished) {
+      return SizedBox(
+        height: displaySize.width / 20,
+      );
+    } else {
+      return ThemeTutorial();
+    }
+  }
+}
+
+class _ThemeChanger extends StatelessWidget {
+  _ThemeChanger(this.i);
+  final int i;
+  @override
+  Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeNotifier>(context);
+    final userData = Provider.of<UserDataNotifier>(context);
+    if (userData.myColors[i]) {
+      return Container(
+        padding: const EdgeInsets.all(10),
+        height: displaySize.width / 8,
+        width: displaySize.width / 8,
+        decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
+          gradient: LinearGradient(
+            colors: baseColors[i],
+          ),
         ),
-        color: Colors.transparent,
-        child: SizedBox(),
-        onPressed: () async => await theme.changeTheme(i),
-      ),
-    );
+        child: FlatButton(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          color: Colors.transparent,
+          child: const SizedBox(),
+          onPressed: () async => await theme.changeTheme(i),
+        ),
+      );
+    } else {
+      return const SizedBox();
+    }
   }
 }

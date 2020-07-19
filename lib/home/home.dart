@@ -12,7 +12,6 @@ import '../setting/tutorial.dart';
 class HomePage extends StatelessWidget {
   final String today = DateFormat('yyyy年MM月dd日現在').format(DateTime.now());
   Widget build(BuildContext context) {
-    final userData = Provider.of<UserDataNotifier>(context);
     return ListView(
       children: <Widget>[
         TotalScoreWidget(),
@@ -22,7 +21,7 @@ class HomePage extends StatelessWidget {
           indent: 10,
           endIndent: 10,
         ),
-        (userData.tutorial[0]) ? SizedBox() : HomeTutorial(),
+        _HomeTutorial(),
         MinuteMeter(),
         Padding(
           padding: const EdgeInsets.all(10),
@@ -47,7 +46,7 @@ class HomePage extends StatelessWidget {
           ),
         ),
         TMWidget(),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Padding(
@@ -78,5 +77,18 @@ class HomePage extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+class _HomeTutorial extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final isTutorialFinished =
+        Provider.of<UserDataNotifier>(context).tutorial[0];
+    if (isTutorialFinished) {
+      return SizedBox();
+    } else {
+      return HomeTutorial();
+    }
   }
 }

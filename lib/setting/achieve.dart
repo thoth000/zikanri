@@ -34,10 +34,11 @@ class _AchievePageState extends State<AchievePage> {
       ),
       body: Column(
         children: <Widget>[
-          (userData.tutorial[7])?
-          SizedBox(
-            height: displaySize.width / 20,
-          ):AchiveTutorial(),
+          (userData.tutorial[7])
+              ? SizedBox(
+                  height: displaySize.width / 20,
+                )
+              : AchiveTutorial(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[

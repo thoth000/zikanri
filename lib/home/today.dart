@@ -147,7 +147,7 @@ class TodayWidget extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                for (int i = userData.todayDoneList.length-1; i >= 0; i--)
+                for (int i = userData.todayDoneList.length - 1; i >= 0; i--)
                   _todayDone(context, i, userData, theme),
                 Center(
                   child: Padding(
