@@ -196,23 +196,25 @@ class _ThemeChanger extends StatelessWidget {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
     if (userData.myColors[i]) {
-      return Container(
+      return Padding(
         padding: const EdgeInsets.all(10),
-        height: displaySize.width / 8,
-        width: displaySize.width / 8,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          gradient: LinearGradient(
-            colors: baseColors[i],
-          ),
-        ),
-        child: FlatButton(
-          shape: RoundedRectangleBorder(
+        child: Container(
+          height: displaySize.width / 8,
+          width: displaySize.width / 8,
+          decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
+            gradient: LinearGradient(
+              colors: baseColors[i],
+            ),
           ),
-          color: Colors.transparent,
-          child: const SizedBox(),
-          onPressed: () async => await theme.changeTheme(i),
+          child: FlatButton(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
+            color: Colors.transparent,
+            child: const SizedBox(),
+            onPressed: () async => await theme.changeTheme(i),
+          ),
         ),
       );
     } else {

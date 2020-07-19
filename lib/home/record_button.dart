@@ -1078,14 +1078,18 @@ class CategoryEditPage extends StatelessWidget {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        child: ListView(
-          children: <Widget>[
-            (userData.tutorial[8]) ? SizedBox() : CategoryEditTutorial(),
-            for (int i = 1; i < 8; i++) CategoryCard(i)
-          ],
-        ),
+      body: ListView(
+        children: <Widget>[
+          (userData.tutorial[8]) ? SizedBox() : CategoryEditTutorial(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Column(
+              children: <Widget>[
+                for (int i = 1; i < 8; i++) CategoryCard(i)
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
