@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-//import 'package:hive_flutter/hive_flutter.dart';
 
 import 'Splash.dart';
 import 'data.dart';
