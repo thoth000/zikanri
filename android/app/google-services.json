@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "129852266781",
+    "firebase_url": "https://zikanri.firebaseio.com",
+    "project_id": "zikanri",
+    "storage_bucket": "zikanri.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:129852266781:android:7541ba08be0bbefd3ea9f4",
+        "android_client_info": {
+          "package_name": "com.thoth000.zikanri"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "129852266781-37hoh3n73p1dbbet709rmkafidepcg03.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpXCXOqDvfMLBFPsWeYfoFQIeABCI8g5Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "129852266781-37hoh3n73p1dbbet709rmkafidepcg03.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
