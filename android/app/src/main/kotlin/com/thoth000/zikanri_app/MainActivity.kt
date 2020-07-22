@@ -1,4 +1,4 @@
-package com.thoth000.zikanri
+package com.thoth000.zikanri_app
 
 import android.os.Bundle
 import io.flutter.app.FlutterActivity

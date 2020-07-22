@@ -34,6 +34,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:129852266781:android:b775455e791a0c0d3ea9f4",
+        "android_client_info": {
+          "package_name": "com.thoth000.zikanri_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "129852266781-37hoh3n73p1dbbet709rmkafidepcg03.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpXCXOqDvfMLBFPsWeYfoFQIeABCI8g5Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "129852266781-37hoh3n73p1dbbet709rmkafidepcg03.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
