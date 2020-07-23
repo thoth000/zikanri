@@ -10,6 +10,28 @@ import '../setting/tutorial.dart';
 import '../splash.dart';
 import '../data.dart';
 
+void notification(String s, int length) async {
+  AndroidNotificationDetails androidNotificationDetails =
+      AndroidNotificationDetails(
+    "Channel ID",
+    "Channel title",
+    "channel body",
+    priority: Priority.Max,
+    importance: Importance.Max,
+    ticker: 'test',
+  );
+  IOSNotificationDetails iosNotificationDetails = IOSNotificationDetails();
+
+  NotificationDetails notificationDetails =
+      NotificationDetails(androidNotificationDetails, iosNotificationDetails);
+  await flutterNotification.show(
+    0,
+    "活動",
+    (length + 1).toString() + "件目: " + s,
+    notificationDetails,
+  );
+}
+
 class RButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -156,26 +178,6 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
       fontSize: FontSize.small,
       fontWeight: FontWeight.w700,
     );
-    Future<void> notification(String s) async {
-      AndroidNotificationDetails androidNotificationDetails =
-          AndroidNotificationDetails(
-        "Channel ID",
-        "Channel title",
-        "channel body",
-        priority: Priority.Max,
-        importance: Importance.Max,
-        ticker: 'test',
-      );
-      IOSNotificationDetails iosNotificationDetails = IOSNotificationDetails();
-
-      NotificationDetails notificationDetails = NotificationDetails(
-          androidNotificationDetails, iosNotificationDetails);
-      await flutterNotification.show(
-          0,
-          "活動",
-          (userData.activities.length + 1).toString() + "件目: " + s,
-          notificationDetails);
-    }
 
     return Padding(
       padding: EdgeInsets.only(
@@ -460,7 +462,10 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                       Navigator.pop(context);
                                       record.reset();
                                     } else {
-                                      notification(record.title);
+                                      notification(
+                                        record.title,
+                                        userData.activities.length,
+                                      );
                                       userData.addShortCuts(
                                         [
                                           record.categoryIndex,
@@ -496,7 +501,10 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                       record.reset();
                                       Navigator.pop(context);
                                     } else {
-                                      notification(record.title);
+                                      notification(
+                                        record.title,
+                                        userData.activities.length,
+                                      );
                                       //開始モード
                                       userData.addActivity(DateTime.now(),
                                           record.title, record.categoryIndex);
@@ -856,10 +864,11 @@ class ShortCutSheet extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            onPressed: () {
+                            onPressed: () async{
                               if (itemList[5]) {
                                 userData.recordDone(itemList);
                               } else {
+                                notification(itemList[1], userData.activities.length);
                                 userData.addActivity(
                                     DateTime.now(), itemList[1], itemList[0]);
                               }
@@ -1084,9 +1093,7 @@ class CategoryEditPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Column(
-              children: <Widget>[
-                for (int i = 1; i < 8; i++) CategoryCard(i)
-              ],
+              children: <Widget>[for (int i = 1; i < 8; i++) CategoryCard(i)],
             ),
           ),
         ],

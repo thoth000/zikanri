@@ -91,8 +91,8 @@ const List<String> iconHintList = [
   "ドライブ",
 ];
 
-List<int> achiveM = [1000, 5000, 10000, 30000, 50000];
-List<int> achiveD = [1, 3, 7, 30, 50];
+List<int> achiveM = [500, 1000, 3000, 5000, 10000];
+List<int> achiveD = [1, 3, 7, 30, 100];
 
 //BaseColor
 //単色をベースにしていく
