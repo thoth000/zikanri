@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
+import 'package:zikanri/guide/quick_guide.dart';
 
 import '../data.dart';
 import 'profile.dart';
@@ -189,7 +190,7 @@ class SettingPage extends StatelessWidget {
                 ),
                 ListTile(
                   title: Text(
-                    'チュートリアルを見る',
+                    'ガイドを見る',
                     style: TextStyle(
                       fontSize: FontSize.xsmall,
                     ),
@@ -203,7 +204,7 @@ class SettingPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       _createRoute(
-                        TutorialPage(),
+                        QuickGuide(),
                       ),
                     );
                   },

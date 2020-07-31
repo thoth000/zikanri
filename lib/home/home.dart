@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:zikanri/guide/notice_guide.dart';
 
 import 'total_score.dart';
 import 'minute_meter.dart';
@@ -14,6 +15,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
+        NoticeGuide(),
         TotalScoreWidget(),
         const Divider(
           height: 20,
@@ -21,7 +23,6 @@ class HomePage extends StatelessWidget {
           indent: 10,
           endIndent: 10,
         ),
-        _HomeTutorial(),
         MinuteMeter(),
         Padding(
           padding: const EdgeInsets.all(10),
