@@ -377,7 +377,7 @@ class _Theme extends StatelessWidget {
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(15),
                   ),
-                  color: Colors.green,
+                  color: Colors.blue,
                 ),
               ),
               Container(
@@ -408,9 +408,10 @@ class _Theme extends StatelessWidget {
                 height: displaySize.width / 11,
                 width: displaySize.width / 11,
                 decoration: BoxDecoration(
-                  borderRadius:
-                      BorderRadius.only(bottomRight: Radius.circular(15)),
-                  color: Colors.green,
+                  borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(15),
+                  ),
+                  color: Colors.blue,
                 ),
               ),
             ],

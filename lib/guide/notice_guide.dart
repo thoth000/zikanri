@@ -61,7 +61,12 @@ class NoticeGuide extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => QuickGuide(),),);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => QuickGuide(),
+                    ),
+                  );
                 },
               ),
             ),

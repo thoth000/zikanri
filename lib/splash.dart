@@ -72,7 +72,8 @@ class _SplashPageState extends State<SplashPage> {
           ),
         ),
       );
-    }  {
+    }
+    {
       Future.delayed(
         Duration(seconds: 1),
         () => Navigator.pushReplacement(

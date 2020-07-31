@@ -864,11 +864,12 @@ class ShortCutSheet extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            onPressed: () async{
+                            onPressed: () async {
                               if (itemList[5]) {
                                 userData.recordDone(itemList);
                               } else {
-                                notification(itemList[1], userData.activities.length);
+                                notification(
+                                    itemList[1], userData.activities.length);
                                 userData.addActivity(
                                     DateTime.now(), itemList[1], itemList[0]);
                               }
