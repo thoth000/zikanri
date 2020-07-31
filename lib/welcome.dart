@@ -1,16 +1,14 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:introduction_screen/introduction_screen.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import 'data.dart';
 import 'mypage.dart';
 
 class WelcomePage extends StatelessWidget {
+  WelcomePage({this.version});
+  final String version;
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
@@ -27,8 +25,8 @@ class WelcomePage extends StatelessWidget {
       await themeBox.put('themeColorsIndex', 0);
       // userData
       await userDataBox.put('welcome', "Yey!");
-      await userDataBox.put('tutorial',
-          [false, false, false, false, false, false, false, false, false]);
+      await userDataBox.put('version', version);
+      await userDataBox.put('readGuide', false);
       await userDataBox.put('myColors', [
         true,
         true,
@@ -248,15 +246,6 @@ class _TimeValue extends StatelessWidget {
           size: displaySize.width / 7,
         ),
       ),
-    );
-  }
-
-  Widget _introduction() {
-    return Column(
-      children: <Widget>[
-        Text("活動の価値"),
-        Text("このアプリでは価値アリ・ナシの二種類の記録しか記録できません。"),
-      ],
     );
   }
 }

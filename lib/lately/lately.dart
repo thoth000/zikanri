@@ -7,7 +7,6 @@ import 'package:flutter/rendering.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 
 import '../data.dart';
-import '../setting/tutorial.dart';
 
 class LatelyPage extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -15,7 +14,6 @@ class LatelyPage extends StatelessWidget {
     final userData = Provider.of<UserDataNotifier>(context);
     return ListView(
       children: <Widget>[
-        (userData.tutorial[3]) ? SizedBox() : LatelyTutorial(),
         SizedBox(
           height: displaySize.width / 2 + 20,
           child: PageView(

@@ -8,7 +8,6 @@ import '../data.dart';
 import 'profile.dart';
 import 'theme.dart';
 import 'achieve.dart';
-import 'tutorial.dart';
 import '../home/record_button.dart';
 
 class SettingPage extends StatelessWidget {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:zikanri/guide/notice_guide.dart';
 
 import 'total_score.dart';
@@ -8,7 +7,6 @@ import 'minute_meter.dart';
 import '../data.dart';
 import 'this_month.dart';
 import 'today.dart';
-import '../setting/tutorial.dart';
 
 class HomePage extends StatelessWidget {
   final String today = DateFormat('yyyy年MM月dd日現在').format(DateTime.now());
@@ -78,18 +76,5 @@ class HomePage extends StatelessWidget {
         ),
       ],
     );
-  }
-}
-
-class _HomeTutorial extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final isTutorialFinished =
-        Provider.of<UserDataNotifier>(context).tutorial[0];
-    if (isTutorialFinished) {
-      return SizedBox();
-    } else {
-      return HomeTutorial();
-    }
   }
 }
