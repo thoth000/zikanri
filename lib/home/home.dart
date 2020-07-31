@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:zikanri/guide/notice_guide.dart';
 
 import 'total_score.dart';
@@ -13,7 +14,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
-        NoticeGuide(),
+        _NoticeGuide(),
         TotalScoreWidget(),
         const Divider(
           height: 20,
@@ -76,5 +77,17 @@ class HomePage extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+class _NoticeGuide extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final controller = Provider.of<UserDataNotifier>(context);
+    if(controller.readGuide){
+      return SizedBox();
+    }else{
+      return NoticeGuide();
+    }
   }
 }

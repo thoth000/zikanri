@@ -286,7 +286,7 @@ class UserDataNotifier with ChangeNotifier {
   ];
   List<bool> get myColors => _myColors;
 
-  bool readGuide;
+  bool readGuide = false;
 
   int passedDays = 1;
   int keynum = 5;
@@ -332,6 +332,12 @@ class UserDataNotifier with ChangeNotifier {
 
   List _activities = [];
   List get activities => _activities;
+
+  Future checkGuide() async{
+    readGuide = true;
+    await Hive.box('userData').put('readGuide', readGuide);
+    notifyListeners();
+  }
 
   Future checkDay() async {
     for (int i = 0; i < achiveD.length; i++) {

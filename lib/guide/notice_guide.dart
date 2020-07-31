@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:zikanri/data.dart';
 import 'package:zikanri/guide/quick_guide.dart';
 
 class NoticeGuide extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final userData = Provider.of<UserDataNotifier>(context,listen: false);
     return Padding(
       padding: EdgeInsets.only(
         top: displaySize.width / 20,
@@ -60,7 +62,8 @@ class NoticeGuide extends StatelessWidget {
                     color: Colors.blue,
                   ),
                 ),
-                onPressed: () {
+                onPressed: () async{
+                  await userData.checkGuide();
                   Navigator.push(
                     context,
                     MaterialPageRoute(

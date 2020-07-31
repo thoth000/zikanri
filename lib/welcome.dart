@@ -243,7 +243,7 @@ class _TimeValue extends StatelessWidget {
         child: Icon(
           Icons.trending_up,
           color: Colors.blue,
-          size: displaySize.width / 7,
+          size: displaySize.width /6.5,
         ),
       ),
     );
