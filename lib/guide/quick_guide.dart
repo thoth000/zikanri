@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zikanri/data.dart';
+import 'package:zikanri/guide/feature_guide.dart';
 
 class QuickGuide extends StatelessWidget {
   @override
@@ -88,7 +89,7 @@ class QuickGuide extends StatelessWidget {
             SizedBox(
               height: displaySize.width / 50,
             ),
-            Text("Zikanriには他にも便利な機能があります。\nガイドの応用を見てください。"),
+            Text("Zikanriには他にも便利な機能があります。\n気になる方はガイドの機能編も見てください。"),
             SizedBox(
               height: displaySize.width / 10,
             ),
@@ -96,7 +97,7 @@ class QuickGuide extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Text(
-                  "ガイド 応用編を見る",
+                  "ガイド 機能編を見る",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: FontSize.small,
@@ -108,7 +109,9 @@ class QuickGuide extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => FeatureGuide(),));
+              },
             ),
             SizedBox(
               height: displaySize.width / 10,

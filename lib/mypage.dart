@@ -8,31 +8,30 @@ import 'setting/setting.dart';
 import 'home/record_button.dart';
 import 'data.dart';
 
-class MyAppPage extends StatefulWidget {
-  @override
-  _MyAppPageState createState() => _MyAppPageState();
-}
-
-class _MyAppPageState extends State<MyAppPage> {
-  int _currentIndex = 0;
-  List pages = [
+class MyAppPage extends StatelessWidget{
+  MyAppPage._({Key key}) : super(key: key);
+  final List pages = [
     HomePage(),
     LatelyPage(),
     PRPage(),
     SettingPage(),
   ];
-  @override
-  void initState() {
-    super.initState();
+
+  static Widget wrapped(){
+    return ChangeNotifierProvider<PageController>(
+      create: (_) => PageController(),
+      child: MyAppPage._(),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
+    final controller = Provider.of<PageController>(context);
     Color color = theme.isDark ? theme.themeColors[0] : theme.themeColors[1];
     double iconsize = displaySize.width / 11;
     return Scaffold(
-      body: SafeArea(child: pages[_currentIndex]),
+      body: SafeArea(child: pages[controller.currentIndex]),
       floatingActionButton: RButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
@@ -44,13 +43,9 @@ class _MyAppPageState extends State<MyAppPage> {
             IconButton(
               icon: Icon(Icons.home),
               iconSize: iconsize,
-              color: (_currentIndex == 0) ? color : Colors.grey,
+              color: (controller.currentIndex == 0) ? color : Colors.grey,
               onPressed: () {
-                setState(
-                  () {
-                    _currentIndex = 0;
-                  },
-                );
+                controller.changePage(0);
               },
             ),
             IconButton(
@@ -58,13 +53,9 @@ class _MyAppPageState extends State<MyAppPage> {
                 Icons.today,
               ),
               iconSize: iconsize,
-              color: (_currentIndex == 1) ? color : Colors.grey,
+              color: (controller.currentIndex == 1) ? color : Colors.grey,
               onPressed: () {
-                setState(
-                  () {
-                    _currentIndex = 1;
-                  },
-                );
+                controller.changePage(1);
               },
             ),
             SizedBox(
@@ -73,30 +64,30 @@ class _MyAppPageState extends State<MyAppPage> {
             IconButton(
               icon: Icon(Icons.assessment),
               iconSize: iconsize,
-              color: (_currentIndex == 2) ? color : Colors.grey,
+              color: (controller.currentIndex == 2) ? color : Colors.grey,
               onPressed: () {
-                setState(
-                  () {
-                    _currentIndex = 2;
-                  },
-                );
+                controller.changePage(2);
               },
             ),
             IconButton(
               icon: Icon(Icons.settings),
               iconSize: iconsize,
-              color: (_currentIndex == 3) ? color : Colors.grey,
+              color: (controller.currentIndex == 3) ? color : Colors.grey,
               onPressed: () {
-                setState(
-                  () {
-                    _currentIndex = 3;
-                  },
-                );
+                controller.changePage(3);
               },
             ),
           ],
         ),
       ),
     );
+  }
+}
+
+class PageController with ChangeNotifier{
+  int currentIndex = 0;
+  void changePage(int index){
+    currentIndex = index;
+    notifyListeners();
   }
 }

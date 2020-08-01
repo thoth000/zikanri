@@ -189,7 +189,7 @@ class SettingPage extends StatelessWidget {
                 ),
                 ListTile(
                   title: Text(
-                    'ガイドを見る',
+                    'クイックガイドを見る',
                     style: TextStyle(
                       fontSize: FontSize.xsmall,
                     ),

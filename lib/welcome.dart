@@ -122,7 +122,7 @@ class WelcomePage extends StatelessWidget {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => MyAppPage(),
+          builder: (context) => MyAppPage.wrapped(),
         ),
       );
     }
