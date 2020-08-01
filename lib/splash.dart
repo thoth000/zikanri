@@ -88,7 +88,7 @@ class _SplashPageState extends State<SplashPage> {
           ),
         );
       //version違う場合：1.1.0～ユーザー
-      } else if(version != Hive.box('userData').get('version')){
+      } else if(version != await Hive.box('userData').get('version')){
         Future.delayed(
           Duration(seconds: 1),
           () => Navigator.pushReplacement(
