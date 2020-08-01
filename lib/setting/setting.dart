@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
+import 'package:zikanri/guide/feature_guide.dart';
 import 'package:zikanri/guide/quick_guide.dart';
 
 import '../data.dart';
@@ -204,6 +205,29 @@ class SettingPage extends StatelessWidget {
                       context,
                       _createRoute(
                         QuickGuide(),
+                      ),
+                    );
+                  },
+                ),const Divider(
+                  height: 0,
+                ),
+                ListTile(
+                  title: Text(
+                    '機能ガイドを見る',
+                    style: TextStyle(
+                      fontSize: FontSize.xsmall,
+                    ),
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.grey,
+                    size: displaySize.width / 20,
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      _createRoute(
+                        FeatureGuide(),
                       ),
                     );
                   },

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zikanri/data.dart';
-import 'package:zikanri/guide/feature_guide.dart';
 
 class QuickGuide extends StatelessWidget {
   @override
@@ -15,13 +14,9 @@ class QuickGuide extends StatelessWidget {
             SizedBox(
               height: displaySize.width / 20,
             ),
-            Row(
-              children: <Widget>[
-                _RecordButton(),
-              ],
-            ),
+            _RecordButton(),
             SizedBox(
-              height: displaySize.width / 50,
+              height: displaySize.width / 20,
             ),
             Text(
               "記録ボタン",
@@ -41,7 +36,7 @@ class QuickGuide extends StatelessWidget {
             ),
             _ActiveTimer(),
             SizedBox(
-              height: displaySize.width / 50,
+              height: displaySize.width / 20,
             ),
             Text(
               "活動タイマー",
@@ -61,7 +56,7 @@ class QuickGuide extends StatelessWidget {
             ),
             _Category(),
             SizedBox(
-              height: displaySize.width / 50,
+              height: displaySize.width / 20,
             ),
             Text(
               "カテゴリー",
@@ -89,7 +84,7 @@ class QuickGuide extends StatelessWidget {
             SizedBox(
               height: displaySize.width / 50,
             ),
-            Text("Zikanriには他にも便利な機能があります。\n気になる方はガイドの機能編も見てください。"),
+            Text("Zikanriには他にも便利な機能があります。\n気になる方は設定ページの機能ガイドも見てください。"),
             SizedBox(
               height: displaySize.width / 10,
             ),
@@ -97,7 +92,7 @@ class QuickGuide extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Text(
-                  "ガイド 機能編を見る",
+                  "クイックガイドを閉じる",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: FontSize.small,
@@ -110,7 +105,7 @@ class QuickGuide extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15),
               ),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => FeatureGuide(),));
+                Navigator.pop(context);
               },
             ),
             SizedBox(
@@ -145,20 +140,24 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
 class _RecordButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: displaySize.width / 5,
-      width: displaySize.width / 5,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(colors: baseColors[0]),
-        shape: BoxShape.circle,
-      ),
-      child: Center(
-        child: Icon(
-          Icons.access_time,
-          color: Colors.white,
-          size: displaySize.width / 7,
+    return Row(
+      children: <Widget>[
+        Container(
+          height: displaySize.width / 5,
+          width: displaySize.width / 5,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(colors: baseColors[0]),
+            shape: BoxShape.circle,
+          ),
+          child: Center(
+            child: Icon(
+              Icons.access_time,
+              color: Colors.white,
+              size: displaySize.width / 7,
+            ),
+          ),
         ),
-      ),
+      ],
     );
   }
 }

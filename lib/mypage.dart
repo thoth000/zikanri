@@ -18,8 +18,8 @@ class MyAppPage extends StatelessWidget{
   ];
 
   static Widget wrapped(){
-    return ChangeNotifierProvider<PageController>(
-      create: (_) => PageController(),
+    return ChangeNotifierProvider<MainPageController>(
+      create: (_) => MainPageController(),
       child: MyAppPage._(),
     );
   }
@@ -27,7 +27,7 @@ class MyAppPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
-    final controller = Provider.of<PageController>(context);
+    final controller = Provider.of<MainPageController>(context);
     Color color = theme.isDark ? theme.themeColors[0] : theme.themeColors[1];
     double iconsize = displaySize.width / 11;
     return Scaffold(
@@ -84,7 +84,7 @@ class MyAppPage extends StatelessWidget{
   }
 }
 
-class PageController with ChangeNotifier{
+class MainPageController with ChangeNotifier{
   int currentIndex = 0;
   void changePage(int index){
     currentIndex = index;
