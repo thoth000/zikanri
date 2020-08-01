@@ -54,8 +54,8 @@ class UpdateNoticePage extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ),
-              onPressed: () async {
-                await Hive.box('userData').put('version', newVersion);
+              onPressed: () {
+                Hive.box('userData').put('version', newVersion);
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(

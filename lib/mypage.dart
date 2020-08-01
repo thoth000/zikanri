@@ -29,7 +29,7 @@ class MyAppPage extends StatelessWidget{
     final theme = Provider.of<ThemeNotifier>(context);
     final controller = Provider.of<MainPageController>(context);
     Color color = theme.isDark ? theme.themeColors[0] : theme.themeColors[1];
-    double iconsize = displaySize.width / 11;
+    double iconsize = displaySize.width / 9.5;
     return Scaffold(
       body: SafeArea(child: pages[controller.currentIndex]),
       floatingActionButton: RButton(),

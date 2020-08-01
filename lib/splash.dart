@@ -72,9 +72,10 @@ class _SplashPageState extends State<SplashPage> {
       await userData.checkDay();
       //versionがない場合：1.0.0ユーザー
       if (!Hive.box('userData').containsKey('version')) {
+        await Hive.box('userData').delete('tutorial');
         await Hive.box('userData').put('version', '1.0.0');
         await Hive.box('userData').put('readGuide', true);
-        await Hive.box('userData').delete('tutorial');
+        userData.addGuide();
         Future.delayed(
           Duration(seconds: 1),
           () => Navigator.pushReplacement(

@@ -10,7 +10,7 @@ class AchievePage extends StatefulWidget {
 
 class _AchievePageState extends State<AchievePage> {
   bool page = true;
-  void change(b) {
+  void change(bool b) {
     setState(() {
       page = b;
     });
@@ -128,7 +128,7 @@ class AchiveMiniteWidget extends StatelessWidget {
 
   Widget achive(int i, check) {
     return Padding(
-      padding: EdgeInsets.all(displaySize.width / 20),
+      padding: EdgeInsets.symmetric(horizontal:displaySize.width / 20,vertical: 10),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
@@ -223,7 +223,7 @@ class AchiveDayWidget extends StatelessWidget {
 
   Widget achive(int i, check) {
     return Padding(
-      padding: EdgeInsets.all(displaySize.width / 20),
+      padding: EdgeInsets.symmetric(horizontal:displaySize.width / 20,vertical: 10),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),

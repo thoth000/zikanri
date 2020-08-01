@@ -338,6 +338,11 @@ class UserDataNotifier with ChangeNotifier {
     await Hive.box('userData').put('readGuide', readGuide);
     notifyListeners();
   }
+  //ver1.0.0用
+  void addGuide() {
+    readGuide = true;
+    notifyListeners();
+  }
 
   Future checkDay() async {
     for (int i = 0; i < achiveD.length; i++) {

@@ -524,28 +524,6 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                               ),
                             ),
                           ),
-                        if (record.timeCheck && record.clickCheck)
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
-                            child: Column(
-                              children: <Widget>[
-                                Text(
-                                  '時間の設定は1日の範囲までです',
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: FontSize.xsmall,
-                                  ),
-                                ),
-                                Text(
-                                  'その時間は設定できません',
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: FontSize.xsmall,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
                       ],
                     ),
                     const Divider(
@@ -558,7 +536,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                           'カテゴリー',
                           style: _headlineStyle,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Wrap(
