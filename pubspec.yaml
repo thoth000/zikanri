@@ -1,6 +1,6 @@
 name: zikanri
 description: A new Flutter application.
-version: 1.2.0+5
+version: 1.1.0+5
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -11,7 +11,7 @@ dependencies:
   share: ^0.6.3+6
   intl: ^0.16.1
   provider: ^4.0.4
-  hive: ^1.4.3
+  hive: ^1.4.1+1
   hive_flutter: ^0.3.0+2
   path_provider: ^1.6.5
   esys_flutter_share: ^1.0.2
@@ -23,7 +23,9 @@ dependencies:
   flutter_svg: ^0.17.4
   flutter_local_notifications: ^1.4.4+2
   package_info: ^0.4.1
-  in_app_review: ^0.2.0+2
+
+dependency_overrides:
+  dartx: ^0.3.0
 
 dev_dependencies:
   hive_generator: ^0.7.0+2
