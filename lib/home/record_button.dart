@@ -5,6 +5,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
+import 'package:zikanri/category/category.dart';
 
 import '../splash.dart';
 import '../data.dart';
@@ -433,6 +434,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                 ? null
                                 : () async {
                                     if (record.isRecord) {
+                                      Vib.shortCut();
                                       userData.addShortCuts(
                                         [
                                           record.categoryIndex,
@@ -458,6 +460,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                         record.title,
                                         userData.activities.length,
                                       );
+                                      Vib.shortCut();
                                       userData.addShortCuts(
                                         [
                                           record.categoryIndex,
@@ -482,6 +485,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                 : () async {
                                     if (record.isRecord) {
                                       //記録モード
+                                      Vib.decide();
                                       userData.recordDone(
                                         [
                                           record.categoryIndex,
@@ -498,6 +502,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                         userData.activities.length,
                                       );
                                       //開始モード
+                                      Vib.decide();
                                       userData.addActivity(DateTime.now(),
                                           record.title, record.categoryIndex);
                                       Navigator.pop(context);
@@ -513,17 +518,6 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                             ),
                           ),
                         ),
-                        if (record.titleCheck && record.clickCheck)
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text(
-                              'タイトルを決めてください',
-                              style: TextStyle(
-                                color: Colors.red,
-                                fontSize: FontSize.xsmall,
-                              ),
-                            ),
-                          ),
                       ],
                     ),
                     const Divider(
@@ -542,9 +536,8 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                         Wrap(
                           children: <Widget>[
                             for (int i = 0; i < userData.categories.length; i++)
-                              (userData.categories[i][1] == "")
-                                  ? const SizedBox()
-                                  : Padding(
+                              (userData.categoryView[i])
+                                  ? Padding(
                                       padding: const EdgeInsets.only(
                                           right: 5, bottom: 10),
                                       child: Column(
@@ -608,12 +601,12 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                             ),
                                           ),
                                           SizedBox(
-                                            width: displaySize.width / 5,
+                                            width: displaySize.width / 5.1,
                                             child: Text(
                                               userData.categories[i][1],
                                               textAlign: TextAlign.center,
                                               softWrap: false,
-                                              overflow: TextOverflow.fade,
+                                              overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
                                                 fontSize: FontSize.xxsmall,
                                               ),
@@ -621,7 +614,8 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                           ),
                                         ],
                                       ),
-                                    ),
+                                    )
+                                  : const SizedBox(),
                             Padding(
                               padding: const EdgeInsets.only(bottom: 20),
                               child: Column(
@@ -666,7 +660,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                      CategoryEditPage(),
+                                                      CategoryPage(),
                                                 ),
                                               );
                                             },
@@ -1033,303 +1027,6 @@ class ShortCutsEditPage extends StatelessWidget {
               ],
               onReorder: (oldIndex, newIndex) =>
                   userData.sort(oldIndex, newIndex),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class CategoryEditPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final theme = Provider.of<ThemeNotifier>(context);
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        title: Text(
-          'カテゴリーの編集',
-          style: TextStyle(
-            color: theme.isDark ? Colors.white : Colors.black,
-          ),
-        ),
-      ),
-      body: ListView(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: Column(
-              children: <Widget>[for (int i = 1; i < 8; i++) CategoryCard(i)],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class CategoryCard extends StatelessWidget {
-  final int index;
-  CategoryCard(this.index);
-  @override
-  Widget build(BuildContext context) {
-    final theme = Provider.of<ThemeNotifier>(context);
-    final userData = Provider.of<UserDataNotifier>(context);
-    void resetCheck(int index) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          title: Text('リセット'),
-          content: Text('このカテゴリーの記録が全てリセットされます。\nそれでもよろしいですか？'),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('いいえ'),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            FlatButton(
-              child: Text('はい'),
-              onPressed: () {
-                userData.resetCategory(index);
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      );
-    }
-
-    return SizedBox(
-      height: displaySize.width / 3,
-      width: displaySize.width,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Container(
-              width: displaySize.width / 1.7,
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    (index).toString() + '.',
-                    style: TextStyle(
-                      fontSize: FontSize.midium,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      SizedBox(
-                          height: displaySize.width / 8,
-                          width: displaySize.width / 8,
-                          child: Icon(
-                            IconData(userData.categories[index][0],
-                                fontFamily: "MaterialIcons"),
-                            size: displaySize.width / 8,
-                          )),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Flexible(
-                        child: Text(
-                          userData.categories[index][1],
-                          maxLines: 2,
-                          softWrap: true,
-                          overflow: TextOverflow.fade,
-                          style: TextStyle(
-                            fontSize: FontSize.small,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              SizedBox(
-                height: displaySize.width / 8,
-                child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  child: Text('変更'),
-                  color: theme.isDark ? Color(0XFF424242) : Colors.white,
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SelectIconPage(index),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: displaySize.width / 8,
-                child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  color: Colors.red,
-                  child: Text(
-                    'リセット',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onPressed: () => resetCheck(index),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class SelectIconPage extends StatelessWidget {
-  final int index;
-  SelectIconPage(this.index);
-  @override
-  Widget build(BuildContext context) {
-    final theme = Provider.of<ThemeNotifier>(context);
-    final userData = Provider.of<UserDataNotifier>(context);
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        title: Text(
-          'アイコンの選択',
-          style: TextStyle(color: theme.isDark ? Colors.white : Colors.black),
-        ),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () async {
-            await userData.dicideCategory();
-            Navigator.pop(context);
-          },
-        ),
-      ),
-      body: Column(
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.all(displaySize.width / 20),
-            width: displaySize.width,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  'タイトル',
-                  style: TextStyle(
-                    fontSize: FontSize.midium,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                Container(
-                  width: displaySize.width / 2,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 5,
-                  ),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.grey,
-                      width: 3,
-                    ),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: TextField(
-                    textAlignVertical: TextAlignVertical.center,
-                    textInputAction: TextInputAction.go,
-                    decoration: InputDecoration(
-                      hintText: '入力',
-                      border: InputBorder.none,
-                    ),
-                    cursorColor: theme.isDark
-                        ? theme.themeColors[0]
-                        : theme.themeColors[1],
-                    inputFormatters: [LengthLimitingTextInputFormatter(18)],
-                    style: TextStyle(fontSize: FontSize.small),
-                    onChanged: (s) {
-                      userData.editCategoryTitle(index, s);
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: <Widget>[
-              SizedBox(
-                width: displaySize.width / 20,
-              ),
-              Text(
-                'アイコン',
-                style: TextStyle(
-                  fontSize: FontSize.midium,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          const Divider(
-            height: 1,
-          ),
-          Expanded(
-            child: GridView.count(
-              crossAxisCount: 3,
-              childAspectRatio: 1.5,
-              crossAxisSpacing: displaySize.width / 25,
-              mainAxisSpacing: 10,
-              children: <Widget>[
-                for (int i = 0; i < iconList.length; i++)
-                  SizedBox(
-                    height: displaySize.width / 4,
-                    child: IconButton(
-                      tooltip: iconHintList[i],
-                      icon: Icon(
-                        IconData(
-                          iconList[i],
-                          fontFamily: "MaterialIcons",
-                        ),
-                        color: (userData.categories[index][0] == iconList[i])
-                            ? (theme.isDark)
-                                ? theme.themeColors[0]
-                                : theme.themeColors[1]
-                            : Colors.grey,
-                        size: displaySize.width / 8,
-                      ),
-                      onPressed: () => userData.editCategoryIcon(
-                        index,
-                        iconList[i],
-                      ),
-                    ),
-                  ),
-              ],
             ),
           ),
         ],

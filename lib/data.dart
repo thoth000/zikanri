@@ -29,6 +29,10 @@ class Vib {
   static void add() {
     Vibration.vibrate(duration: 150);
   }
+
+  static void shortCut() {
+    Vibration.vibrate(pattern: [0, 50, 100, 50, 100, 50]);
+  }
 }
 
 const List<int> iconList = [
@@ -59,36 +63,6 @@ const List<int> iconList = [
   59596,
   58386,
   58899,
-];
-
-const List<String> iconHintList = [
-  "時間",
-  "勉強",
-  "運動",
-  "家事",
-  "音楽",
-  "読書",
-  "イラスト",
-  "ゲーム",
-  "ペット",
-  "メディア",
-  "SNS",
-  "パソコン",
-  "DIY",
-  "料理",
-  "筋トレ",
-  "リラックス",
-  "博物館",
-  "インターネット",
-  "音",
-  "園芸",
-  "映画",
-  "バカンス",
-  "ギャンブル",
-  "恋愛",
-  "買い物",
-  "カメラ",
-  "ドライブ",
 ];
 
 List<int> achiveM = [500, 1000, 3000, 5000, 10000];
@@ -321,6 +295,8 @@ class UserDataNotifier with ChangeNotifier {
   List _categories = [];
   List get categories => _categories;
 
+  List<bool> categoryView = [];
+
   List _latelyData = [];
   List get latelyData => _latelyData;
 
@@ -333,11 +309,12 @@ class UserDataNotifier with ChangeNotifier {
   List _activities = [];
   List get activities => _activities;
 
-  Future checkGuide() async{
+  Future checkGuide() async {
     readGuide = true;
     await Hive.box('userData').put('readGuide', readGuide);
     notifyListeners();
   }
+
   //ver1.0.0用
   void addGuide() {
     readGuide = true;
@@ -378,15 +355,25 @@ class UserDataNotifier with ChangeNotifier {
   Future dicideCategory() async {
     notifyListeners();
     await Hive.box('userData').put('categories', _categories);
+    await Hive.box('userData').put('categoryView', categoryView);
   }
 
   void editCategoryIcon(int index, int icon) {
     _categories[index][0] = icon;
     notifyListeners();
+    Hive.box('userData').put('categories', _categories);
   }
 
   void editCategoryTitle(int index, String s) {
     _categories[index][1] = s;
+    notifyListeners();
+    Hive.box('userData').put('categories', _categories);
+  }
+
+  void switchCategoryView(int index) {
+    categoryView[index] = !categoryView[index];
+    notifyListeners();
+    Hive.box('userData').put('categoryView', categoryView);
   }
 
   Future resetCategory(int index) async {
@@ -395,12 +382,13 @@ class UserDataNotifier with ChangeNotifier {
       "",
       [0, 0, 0]
     ];
+    categoryView[index] = false;
     notifyListeners();
     await Hive.box('userData').put('categories', _categories);
+    await Hive.box('userData').put('categoryView', categoryView);
   }
 
   Future addShortCuts(List item) async {
-    Vib.add();
     keynum += 1;
     _shortCuts.add(item);
     notifyListeners();
@@ -430,7 +418,6 @@ class UserDataNotifier with ChangeNotifier {
     String title,
     int categoryIndex,
   ) async {
-    Vib.decide();
     _activities.add([startTime, false, title, categoryIndex, 1, 1]);
     notifyListeners();
     await Hive.box('userData').put('activities', _activities);
@@ -479,7 +466,6 @@ class UserDataNotifier with ChangeNotifier {
   Future recordDone(
     List listData,
   ) async {
-    Vib.decide();
     int time = listData[2];
     _allTime += time;
     _thisMonthTime += time;
@@ -606,6 +592,7 @@ class UserDataNotifier with ChangeNotifier {
     _latelyData = await box.get('latelyData');
     _todayDoneList = await box.get('todayDoneList');
     _categories = await box.get('categories');
+    categoryView = await box.get('categoryView');
     _shortCuts = await box.get('shortCuts');
     _activities = await box.get('activities');
     userName = await box.get('userName');

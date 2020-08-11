@@ -110,6 +110,8 @@ class WelcomePage extends StatelessWidget {
           ],
         ],
       );
+      await userDataBox.put('categoryView',
+          [true, false, false, false, false, false, false, false]);
       await userDataBox.put('keynum', 5);
       await userDataBox.put('activities', []);
       await userDataBox.put('userName', 'ゲスト');
@@ -243,7 +245,7 @@ class _TimeValue extends StatelessWidget {
         child: Icon(
           Icons.trending_up,
           color: Colors.blue,
-          size: displaySize.width /6.5,
+          size: displaySize.width / 6.5,
         ),
       ),
     );

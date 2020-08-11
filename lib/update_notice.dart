@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:provider/provider.dart';
 import 'package:zikanri/data.dart';
 import 'package:zikanri/mypage.dart';
 
@@ -18,7 +19,7 @@ class UpdateNoticePage extends StatelessWidget {
           ),
           Center(
             child: Text(
-              "Ver.1.1.0",
+              "Ver.1.2.0",
               style: TextStyle(
                 fontSize: FontSize.xlarge,
                 fontWeight: FontWeight.w700,
@@ -28,9 +29,13 @@ class UpdateNoticePage extends StatelessWidget {
           SizedBox(
             height: displaySize.width / 8,
           ),
-          _NoticeVersion(),
+          _Review(),
           SizedBox(height: displaySize.width / 10),
-          _Guide(),
+          _Vibration(),
+          SizedBox(
+            height: displaySize.width / 10,
+          ),
+          _Category(),
           SizedBox(
             height: displaySize.width / 10,
           ),
@@ -54,8 +59,19 @@ class UpdateNoticePage extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ),
-              onPressed: () {
-                Hive.box('userData').put('version', newVersion);
+              onPressed: () async{
+                await Hive.box('userData').put('version', newVersion);
+                await Hive.box('userData').put('categoryView', [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                ]);
+                await Provider.of<UserDataNotifier>(context).initialize();
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
@@ -74,7 +90,7 @@ class UpdateNoticePage extends StatelessWidget {
   }
 }
 
-class _NoticeVersion extends StatelessWidget {
+class _Review extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -84,69 +100,21 @@ class _NoticeVersion extends StatelessWidget {
         ),
         item(),
         SizedBox(
-          width: displaySize.width / 10,
+          width: displaySize.width / 20,
         ),
         Flexible(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "バージョン通知",
+                "アプリからレビュー",
                 style: TextStyle(
                   fontSize: FontSize.midium,
                   fontWeight: FontWeight.w700,
                 ),
               ),
               Text(
-                "この画面でアップデート内容を分かりやすくお知らせします。",
-                style: TextStyle(
-                  fontSize: FontSize.small,
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          width: displaySize.width / 10,
-        ),
-      ],
-    );
-  }
-
-  Widget item() {
-    return Icon(
-      Icons.notifications,
-      color: Colors.yellow,
-      size: displaySize.width / 5,
-    );
-  }
-}
-
-class _Guide extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        SizedBox(
-          width: displaySize.width / 10,
-        ),
-        item(),
-        SizedBox(
-          width: displaySize.width / 10,
-        ),
-        Flexible(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                "ガイドの追加",
-                style: TextStyle(
-                  fontSize: FontSize.midium,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              Text(
-                "アプリを始めた方に向けて丁寧なアプリガイドを用意しました。",
+                "皆さんのレビューがアプリの向上に役立ちます。",
                 style: TextStyle(
                   fontSize: FontSize.small,
                 ),
@@ -164,7 +132,103 @@ class _Guide extends StatelessWidget {
   Widget item() {
     return Icon(
       Icons.assignment,
+      color: Colors.yellow,
+      size: displaySize.width / 5,
+    );
+  }
+}
+
+class _Vibration extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        SizedBox(
+          width: displaySize.width / 10,
+        ),
+        item(),
+        SizedBox(
+          width: displaySize.width / 20,
+        ),
+        Flexible(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "デバイスの振動",
+                style: TextStyle(
+                  fontSize: FontSize.midium,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              Text(
+                "ショートカット追加時の振動を分かりやすく区別しました。",
+                style: TextStyle(
+                  fontSize: FontSize.small,
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          width: displaySize.width / 10,
+        ),
+      ],
+    );
+  }
+
+  Widget item() {
+    return Icon(
+      Icons.vibration,
       color: Colors.blue,
+      size: displaySize.width / 5,
+    );
+  }
+}
+
+class _Category extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        SizedBox(
+          width: displaySize.width / 10,
+        ),
+        item(),
+        SizedBox(
+          width: displaySize.width / 20,
+        ),
+        Flexible(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "カテゴリーの機能",
+                style: TextStyle(
+                  fontSize: FontSize.midium,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              Text(
+                "カテゴリー非表示の設定を新しく作成しました。",
+                style: TextStyle(
+                  fontSize: FontSize.small,
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          width: displaySize.width / 10,
+        ),
+      ],
+    );
+  }
+
+  Widget item() {
+    return Icon(
+      Icons.category,
+      color: Colors.green,
       size: displaySize.width / 5,
     );
   }

@@ -98,7 +98,7 @@ class FeatureGuide extends StatelessWidget {
               height: displaySize.width / 10,
             ),
             SizedBox(
-              height: displaySize.width/20,
+              height: displaySize.width / 20,
             ),
             RaisedButton(
               child: Padding(
@@ -159,7 +159,7 @@ class _AnalyzeData extends StatelessWidget {
           size: displaySize.width / 8,
         ),
         SizedBox(
-          width: displaySize.width/20,
+          width: displaySize.width / 20,
         ),
         Icon(
           Icons.data_usage,
@@ -279,7 +279,8 @@ class _ShortCut extends StatelessWidget {
 class RecordButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: displaySize.width/10, vertical: 15),
+      padding: EdgeInsets.symmetric(
+          horizontal: displaySize.width / 10, vertical: 15),
       child: Container(
         height: displaySize.width / 7,
         width: displaySize.width / 1.5,
@@ -295,11 +296,13 @@ class RecordButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(500),
           ),
           onPressed: () {
+            Vib.decide();
             Scaffold.of(context).showSnackBar(
               snackBar("長押しができていません。"),
             );
           },
           onLongPress: () {
+            Vib.shortCut();
             Scaffold.of(context).showSnackBar(
               snackBar("ショートカットに保存しました。"),
             );

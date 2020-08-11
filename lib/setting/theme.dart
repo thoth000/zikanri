@@ -21,8 +21,8 @@ class ThemeSettingPage extends StatelessWidget {
       body: ListView(
         children: <Widget>[
           SizedBox(
-        height: displaySize.width / 20,
-      ),
+            height: displaySize.width / 20,
+          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
