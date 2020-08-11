@@ -433,6 +433,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                 ? null
                                 : () async {
                                     if (record.isRecord) {
+                                      Vib.shortCut();
                                       userData.addShortCuts(
                                         [
                                           record.categoryIndex,
@@ -458,6 +459,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                         record.title,
                                         userData.activities.length,
                                       );
+                                      Vib.shortCut();
                                       userData.addShortCuts(
                                         [
                                           record.categoryIndex,
@@ -482,6 +484,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                 : () async {
                                     if (record.isRecord) {
                                       //記録モード
+                                      Vib.decide();
                                       userData.recordDone(
                                         [
                                           record.categoryIndex,
@@ -498,6 +501,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                         userData.activities.length,
                                       );
                                       //開始モード
+                                      Vib.decide();
                                       userData.addActivity(DateTime.now(),
                                           record.title, record.categoryIndex);
                                       Navigator.pop(context);
@@ -513,17 +517,6 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                             ),
                           ),
                         ),
-                        if (record.titleCheck && record.clickCheck)
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text(
-                              'タイトルを決めてください',
-                              style: TextStyle(
-                                color: Colors.red,
-                                fontSize: FontSize.xsmall,
-                              ),
-                            ),
-                          ),
                       ],
                     ),
                     const Divider(

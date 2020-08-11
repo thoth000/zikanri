@@ -29,6 +29,10 @@ class Vib {
   static void add() {
     Vibration.vibrate(duration: 150);
   }
+
+  static void shortCut(){
+    Vibration.vibrate(pattern: [0,50,100,50,100,50]);
+  }
 }
 
 const List<int> iconList = [
@@ -400,7 +404,6 @@ class UserDataNotifier with ChangeNotifier {
   }
 
   Future addShortCuts(List item) async {
-    Vib.add();
     keynum += 1;
     _shortCuts.add(item);
     notifyListeners();
@@ -430,7 +433,6 @@ class UserDataNotifier with ChangeNotifier {
     String title,
     int categoryIndex,
   ) async {
-    Vib.decide();
     _activities.add([startTime, false, title, categoryIndex, 1, 1]);
     notifyListeners();
     await Hive.box('userData').put('activities', _activities);
@@ -479,7 +481,6 @@ class UserDataNotifier with ChangeNotifier {
   Future recordDone(
     List listData,
   ) async {
-    Vib.decide();
     int time = listData[2];
     _allTime += time;
     _thisMonthTime += time;

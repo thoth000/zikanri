@@ -295,11 +295,13 @@ class RecordButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(500),
           ),
           onPressed: () {
+            Vib.decide();
             Scaffold.of(context).showSnackBar(
               snackBar("長押しができていません。"),
             );
           },
           onLongPress: () {
+            Vib.shortCut();
             Scaffold.of(context).showSnackBar(
               snackBar("ショートカットに保存しました。"),
             );

@@ -413,6 +413,7 @@ class FinishRecordDialog extends StatelessWidget {
                       style: TextStyle(fontSize: FontSize.xsmall),
                     ),
                     onPressed: () async {
+                      Vib.decide();
                       userData.recordDone(
                         [
                           record.categoryIndex,
