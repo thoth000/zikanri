@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
+import 'package:launch_review/launch_review.dart';
 import 'package:provider/provider.dart';
 import 'package:zikanri/guide/feature_guide.dart';
 import 'package:zikanri/guide/quick_guide.dart';
@@ -190,6 +191,25 @@ class SettingPage extends StatelessWidget {
                 ),
                 ListTile(
                   title: Text(
+                    'アプリをレビューする',
+                    style: TextStyle(
+                      fontSize: FontSize.xsmall,
+                    ),
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.grey,
+                    size: displaySize.width / 20,
+                  ),
+                  onTap: () {
+                    LaunchReview.launch(androidAppId: "com.thoth000.zikanri_app");
+                  },
+                ),
+                const Divider(
+                  height: 0,
+                ),
+                ListTile(
+                  title: Text(
                     'クイックガイドを見る',
                     style: TextStyle(
                       fontSize: FontSize.xsmall,
@@ -208,7 +228,8 @@ class SettingPage extends StatelessWidget {
                       ),
                     );
                   },
-                ),const Divider(
+                ),
+                const Divider(
                   height: 0,
                 ),
                 ListTile(
