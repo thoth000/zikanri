@@ -5,6 +5,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
+import 'package:zikanri/category/category.dart';
+import 'package:zikanri/category/category_edit.dart';
 
 import '../splash.dart';
 import '../data.dart';
@@ -535,9 +537,8 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                         Wrap(
                           children: <Widget>[
                             for (int i = 0; i < userData.categories.length; i++)
-                              (userData.categories[i][1] == "")
-                                  ? const SizedBox()
-                                  : Padding(
+                              (userData.categoryView[i])
+                                  ? Padding(
                                       padding: const EdgeInsets.only(
                                           right: 5, bottom: 10),
                                       child: Column(
@@ -601,12 +602,12 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                             ),
                                           ),
                                           SizedBox(
-                                            width: displaySize.width / 5,
+                                            width: displaySize.width / 5.1,
                                             child: Text(
                                               userData.categories[i][1],
                                               textAlign: TextAlign.center,
                                               softWrap: false,
-                                              overflow: TextOverflow.fade,
+                                              overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
                                                 fontSize: FontSize.xxsmall,
                                               ),
@@ -614,7 +615,8 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                           ),
                                         ],
                                       ),
-                                    ),
+                                    )
+                                  : const SizedBox(),
                             Padding(
                               padding: const EdgeInsets.only(bottom: 20),
                               child: Column(
@@ -659,7 +661,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                      CategoryEditPage(),
+                                                      CategoryPage(),
                                                 ),
                                               );
                                             },

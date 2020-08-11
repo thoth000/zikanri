@@ -325,6 +325,8 @@ class UserDataNotifier with ChangeNotifier {
   List _categories = [];
   List get categories => _categories;
 
+  List<bool> categoryView = [];
+
   List _latelyData = [];
   List get latelyData => _latelyData;
 
@@ -382,15 +384,25 @@ class UserDataNotifier with ChangeNotifier {
   Future dicideCategory() async {
     notifyListeners();
     await Hive.box('userData').put('categories', _categories);
+    await Hive.box('userData').put('categoryView', categoryView);
   }
 
   void editCategoryIcon(int index, int icon) {
     _categories[index][0] = icon;
     notifyListeners();
+    Hive.box('userData').put('categories', _categories);
   }
 
   void editCategoryTitle(int index, String s) {
     _categories[index][1] = s;
+    notifyListeners();
+    Hive.box('userData').put('categories', _categories);
+  }
+
+  void switchCategoryView(int index){
+    categoryView[index] = !categoryView[index];
+    notifyListeners();
+    Hive.box('userData').put('categoryView', categoryView);
   }
 
   Future resetCategory(int index) async {
@@ -399,8 +411,10 @@ class UserDataNotifier with ChangeNotifier {
       "",
       [0, 0, 0]
     ];
+    categoryView[index] = false;
     notifyListeners();
     await Hive.box('userData').put('categories', _categories);
+    await Hive.box('userData').put('categoryView', categoryView);
   }
 
   Future addShortCuts(List item) async {
@@ -607,6 +621,7 @@ class UserDataNotifier with ChangeNotifier {
     _latelyData = await box.get('latelyData');
     _todayDoneList = await box.get('todayDoneList');
     _categories = await box.get('categories');
+    categoryView = await box.get('categoryView');
     _shortCuts = await box.get('shortCuts');
     _activities = await box.get('activities');
     userName = await box.get('userName');

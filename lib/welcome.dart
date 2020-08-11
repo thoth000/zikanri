@@ -110,6 +110,7 @@ class WelcomePage extends StatelessWidget {
           ],
         ],
       );
+      await userDataBox.put('categoryView', [true,false,false,false,false,false,false,false]);
       await userDataBox.put('keynum', 5);
       await userDataBox.put('activities', []);
       await userDataBox.put('userName', 'ゲスト');

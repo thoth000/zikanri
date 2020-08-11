@@ -4,9 +4,9 @@ import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 
 import '../data.dart';
 
-class CategoryPage extends StatelessWidget {
+class CategoryDataPage extends StatelessWidget {
   final int index;
-  CategoryPage(this.index);
+  CategoryDataPage(this.index);
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);

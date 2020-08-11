@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
-import 'package:zikanri/previous_records/category.dart';
+import 'package:zikanri/previous_records/category_data.dart';
 
 import '../data.dart';
 
@@ -56,14 +56,19 @@ class PRPage extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          for (int i = 0; i < userData.categories.length; i += 2)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[GridCard(i), GridCard(i + 1)],
-              ),
-            ),
+          Wrap(
+            children: [
+              for (int i = 0; i < userData.categories.length; i += 1)
+                (userData.categoryView[i])
+                    ? Padding(
+                        padding: const EdgeInsets.only(
+                          bottom: 10.0,
+                        ),
+                        child: GridCard(i),
+                      )
+                    : Container(),
+            ],
+          ),
           SizedBox(
             height: displaySize.width / 10,
           ),
@@ -129,71 +134,78 @@ class GridCard extends StatelessWidget {
         rankKey: 'Quarterly Profits',
       ),
     ];
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: SizedBox(
-        height: displaySize.width / 3,
-        width: displaySize.width / 2.5,
-        child: FlatButton(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => CategoryPage(index)));
-          },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Icon(
-                      IconData(icon, fontFamily: "MaterialIcons"),
-                      size: displaySize.width / 15,
+    return SizedBox(
+      width: displaySize.width / 2,
+      child: Center(
+        child: SizedBox(
+          height: displaySize.width / 2.8,
+          width: displaySize.width / 2.2,
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: FlatButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CategoryDataPage(index)));
+              },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Icon(
+                          IconData(icon, fontFamily: "MaterialIcons"),
+                          size: displaySize.width / 15,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Expanded(
+                          child: Text(
+                            title,
+                            textAlign: TextAlign.end,
+                            softWrap: false,
+                            overflow: TextOverflow.fade,
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: FontSize.xsmall,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Expanded(
-                      child: Text(
-                        title,
-                        textAlign: TextAlign.end,
-                        softWrap: false,
-                        overflow: TextOverflow.fade,
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: FontSize.xsmall,
+                  ),
+                  Center(
+                    child: Hero(
+                      tag: index.toString(),
+                      child: AnimatedCircularChart(
+                        edgeStyle: SegmentEdgeStyle.round,
+                        duration: Duration.zero,
+                        initialChartData: data,
+                        key: _chartKey,
+                        size: Size(
+                            displaySize.width / 4.5, displaySize.width / 4.5),
+                        holeLabel: list[2][2].toString() + '%',
+                        labelStyle: TextStyle(
+                          fontSize: FontSize.small,
+                          fontWeight: FontWeight.w700,
+                          color: theme.isDark ? Colors.white : Colors.black,
                         ),
                       ),
                     ),
-                  ],
-                ),
-              ),
-              Center(
-                child: Hero(
-                  tag: index.toString(),
-                  child: AnimatedCircularChart(
-                    edgeStyle: SegmentEdgeStyle.round,
-                    duration: Duration.zero,
-                    initialChartData: data,
-                    key: _chartKey,
-                    size:
-                        Size(displaySize.width / 4.5, displaySize.width / 4.5),
-                    holeLabel: list[2][2].toString() + '%',
-                    labelStyle: TextStyle(
-                      fontSize: FontSize.small,
-                      fontWeight: FontWeight.w700,
-                      color: theme.isDark ? Colors.white : Colors.black,
-                    ),
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
