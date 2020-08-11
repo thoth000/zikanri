@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
 
-import '../setting/tutorial.dart';
 import '../splash.dart';
 import '../data.dart';
 
@@ -281,13 +280,6 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                         SizedBox(
                           height: 10,
                         ),
-                        (record.isRecord)
-                            ? (userData.tutorial[1])
-                                ? SizedBox()
-                                : RecordTutorial()
-                            : (userData.tutorial[2])
-                                ? SizedBox()
-                                : StartTutorial(),
                         Text(
                           'タイトル',
                           style: _headlineStyle,
@@ -532,28 +524,6 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                               ),
                             ),
                           ),
-                        if (record.timeCheck && record.clickCheck)
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
-                            child: Column(
-                              children: <Widget>[
-                                Text(
-                                  '時間の設定は1日の範囲までです',
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: FontSize.xsmall,
-                                  ),
-                                ),
-                                Text(
-                                  'その時間は設定できません',
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: FontSize.xsmall,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
                       ],
                     ),
                     const Divider(
@@ -566,7 +536,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                           'カテゴリー',
                           style: _headlineStyle,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Wrap(
@@ -864,11 +834,12 @@ class ShortCutSheet extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            onPressed: () async{
+                            onPressed: () async {
                               if (itemList[5]) {
                                 userData.recordDone(itemList);
                               } else {
-                                notification(itemList[1], userData.activities.length);
+                                notification(
+                                    itemList[1], userData.activities.length);
                                 userData.addActivity(
                                     DateTime.now(), itemList[1], itemList[0]);
                               }
@@ -991,7 +962,6 @@ class ShortCutsEditPage extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
-          (userData.tutorial[5]) ? SizedBox() : ShortCutEditTutorial(),
           Expanded(
             child: ReorderableListView(
               children: [
@@ -1075,7 +1045,6 @@ class CategoryEditPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
-    final userData = Provider.of<UserDataNotifier>(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -1089,7 +1058,6 @@ class CategoryEditPage extends StatelessWidget {
       ),
       body: ListView(
         children: <Widget>[
-          (userData.tutorial[8]) ? SizedBox() : CategoryEditTutorial(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Column(

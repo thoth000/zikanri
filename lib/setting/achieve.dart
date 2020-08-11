@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../data.dart';
-import 'tutorial.dart';
 
 class AchievePage extends StatefulWidget {
   @override
@@ -11,7 +10,7 @@ class AchievePage extends StatefulWidget {
 
 class _AchievePageState extends State<AchievePage> {
   bool page = true;
-  void change(b) {
+  void change(bool b) {
     setState(() {
       page = b;
     });
@@ -20,7 +19,6 @@ class _AchievePageState extends State<AchievePage> {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
-    final userData = Provider.of<UserDataNotifier>(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -34,11 +32,9 @@ class _AchievePageState extends State<AchievePage> {
       ),
       body: Column(
         children: <Widget>[
-          (userData.tutorial[7])
-              ? SizedBox(
+          SizedBox(
                   height: displaySize.width / 20,
-                )
-              : AchiveTutorial(),
+                ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -132,7 +128,7 @@ class AchiveMiniteWidget extends StatelessWidget {
 
   Widget achive(int i, check) {
     return Padding(
-      padding: EdgeInsets.all(displaySize.width / 20),
+      padding: EdgeInsets.symmetric(horizontal:displaySize.width / 20,vertical: 10),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
@@ -227,7 +223,7 @@ class AchiveDayWidget extends StatelessWidget {
 
   Widget achive(int i, check) {
     return Padding(
-      padding: EdgeInsets.all(displaySize.width / 20),
+      padding: EdgeInsets.symmetric(horizontal:displaySize.width / 20,vertical: 10),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),

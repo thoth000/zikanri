@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:zikanri/guide/notice_guide.dart';
 
 import 'total_score.dart';
 import 'minute_meter.dart';
 import '../data.dart';
 import 'this_month.dart';
 import 'today.dart';
-import '../setting/tutorial.dart';
 
 class HomePage extends StatelessWidget {
   final String today = DateFormat('yyyy年MM月dd日現在').format(DateTime.now());
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
+        _NoticeGuide(),
         TotalScoreWidget(),
         const Divider(
           height: 20,
@@ -21,7 +22,6 @@ class HomePage extends StatelessWidget {
           indent: 10,
           endIndent: 10,
         ),
-        _HomeTutorial(),
         MinuteMeter(),
         Padding(
           padding: const EdgeInsets.all(10),
@@ -80,15 +80,14 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class _HomeTutorial extends StatelessWidget {
+class _NoticeGuide extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final isTutorialFinished =
-        Provider.of<UserDataNotifier>(context).tutorial[0];
-    if (isTutorialFinished) {
+    final controller = Provider.of<UserDataNotifier>(context);
+    if(controller.readGuide){
       return SizedBox();
-    } else {
-      return HomeTutorial();
+    }else{
+      return NoticeGuide();
     }
   }
 }

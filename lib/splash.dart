@@ -6,6 +6,9 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import 'package:package_info/package_info.dart';
+import 'package:zikanri/update_notice.dart';
+
 import 'mypage.dart';
 import 'welcome.dart';
 import 'data.dart';
@@ -24,6 +27,10 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   void _initialize() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String version = packageInfo.version;
+    print(version);
+
     final theme = Provider.of<ThemeNotifier>(context, listen: false);
     final userData = Provider.of<UserDataNotifier>(context, listen: false);
     await Hive.initFlutter();
@@ -63,22 +70,57 @@ class _SplashPageState extends State<SplashPage> {
       await theme.initialize();
       await userData.initialize();
       await userData.checkDay();
-      Future.delayed(
-        Duration(seconds: 1),
-        () => Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MyAppPage(),
+      //versionがない場合：1.0.0ユーザー
+      if (!Hive.box('userData').containsKey('version')) {
+        await Hive.box('userData').delete('tutorial');
+        await Hive.box('userData').put('version', '1.0.0');
+        await Hive.box('userData').put('readGuide', true);
+        userData.addGuide();
+        Future.delayed(
+          Duration(seconds: 1),
+          () => Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => UpdateNoticePage(
+                newVersion: version,
+              ),
+            ),
           ),
-        ),
-      );
-    } else {
+        );
+      //version違う場合：1.1.0～ユーザー
+      } else if(version != await Hive.box('userData').get('version')){
+        Future.delayed(
+          Duration(seconds: 1),
+          () => Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => UpdateNoticePage(
+                newVersion: version,
+              ),
+            ),
+          ),
+        );
+      }
+      //version合ってる場合
+      else{
+        Future.delayed(
+          Duration(seconds: 1),
+          () => Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MyAppPage.wrapped(),
+            ),
+          ),
+        );
+      }
+    //初めての場合
+    }else {
       Future.delayed(
         Duration(seconds: 1),
         () => Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => WelcomePage(),
+            builder: (context) => WelcomePage(version: version,),
           ),
         ),
       );

@@ -286,7 +286,7 @@ class UserDataNotifier with ChangeNotifier {
   ];
   List<bool> get myColors => _myColors;
 
-  List<bool> tutorial = [];
+  bool readGuide = false;
 
   int passedDays = 1;
   int keynum = 5;
@@ -332,6 +332,17 @@ class UserDataNotifier with ChangeNotifier {
 
   List _activities = [];
   List get activities => _activities;
+
+  Future checkGuide() async{
+    readGuide = true;
+    await Hive.box('userData').put('readGuide', readGuide);
+    notifyListeners();
+  }
+  //ver1.0.0用
+  void addGuide() {
+    readGuide = true;
+    notifyListeners();
+  }
 
   Future checkDay() async {
     for (int i = 0; i < achiveD.length; i++) {
@@ -411,12 +422,6 @@ class UserDataNotifier with ChangeNotifier {
     _shortCuts.removeAt(index);
     notifyListeners();
     await Hive.box('userData').put('shortCuts', _shortCuts);
-  }
-
-  Future finishTutorial(int index) async {
-    tutorial[index] = true;
-    notifyListeners();
-    await Hive.box('userData').put('tutorial', tutorial);
   }
 
   //activity関連
@@ -604,7 +609,7 @@ class UserDataNotifier with ChangeNotifier {
     _shortCuts = await box.get('shortCuts');
     _activities = await box.get('activities');
     userName = await box.get('userName');
-    tutorial = await box.get('tutorial');
+    readGuide = await box.get('readGuide');
     _myColors = await box.get('myColors');
     checkM = await box.get('checkM');
     checkD = await box.get('checkD');

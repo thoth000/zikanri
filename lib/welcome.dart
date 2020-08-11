@@ -1,22 +1,20 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:introduction_screen/introduction_screen.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import 'data.dart';
 import 'mypage.dart';
 
 class WelcomePage extends StatelessWidget {
+  WelcomePage({this.version});
+  final String version;
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
 
-    Future makeDir() async {
+    void makeDir() async {
       //アプリ初回起動時の動作
       var firstdate = DateFormat("yyyy年MM月dd日").format(DateTime.now());
       var firstMonth = DateFormat("MM").format(DateTime.now());
@@ -27,8 +25,8 @@ class WelcomePage extends StatelessWidget {
       await themeBox.put('themeColorsIndex', 0);
       // userData
       await userDataBox.put('welcome', "Yey!");
-      await userDataBox.put('tutorial',
-          [false, false, false, false, false, false, false, false, false]);
+      await userDataBox.put('version', version);
+      await userDataBox.put('readGuide', false);
       await userDataBox.put('myColors', [
         true,
         true,
@@ -124,189 +122,291 @@ class WelcomePage extends StatelessWidget {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => MyAppPage(),
+          builder: (context) => MyAppPage.wrapped(),
         ),
-      );
-    }
-
-    Widget welcomeBody() {
-      return IntroductionScreen(
-        skipFlex: 5,
-        dotsFlex: 6,
-        nextFlex: 5,
-        pages: [
-          PageViewModel(
-            image: Center(
-              child:
-                  /*Image(
-                image: AssetImage('images/1.png'),
-                height: displaySize.width / 2,
-              ),*/
-                  SvgPicture.asset(
-                'images/1.svg',
-                height: displaySize.width / 2,
-              ),
-            ),
-            title: 'ジカンリへようこそ！',
-            //body: 'ジカンリでは毎日の行動を価値のアリ・ナシで二種類に分けて記録できます。',
-            bodyWidget: Column(
-              children: <Widget>[
-                Text(
-                  '毎日の行動を価値アリ・ナシの',
-                  style: TextStyle(fontSize: FontSize.small),
-                ),
-                Text(
-                  '２種類に分けて記録できます。',
-                  style: TextStyle(fontSize: FontSize.small),
-                ),
-              ],
-            ),
-          ),
-          PageViewModel(
-            image: Center(
-              child:
-                  /*Image(
-                image: AssetImage('images/2.png'),
-                height: displaySize.width / 2,
-              ),*/
-                  SvgPicture.asset(
-                'images/2.svg',
-                height: displaySize.width / 2,
-              ),
-            ),
-            title: '記録をデータ化',
-            //body: 'あなたの行動を数値やグラフを通して振り返ることができます。',
-            bodyWidget: Column(
-              children: <Widget>[
-                Text(
-                  '記録を数値化・グラフ化して',
-                  style: TextStyle(fontSize: FontSize.small),
-                ),
-                Text(
-                  '振り返ることができます。',
-                  style: TextStyle(fontSize: FontSize.small),
-                ),
-              ],
-            ),
-          ),
-          PageViewModel(
-            image: Center(
-              child:
-                  /*Image(
-                image: AssetImage('images/3.png'),
-                height: displaySize.width / 2,
-              ),*/
-                  SvgPicture.asset(
-                'images/3.svg',
-                height: displaySize.width / 2,
-              ),
-            ),
-            title: 'カテゴリーに分けて記録',
-            //body: '豊富なアイコンと自由なタイトルから行動のカテゴリーを作成できます。',
-            bodyWidget: Column(
-              children: <Widget>[
-                Text(
-                  '豊富なアイコンと自由なタイトルで',
-                  style: TextStyle(fontSize: FontSize.small),
-                ),
-                Text(
-                  'カテゴリーを作成できます。',
-                  style: TextStyle(fontSize: FontSize.small),
-                ),
-              ],
-            ),
-          ),
-          PageViewModel(
-            image: Center(
-              child:
-                  /*Image(
-                image: AssetImage('images/4.png'),
-                height: displaySize.width / 2,
-              ),*/
-                  SvgPicture.asset(
-                'images/4.svg',
-                height: displaySize.width / 2,
-              ),
-            ),
-            title: 'あなたの記録をシェア',
-            bodyWidget: Column(
-              children: <Widget>[
-                Text(
-                  'SNSで記録をシェアできます。',
-                  style: TextStyle(fontSize: FontSize.small),
-                ),
-                Text(
-                  '新しい仲間を見つけましょう！',
-                  style: TextStyle(fontSize: FontSize.small),
-                ),
-              ],
-            ),
-          ),
-          PageViewModel(
-            image: Center(
-              child:
-                  /*Image(
-                image: AssetImage('images/5.png'),
-                height: displaySize.width / 2,
-              ),*/
-                  SvgPicture.asset(
-                'images/5.svg',
-                height: displaySize.width / 2,
-              ),
-            ),
-            title: 'ジカンリを始めよう',
-            //body: '自分自身で自分の時間価値を高めましょう！',
-            bodyWidget: Column(
-              children: <Widget>[
-                Text(
-                  '自分で自分の時間価値を高めよう！',
-                  style: TextStyle(
-                    fontSize: FontSize.small,
-                  ),
-                ),
-                Text(
-                  'さぁ今すぐに！',
-                  style: TextStyle(
-                    fontSize: FontSize.small,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-        showSkipButton: true,
-        showNextButton: true,
-        skip: Text(
-          'スキップ',
-          style: TextStyle(
-            fontSize: FontSize.xsmall,
-            color: Colors.blue,
-          ),
-        ),
-        next: Text(
-          '次へ',
-          style: TextStyle(
-            fontSize: FontSize.xsmall,
-            color: Colors.blue,
-          ),
-        ),
-        done: Text(
-          '始める',
-          style: TextStyle(
-            fontSize: FontSize.xsmall,
-            color: Colors.blue,
-          ),
-        ),
-        onDone: () async {
-          Hive.box('userData').containsKey('welcome')
-              ? Navigator.pop(context)
-              : await makeDir();
-        },
       );
     }
 
     return Scaffold(
-      body: welcomeBody(),
+      body: ListView(
+        children: <Widget>[
+          SizedBox(
+            height: displaySize.width / 8,
+          ),
+          Center(
+            child: Text(
+              "Zikanriへようこそ",
+              style: TextStyle(
+                fontSize: FontSize.xlarge,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: displaySize.width / 8,
+          ),
+          _TimeValue(),
+          SizedBox(height: displaySize.width / 20),
+          _Category(),
+          SizedBox(
+            height: displaySize.width / 20,
+          ),
+          _Theme(),
+          SizedBox(
+            height: displaySize.width / 8,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: displaySize.width / 10,
+            ),
+            child: RaisedButton(
+              child: Padding(
+                padding: const EdgeInsets.all(15),
+                child: Text(
+                  "始める",
+                  style: TextStyle(
+                    fontSize: FontSize.small,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              color: Colors.blue,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              onPressed: () async {
+                makeDir();
+              },
+            ),
+          ),
+          SizedBox(
+            height: displaySize.width / 20,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _TimeValue extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        SizedBox(
+          width: displaySize.width / 10,
+        ),
+        item(),
+        SizedBox(
+          width: displaySize.width / 10,
+        ),
+        Flexible(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "時間の価値",
+                style: TextStyle(
+                  fontSize: FontSize.midium,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              Text(
+                "価値アリと価値ナシの２種類の記録しか記録できません。",
+                style: TextStyle(
+                  fontSize: FontSize.small,
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          width: displaySize.width / 10,
+        ),
+      ],
+    );
+  }
+
+  Widget item() {
+    return Container(
+      height: displaySize.width / 5.5,
+      width: displaySize.width / 5.5,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+          color: Colors.blue,
+          width: 3,
+        ),
+      ),
+      child: Center(
+        child: Icon(
+          Icons.trending_up,
+          color: Colors.blue,
+          size: displaySize.width /6.5,
+        ),
+      ),
+    );
+  }
+}
+
+class _Category extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        SizedBox(
+          width: displaySize.width / 10,
+        ),
+        item(),
+        SizedBox(
+          width: displaySize.width / 10,
+        ),
+        Flexible(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "カテゴリー",
+                style: TextStyle(
+                  fontSize: FontSize.midium,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              Text(
+                "豊富なアイコンと自由なタイトルで記録を管理します。",
+                style: TextStyle(
+                  fontSize: FontSize.small,
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          width: displaySize.width / 10,
+        ),
+      ],
+    );
+  }
+
+  Widget item() {
+    return Container(
+      height: displaySize.width / 3,
+      width: displaySize.width / 5.5,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Icon(
+            Icons.edit,
+            size: displaySize.width / 7,
+            color: Colors.red,
+          ),
+          Icon(
+            Icons.videogame_asset,
+            size: displaySize.width / 7,
+            color: Colors.red,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Theme extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        SizedBox(
+          width: displaySize.width / 10,
+        ),
+        item(),
+        SizedBox(
+          width: displaySize.width / 10,
+        ),
+        Flexible(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                "テーマ",
+                style: TextStyle(
+                  fontSize: FontSize.midium,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              Text(
+                "最大12種類のテーマから自分に合ったものを選べます。",
+                style: TextStyle(
+                  fontSize: FontSize.small,
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          width: displaySize.width / 10,
+        ),
+      ],
+    );
+  }
+
+  Widget item() {
+    return Container(
+      height: displaySize.width / 5.5,
+      width: displaySize.width / 5.5,
+      child: Column(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Container(
+                height: displaySize.width / 11,
+                width: displaySize.width / 11,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                  ),
+                  color: Colors.blue,
+                ),
+              ),
+              Container(
+                height: displaySize.width / 11,
+                width: displaySize.width / 11,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(15),
+                  ),
+                  color: Colors.yellow,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Container(
+                height: displaySize.width / 11,
+                width: displaySize.width / 11,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(15),
+                  ),
+                  color: Colors.yellow,
+                ),
+              ),
+              Container(
+                height: displaySize.width / 11,
+                width: displaySize.width / 11,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(15),
+                  ),
+                  color: Colors.blue,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

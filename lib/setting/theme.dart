@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../data.dart';
-import 'tutorial.dart';
 
 class ThemeSettingPage extends StatelessWidget {
   @override
@@ -21,7 +20,9 @@ class ThemeSettingPage extends StatelessWidget {
       ),
       body: ListView(
         children: <Widget>[
-          _ThemeTutorial(),
+          SizedBox(
+        height: displaySize.width / 20,
+      ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -170,21 +171,6 @@ class ThemeSettingPage extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class _ThemeTutorial extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final isTutorialFinished =
-        Provider.of<UserDataNotifier>(context).tutorial[6];
-    if (isTutorialFinished) {
-      return SizedBox(
-        height: displaySize.width / 20,
-      );
-    } else {
-      return ThemeTutorial();
-    }
   }
 }
 
