@@ -8,7 +8,7 @@ import 'setting/setting.dart';
 import 'home/record_button.dart';
 import 'data.dart';
 
-class MyAppPage extends StatelessWidget{
+class MyAppPage extends StatelessWidget {
   MyAppPage._({Key key}) : super(key: key);
   final List pages = [
     HomePage(),
@@ -17,7 +17,7 @@ class MyAppPage extends StatelessWidget{
     SettingPage(),
   ];
 
-  static Widget wrapped(){
+  static Widget wrapped() {
     return ChangeNotifierProvider<MainPageController>(
       create: (_) => MainPageController(),
       child: MyAppPage._(),
@@ -84,9 +84,9 @@ class MyAppPage extends StatelessWidget{
   }
 }
 
-class MainPageController with ChangeNotifier{
+class MainPageController with ChangeNotifier {
   int currentIndex = 0;
-  void changePage(int index){
+  void changePage(int index) {
     currentIndex = index;
     notifyListeners();
   }

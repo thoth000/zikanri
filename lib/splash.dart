@@ -87,8 +87,8 @@ class _SplashPageState extends State<SplashPage> {
             ),
           ),
         );
-      //version違う場合：1.1.0～ユーザー
-      } else if(version != await Hive.box('userData').get('version')){
+        //version違う場合：1.1.0～ユーザー
+      } else if (version != await Hive.box('userData').get('version')) {
         Future.delayed(
           Duration(seconds: 1),
           () => Navigator.pushReplacement(
@@ -102,7 +102,7 @@ class _SplashPageState extends State<SplashPage> {
         );
       }
       //version合ってる場合
-      else{
+      else {
         Future.delayed(
           Duration(seconds: 1),
           () => Navigator.pushReplacement(
@@ -113,14 +113,16 @@ class _SplashPageState extends State<SplashPage> {
           ),
         );
       }
-    //初めての場合
-    }else {
+      //初めての場合
+    } else {
       Future.delayed(
         Duration(seconds: 1),
         () => Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => WelcomePage(version: version,),
+            builder: (context) => WelcomePage(
+              version: version,
+            ),
           ),
         ),
       );

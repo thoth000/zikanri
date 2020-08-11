@@ -115,7 +115,7 @@ class CategoryCard extends StatelessWidget {
               ),
             ),
             child: RaisedButton(
-              elevation: 6,
+                elevation: 6,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),

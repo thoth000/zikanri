@@ -29,7 +29,7 @@ class CategoryEditPage extends StatelessWidget {
             index: index,
           ),
           SizedBox(
-            height: displaySize.width/10,
+            height: displaySize.width / 10,
           ),
           _DeleteData(
             index: index,
@@ -119,8 +119,9 @@ class _CategoryIcon extends StatelessWidget {
         children: [
           Icon(
             IconData(
-          iconNum,fontFamily: "MaterialIcons",
-        ),
+              iconNum,
+              fontFamily: "MaterialIcons",
+            ),
           ),
         ],
       ),
@@ -149,7 +150,8 @@ class _ViewSwitch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
-    final bool boolean = Provider.of<UserDataNotifier>(context).categoryView[index];
+    final bool boolean =
+        Provider.of<UserDataNotifier>(context).categoryView[index];
     return ListTile(
       leading: Text(
         "表示　　 ",
@@ -158,7 +160,7 @@ class _ViewSwitch extends StatelessWidget {
           fontSize: FontSize.xsmall,
         ),
       ),
-      title: Text(boolean?"表示中":"非表示"),
+      title: Text(boolean ? "表示中" : "非表示"),
       trailing: Switch(
         value: boolean,
         activeColor:
@@ -166,7 +168,8 @@ class _ViewSwitch extends StatelessWidget {
         onChanged: (b) {},
       ),
       onTap: () {
-        Provider.of<UserDataNotifier>(context,listen: false).switchCategoryView(index);
+        Provider.of<UserDataNotifier>(context, listen: false)
+            .switchCategoryView(index);
       },
     );
   }
@@ -177,7 +180,7 @@ class _DeleteData extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    final userData = Provider.of<UserDataNotifier>(context,listen: false);
+    final userData = Provider.of<UserDataNotifier>(context, listen: false);
     void resetCheck(int index) {
       showDialog(
         context: context,
@@ -205,6 +208,7 @@ class _DeleteData extends StatelessWidget {
         ),
       );
     }
+
     return Padding(
       padding: const EdgeInsets.all(10),
       child: FlatButton(
@@ -235,4 +239,3 @@ class _DeleteData extends StatelessWidget {
     );
   }
 }
-

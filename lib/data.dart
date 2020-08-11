@@ -30,8 +30,8 @@ class Vib {
     Vibration.vibrate(duration: 150);
   }
 
-  static void shortCut(){
-    Vibration.vibrate(pattern: [0,50,100,50,100,50]);
+  static void shortCut() {
+    Vibration.vibrate(pattern: [0, 50, 100, 50, 100, 50]);
   }
 }
 
@@ -63,36 +63,6 @@ const List<int> iconList = [
   59596,
   58386,
   58899,
-];
-
-const List<String> iconHintList = [
-  "時間",
-  "勉強",
-  "運動",
-  "家事",
-  "音楽",
-  "読書",
-  "イラスト",
-  "ゲーム",
-  "ペット",
-  "メディア",
-  "SNS",
-  "パソコン",
-  "DIY",
-  "料理",
-  "筋トレ",
-  "リラックス",
-  "博物館",
-  "インターネット",
-  "音",
-  "園芸",
-  "映画",
-  "バカンス",
-  "ギャンブル",
-  "恋愛",
-  "買い物",
-  "カメラ",
-  "ドライブ",
 ];
 
 List<int> achiveM = [500, 1000, 3000, 5000, 10000];
@@ -339,11 +309,12 @@ class UserDataNotifier with ChangeNotifier {
   List _activities = [];
   List get activities => _activities;
 
-  Future checkGuide() async{
+  Future checkGuide() async {
     readGuide = true;
     await Hive.box('userData').put('readGuide', readGuide);
     notifyListeners();
   }
+
   //ver1.0.0用
   void addGuide() {
     readGuide = true;
@@ -399,7 +370,7 @@ class UserDataNotifier with ChangeNotifier {
     Hive.box('userData').put('categories', _categories);
   }
 
-  void switchCategoryView(int index){
+  void switchCategoryView(int index) {
     categoryView[index] = !categoryView[index];
     notifyListeners();
     Hive.box('userData').put('categoryView', categoryView);

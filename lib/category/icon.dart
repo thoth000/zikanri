@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:zikanri/data.dart';
 
 class EditIconPage extends StatefulWidget {
-  EditIconPage({this.index,this.iconNum});
+  EditIconPage({this.index, this.iconNum});
   final int index;
   final int iconNum;
   @override
@@ -12,10 +12,11 @@ class EditIconPage extends StatefulWidget {
 
 class _EditIconPageState extends State<EditIconPage> {
   int selectedIcon;
-  void initState(){
-    selectedIcon=widget.iconNum;
+  void initState() {
+    selectedIcon = widget.iconNum;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
@@ -26,6 +27,7 @@ class _EditIconPageState extends State<EditIconPage> {
         selectedIcon = iconNum;
       });
     }
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -39,7 +41,7 @@ class _EditIconPageState extends State<EditIconPage> {
         actions: [
           IconButton(
             icon: Icon(Icons.check),
-            onPressed: (){
+            onPressed: () {
               userData.editCategoryIcon(widget.index, selectedIcon);
               Navigator.pop(context);
             },

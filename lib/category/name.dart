@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:zikanri/data.dart';
 
 class EditNameSheet extends StatefulWidget {
-  EditNameSheet({this.name,this.index});
+  EditNameSheet({this.name, this.index});
   final String name;
   final int index;
 
@@ -13,7 +13,7 @@ class EditNameSheet extends StatefulWidget {
 
 class _EditNameSheetState extends State<EditNameSheet> {
   TextEditingController controller;
-  void initState(){
+  void initState() {
     controller = TextEditingController(text: widget.name);
     controller.addListener(() {
       setState(() {});
@@ -29,7 +29,7 @@ class _EditNameSheetState extends State<EditNameSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final userData = Provider.of<UserDataNotifier>(context,listen: false);
+    final userData = Provider.of<UserDataNotifier>(context, listen: false);
     final theme = Provider.of<ThemeNotifier>(context);
     Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return Padding(

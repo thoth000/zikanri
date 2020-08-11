@@ -203,7 +203,8 @@ class SettingPage extends StatelessWidget {
                     size: displaySize.width / 20,
                   ),
                   onTap: () {
-                    LaunchReview.launch(androidAppId: "com.thoth000.zikanri_app");
+                    LaunchReview.launch(
+                        androidAppId: "com.thoth000.zikanri_app");
                   },
                 ),
                 const Divider(
