@@ -19,7 +19,7 @@ class UpdateNoticePage extends StatelessWidget {
           ),
           Center(
             child: Text(
-              "Ver.1.2.0",
+              "Ver.1.3.0",
               style: TextStyle(
                 fontSize: FontSize.xlarge,
                 fontWeight: FontWeight.w700,
@@ -29,13 +29,9 @@ class UpdateNoticePage extends StatelessWidget {
           SizedBox(
             height: displaySize.width / 8,
           ),
-          _Review(),
+          _Privacy(),
           SizedBox(height: displaySize.width / 10),
-          _Vibration(),
-          SizedBox(
-            height: displaySize.width / 10,
-          ),
-          _Category(),
+          _AddTime(),
           SizedBox(
             height: displaySize.width / 10,
           ),
@@ -61,16 +57,6 @@ class UpdateNoticePage extends StatelessWidget {
               ),
               onPressed: () async{
                 await Hive.box('userData').put('version', newVersion);
-                await Hive.box('userData').put('categoryView', [
-                  true,
-                  true,
-                  true,
-                  true,
-                  true,
-                  true,
-                  true,
-                  true,
-                ]);
                 await Provider.of<UserDataNotifier>(context).initialize();
                 Navigator.pushReplacement(
                   context,
@@ -90,7 +76,7 @@ class UpdateNoticePage extends StatelessWidget {
   }
 }
 
-class _Review extends StatelessWidget {
+class _Privacy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -107,14 +93,14 @@ class _Review extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "アプリからレビュー",
+                "プライバシー",
                 style: TextStyle(
                   fontSize: FontSize.midium,
                   fontWeight: FontWeight.w700,
                 ),
               ),
               Text(
-                "皆さんのレビューがアプリの向上に役立ちます。",
+                "アプリ利用のうえでプライバシーポリシーを明記しました。",
                 style: TextStyle(
                   fontSize: FontSize.small,
                 ),
@@ -132,61 +118,13 @@ class _Review extends StatelessWidget {
   Widget item() {
     return Icon(
       Icons.assignment,
-      color: Colors.yellow,
-      size: displaySize.width / 5,
-    );
-  }
-}
-
-class _Vibration extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        SizedBox(
-          width: displaySize.width / 10,
-        ),
-        item(),
-        SizedBox(
-          width: displaySize.width / 20,
-        ),
-        Flexible(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                "デバイスの振動",
-                style: TextStyle(
-                  fontSize: FontSize.midium,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              Text(
-                "ショートカット追加時の振動を分かりやすく区別しました。",
-                style: TextStyle(
-                  fontSize: FontSize.small,
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          width: displaySize.width / 10,
-        ),
-      ],
-    );
-  }
-
-  Widget item() {
-    return Icon(
-      Icons.vibration,
       color: Colors.blue,
       size: displaySize.width / 5,
     );
   }
 }
 
-class _Category extends StatelessWidget {
+class _AddTime extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -203,14 +141,14 @@ class _Category extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "カテゴリーの機能",
+                "時間の追記",
                 style: TextStyle(
                   fontSize: FontSize.midium,
                   fontWeight: FontWeight.w700,
                 ),
               ),
               Text(
-                "カテゴリー非表示の設定を新しく作成しました。",
+                "記録時間をあとから追加できるようにしました。",
                 style: TextStyle(
                   fontSize: FontSize.small,
                 ),
@@ -227,7 +165,7 @@ class _Category extends StatelessWidget {
 
   Widget item() {
     return Icon(
-      Icons.category,
+      Icons.add_circle_outline,
       color: Colors.green,
       size: displaySize.width / 5,
     );

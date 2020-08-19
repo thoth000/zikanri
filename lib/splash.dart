@@ -70,25 +70,8 @@ class _SplashPageState extends State<SplashPage> {
       await theme.initialize();
       await userData.initialize();
       await userData.checkDay();
-      //versionがない場合：1.0.0ユーザー
-      if (!Hive.box('userData').containsKey('version')) {
-        await Hive.box('userData').delete('tutorial');
-        await Hive.box('userData').put('version', '1.0.0');
-        await Hive.box('userData').put('readGuide', true);
-        userData.addGuide();
-        Future.delayed(
-          Duration(seconds: 1),
-          () => Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => UpdateNoticePage(
-                newVersion: version,
-              ),
-            ),
-          ),
-        );
-        //version違う場合：1.1.0～ユーザー
-      } else if (version != await Hive.box('userData').get('version')) {
+      //version違う場合：1.1.0～ユーザー
+      if (version != await Hive.box('userData').get('version')) {
         Future.delayed(
           Duration(seconds: 1),
           () => Navigator.pushReplacement(
