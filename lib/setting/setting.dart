@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:zikanri/category/category.dart';
 import 'package:zikanri/guide/feature_guide.dart';
 import 'package:zikanri/guide/quick_guide.dart';
+import 'package:zikanri/setting/privacy.dart';
 
 import '../data.dart';
 import 'profile.dart';
@@ -44,7 +45,7 @@ class SettingPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Text(
-              '基本設定',
+              '基本機能',
               style: TextStyle(
                 fontSize: FontSize.xsmall,
                 fontWeight: FontWeight.bold,
@@ -146,26 +147,9 @@ class SettingPage extends StatelessWidget {
                     );
                   },
                 ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text(
-              'その他',
-              style: TextStyle(
-                fontSize: FontSize.xsmall,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          Container(
-            color: theme.isDark ? Color(0XFF424242) : Colors.white,
-            child: Column(
-              children: <Widget>[
+                const Divider(
+                  height: 0,
+                ),
                 ListTile(
                   title: Text(
                     '実績を確認する',
@@ -187,29 +171,26 @@ class SettingPage extends StatelessWidget {
                     );
                   },
                 ),
-                const Divider(
-                  height: 0,
-                ),
-                ListTile(
-                  title: Text(
-                    'アプリをレビューする',
-                    style: TextStyle(
-                      fontSize: FontSize.xsmall,
-                    ),
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: Colors.grey,
-                    size: displaySize.width / 20,
-                  ),
-                  onTap: () {
-                    LaunchReview.launch(
-                        androidAppId: "com.thoth000.zikanri_app");
-                  },
-                ),
-                const Divider(
-                  height: 0,
-                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Text(
+              'その他',
+              style: TextStyle(
+                fontSize: FontSize.xsmall,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Container(
+            color: theme.isDark ? Color(0XFF424242) : Colors.white,
+            child: Column(
+              children: <Widget>[
                 ListTile(
                   title: Text(
                     'クイックガイドを見る',
@@ -251,6 +232,50 @@ class SettingPage extends StatelessWidget {
                       context,
                       _createRoute(
                         FeatureGuide(),
+                      ),
+                    );
+                  },
+                ),
+                const Divider(
+                  height: 0,
+                ),
+                ListTile(
+                  title: Text(
+                    'アプリをレビューする',
+                    style: TextStyle(
+                      fontSize: FontSize.xsmall,
+                    ),
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.grey,
+                    size: displaySize.width / 20,
+                  ),
+                  onTap: () {
+                    LaunchReview.launch(
+                        androidAppId: "com.thoth000.zikanri_app");
+                  },
+                ),
+                const Divider(
+                  height: 0,
+                ),
+                ListTile(
+                  title: Text(
+                    'プライバシーポリシー',
+                    style: TextStyle(
+                      fontSize: FontSize.xsmall,
+                    ),
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.grey,
+                    size: displaySize.width / 20,
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      _createRoute(
+                        PrivacyPage(),
                       ),
                     );
                   },

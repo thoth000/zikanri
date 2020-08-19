@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:zikanri/data.dart';
+import 'package:zikanri/parts/general_app_bar.dart';
 
 class QuickGuide extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _AppBar(),
+      appBar: GeneralAppBar(pageTitle: "クイックガイド",),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: displaySize.width / 20),
         child: ListView(
@@ -112,25 +112,6 @@ class QuickGuide extends StatelessWidget {
               height: displaySize.width / 10,
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _AppBar extends StatelessWidget with PreferredSizeWidget {
-  @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
-  @override
-  Widget build(BuildContext context) {
-    final controller = Provider.of<ThemeNotifier>(context);
-    return AppBar(
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      title: Text(
-        "クイックガイド",
-        style: TextStyle(
-          color: controller.isDark ? Colors.white : Colors.black,
         ),
       ),
     );

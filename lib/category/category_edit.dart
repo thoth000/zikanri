@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:zikanri/category/icon.dart';
 import 'package:zikanri/category/name.dart';
 import 'package:zikanri/data.dart';
+import 'package:zikanri/parts/general_app_bar.dart';
 
 class CategoryEditPage extends StatelessWidget {
   CategoryEditPage({this.index});
@@ -10,7 +11,7 @@ class CategoryEditPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _AppBar(),
+      appBar: GeneralAppBar(pageTitle: "カテゴリーの編集",),
       body: Column(
         children: [
           _CategoryName(
@@ -35,25 +36,6 @@ class CategoryEditPage extends StatelessWidget {
             index: index,
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _AppBar extends StatelessWidget with PreferredSizeWidget {
-  @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
-  @override
-  Widget build(BuildContext context) {
-    final controller = Provider.of<ThemeNotifier>(context);
-    return AppBar(
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      title: Text(
-        "カテゴリーの編集",
-        style: TextStyle(
-          color: controller.isDark ? Colors.white : Colors.black,
-        ),
       ),
     );
   }
