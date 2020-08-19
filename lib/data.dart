@@ -265,8 +265,6 @@ class UserDataNotifier with ChangeNotifier {
   int passedDays = 1;
   int keynum = 5;
 
-  String tmpName = '';
-
   int _allTime = 0;
   int get allTime => _allTime;
   int _allGood = 0;
@@ -341,13 +339,8 @@ class UserDataNotifier with ChangeNotifier {
     notifyListeners();
   }
 
-  void nameChange(s) {
-    tmpName = s;
-    notifyListeners();
-  }
-
-  Future editProfile() async {
-    userName = tmpName;
+  Future editProfile(String name) async {
+    userName = name;
     notifyListeners();
     await Hive.box('userData').put('userName', userName);
   }
@@ -463,7 +456,60 @@ class UserDataNotifier with ChangeNotifier {
   //カテゴリーインデックスからcategoriesにアクセスをして
   //アイコンデータを取得して表示する必要がある。
 
-  Future recordDone(
+  Future<void> addTime(
+    int index,
+    int time,
+  ) async {
+    //0:category 1:title 2:time 3:isGood
+    bool isGood = _todayDoneList[index][3];
+    _allTime += time;
+    _thisMonthTime += time;
+    _todayTime += time;
+    _todayDoneList[index][2]+=time;
+    _categories[_todayDoneList[index][0]][2][0] += time;
+    if (isGood) {
+      _allGood += time;
+      _thisMonthGood += time;
+      _todayGood += time;
+      _categories[_todayDoneList[index][0]][2][1] += time;
+    }
+    _allPer = (_allGood * 100 / _allTime).round();
+    _thisMonthPer = (_thisMonthGood * 100 / _thisMonthTime).round();
+    _todayPer = (_todayGood * 100 / _todayTime).round();
+    _categories[_todayDoneList[index][0]][2][2] =
+        (_categories[_todayDoneList[index][0]][2][1] *100 /
+                _categories[_todayDoneList[index][0]][2][0]).round();
+    for (int i = 0; i < achiveM.length; i++) {
+      if (!checkM[i]) {
+        if (allTime >= achiveM[i]) {
+          checkM[i] = true;
+          _myColors[2 * i + 3] = true;
+        } else {
+          break;
+        }
+      }
+    }
+    notifyListeners();
+    //保存メソッド
+    await Hive.box('userData').put('userValue', [
+      _allTime,
+      _allGood,
+      _allPer,
+      _thisMonthTime,
+      _thisMonthGood,
+      _thisMonthPer,
+      _todayTime,
+      _todayGood,
+      _todayPer,
+    ]);
+    await Hive.box('userData').put('categories', _categories);
+    await Hive.box('userData').put('todayDoneList', _todayDoneList);
+    await Hive.box('userData').put('latelyData', _latelyData);
+    await Hive.box('userData').put('checkM', checkM);
+    await Hive.box('userData').put('myColors', _myColors);
+  }
+
+  Future<void> recordDone(
     List listData,
   ) async {
     int time = listData[2];
@@ -496,7 +542,7 @@ class UserDataNotifier with ChangeNotifier {
     );
     for (int i = 0; i < achiveM.length; i++) {
       if (!checkM[i]) {
-        if (allTime >= achiveM[i]) {
+        if (_allTime >= achiveM[i]) {
           checkM[i] = true;
           _myColors[2 * i + 3] = true;
         } else {

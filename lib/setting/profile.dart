@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../data.dart';
 
 class ProfileSettingPage extends StatelessWidget {
+  final nameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
@@ -23,7 +23,7 @@ class ProfileSettingPage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.check),
             onPressed: () async {
-              await userData.editProfile();
+              await userData.editProfile(nameController.text);
             },
           ),
         ],
@@ -67,6 +67,8 @@ class ProfileSettingPage extends StatelessWidget {
             SizedBox(
               height: displaySize.width / 6,
               child: TextField(
+                controller: nameController,
+                maxLength: 94,
                 cursorColor: (theme.isDark)
                     ? theme.themeColors[0]
                     : theme.themeColors[1],
@@ -83,12 +85,6 @@ class ProfileSettingPage extends StatelessWidget {
                   fontSize: FontSize.midium,
                   fontWeight: FontWeight.w700,
                 ),
-                inputFormatters: [
-                  LengthLimitingTextInputFormatter(94),
-                ],
-                onChanged: (name) {
-                  userData.nameChange(name);
-                },
               ),
             ),
             SizedBox(
