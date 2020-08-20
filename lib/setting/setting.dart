@@ -21,10 +21,10 @@ class SettingPage extends StatelessWidget {
       return PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) => page,
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          var begin = Offset(1.0, 0.0);
-          var end = Offset.zero;
-          var curve = Curves.ease;
-          var tween =
+          const begin = Offset(1, 0);
+          const end = Offset.zero;
+          const curve = Curves.ease;
+          final tween =
               Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
           return SlideTransition(
             position: animation.drive(tween),
@@ -37,14 +37,14 @@ class SettingPage extends StatelessWidget {
     final theme = Provider.of<ThemeNotifier>(context);
 
     return Container(
-      color: theme.isDark ? null : Color(0XFFe7ecf0),
+      color: theme.isDark ? null : const Color(0XFFe7ecf0),
       child: ListView(
         children: <Widget>[
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(10),
             child: Text(
               '基本機能',
               style: TextStyle(
@@ -54,7 +54,7 @@ class SettingPage extends StatelessWidget {
             ),
           ),
           Container(
-            color: theme.isDark ? Color(0XFF424242) : Colors.white,
+            color: theme.isDark ? const Color(0XFF424242) : Colors.white,
             child: Column(
               children: <Widget>[
                 ListTile(
@@ -189,7 +189,7 @@ class SettingPage extends StatelessWidget {
             ),
           ),
           Container(
-            color: theme.isDark ? Color(0XFF424242) : Colors.white,
+            color: theme.isDark ? const Color(0XFF424242) : Colors.white,
             child: Column(
               children: <Widget>[
                 ListTile(
@@ -254,7 +254,7 @@ class SettingPage extends StatelessWidget {
                   ),
                   onTap: () {
                     LaunchReview.launch(
-                        androidAppId: "com.thoth000.zikanri_app");
+                        androidAppId: 'com.thoth000.zikanri_app');
                   },
                 ),
                 const Divider(
@@ -318,15 +318,15 @@ class SettingPage extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
-      title: Text('データの永久削除'),
-      content: Text('データを削除しますか？\n削除すると自動的にアプリが終了します。'),
+      title: const Text('データの永久削除'),
+      content: const Text('データを削除しますか？\n削除すると自動的にアプリが終了します。'),
       actions: <Widget>[
         FlatButton(
-          child: Text('いいえ'),
+          child: const Text('いいえ'),
           onPressed: () => Navigator.pop(context),
         ),
         FlatButton(
-          child: Text('はい'),
+          child: const Text('はい'),
           onPressed: () {
             Hive.box('theme').clear();
             Hive.box('userData').clear();

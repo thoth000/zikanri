@@ -16,9 +16,9 @@ import '../data.dart';
 void notification(String s, int length) async {
   AndroidNotificationDetails androidNotificationDetails =
       AndroidNotificationDetails(
-    "Channel ID",
-    "Channel title",
-    "channel body",
+    'Channel ID',
+    'Channel title',
+    'channel body',
     priority: Priority.Max,
     importance: Importance.Max,
     ticker: 'test',
@@ -29,8 +29,8 @@ void notification(String s, int length) async {
       NotificationDetails(androidNotificationDetails, iosNotificationDetails);
   await flutterNotification.show(
     0,
-    "活動",
-    (length + 1).toString() + "件目: " + s,
+    '活動',
+    (length + 1).toString() + '件目: ' + s,
     notificationDetails,
   );
 }
@@ -74,7 +74,7 @@ class RButton extends StatelessWidget {
               ),
               child: SizedBox(),
               onPressed: () {
-                var date = DateFormat("yyyy年MM月dd日").format(DateTime.now());
+                var date = DateFormat('yyyy年MM月dd日').format(DateTime.now());
                 if (date != Hive.box('userData').get('previousDate')) {
                   showDialog(
                     barrierDismissible: false,
@@ -96,7 +96,7 @@ class RButton extends StatelessWidget {
                 }
               },
               onLongPress: () {
-                var date = DateFormat("yyyy年MM月dd日").format(DateTime.now());
+                var date = DateFormat('yyyy年MM月dd日').format(DateTime.now());
                 if (date != Hive.box('userData').get('previousDate')) {
                   showDialog(
                     barrierDismissible: false,
@@ -306,7 +306,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               //ヒント文:記録モード:開始モード
-                              hintText: record.isRecord ? "なにをしたの？" : "なにをするの？",
+                              hintText: record.isRecord ? 'なにをしたの？' : 'なにをするの？',
                             ),
                             inputFormatters: [
                               LengthLimitingTextInputFormatter(20)
@@ -358,7 +358,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                       textInputAction: TextInputAction.go,
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
-                                        hintText: "何分？",
+                                        hintText: '何分？',
                                       ),
                                       onChanged: (s) => record.changeTime(s),
                                     ),
@@ -573,7 +573,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                                     IconData(
                                                       userData.categories[i][0],
                                                       fontFamily:
-                                                          "MaterialIcons",
+                                                          'MaterialIcons',
                                                     ),
                                                     color: (theme.isDark)
                                                         ? Colors.white
@@ -753,14 +753,14 @@ class ShortCutSheet extends StatelessWidget {
               ),
             ),
             Text(
-              "記録の追加",
+              '記録の追加',
               style: TextStyle(
                 fontSize: FontSize.large,
                 fontWeight: FontWeight.w700,
               ),
             ),
             Text(
-              "ショートカットモード",
+              'ショートカットモード',
               style: TextStyle(
                 fontSize: FontSize.small,
                 fontWeight: FontWeight.w700,
@@ -854,7 +854,7 @@ class ShortCutSheet extends StatelessWidget {
                                         Icon(
                                           IconData(
                                             userData.categories[itemList[0]][0],
-                                            fontFamily: "MaterialIcons",
+                                            fontFamily: 'MaterialIcons',
                                           ),
                                           color: (itemList[3])
                                               ? (theme.isDark)

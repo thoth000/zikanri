@@ -3,7 +3,7 @@ import 'package:zikanri/data.dart';
 
 //changeNotifier for record
 class RecordNotifier with ChangeNotifier {
-  String _title = "";
+  String _title = '';
   String get title => _title;
   bool _isRecord = true;
   bool get isRecord => _isRecord;
@@ -23,7 +23,7 @@ class RecordNotifier with ChangeNotifier {
 
   void changeTitle(String s) {
     _title = s;
-    if (_title == "") {
+    if (_title == '') {
       _titleCheck = true;
     } else {
       _titleCheck = false;
@@ -32,10 +32,10 @@ class RecordNotifier with ChangeNotifier {
   }
 
   void changeTime(String s) {
-    if (s == "") {
+    if (s == '') {
       _timeCheck = true;
     } else {
-      int _minute = int.parse(s);
+      final int _minute = int.parse(s);
       if (_minute > 1440 || _minute == 0) {
         _timeCheck = true;
       } else {
@@ -84,7 +84,7 @@ class RecordNotifier with ChangeNotifier {
     }
   }
 
-  void copyData(tmpCategoryIndex, tmpTitle, tmpTime) {
+  void copyData(int tmpCategoryIndex, String tmpTitle, int tmpTime) {
     _title = tmpTitle;
     _categoryIndex = tmpCategoryIndex;
     _time = tmpTime;
@@ -92,7 +92,7 @@ class RecordNotifier with ChangeNotifier {
   }
 
   void reset() {
-    _title = "";
+    _title = '';
     _categoryIndex = 0;
     _time = 0;
     _isGood = false;

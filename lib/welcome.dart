@@ -9,7 +9,7 @@ import 'data.dart';
 import 'mypage.dart';
 
 class WelcomePage extends StatelessWidget {
-  WelcomePage({this.version});
+  const WelcomePage({this.version});
   final String version;
   @override
   Widget build(BuildContext context) {
@@ -18,15 +18,15 @@ class WelcomePage extends StatelessWidget {
 
     void makeDir() async {
       //アプリ初回起動時の動作
-      var firstdate = DateFormat("yyyy年MM月dd日").format(DateTime.now());
-      var firstMonth = DateFormat("MM").format(DateTime.now());
+      var firstdate = DateFormat('yyyy年MM月dd日').format(DateTime.now());
+      var firstMonth = DateFormat('MM').format(DateTime.now());
       var themeBox = Hive.box('theme');
       var userDataBox = Hive.box('userData');
       // theme
       await themeBox.put('isDark', false);
       await themeBox.put('themeColorsIndex', 0);
       // userData
-      await userDataBox.put('welcome', "Yey!");
+      await userDataBox.put('welcome', 'Yey!');
       await userDataBox.put('version', version);
       await userDataBox.put('readGuide', false);
       await userDataBox.put('myColors', [
@@ -72,42 +72,42 @@ class WelcomePage extends StatelessWidget {
         [
           [
             57746,
-            "指定なし",
+            '指定なし',
             [0, 0, 0]
           ],
           [
             57746,
-            "",
+            '',
             [0, 0, 0]
           ],
           [
             57746,
-            "",
+            '',
             [0, 0, 0]
           ],
           [
             57746,
-            "",
+            '',
             [0, 0, 0]
           ],
           [
             57746,
-            "",
+            '',
             [0, 0, 0]
           ],
           [
             57746,
-            "",
+            '',
             [0, 0, 0]
           ],
           [
             57746,
-            "",
+            '',
             [0, 0, 0]
           ],
           [
             57746,
-            "",
+            '',
             [0, 0, 0]
           ],
         ],
@@ -139,7 +139,7 @@ class WelcomePage extends StatelessWidget {
           ),
           Center(
             child: Text(
-              "Zikanriへようこそ",
+              'Zikanriへようこそ',
               style: TextStyle(
                 fontSize: FontSize.xlarge,
                 fontWeight: FontWeight.w700,
@@ -167,7 +167,7 @@ class WelcomePage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(15),
                 child: Text(
-                  "始める",
+                  '始める',
                   style: TextStyle(
                     fontSize: FontSize.small,
                     fontWeight: FontWeight.w700,
@@ -210,14 +210,14 @@ class _TimeValue extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "時間の価値",
+                '時間の価値',
                 style: TextStyle(
                   fontSize: FontSize.midium,
                   fontWeight: FontWeight.w700,
                 ),
               ),
               Text(
-                "価値アリと価値ナシの２種類の記録しか記録できません。",
+                '価値アリと価値ナシの２種類の記録しか記録できません。',
                 style: TextStyle(
                   fontSize: FontSize.small,
                 ),
@@ -271,14 +271,14 @@ class _Category extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "カテゴリー",
+                'カテゴリー',
                 style: TextStyle(
                   fontSize: FontSize.midium,
                   fontWeight: FontWeight.w700,
                 ),
               ),
               Text(
-                "豊富なアイコンと自由なタイトルで記録を管理します。",
+                '豊富なアイコンと自由なタイトルで記録を管理します。',
                 style: TextStyle(
                   fontSize: FontSize.small,
                 ),
@@ -333,14 +333,14 @@ class _Theme extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "テーマ",
+                'テーマ',
                 style: TextStyle(
                   fontSize: FontSize.midium,
                   fontWeight: FontWeight.w700,
                 ),
               ),
               Text(
-                "最大12種類のテーマから自分に合ったものを選べます。",
+                '最大12種類のテーマから自分に合ったものを選べます。',
                 style: TextStyle(
                   fontSize: FontSize.small,
                 ),
@@ -366,7 +366,7 @@ class _Theme extends StatelessWidget {
               Container(
                 height: displaySize.width / 11,
                 width: displaySize.width / 11,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(15),
                   ),
@@ -376,7 +376,7 @@ class _Theme extends StatelessWidget {
               Container(
                 height: displaySize.width / 11,
                 width: displaySize.width / 11,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(15),
                   ),
@@ -390,7 +390,7 @@ class _Theme extends StatelessWidget {
               Container(
                 height: displaySize.width / 11,
                 width: displaySize.width / 11,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(15),
                   ),
@@ -400,7 +400,7 @@ class _Theme extends StatelessWidget {
               Container(
                 height: displaySize.width / 11,
                 width: displaySize.width / 11,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(15),
                   ),

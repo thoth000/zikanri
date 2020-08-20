@@ -23,7 +23,7 @@ class ProfileSettingPage extends StatelessWidget {
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.check),
+            icon: const Icon(Icons.check),
             onPressed: () async {
               await userData.editProfile(nameController.text);
             },
@@ -32,11 +32,11 @@ class ProfileSettingPage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
-          horizontal: 10.0,
+          horizontal: 10,
         ),
         child: ListView(
           children: <Widget>[
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Text(
@@ -46,7 +46,7 @@ class ProfileSettingPage extends StatelessWidget {
                 fontSize: FontSize.small,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Text(
@@ -56,7 +56,7 @@ class ProfileSettingPage extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Text(
@@ -89,7 +89,7 @@ class ProfileSettingPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
           ],

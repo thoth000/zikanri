@@ -5,7 +5,7 @@ import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/data.dart';
 
 class EditIconPage extends StatefulWidget {
-  EditIconPage({this.index, this.iconNum});
+  const EditIconPage({this.index, this.iconNum});
   final int index;
   final int iconNum;
   @override
@@ -35,14 +35,14 @@ class _EditIconPageState extends State<EditIconPage> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         title: Text(
-          "アイコン",
+          'アイコン',
           style: TextStyle(
             color: theme.isDark ? Colors.white : Colors.black,
           ),
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.check),
+            icon: const Icon(Icons.check),
             onPressed: () {
               userData.editCategoryIcon(widget.index, selectedIcon);
               Navigator.pop(context);
@@ -58,7 +58,7 @@ class _EditIconPageState extends State<EditIconPage> {
               Container(
                 height: displaySize.width / 5 - 8,
                 width: displaySize.width / 5 - 8,
-                margin: EdgeInsets.all(2),
+                margin: const EdgeInsets.all(2),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(
@@ -72,7 +72,7 @@ class _EditIconPageState extends State<EditIconPage> {
                   },
                   child: Center(
                     child: Icon(
-                      IconData(iconList[i], fontFamily: "MaterialIcons"),
+                      IconData(iconList[i], fontFamily: 'MaterialIcons'),
                     ),
                   ),
                 ),

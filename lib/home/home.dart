@@ -86,7 +86,7 @@ class _NoticeGuide extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Provider.of<UserDataNotifier>(context);
     if (controller.readGuide) {
-      return SizedBox();
+      return const SizedBox();
     } else {
       return NoticeGuide();
     }

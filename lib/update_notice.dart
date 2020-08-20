@@ -6,7 +6,7 @@ import 'package:zikanri/data.dart';
 import 'package:zikanri/mypage.dart';
 
 class UpdateNoticePage extends StatelessWidget {
-  UpdateNoticePage({
+  const UpdateNoticePage({
     this.newVersion,
   });
   final String newVersion;
@@ -20,7 +20,7 @@ class UpdateNoticePage extends StatelessWidget {
           ),
           Center(
             child: Text(
-              "Ver.1.3.0",
+              'Ver.1.3.0',
               style: TextStyle(
                 fontSize: FontSize.xlarge,
                 fontWeight: FontWeight.w700,
@@ -44,7 +44,7 @@ class UpdateNoticePage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(15),
                 child: Text(
-                  "続ける",
+                  '続ける',
                   style: TextStyle(
                     fontSize: FontSize.small,
                     fontWeight: FontWeight.w700,
@@ -94,14 +94,14 @@ class _Privacy extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "プライバシー",
+                'プライバシー',
                 style: TextStyle(
                   fontSize: FontSize.midium,
                   fontWeight: FontWeight.w700,
                 ),
               ),
               Text(
-                "アプリ利用のうえでプライバシーポリシーを明記しました。",
+                'アプリ利用のうえでプライバシーポリシーを明記しました。',
                 style: TextStyle(
                   fontSize: FontSize.small,
                 ),
@@ -142,14 +142,14 @@ class _AddTime extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                "時間の追記",
+                '時間の追記',
                 style: TextStyle(
                   fontSize: FontSize.midium,
                   fontWeight: FontWeight.w700,
                 ),
               ),
               Text(
-                "記録時間をあとから追加できるようにしました。",
+                '記録時間をあとから追加できるようにしました。',
                 style: TextStyle(
                   fontSize: FontSize.small,
                 ),

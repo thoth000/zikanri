@@ -25,7 +25,7 @@ class _MinuteMeterState extends State<MinuteMeter> {
 
   Future dateCheck() async {
     var now = DateTime.now();
-    if (DateFormat("yyyy年MM月dd日").format(now) !=
+    if (DateFormat('yyyy年MM月dd日').format(now) !=
         Hive.box('userData').get('previousDate')) {
       await Future.delayed(Duration.zero);
       showDialog(
@@ -147,7 +147,7 @@ class _MinuteMeterState extends State<MinuteMeter> {
                                   IconData(
                                     userData.categories[userData.activities[i]
                                         [3]][0],
-                                    fontFamily: "MaterialIcons",
+                                    fontFamily: 'MaterialIcons',
                                   ),
                                   size: displaySize.width / 10,
                                   color: Colors.grey,
@@ -218,12 +218,12 @@ class _MinuteMeterState extends State<MinuteMeter> {
                                         if (userData.activities[i][1]) {
                                           userData.startTimer(i);
                                           Scaffold.of(context).showSnackBar(
-                                            notifySnackBar("タイマーをスタートさせました"),
+                                            notifySnackBar('タイマーをスタートさせました'),
                                           );
                                         } else {
                                           userData.stopTimer(i);
                                           Scaffold.of(context).showSnackBar(
-                                            notifySnackBar("タイマーをストップさせました"),
+                                            notifySnackBar('タイマーをストップさせました'),
                                           );
                                         }
                                       },

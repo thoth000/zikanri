@@ -36,13 +36,13 @@ class MyAppPage extends StatelessWidget {
       floatingActionButton: RButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
-        shape: CircularNotchedRectangle(),
+        shape: const CircularNotchedRectangle(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             IconButton(
-              icon: Icon(Icons.home),
+              icon: const Icon(Icons.home),
               iconSize: iconsize,
               color: (controller.currentIndex == 0) ? color : Colors.grey,
               onPressed: () {
@@ -50,7 +50,7 @@ class MyAppPage extends StatelessWidget {
               },
             ),
             IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.today,
               ),
               iconSize: iconsize,
@@ -63,7 +63,7 @@ class MyAppPage extends StatelessWidget {
               width: displaySize.width / 5,
             ),
             IconButton(
-              icon: Icon(Icons.assessment),
+              icon: const Icon(Icons.assessment),
               iconSize: iconsize,
               color: (controller.currentIndex == 2) ? color : Colors.grey,
               onPressed: () {
@@ -71,7 +71,7 @@ class MyAppPage extends StatelessWidget {
               },
             ),
             IconButton(
-              icon: Icon(Icons.settings),
+              icon: const Icon(Icons.settings),
               iconSize: iconsize,
               color: (controller.currentIndex == 3) ? color : Colors.grey,
               onPressed: () {

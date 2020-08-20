@@ -70,11 +70,11 @@ List<int> achiveD = [1, 3, 7, 30, 100];
 //BaseColor
 //単色をベースにしていく
 //今なんこ,14
-List<List<Color>> baseColors = [
+List<List<Color>> baseColors = const [
   [Color(0XFF39BAE8), Color(0XFF0000A1)], //青
   [Color(0XFFef473a), Color(0XFFcb2d3e)], //赤
   [Color(0XFF08ffc8), Color(0XFF204969)], //緑
-  [Colors.white, Colors.black], //モノクロ
+  [Color(0xFFFFFFFF), Color(0xFF000000)], //モノクロ
   [Color(0XFFffcccc), Color(0XFFcaabd8)], //ピンク
   [Color(0XFFffe259), Color(0XFFffa751)], //マンゴー
   [Color(0XFFFFFDE4), Color(0XFF005AA7)], //白青

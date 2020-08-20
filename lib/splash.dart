@@ -41,8 +41,8 @@ class _SplashPageState extends State<SplashPage> {
     //await Hive.box('theme').clear();
     //await Hive.box('userData').clear();
     if (Hive.box('userData').containsKey('welcome')) {
-      final date = DateFormat("yyyy年MM月dd日").format(DateTime.now());
-      final month = DateFormat("MM").format(DateTime.now());
+      final date = DateFormat('yyyy年MM月dd日').format(DateTime.now());
+      final month = DateFormat('MM').format(DateTime.now());
       if (date != Hive.box('userData').get('previousDate')) {
         var box = Hive.box('userData');
         await box.put('previousDate', date);
@@ -75,7 +75,7 @@ class _SplashPageState extends State<SplashPage> {
       //version違う場合：1.1.0～ユーザー
       if (version != await Hive.box('userData').get('version')) {
         Future.delayed(
-          Duration(seconds: 1),
+          const Duration(seconds: 1),
           () => Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -89,7 +89,7 @@ class _SplashPageState extends State<SplashPage> {
       //version合ってる場合
       else {
         Future.delayed(
-          Duration(seconds: 1),
+          const Duration(seconds: 1),
           () => Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -101,7 +101,7 @@ class _SplashPageState extends State<SplashPage> {
       //初めての場合
     } else {
       Future.delayed(
-        Duration(seconds: 1),
+        const Duration(seconds: 1),
         () => Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -124,14 +124,14 @@ class _SplashPageState extends State<SplashPage> {
     }
 
     return Scaffold(
-      backgroundColor: Color(0XFFFAFAFA),
+      backgroundColor: const Color(0XFFFAFAFA),
       body: Stack(
         children: <Widget>[
           Center(
             child: SizedBox(
               height: displaySize.width / 2,
               width: displaySize.width / 2,
-              child: Image(
+              child: const Image(
                 image: AssetImage('images/zikanri_shaped.png'),
               ),
             ),
@@ -145,7 +145,7 @@ class _SplashPageState extends State<SplashPage> {
                 style: TextStyle(
                   fontSize: FontSize.big,
                   fontWeight: FontWeight.w700,
-                  color: Color(0XFF3A405A),
+                  color: const Color(0XFF3A405A),
                 ),
               ),
             ),

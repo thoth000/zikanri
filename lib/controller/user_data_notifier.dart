@@ -4,9 +4,9 @@ import 'package:zikanri/data.dart';
 
 //changeNotifier for userData
 class UserDataNotifier with ChangeNotifier {
-  String userName = "ゲスト";
-  String previousDate = "2020年01月01日";
-  String thisMonth = "01";
+  String userName = 'ゲスト';
+  String previousDate = '2020年01月01日';
+  String thisMonth = '01';
   int totalPassedDays = 1;
   //実績
   List<bool> checkM = [false, false, false, false, false];
@@ -143,7 +143,7 @@ class UserDataNotifier with ChangeNotifier {
   Future resetCategory(int index) async {
     _categories[index] = [
       57746,
-      "",
+      '',
       [0, 0, 0]
     ];
     categoryView[index] = false;

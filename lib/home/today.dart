@@ -61,7 +61,7 @@ class TodayWidget extends StatelessWidget {
                   style: TextStyle(
                       fontSize: FontSize.midium, fontWeight: FontWeight.w700),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 for (int i = userData.todayDoneList.length - 1; i >= 0; i--)
@@ -95,8 +95,8 @@ class TodayWidget extends StatelessWidget {
 }
 
 class TodayDone extends StatelessWidget {
+  const TodayDone({this.index});
   final int index;
-  TodayDone({this.index});
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context);
@@ -144,13 +144,13 @@ class TodayDone extends StatelessWidget {
             ),
           ),
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.add_circle_outline,
             ),
             iconSize: displaySize.width / 12,
             color: theme.isDark ? theme.themeColors[0] : theme.themeColors[1],
             onPressed: () => showModalBottomSheet(
-              shape: RoundedRectangleBorder(
+              shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
               ),
               context: context,
@@ -161,7 +161,7 @@ class TodayDone extends StatelessWidget {
             ),
           ),
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.remove_circle_outline,
             ),
             iconSize: displaySize.width / 12,
@@ -181,18 +181,18 @@ class TodayDone extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
-      title: Text(
+      title: const Text(
         '削除',
         style: TextStyle(fontWeight: FontWeight.w700),
       ),
-      content: Text('この記録を削除しますか？'),
+      content: const Text('この記録を削除しますか？'),
       actions: <Widget>[
         FlatButton(
-          child: Text('いいえ'),
+          child: const Text('いいえ'),
           onPressed: () => Navigator.pop(context),
         ),
         FlatButton(
-          child: Text('はい'),
+          child: const Text('はい'),
           onPressed: () {
             userData.deleteDone(itemList, index);
             Navigator.pop(context);
@@ -204,8 +204,8 @@ class TodayDone extends StatelessWidget {
 }
 
 class AddSheet extends StatefulWidget {
+  const AddSheet({this.index});
   final int index;
-  AddSheet({this.index});
 
   @override
   _AddSheetState createState() => _AddSheetState();
@@ -235,7 +235,7 @@ class _AddSheetState extends State<AddSheet> {
           Container(
             height: 5,
             width: 50,
-            margin: EdgeInsets.all(12.5),
+            margin: const EdgeInsets.all(12.5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
               color: Colors.grey,
@@ -252,7 +252,7 @@ class _AddSheetState extends State<AddSheet> {
           Row(
             children: [
               Text(
-                "　時間（分）",
+                '　時間（分）',
                 style: TextStyle(
                   fontSize: FontSize.small,
                   fontWeight: FontWeight.w700,
@@ -267,6 +267,8 @@ class _AddSheetState extends State<AddSheet> {
               style: TextStyle(
                 fontSize: FontSize.small,
               ),
+              keyboardType: TextInputType.number,
+              textInputAction: TextInputAction.go,
               inputFormatters: [
                 WhitelistingTextInputFormatter.digitsOnly,
               ],
@@ -278,7 +280,7 @@ class _AddSheetState extends State<AddSheet> {
                     width: 1,
                   ),
                 ),
-                enabledBorder: OutlineInputBorder(
+                enabledBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
                     color: Colors.grey,
                     width: 1,
@@ -321,10 +323,10 @@ class _AddSheetState extends State<AddSheet> {
                     Padding(
                       padding: const EdgeInsets.all(15),
                       child: Text(
-                        "保存する",
+                        '保存する',
                         style: TextStyle(
                           color: (time > 0 && time < 501)
-                              ? Colors.white
+                              ? null
                               : Colors.grey,
                           fontSize: FontSize.small,
                           fontWeight: FontWeight.w700,

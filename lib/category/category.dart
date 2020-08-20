@@ -23,7 +23,7 @@ class CategoryPage extends StatelessWidget {
       body: ListView(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
               children: <Widget>[for (int i = 1; i < 8; i++) CategoryCard(i)],
             ),
@@ -35,8 +35,8 @@ class CategoryPage extends StatelessWidget {
 }
 
 class CategoryCard extends StatelessWidget {
+  const CategoryCard(this.index);
   final int index;
-  CategoryCard(this.index);
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
@@ -54,7 +54,7 @@ class CategoryCard extends StatelessWidget {
             ),
             child: Container(
               width: displaySize.width / 1.7,
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -82,10 +82,10 @@ class CategoryCard extends StatelessWidget {
                           width: displaySize.width / 8,
                           child: Icon(
                             IconData(userData.categories[index][0],
-                                fontFamily: "MaterialIcons"),
+                                fontFamily: 'MaterialIcons'),
                             size: displaySize.width / 8,
                           )),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Flexible(
@@ -128,7 +128,7 @@ class CategoryCard extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                color: theme.isDark ? Color(0XFF424242) : Colors.white,
+                color: theme.isDark ? const Color(0XFF424242) : Colors.white,
                 onPressed: () {
                   Navigator.push(
                     context,

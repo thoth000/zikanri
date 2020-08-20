@@ -5,7 +5,7 @@ import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/data.dart';
 
 class EditNameSheet extends StatefulWidget {
-  EditNameSheet({this.name, this.index});
+  const EditNameSheet({this.name, this.index});
   final String name;
   final int index;
 
@@ -43,7 +43,7 @@ class _EditNameSheetState extends State<EditNameSheet> {
           Container(
             height: 5,
             width: 50,
-            margin: EdgeInsets.all(12.5),
+            margin: const EdgeInsets.all(12.5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
               color: Colors.grey,
@@ -68,7 +68,7 @@ class _EditNameSheetState extends State<EditNameSheet> {
                     width: 3,
                   ),
                 ),
-                enabledBorder: OutlineInputBorder(
+                enabledBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
                     color: Colors.grey,
                     width: 2,
@@ -93,7 +93,7 @@ class _EditNameSheetState extends State<EditNameSheet> {
                   Padding(
                     padding: const EdgeInsets.all(15),
                     child: Text(
-                      "保存する",
+                      '保存する',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: FontSize.small,

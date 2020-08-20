@@ -9,7 +9,7 @@ class ThemeNotifier with ChangeNotifier {
   int _themeColorsIndex = 0;
   //List _myColors = [true,true,true,false,false,false,false,false,false,false];
   //List get myColors => _myColors;
-  List _themeColors() => baseColors[_themeColorsIndex];
+  List<Color> _themeColors() => baseColors[_themeColorsIndex];
   List get themeColors => _themeColors();
   ThemeData buildTheme() => ThemeData(
         fontFamily: 'NotoSansJP',
