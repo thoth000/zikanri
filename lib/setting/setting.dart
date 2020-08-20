@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:launch_review/launch_review.dart';
 import 'package:provider/provider.dart';
 import 'package:zikanri/category/category.dart';
+import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/guide/feature_guide.dart';
 import 'package:zikanri/guide/quick_guide.dart';
 import 'package:zikanri/setting/privacy.dart';

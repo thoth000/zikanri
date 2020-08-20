@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
+import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/data.dart';
 import 'package:zikanri/mypage.dart';
 
@@ -55,7 +56,7 @@ class UpdateNoticePage extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ),
-              onPressed: () async{
+              onPressed: () async {
                 await Hive.box('userData').put('version', newVersion);
                 await Provider.of<UserDataNotifier>(context).initialize();
                 Navigator.pushReplacement(

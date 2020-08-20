@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:zikanri/data.dart';
+import 'package:zikanri/controller/theme_notifier.dart';
 
 class GeneralAppBar extends StatelessWidget with PreferredSizeWidget {
   final String pageTitle;

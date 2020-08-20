@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zikanri/controller/theme_notifier.dart';
 
 import 'home/home.dart';
 import 'lately/lately.dart';

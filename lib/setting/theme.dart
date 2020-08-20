@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zikanri/controller/theme_notifier.dart';
+import 'package:zikanri/controller/user_data_notifier.dart';
 
 import '../data.dart';
 

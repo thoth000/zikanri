@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:package_info/package_info.dart';
+import 'package:zikanri/controller/theme_notifier.dart';
+import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/update_notice.dart';
 
 import 'mypage.dart';

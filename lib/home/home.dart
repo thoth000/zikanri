@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/guide/notice_guide.dart';
 
 import 'total_score.dart';

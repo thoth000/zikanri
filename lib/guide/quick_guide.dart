@@ -6,7 +6,9 @@ class QuickGuide extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: GeneralAppBar(pageTitle: "クイックガイド",),
+      appBar: GeneralAppBar(
+        pageTitle: "クイックガイド",
+      ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: displaySize.width / 20),
         child: ListView(

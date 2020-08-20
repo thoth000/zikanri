@@ -6,7 +6,9 @@ class FeatureGuide extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: GeneralAppBar(pageTitle: "機能ガイド",),
+      appBar: GeneralAppBar(
+        pageTitle: "機能ガイド",
+      ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: displaySize.width / 20),
         child: ListView(

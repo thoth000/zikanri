@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zikanri/category/icon.dart';
 import 'package:zikanri/category/name.dart';
+import 'package:zikanri/controller/theme_notifier.dart';
+import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/data.dart';
 import 'package:zikanri/parts/general_app_bar.dart';
 
@@ -11,7 +13,9 @@ class CategoryEditPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: GeneralAppBar(pageTitle: "カテゴリーの編集",),
+      appBar: GeneralAppBar(
+        pageTitle: "カテゴリーの編集",
+      ),
       body: Column(
         children: [
           _CategoryName(
