@@ -86,8 +86,7 @@ class _EditNameSheetState extends State<EditNameSheet> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(500),
                 border: Border.all(
-                  color:
-                      color,
+                  color: color,
                   width: 3,
                 ),
               ),

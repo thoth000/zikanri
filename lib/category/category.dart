@@ -25,7 +25,9 @@ class CategoryPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
-              children: <Widget>[for (int i = 1; i < 8; i++) CategoryCard(i)],
+              children: <Widget>[
+                for (int i = 1; i < 8; i++) CategoryCard(i),
+              ],
             ),
           ),
         ],

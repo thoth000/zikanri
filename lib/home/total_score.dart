@@ -41,7 +41,8 @@ class TotalScoreWidget extends StatelessWidget {
       child: Container(
         height: displaySize.width / 2.2 + displaySize.width / 10,
         width: displaySize.width,
-        color: (theme.isDark) ? const Color(0XFF303030) : const Color(0XFFFAFAFA),
+        color:
+            (theme.isDark) ? const Color(0XFF303030) : const Color(0XFFFAFAFA),
         child: Padding(
           padding: EdgeInsets.all(displaySize.width / 20),
           child: Container(

@@ -9,7 +9,7 @@ import '../data.dart';
 class CategoryDataPage extends StatelessWidget {
   const CategoryDataPage(this.index);
   final int index;
-  
+
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);

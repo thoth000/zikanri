@@ -48,9 +48,9 @@ class WelcomePage extends StatelessWidget {
       await userDataBox.put('checkM', [false, false, false, false, false]);
       await userDataBox.put('checkD', [true, false, false, false, false]);
       /*userValue=[
-        aTime,aGood,aPer,
-        tmTime,tmGood,tmPer,
-        tTime,tGood,tPer
+        all       Time,Good,Per,
+        thisMonth Time,Good,Per,
+        today     Time,Good,Per
       ]*/
       await userDataBox.put('userValue', [0, 0, 0, 0, 0, 0, 0, 0, 0]);
       //latelyData=[date,totaltime,goodtime,percent,donelist]

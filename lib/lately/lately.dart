@@ -200,7 +200,8 @@ class DayData extends StatelessWidget {
       child: Container(
         height: displaySize.width / 2 + 20,
         width: displaySize.width,
-        color: (theme.isDark) ? const Color(0XFF303030) : const Color(0XFFFAFAFA),
+        color:
+            (theme.isDark) ? const Color(0XFF303030) : const Color(0XFFFAFAFA),
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Card(

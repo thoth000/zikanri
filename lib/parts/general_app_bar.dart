@@ -5,7 +5,7 @@ import 'package:zikanri/controller/theme_notifier.dart';
 class GeneralAppBar extends StatelessWidget with PreferredSizeWidget {
   GeneralAppBar({this.pageTitle});
   final String pageTitle;
-  
+
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
   @override

@@ -5,7 +5,7 @@ class PrivacyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const titleStyle = TextStyle(fontWeight: FontWeight.w700);
-    const  space = SizedBox(
+    const space = SizedBox(
       height: 10,
     );
     return Scaffold(

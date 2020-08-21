@@ -107,7 +107,7 @@ class PRPage extends StatelessWidget {
 class GridCard extends StatelessWidget {
   const GridCard(this.index);
   final int index;
-  
+
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);

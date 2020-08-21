@@ -325,9 +325,7 @@ class _AddSheetState extends State<AddSheet> {
                       child: Text(
                         '保存する',
                         style: TextStyle(
-                          color: (time > 0 && time < 501)
-                              ? null
-                              : Colors.grey,
+                          color: (time > 0 && time < 501) ? null : Colors.grey,
                           fontSize: FontSize.small,
                           fontWeight: FontWeight.w700,
                         ),

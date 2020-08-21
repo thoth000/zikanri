@@ -8,6 +8,7 @@ import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/guide/feature_guide.dart';
 import 'package:zikanri/guide/quick_guide.dart';
 import 'package:zikanri/setting/privacy.dart';
+import 'package:zikanri/takeover/sign_in.dart';
 
 import '../data.dart';
 import 'profile.dart';
@@ -277,6 +278,30 @@ class SettingPage extends StatelessWidget {
                       context,
                       _createRoute(
                         PrivacyPage(),
+                      ),
+                    );
+                  },
+                ),
+                const Divider(
+                  height: 0,
+                ),
+                ListTile(
+                  title: Text(
+                    'データの引き継ぎ',
+                    style: TextStyle(
+                      fontSize: FontSize.xsmall,
+                    ),
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.grey,
+                    size: displaySize.width / 20,
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      _createRoute(
+                        SignInPage(),
                       ),
                     );
                   },
