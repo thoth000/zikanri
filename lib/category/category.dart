@@ -113,32 +113,33 @@ class CategoryCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
                 color: color,
-                width: 1,
+                width: 2,
               ),
             ),
             child: RaisedButton(
-                elevation: 6,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Text(
+                '編集',
+                style: TextStyle(
+                  fontSize: FontSize.small,
+                  fontWeight: FontWeight.w700,
                 ),
-                child: Text(
-                  '編集',
-                  style: TextStyle(
-                    fontSize: FontSize.small,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                color: theme.isDark ? const Color(0XFF424242) : Colors.white,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CategoryEditPage(
-                        index: index,
-                      ),
+              ),
+              color: theme.isDark ? const Color(0XFF424242) : Colors.white,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CategoryEditPage(
+                      index: index,
                     ),
-                  );
-                }),
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),
