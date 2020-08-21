@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
+import 'package:zikanri/controller/theme_notifier.dart';
+import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/previous_records/category_data.dart';
 
 import '../data.dart';
@@ -53,7 +55,7 @@ class PRPage extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Wrap(
@@ -103,8 +105,9 @@ class PRPage extends StatelessWidget {
 }
 
 class GridCard extends StatelessWidget {
+  const GridCard(this.index);
   final int index;
-  GridCard(this.index);
+  
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
@@ -163,10 +166,10 @@ class GridCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Icon(
-                          IconData(icon, fontFamily: "MaterialIcons"),
+                          IconData(icon, fontFamily: 'MaterialIcons'),
                           size: displaySize.width / 15,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
                         Expanded(

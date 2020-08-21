@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:zikanri/data.dart';
+import 'package:zikanri/parts/general_app_bar.dart';
 
 class QuickGuide extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _AppBar(),
+      appBar: GeneralAppBar(
+        pageTitle: 'クイックガイド',
+      ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: displaySize.width / 20),
         child: ListView(
@@ -19,7 +21,7 @@ class QuickGuide extends StatelessWidget {
               height: displaySize.width / 20,
             ),
             Text(
-              "記録ボタン",
+              '記録ボタン',
               style: TextStyle(
                 fontSize: FontSize.midium,
                 fontWeight: FontWeight.w700,
@@ -28,8 +30,8 @@ class QuickGuide extends StatelessWidget {
             SizedBox(
               height: displaySize.width / 50,
             ),
-            Text(
-              "このボタンで活動の記録を始められます。\n・既に終わった活動を記録する「記録」モード\n・これから活動を始める「開始」モード\nの二つから記録方法を選択できます。",
+            const Text(
+              'このボタンで活動の記録を始められます。\n・既に終わった活動を記録する「記録」モード\n・これから活動を始める「開始」モード\nの二つから記録方法を選択できます。',
             ),
             Divider(
               height: displaySize.width / 6,
@@ -39,7 +41,7 @@ class QuickGuide extends StatelessWidget {
               height: displaySize.width / 20,
             ),
             Text(
-              "活動タイマー",
+              '活動タイマー',
               style: TextStyle(
                 fontSize: FontSize.midium,
                 fontWeight: FontWeight.w700,
@@ -48,8 +50,8 @@ class QuickGuide extends StatelessWidget {
             SizedBox(
               height: displaySize.width / 50,
             ),
-            Text(
-              "記録が「開始」モードだとタイマーが作られます。\nボタンにはそれぞれアクションがあります。\n・左ボタン　　　タイマーのスタート・ストップ\n・中央ボタン　　活動の記録\n・右ボタン　　　タイマーの削除",
+            const Text(
+              '記録が「開始」モードだとタイマーが作られます。\nボタンにはそれぞれアクションがあります。\n・左ボタン　　　タイマーのスタート・ストップ\n・中央ボタン　　活動の記録\n・右ボタン　　　タイマーの削除',
             ),
             Divider(
               height: displaySize.width / 6,
@@ -59,7 +61,7 @@ class QuickGuide extends StatelessWidget {
               height: displaySize.width / 20,
             ),
             Text(
-              "カテゴリー",
+              'カテゴリー',
               style: TextStyle(
                 fontSize: FontSize.midium,
                 fontWeight: FontWeight.w700,
@@ -68,14 +70,14 @@ class QuickGuide extends StatelessWidget {
             SizedBox(
               height: displaySize.width / 50,
             ),
-            Text(
-              "アイコンとタイトルを自由に組み合わせて作ります。\nカテゴリーは最大8個まで設定できます。\nカテゴリーごとに記録のデータを取れます。",
+            const Text(
+              'アイコンとタイトルを自由に組み合わせて作ります。\nカテゴリーは最大8個まで設定できます。\nカテゴリーごとに記録のデータを取れます。',
             ),
             Divider(
               height: displaySize.width / 6,
             ),
             Text(
-              "ガイドの続き",
+              'ガイドの続き',
               style: TextStyle(
                 fontSize: FontSize.midium,
                 fontWeight: FontWeight.w700,
@@ -84,7 +86,7 @@ class QuickGuide extends StatelessWidget {
             SizedBox(
               height: displaySize.width / 50,
             ),
-            Text("Zikanriには他にも便利な機能があります。\n気になる方は設定ページの機能ガイドも見てください。"),
+            const Text('Zikanriには他にも便利な機能があります。\n気になる方は設定ページの機能ガイドも見てください。'),
             SizedBox(
               height: displaySize.width / 10,
             ),
@@ -92,7 +94,7 @@ class QuickGuide extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Text(
-                  "クイックガイドを閉じる",
+                  'クイックガイドを閉じる',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: FontSize.small,
@@ -112,25 +114,6 @@ class QuickGuide extends StatelessWidget {
               height: displaySize.width / 10,
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _AppBar extends StatelessWidget with PreferredSizeWidget {
-  @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
-  @override
-  Widget build(BuildContext context) {
-    final controller = Provider.of<ThemeNotifier>(context);
-    return AppBar(
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      title: Text(
-        "クイックガイド",
-        style: TextStyle(
-          color: controller.isDark ? Colors.white : Colors.black,
         ),
       ),
     );
@@ -195,12 +178,12 @@ class _ActiveTimer extends StatelessWidget {
                           size: displaySize.width / 10,
                           color: Colors.grey,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Flexible(
                           child: Text(
-                            "活動タイトル",
+                            '活動タイトル',
                             overflow: TextOverflow.fade,
                             softWrap: false,
                             style: TextStyle(
@@ -251,7 +234,7 @@ class _ActiveTimer extends StatelessWidget {
                             child: FlatButton(
                               splashColor: Colors.transparent,
                               highlightColor: Colors.transparent,
-                              child: SizedBox(),
+                              child: const SizedBox(),
                               onPressed: () {},
                             ),
                           ),
@@ -271,7 +254,7 @@ class _ActiveTimer extends StatelessWidget {
                             height: displaySize.width / 12,
                             width: displaySize.width / 12,
                             child: FlatButton(
-                              child: SizedBox(),
+                              child: const SizedBox(),
                               splashColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onPressed: () {},
@@ -293,7 +276,7 @@ class _ActiveTimer extends StatelessWidget {
                             height: displaySize.width / 12,
                             width: displaySize.width / 12,
                             child: FlatButton(
-                              child: SizedBox(),
+                              child: const SizedBox(),
                               splashColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onPressed: () {},

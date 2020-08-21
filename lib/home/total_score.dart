@@ -5,6 +5,8 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/rendering.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
+import 'package:zikanri/controller/theme_notifier.dart';
+import 'package:zikanri/controller/user_data_notifier.dart';
 
 import '../data.dart';
 
@@ -39,7 +41,7 @@ class TotalScoreWidget extends StatelessWidget {
       child: Container(
         height: displaySize.width / 2.2 + displaySize.width / 10,
         width: displaySize.width,
-        color: (theme.isDark) ? Color(0XFF303030) : Color(0XFFFAFAFA),
+        color: (theme.isDark) ? const Color(0XFF303030) : const Color(0XFFFAFAFA),
         child: Padding(
           padding: EdgeInsets.all(displaySize.width / 20),
           child: Container(
@@ -49,9 +51,9 @@ class TotalScoreWidget extends StatelessWidget {
               gradient: LinearGradient(colors: theme.themeColors),
               borderRadius:
                   BorderRadius.all(Radius.circular(displaySize.width / 12)),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
-                  spreadRadius: 1.0,
+                  spreadRadius: 1,
                   color: Colors.black26,
                   blurRadius: 10,
                   offset: Offset(10, 10),
@@ -71,7 +73,7 @@ class TotalScoreWidget extends StatelessWidget {
                     IconButton(
                       onPressed: null,
                       iconSize: displaySize.width / 15,
-                      icon: Icon(null),
+                      icon: const Icon(null),
                     ),
                     Text(
                       'Good Rate',

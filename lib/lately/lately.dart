@@ -5,6 +5,8 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/rendering.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
+import 'package:zikanri/controller/theme_notifier.dart';
+import 'package:zikanri/controller/user_data_notifier.dart';
 
 import '../data.dart';
 
@@ -42,13 +44,13 @@ class LatelyPage extends StatelessWidget {
   Widget _dayDone(i, theme, userData) {
     //iは日付に対応したindex
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Card(
         elevation: 5,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(
+            borderRadius: const BorderRadius.all(
               Radius.circular(30),
             ),
             border: Border.all(
@@ -66,7 +68,7 @@ class LatelyPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(
                   '記録',
                   style: TextStyle(
@@ -144,7 +146,7 @@ class LatelyPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 SizedBox(
@@ -171,19 +173,19 @@ class LatelyPage extends StatelessWidget {
 }
 
 class DayData extends StatelessWidget {
-  final l;
-  DayData(this.l);
+  const DayData(this.l);
+  final List l;
 
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
-    GlobalKey _globalKey = GlobalKey();
+    final GlobalKey _globalKey = GlobalKey();
     Future _exportToImage() async {
       Vib.decide();
-      RenderRepaintBoundary boundary =
+      final RenderRepaintBoundary boundary =
           _globalKey.currentContext.findRenderObject();
-      ui.Image image = await boundary.toImage(
-        pixelRatio: 3.0,
+      final ui.Image image = await boundary.toImage(
+        pixelRatio: 3,
       );
       ByteData byteData = await image.toByteData(
         format: ui.ImageByteFormat.png,
@@ -198,9 +200,9 @@ class DayData extends StatelessWidget {
       child: Container(
         height: displaySize.width / 2 + 20,
         width: displaySize.width,
-        color: (theme.isDark) ? Color(0XFF303030) : Color(0XFFFAFAFA),
+        color: (theme.isDark) ? const Color(0XFF303030) : const Color(0XFFFAFAFA),
         child: Padding(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: Card(
             elevation: 5,
             shape: RoundedRectangleBorder(
@@ -209,7 +211,7 @@ class DayData extends StatelessWidget {
             child: Container(
               height: displaySize.width / 2,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(
+                borderRadius: const BorderRadius.all(
                   Radius.circular(30),
                 ),
                 border: Border.all(
@@ -254,7 +256,7 @@ class DayData extends StatelessWidget {
                                   color: Colors.transparent,
                                   splashColor: Colors.transparent,
                                   highlightColor: Colors.transparent,
-                                  child: SizedBox(),
+                                  child: const SizedBox(),
                                   onPressed: () async {
                                     await _exportToImage();
                                   },
@@ -303,7 +305,7 @@ class DayData extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Icon(
+          const Icon(
             Icons.bubble_chart,
           ),
           Text(

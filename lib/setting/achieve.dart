@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zikanri/controller/theme_notifier.dart';
+import 'package:zikanri/controller/user_data_notifier.dart';
 
 import '../data.dart';
 
@@ -56,7 +58,7 @@ class _AchievePageState extends State<AchievePage> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Center(
+                  child: const Center(
                     child: Text('記録'),
                   ),
                   onPressed: () => change(true),
@@ -80,7 +82,7 @@ class _AchievePageState extends State<AchievePage> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Center(
+                  child: const Center(
                     child: Text('ログイン'),
                   ),
                   onPressed: () => change(false),
@@ -105,7 +107,7 @@ class AchiveMiniteWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Text(
@@ -201,7 +203,7 @@ class AchiveDayWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Text(

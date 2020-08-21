@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/data.dart';
 import 'package:zikanri/guide/quick_guide.dart';
 
@@ -41,13 +42,13 @@ class NoticeGuide extends StatelessWidget {
               height: displaySize.width / 20,
             ),
             Text(
-              "Zikanriの使い方について",
+              'Zikanriの使い方について',
               style: TextStyle(
                 fontSize: FontSize.xsmall,
               ),
             ),
             Text(
-              "クイックガイドがあります。",
+              'クイックガイドがあります。',
               style: TextStyle(
                 fontSize: FontSize.xsmall,
               ),
@@ -56,7 +57,7 @@ class NoticeGuide extends StatelessWidget {
               padding: EdgeInsets.all(displaySize.width / 50),
               child: FlatButton(
                 child: Text(
-                  "クイックガイドを読む",
+                  'クイックガイドを読む',
                   style: TextStyle(
                     fontSize: FontSize.xsmall,
                     color: Colors.blue,

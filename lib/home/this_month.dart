@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/data.dart';
 import 'package:provider/provider.dart';
 
@@ -16,12 +17,12 @@ class _TMWidgetState extends State<TMWidget> {
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context);
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(10),
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         elevation: 5,
         child: Container(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           height: displaySize.width / 2.2,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -48,7 +49,7 @@ class _TMWidgetState extends State<TMWidget> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Icon(
+          const Icon(
             Icons.radio_button_checked,
           ),
           Text(

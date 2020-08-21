@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
+import 'package:zikanri/controller/theme_notifier.dart';
+import 'package:zikanri/controller/user_data_notifier.dart';
 
 import '../data.dart';
 
 class CategoryDataPage extends StatelessWidget {
+  const CategoryDataPage(this.index);
   final int index;
-  CategoryDataPage(this.index);
+  
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
@@ -45,7 +48,7 @@ class CategoryDataPage extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: displaySize.width / 20),
         child: Column(
           children: <Widget>[
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -54,7 +57,7 @@ class CategoryDataPage extends StatelessWidget {
                   IconData(icon, fontFamily: 'MaterialIcons'),
                   size: displaySize.width / 10,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 Flexible(
@@ -66,7 +69,7 @@ class CategoryDataPage extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Hero(
@@ -85,7 +88,7 @@ class CategoryDataPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Card(
@@ -102,7 +105,7 @@ class CategoryDataPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          values[0].toString() + "分",
+                          values[0].toString() + '分',
                           softWrap: false,
                           overflow: TextOverflow.fade,
                           style: TextStyle(
@@ -111,7 +114,7 @@ class CategoryDataPage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "記録時間",
+                          '記録時間',
                           style: TextStyle(
                             color: Colors.grey,
                             fontSize: FontSize.xxsmall,
@@ -132,7 +135,7 @@ class CategoryDataPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          values[1].toString() + "分",
+                          values[1].toString() + '分',
                           softWrap: false,
                           overflow: TextOverflow.fade,
                           style: TextStyle(
@@ -141,7 +144,7 @@ class CategoryDataPage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "価値時間",
+                          '価値時間',
                           style: TextStyle(
                             color: Colors.grey,
                             fontSize: FontSize.xxsmall,

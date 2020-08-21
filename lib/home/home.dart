@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/guide/notice_guide.dart';
 
 import 'total_score.dart';
@@ -85,7 +86,7 @@ class _NoticeGuide extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Provider.of<UserDataNotifier>(context);
     if (controller.readGuide) {
-      return SizedBox();
+      return const SizedBox();
     } else {
       return NoticeGuide();
     }

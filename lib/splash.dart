@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:package_info/package_info.dart';
+import 'package:zikanri/controller/theme_notifier.dart';
+import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/update_notice.dart';
 
 import 'mypage.dart';
@@ -39,8 +41,8 @@ class _SplashPageState extends State<SplashPage> {
     //await Hive.box('theme').clear();
     //await Hive.box('userData').clear();
     if (Hive.box('userData').containsKey('welcome')) {
-      final date = DateFormat("yyyy年MM月dd日").format(DateTime.now());
-      final month = DateFormat("MM").format(DateTime.now());
+      final date = DateFormat('yyyy年MM月dd日').format(DateTime.now());
+      final month = DateFormat('MM').format(DateTime.now());
       if (date != Hive.box('userData').get('previousDate')) {
         var box = Hive.box('userData');
         await box.put('previousDate', date);
@@ -70,27 +72,10 @@ class _SplashPageState extends State<SplashPage> {
       await theme.initialize();
       await userData.initialize();
       await userData.checkDay();
-      //versionがない場合：1.0.0ユーザー
-      if (!Hive.box('userData').containsKey('version')) {
-        await Hive.box('userData').delete('tutorial');
-        await Hive.box('userData').put('version', '1.0.0');
-        await Hive.box('userData').put('readGuide', true);
-        userData.addGuide();
+      //version違う場合：1.1.0～ユーザー
+      if (version != await Hive.box('userData').get('version')) {
         Future.delayed(
-          Duration(seconds: 1),
-          () => Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => UpdateNoticePage(
-                newVersion: version,
-              ),
-            ),
-          ),
-        );
-        //version違う場合：1.1.0～ユーザー
-      } else if (version != await Hive.box('userData').get('version')) {
-        Future.delayed(
-          Duration(seconds: 1),
+          const Duration(seconds: 1),
           () => Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -104,7 +89,7 @@ class _SplashPageState extends State<SplashPage> {
       //version合ってる場合
       else {
         Future.delayed(
-          Duration(seconds: 1),
+          const Duration(seconds: 1),
           () => Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -116,7 +101,7 @@ class _SplashPageState extends State<SplashPage> {
       //初めての場合
     } else {
       Future.delayed(
-        Duration(seconds: 1),
+        const Duration(seconds: 1),
         () => Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -139,14 +124,14 @@ class _SplashPageState extends State<SplashPage> {
     }
 
     return Scaffold(
-      backgroundColor: Color(0XFFFAFAFA),
+      backgroundColor: const Color(0XFFFAFAFA),
       body: Stack(
         children: <Widget>[
           Center(
             child: SizedBox(
               height: displaySize.width / 2,
               width: displaySize.width / 2,
-              child: Image(
+              child: const Image(
                 image: AssetImage('images/zikanri_shaped.png'),
               ),
             ),
@@ -160,7 +145,7 @@ class _SplashPageState extends State<SplashPage> {
                 style: TextStyle(
                   fontSize: FontSize.big,
                   fontWeight: FontWeight.w700,
-                  color: Color(0XFF3A405A),
+                  color: const Color(0XFF3A405A),
                 ),
               ),
             ),

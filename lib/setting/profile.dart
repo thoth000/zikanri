@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:zikanri/controller/theme_notifier.dart';
+import 'package:zikanri/controller/user_data_notifier.dart';
 
 import '../data.dart';
 
 class ProfileSettingPage extends StatelessWidget {
+  final nameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
@@ -21,20 +23,20 @@ class ProfileSettingPage extends StatelessWidget {
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.check),
+            icon: const Icon(Icons.check),
             onPressed: () async {
-              await userData.editProfile();
+              await userData.editProfile(nameController.text);
             },
           ),
         ],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
-          horizontal: 10.0,
+          horizontal: 10,
         ),
         child: ListView(
           children: <Widget>[
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Text(
@@ -44,7 +46,7 @@ class ProfileSettingPage extends StatelessWidget {
                 fontSize: FontSize.small,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Text(
@@ -54,7 +56,7 @@ class ProfileSettingPage extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Text(
@@ -67,6 +69,8 @@ class ProfileSettingPage extends StatelessWidget {
             SizedBox(
               height: displaySize.width / 6,
               child: TextField(
+                controller: nameController,
+                maxLength: 94,
                 cursorColor: (theme.isDark)
                     ? theme.themeColors[0]
                     : theme.themeColors[1],
@@ -83,15 +87,9 @@ class ProfileSettingPage extends StatelessWidget {
                   fontSize: FontSize.midium,
                   fontWeight: FontWeight.w700,
                 ),
-                inputFormatters: [
-                  LengthLimitingTextInputFormatter(94),
-                ],
-                onChanged: (name) {
-                  userData.nameChange(name);
-                },
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
           ],

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:zikanri/data.dart';
+import 'package:zikanri/parts/general_app_bar.dart';
 
 class FeatureGuide extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _AppBar(),
+      appBar: GeneralAppBar(
+        pageTitle: '機能ガイド',
+      ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: displaySize.width / 20),
         child: ListView(
@@ -19,7 +21,7 @@ class FeatureGuide extends StatelessWidget {
               height: displaySize.width / 20,
             ),
             Text(
-              "記録データの集計",
+              '記録データの集計',
               style: TextStyle(
                 fontSize: FontSize.midium,
                 fontWeight: FontWeight.w700,
@@ -28,8 +30,8 @@ class FeatureGuide extends StatelessWidget {
             SizedBox(
               height: displaySize.width / 50,
             ),
-            Text(
-              "時間価値・記録した日付・カテゴリーで\n記録データを分析します。\n振り返ることで気づきがあるかもしれません。",
+            const Text(
+              '時間価値・記録した日付・カテゴリーで\n記録データを分析します。\n振り返ることで気づきがあるかもしれません。',
             ),
             Divider(
               height: displaySize.width / 6,
@@ -39,7 +41,7 @@ class FeatureGuide extends StatelessWidget {
               height: displaySize.width / 20,
             ),
             Text(
-              "SNSシェア",
+              'SNSシェア',
               style: TextStyle(
                 fontSize: FontSize.midium,
                 fontWeight: FontWeight.w700,
@@ -48,8 +50,8 @@ class FeatureGuide extends StatelessWidget {
             SizedBox(
               height: displaySize.width / 50,
             ),
-            Text(
-              "集計した記録データをSNSを使って共有できます。\n上のような共有ボタンを押すとシェア画面が開きます。",
+            const Text(
+              '集計した記録データをSNSを使って共有できます。\n上のような共有ボタンを押すとシェア画面が開きます。',
             ),
             Divider(
               height: displaySize.width / 6,
@@ -59,7 +61,7 @@ class FeatureGuide extends StatelessWidget {
               height: displaySize.width / 20,
             ),
             Text(
-              "テーマ・実績",
+              'テーマ・実績',
               style: TextStyle(
                 fontSize: FontSize.midium,
                 fontWeight: FontWeight.w700,
@@ -68,8 +70,8 @@ class FeatureGuide extends StatelessWidget {
             SizedBox(
               height: displaySize.width / 50,
             ),
-            Text(
-              "アプリのテーマを最大12種類から選べます。\n実績はアプリを使い込むことで解除されて\n毎回新しいテーマを獲得できます。\nお気に入りのテーマを選びましょう。",
+            const Text(
+              'アプリのテーマを最大12種類から選べます。\n実績はアプリを使い込むことで解除されて\n毎回新しいテーマを獲得できます。\nお気に入りのテーマを選びましょう。',
             ),
             Divider(
               height: displaySize.width / 6,
@@ -79,7 +81,7 @@ class FeatureGuide extends StatelessWidget {
               height: displaySize.width / 20,
             ),
             Text(
-              "記録のショートカット",
+              '記録のショートカット',
               style: TextStyle(
                 fontSize: FontSize.midium,
                 fontWeight: FontWeight.w700,
@@ -88,10 +90,10 @@ class FeatureGuide extends StatelessWidget {
             SizedBox(
               height: displaySize.width / 50,
             ),
-            Text(
-                "記録が面倒ではありませんか？\nジカンリにはショートカット機能がついています。\n「記録する」「開始する」ボタンを長押しすると\n記録だけでなくショートカットにも保存されます。"),
-            Text(
-              "保存したショートカットを使うには\n記録ボタンを長押しするだけです。",
+            const Text(
+                '記録が面倒ではありませんか？\nジカンリにはショートカット機能がついています。\n「記録する」「開始する」ボタンを長押しすると\n記録だけでなくショートカットにも保存されます。'),
+            const Text(
+              '保存したショートカットを使うには\n記録ボタンを長押しするだけです。',
             ),
             RecordButton(),
             Divider(
@@ -104,7 +106,7 @@ class FeatureGuide extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Text(
-                  "機能ガイドを閉じる",
+                  '機能ガイドを閉じる',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: FontSize.small,
@@ -124,25 +126,6 @@ class FeatureGuide extends StatelessWidget {
               height: displaySize.width / 10,
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _AppBar extends StatelessWidget with PreferredSizeWidget {
-  @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
-  @override
-  Widget build(BuildContext context) {
-    final controller = Provider.of<ThemeNotifier>(context);
-    return AppBar(
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      title: Text(
-        "機能ガイド",
-        style: TextStyle(
-          color: controller.isDark ? Colors.white : Colors.black,
         ),
       ),
     );
@@ -229,7 +212,7 @@ class _ShortCut extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        item("ショートカットで時短", "記録"),
+        item('ショートカットで時短', '記録'),
       ],
     );
   }
@@ -298,13 +281,13 @@ class RecordButton extends StatelessWidget {
           onPressed: () {
             Vib.decide();
             Scaffold.of(context).showSnackBar(
-              snackBar("長押しができていません。"),
+              snackBar('長押しができていません。'),
             );
           },
           onLongPress: () {
             Vib.shortCut();
             Scaffold.of(context).showSnackBar(
-              snackBar("ショートカットに保存しました。"),
+              snackBar('ショートカットに保存しました。'),
             );
           },
           child: Text(
@@ -323,7 +306,7 @@ class RecordButton extends StatelessWidget {
     return SnackBar(
       behavior: SnackBarBehavior.floating,
       content: Text(title),
-      duration: Duration(milliseconds: 1500),
+      duration: const Duration(milliseconds: 1500),
     );
   }
 }

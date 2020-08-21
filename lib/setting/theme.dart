@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zikanri/controller/theme_notifier.dart';
+import 'package:zikanri/controller/user_data_notifier.dart';
 
 import '../data.dart';
 
@@ -36,7 +38,7 @@ class ThemeSettingPage extends StatelessWidget {
                     gradient: LinearGradient(colors: theme.themeColors),
                     borderRadius: BorderRadius.all(
                         Radius.circular(displaySize.width / 12)),
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                         spreadRadius: 1.0,
                         color: Colors.black26,
@@ -58,7 +60,7 @@ class ThemeSettingPage extends StatelessWidget {
                           IconButton(
                             onPressed: null,
                             iconSize: displaySize.width / 15,
-                            icon: Icon(null),
+                            icon: const Icon(null),
                           ),
                           Text(
                             'Good Rate',
@@ -118,7 +120,7 @@ class ThemeSettingPage extends StatelessWidget {
           Container(
             height: displaySize.width / 9,
             width: displaySize.width,
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -156,7 +158,7 @@ class ThemeSettingPage extends StatelessWidget {
                   style: TextStyle(
                       fontSize: FontSize.midium, fontWeight: FontWeight.w700),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Wrap(
@@ -175,7 +177,7 @@ class ThemeSettingPage extends StatelessWidget {
 }
 
 class _ThemeChanger extends StatelessWidget {
-  _ThemeChanger(this.i);
+  const _ThemeChanger(this.i);
   final int i;
   @override
   Widget build(BuildContext context) {

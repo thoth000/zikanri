@@ -2,27 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zikanri/category/icon.dart';
 import 'package:zikanri/category/name.dart';
+import 'package:zikanri/controller/theme_notifier.dart';
+import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/data.dart';
+import 'package:zikanri/parts/general_app_bar.dart';
 
 class CategoryEditPage extends StatelessWidget {
-  CategoryEditPage({this.index});
+  const CategoryEditPage({this.index});
   final int index;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _AppBar(),
+      appBar: GeneralAppBar(
+        pageTitle: 'カテゴリーの編集',
+      ),
       body: Column(
         children: [
           _CategoryName(
             index: index,
           ),
-          Divider(
+          const Divider(
             height: 0,
           ),
           _CategoryIcon(
             index: index,
           ),
-          Divider(
+          const Divider(
             height: 0,
           ),
           _ViewSwitch(
@@ -40,35 +45,16 @@ class CategoryEditPage extends StatelessWidget {
   }
 }
 
-class _AppBar extends StatelessWidget with PreferredSizeWidget {
-  @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
-  @override
-  Widget build(BuildContext context) {
-    final controller = Provider.of<ThemeNotifier>(context);
-    return AppBar(
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      title: Text(
-        "カテゴリーの編集",
-        style: TextStyle(
-          color: controller.isDark ? Colors.white : Colors.black,
-        ),
-      ),
-    );
-  }
-}
-
 class _CategoryName extends StatelessWidget {
-  _CategoryName({this.index});
+  const _CategoryName({this.index});
   final int index;
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context);
-    String text = userData.categories[index][1];
+    final String text = userData.categories[index][1];
     return ListTile(
       leading: Text(
-        "名前　　 ",
+        '名前　　 ',
         style: TextStyle(
           color: Colors.grey,
           fontSize: FontSize.xsmall,
@@ -79,13 +65,13 @@ class _CategoryName extends StatelessWidget {
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
-      trailing: Icon(
+      trailing: const Icon(
         Icons.arrow_forward_ios,
         color: Colors.grey,
       ),
       onTap: () {
         showModalBottomSheet(
-          shape: RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
           ),
           context: context,
@@ -101,15 +87,15 @@ class _CategoryName extends StatelessWidget {
 }
 
 class _CategoryIcon extends StatelessWidget {
-  _CategoryIcon({this.index});
+  const _CategoryIcon({this.index});
   final int index;
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context);
-    int iconNum = userData.categories[index][0];
+    final int iconNum = userData.categories[index][0];
     return ListTile(
       leading: Text(
-        "アイコン ",
+        'アイコン ',
         style: TextStyle(
           color: Colors.grey,
           fontSize: FontSize.xsmall,
@@ -120,12 +106,12 @@ class _CategoryIcon extends StatelessWidget {
           Icon(
             IconData(
               iconNum,
-              fontFamily: "MaterialIcons",
+              fontFamily: 'MaterialIcons',
             ),
           ),
         ],
       ),
-      trailing: Icon(
+      trailing: const Icon(
         Icons.arrow_forward_ios,
         color: Colors.grey,
       ),
@@ -145,8 +131,8 @@ class _CategoryIcon extends StatelessWidget {
 }
 
 class _ViewSwitch extends StatelessWidget {
-  _ViewSwitch({this.index});
-  final index;
+  const _ViewSwitch({this.index});
+  final int index;
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
@@ -154,13 +140,13 @@ class _ViewSwitch extends StatelessWidget {
         Provider.of<UserDataNotifier>(context).categoryView[index];
     return ListTile(
       leading: Text(
-        "表示　　 ",
+        '表示　　 ',
         style: TextStyle(
           color: Colors.grey,
           fontSize: FontSize.xsmall,
         ),
       ),
-      title: Text(boolean ? "表示中" : "非表示"),
+      title: Text(boolean ? '表示中' : '非表示'),
       trailing: Switch(
         value: boolean,
         activeColor:
@@ -176,7 +162,7 @@ class _ViewSwitch extends StatelessWidget {
 }
 
 class _DeleteData extends StatelessWidget {
-  _DeleteData({this.index});
+  const _DeleteData({this.index});
   final int index;
   @override
   Widget build(BuildContext context) {
@@ -188,17 +174,17 @@ class _DeleteData extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          title: Text('リセット'),
-          content: Text('このカテゴリーの記録が全てリセットされます。\nそれでもよろしいですか？'),
+          title: const Text('リセット'),
+          content: const Text('このカテゴリーの記録が全てリセットされます。\nそれでもよろしいですか？'),
           actions: <Widget>[
             FlatButton(
-              child: Text('いいえ'),
+              child: const Text('いいえ'),
               onPressed: () {
                 Navigator.pop(context);
               },
             ),
             FlatButton(
-              child: Text('はい'),
+              child: const Text('はい'),
               onPressed: () {
                 userData.resetCategory(index);
                 Navigator.pop(context);
@@ -222,7 +208,7 @@ class _DeleteData extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(15),
               child: Text(
-                "リセットする",
+                'リセットする',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: FontSize.small,
