@@ -32,12 +32,11 @@ class _SplashPageState extends State<SplashPage> {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     String version = packageInfo.version;
     print(version);
-
-    final theme = Provider.of<ThemeNotifier>(context, listen: false);
-    final userData = Provider.of<UserDataNotifier>(context, listen: false);
     await Hive.initFlutter();
     await Hive.openBox('theme');
     await Hive.openBox('userData');
+    final theme = Provider.of<ThemeNotifier>(context, listen: false);
+    final userData = Provider.of<UserDataNotifier>(context, listen: false);
     //await Hive.box('theme').clear();
     //await Hive.box('userData').clear();
     if (Hive.box('userData').containsKey('welcome')) {
@@ -71,7 +70,7 @@ class _SplashPageState extends State<SplashPage> {
       }
       await theme.initialize();
       await userData.initialize();
-      await userData.checkDay();
+      await userData.updateCheckD(1);
       //version違う場合：1.1.0～ユーザー
       if (version != await Hive.box('userData').get('version')) {
         Future.delayed(

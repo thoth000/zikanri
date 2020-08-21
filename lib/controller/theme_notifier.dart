@@ -4,6 +4,8 @@ import 'package:zikanri/data.dart';
 
 //changeNotifier for theme
 class ThemeNotifier with ChangeNotifier {
+  final themeBox = Hive.box('theme');
+
   bool _isDark = false;
   bool get isDark => _isDark;
   int _themeColorsIndex = 0;
@@ -30,20 +32,25 @@ class ThemeNotifier with ChangeNotifier {
     Vib.select();
     _isDark = !_isDark;
     notifyListeners();
-    await Hive.box('theme').put('isDark', _isDark);
+    await themeBox.put('isDark', _isDark);
   }
 
   Future changeTheme(int i) async {
     Vib.select();
     _themeColorsIndex = i;
     notifyListeners();
-    await Hive.box('theme').put('themeColorsIndex', _themeColorsIndex);
+    await themeBox.put('themeColorsIndex', _themeColorsIndex);
   }
 
   Future initialize() async {
-    var box = Hive.box('theme');
-    _isDark = await box.get('isDark');
-    _themeColorsIndex = await box.get('themeColorsIndex');
+    _isDark = await themeBox.get('isDark');
+    _themeColorsIndex = await themeBox.get('themeColorsIndex');
     notifyListeners();
+  }
+
+  Future firstOpenDataSet() async {
+    await themeBox.put('isDark', false);
+    await themeBox.put('themeColorsIndex', 0);
+    await initialize();
   }
 }

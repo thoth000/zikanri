@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
@@ -18,111 +16,8 @@ class WelcomePage extends StatelessWidget {
 
     void makeDir() async {
       //アプリ初回起動時の動作
-      var firstdate = DateFormat('yyyy年MM月dd日').format(DateTime.now());
-      var firstMonth = DateFormat('MM').format(DateTime.now());
-      var themeBox = Hive.box('theme');
-      var userDataBox = Hive.box('userData');
-      // theme
-      await themeBox.put('isDark', false);
-      await themeBox.put('themeColorsIndex', 0);
-      // userData
-      await userDataBox.put('welcome', 'Yey!');
-      await userDataBox.put('version', version);
-      await userDataBox.put('readGuide', false);
-      await userDataBox.put('myColors', [
-        true,
-        true,
-        true,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false
-      ]);
-      await userDataBox.put('checkM', [false, false, false, false, false]);
-      await userDataBox.put('checkD', [true, false, false, false, false]);
-      /*userValue=[
-        all       Time,Good,Per,
-        thisMonth Time,Good,Per,
-        today     Time,Good,Per
-      ]*/
-      await userDataBox.put('userValue', [0, 0, 0, 0, 0, 0, 0, 0, 0]);
-      //latelyData=[date,totaltime,goodtime,percent,donelist]
-      await userDataBox.put('latelyData', [
-        [firstdate, 0, 0, 0, []],
-      ]);
-      await userDataBox.put('todayDoneList', []);
-      //shortcut=[icon,title,time,isGood,keynum,isRecord]
-      await userDataBox.put(
-        'shortCuts',
-        [
-          [0, '二度寝', 120, false, 3, true],
-          [0, 'ひと狩り', 0, false, 4, false],
-        ],
-      );
-      //category=[iconNumber,title,data[total,good,percent]]
-      await userDataBox.put(
-        'categories',
-        [
-          [
-            57746,
-            '指定なし',
-            [0, 0, 0]
-          ],
-          [
-            57746,
-            '',
-            [0, 0, 0]
-          ],
-          [
-            57746,
-            '',
-            [0, 0, 0]
-          ],
-          [
-            57746,
-            '',
-            [0, 0, 0]
-          ],
-          [
-            57746,
-            '',
-            [0, 0, 0]
-          ],
-          [
-            57746,
-            '',
-            [0, 0, 0]
-          ],
-          [
-            57746,
-            '',
-            [0, 0, 0]
-          ],
-          [
-            57746,
-            '',
-            [0, 0, 0]
-          ],
-        ],
-      );
-      await userDataBox.put('categoryView',
-          [true, false, false, false, false, false, false, false]);
-      await userDataBox.put('keynum', 5);
-      await userDataBox.put('activities', []);
-      await userDataBox.put('userName', 'ゲスト');
-      await userDataBox.put('previousDate', firstdate);
-      await userDataBox.put('thisMonth', firstMonth);
-      await userDataBox.put('passedDays', 1);
-      await userDataBox.put('totalPassedDays', 1);
-      await theme.initialize();
-      await userData.initialize();
+      await theme.firstOpenDataSet();
+      await userData.firstOpneDataSet(version);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zikanri/controller/theme_notifier.dart';
+import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/data.dart';
 import 'package:zikanri/parts/general_app_bar.dart';
 import 'package:zikanri/service/auth.dart';
+import 'package:zikanri/service/store_service.dart';
 import 'package:zikanri/takeover/result_dialog.dart';
 import 'package:zikanri/takeover/sign_up.dart';
 
@@ -125,6 +127,10 @@ class _SignInPageState extends State<SignInPage> {
                         } else if (result == 'error:unknown') {
                           result = 'データを呼び出せませんでした。';
                         } else {
+                          List achive = await StoreService().getUserData(result);
+                          await StoreService().getUserCategory(result);
+                          await Provider.of<UserDataNotifier>(context, listen:false).takeOver(achive[0], achive[1]);
+                          await Provider.of<ThemeNotifier>(context, listen: false).firstOpenDataSet();
                           result = '正常にデータを引き継ぎました。';
                         }
                         await showDialog(

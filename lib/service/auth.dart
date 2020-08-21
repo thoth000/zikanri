@@ -43,8 +43,6 @@ class Auth {
           '[firebase_auth/wrong-password] The password is invalid or the user does not have a password.') {
         return 'error:password';
       }
-      print('ココ');
-      print(error);
       return 'error:unknown';
     }
   }
