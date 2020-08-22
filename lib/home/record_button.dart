@@ -212,7 +212,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                 style: TextStyle(
                     fontSize: FontSize.large, fontWeight: FontWeight.w700),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Padding(
@@ -262,7 +262,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: Center(
+                        child: const Center(
                           child: Text('開始する'),
                         ),
                         onPressed: record.startMode,
@@ -291,7 +291,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                           style: _headlineStyle,
                         ),
                         Container(
-                          margin: EdgeInsets.only(top: 5),
+                          margin: const EdgeInsets.only(top: 5),
                           decoration: _decorationStyle,
                           padding: const EdgeInsets.symmetric(
                             horizontal: 5,
@@ -407,7 +407,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                             ],
                           )
                         : SizedBox(),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Column(
@@ -544,7 +544,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                               (userData.categoryView[i])
                                   ? Padding(
                                       padding: const EdgeInsets.only(
-                                          right: 5, bottom: 10),
+                                          right: 5, bottom: 10,),
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
@@ -594,9 +594,9 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                                                         RoundedRectangleBorder(
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              10),
+                                                              10,),
                                                     ),
-                                                    child: SizedBox(),
+                                                    child: const SizedBox(),
                                                     color: Colors.transparent,
                                                     onPressed: () => record
                                                         .changeCategoryIndex(i),
@@ -810,7 +810,7 @@ class ShortCutSheet extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: <Widget>[
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   for (var itemList in userData.shortCuts)
@@ -865,7 +865,7 @@ class ShortCutSheet extends StatelessWidget {
                                               : Colors.grey,
                                           size: displaySize.width / 10,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 10,
                                         ),
                                         Flexible(
@@ -881,7 +881,7 @@ class ShortCutSheet extends StatelessWidget {
                                       ],
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   ),
                                   Container(
@@ -929,11 +929,11 @@ class ShortCutsEditPage extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          title: Text('削除'),
-          content: Text('ショートカットを削除しますか？'),
+          title: const Text('削除'),
+          content: const Text('ショートカットを削除しますか？'),
           actions: <Widget>[
             FlatButton(
-              child: Text('いいえ'),
+              child: const Text('いいえ'),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -956,7 +956,7 @@ class ShortCutsEditPage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         title: Text(
           'ショートカットの編集',
-          style: TextStyle(color: theme.isDark ? Colors.white : Colors.black),
+          style: TextStyle(color: theme.isDark ? Colors.white : Colors.black,),
         ),
       ),
       body: Column(
