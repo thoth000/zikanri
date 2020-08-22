@@ -1,14 +1,17 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
+//dart
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+
+//packages
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:provider/provider.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
+
+//my files
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
-
-import '../data.dart';
+import 'package:zikanri/data.dart';
 
 class LatelyPage extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -200,7 +203,8 @@ class DayData extends StatelessWidget {
       child: Container(
         height: displaySize.width / 2 + 20,
         width: displaySize.width,
-        color: (theme.isDark) ? const Color(0XFF303030) : const Color(0XFFFAFAFA),
+        color:
+            (theme.isDark) ? const Color(0XFF303030) : const Color(0XFFFAFAFA),
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Card(

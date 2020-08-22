@@ -1,7 +1,11 @@
+//packages
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+//my files
 import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/data.dart';
-import 'package:provider/provider.dart';
+
 
 class TMWidget extends StatefulWidget {
   @override

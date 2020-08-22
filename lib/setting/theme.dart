@@ -1,9 +1,11 @@
+//packages
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+//my files
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
-
-import '../data.dart';
+import 'package:zikanri/data.dart';
 
 class ThemeSettingPage extends StatelessWidget {
   @override

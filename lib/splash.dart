@@ -1,27 +1,25 @@
+//dart
 import 'dart:async';
 
+//packages
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-
 import 'package:package_info/package_info.dart';
+
+//my files
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/update_notice.dart';
-
-import 'mypage.dart';
-import 'welcome.dart';
-import 'data.dart';
+import 'package:zikanri/mypage.dart';
+import 'package:zikanri/welcome.dart';
+import 'package:zikanri/data.dart';
 
 class SplashPage extends StatefulWidget {
   _SplashPageState createState() => _SplashPageState();
 }
 
 class _SplashPageState extends State<SplashPage> {
-  var box1;
-  var box2;
   @override
   void initState() {
     super.initState();
@@ -32,46 +30,16 @@ class _SplashPageState extends State<SplashPage> {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     String version = packageInfo.version;
     print(version);
-
+    final userDataBox = await Hive.openBox('userData');
     final theme = Provider.of<ThemeNotifier>(context, listen: false);
     final userData = Provider.of<UserDataNotifier>(context, listen: false);
-    await Hive.initFlutter();
-    await Hive.openBox('theme');
-    await Hive.openBox('userData');
     //await Hive.box('theme').clear();
     //await Hive.box('userData').clear();
-    if (Hive.box('userData').containsKey('welcome')) {
-      final date = DateFormat('yyyy年MM月dd日').format(DateTime.now());
-      final month = DateFormat('MM').format(DateTime.now());
-      if (date != Hive.box('userData').get('previousDate')) {
-        var box = Hive.box('userData');
-        await box.put('previousDate', date);
-        await box.put('todayDoneList', []);
-        box1 = box.get('latelyData');
-        if (box1.length >= 8) {
-          box1.removeAt(0);
-        }
-        box1.add([date, 0, 0, 0, []]);
-        await box.put('latelyData', box1);
-        box2 = box.get('userValue');
-        if (month != box.get('thisMonth')) {
-          box2[3] = 0;
-          box2[4] = 0;
-          box2[5] = 0;
-          await box.put('thisMonth', month);
-          await box.put('passedDays', 1);
-        } else {
-          await box.put('passedDays', box.get('passedDays') + 1);
-        }
-        box2[6] = 0;
-        box2[7] = 0;
-        box2[8] = 0;
-        await box.put('userValue', box2);
-        await box.put('totalPassedDays', box.get('totalPassedDays') + 1);
-      }
+    if (userDataBox.containsKey('welcome')) {
+      await userData.splashFunc();
       await theme.initialize();
       await userData.initialize();
-      await userData.checkDay();
+      await userData.updateCheckD(userDataBox.get('totalPassedDays'));
       //version違う場合：1.1.0～ユーザー
       if (version != await Hive.box('userData').get('version')) {
         Future.delayed(

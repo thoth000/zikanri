@@ -1,9 +1,12 @@
+//packages
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
+
+//my files
 import 'package:zikanri/controller/user_data_notifier.dart';
-import 'package:zikanri/data.dart';
 import 'package:zikanri/mypage.dart';
+import 'package:zikanri/data.dart';
 
 class UpdateNoticePage extends StatelessWidget {
   const UpdateNoticePage({
@@ -20,7 +23,7 @@ class UpdateNoticePage extends StatelessWidget {
           ),
           Center(
             child: Text(
-              'Ver.1.3.0',
+              'Ver.1.4.0',
               style: TextStyle(
                 fontSize: FontSize.xlarge,
                 fontWeight: FontWeight.w700,
@@ -30,9 +33,9 @@ class UpdateNoticePage extends StatelessWidget {
           SizedBox(
             height: displaySize.width / 8,
           ),
-          _Privacy(),
+          _Cloud(),
           SizedBox(height: displaySize.width / 10),
-          _AddTime(),
+          _Takeover(),
           SizedBox(
             height: displaySize.width / 10,
           ),
@@ -58,7 +61,8 @@ class UpdateNoticePage extends StatelessWidget {
               ),
               onPressed: () async {
                 await Hive.box('userData').put('version', newVersion);
-                await Provider.of<UserDataNotifier>(context).initialize();
+                await Provider.of<UserDataNotifier>(context, listen: false)
+                    .initialize();
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
@@ -77,7 +81,7 @@ class UpdateNoticePage extends StatelessWidget {
   }
 }
 
-class _Privacy extends StatelessWidget {
+class _Cloud extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -94,14 +98,14 @@ class _Privacy extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                'プライバシー',
+                'データの保存',
                 style: TextStyle(
                   fontSize: FontSize.midium,
                   fontWeight: FontWeight.w700,
                 ),
               ),
               Text(
-                'アプリ利用のうえでプライバシーポリシーを明記しました。',
+                'ネット上にデータを保存できるようになりました。（ログイン必要）',
                 style: TextStyle(
                   fontSize: FontSize.small,
                 ),
@@ -118,14 +122,14 @@ class _Privacy extends StatelessWidget {
 
   Widget item() {
     return Icon(
-      Icons.assignment,
+      Icons.cloud_upload,
       color: Colors.blue,
       size: displaySize.width / 5,
     );
   }
 }
 
-class _AddTime extends StatelessWidget {
+class _Takeover extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -142,14 +146,14 @@ class _AddTime extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                '時間の追記',
+                'データの引き継ぎ',
                 style: TextStyle(
                   fontSize: FontSize.midium,
                   fontWeight: FontWeight.w700,
                 ),
               ),
               Text(
-                '記録時間をあとから追加できるようにしました。',
+                '他の端末にデータを引き継げるようになりました。（ログイン必要）',
                 style: TextStyle(
                   fontSize: FontSize.small,
                 ),
@@ -166,7 +170,7 @@ class _AddTime extends StatelessWidget {
 
   Widget item() {
     return Icon(
-      Icons.add_circle_outline,
+      Icons.directions_car,
       color: Colors.green,
       size: displaySize.width / 5,
     );

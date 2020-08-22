@@ -1,12 +1,14 @@
+//packages
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
+
+//my files
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/previous_records/category_data.dart';
-
-import '../data.dart';
+import 'package:zikanri/data.dart';
 
 class PRPage extends StatelessWidget {
   @override
@@ -68,7 +70,9 @@ class PRPage extends StatelessWidget {
                         ),
                         child: GridCard(i),
                       )
-                    : Container(),
+                    : SizedBox(
+                        width: 0,
+                      ),
             ],
           ),
           SizedBox(
@@ -92,12 +96,17 @@ class PRPage extends StatelessWidget {
           child: Text(
             value,
             style: TextStyle(
-                fontSize: FontSize.xlarge, fontWeight: FontWeight.w700),
+              fontSize: FontSize.xlarge,
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ),
         Text(
           title,
-          style: TextStyle(fontSize: FontSize.xsmall, color: Colors.grey),
+          style: TextStyle(
+            fontSize: FontSize.xsmall,
+            color: Colors.grey,
+          ),
         ),
       ],
     );
@@ -107,7 +116,7 @@ class PRPage extends StatelessWidget {
 class GridCard extends StatelessWidget {
   const GridCard(this.index);
   final int index;
-  
+
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
@@ -138,7 +147,7 @@ class GridCard extends StatelessWidget {
       ),
     ];
     return SizedBox(
-      width: displaySize.width / 2,
+      width: displaySize.width / 2.01,
       child: Center(
         child: SizedBox(
           height: displaySize.width / 2.8,

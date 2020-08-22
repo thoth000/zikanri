@@ -1,15 +1,17 @@
+//packages
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
+
+//my files
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
-
-import '../data.dart';
+import 'package:zikanri/data.dart';
 
 class CategoryDataPage extends StatelessWidget {
   const CategoryDataPage(this.index);
   final int index;
-  
+
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);

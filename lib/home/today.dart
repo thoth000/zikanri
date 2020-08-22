@@ -1,9 +1,13 @@
+//packages
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
+
+//my files
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/data.dart';
-import 'package:provider/provider.dart';
+
 
 class TodayWidget extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -325,9 +329,7 @@ class _AddSheetState extends State<AddSheet> {
                       child: Text(
                         '保存する',
                         style: TextStyle(
-                          color: (time > 0 && time < 501)
-                              ? null
-                              : Colors.grey,
+                          color: (time > 0 && time < 501) ? null : Colors.grey,
                           fontSize: FontSize.small,
                           fontWeight: FontWeight.w700,
                         ),

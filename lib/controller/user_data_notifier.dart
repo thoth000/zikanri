@@ -1,9 +1,15 @@
+//packages
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
+
+//my files
 import 'package:zikanri/data.dart';
 
 //changeNotifier for userData
 class UserDataNotifier with ChangeNotifier {
+  final userDataBox = Hive.box('userData');
+
   String userName = 'ゲスト';
   String previousDate = '2020年01月01日';
   String thisMonth = '01';
@@ -78,7 +84,7 @@ class UserDataNotifier with ChangeNotifier {
 
   //リストはHive保存のため構造体（Class）に代替しない。プログラムは複雑になるが処理は他の保存・読み込み手段に比べて速い。
 
-  Future checkGuide() async {
+  Future<void> checkGuide() async {
     readGuide = true;
     await Hive.box('userData').put('readGuide', readGuide);
     notifyListeners();
@@ -90,57 +96,43 @@ class UserDataNotifier with ChangeNotifier {
     notifyListeners();
   }
 
-  Future checkDay() async {
-    for (int i = 0; i < achiveD.length; i++) {
-      if (!checkD[i]) {
-        if (totalPassedDays >= achiveD[i]) {
-          checkD[i] = true;
-          myColors[2 * i + 2] = true;
-        }
-      }
-    }
-    notifyListeners();
-    await Hive.box('userData').put('myColors', _myColors);
-    await Hive.box('userData').put('checkD', checkD);
-  }
-
-  Future addTheme(int i) async {
+  Future<void> addTheme(int i) async {
     _myColors[i] = true;
-    await Hive.box('userData').put('myColors', _myColors);
+    await userDataBox.put('myColors', _myColors);
     notifyListeners();
   }
 
-  Future editProfile(String name) async {
+  Future<void> editProfile(String name) async {
     userName = name;
     notifyListeners();
-    await Hive.box('userData').put('userName', userName);
+    await userDataBox.put('userName', userName);
   }
 
-  Future dicideCategory() async {
+  Future<void> dicideCategory() async {
     notifyListeners();
-    await Hive.box('userData').put('categories', _categories);
-    await Hive.box('userData').put('categoryView', categoryView);
+    await userDataBox.put('categories', _categories);
+    await userDataBox.put('categoryView', categoryView);
   }
 
   void editCategoryIcon(int index, int icon) {
     _categories[index][0] = icon;
     notifyListeners();
-    Hive.box('userData').put('categories', _categories);
+    userDataBox.put('categories', _categories);
   }
 
   void editCategoryTitle(int index, String s) {
     _categories[index][1] = s;
     notifyListeners();
-    Hive.box('userData').put('categories', _categories);
+    userDataBox.put('categories', _categories);
   }
 
   void switchCategoryView(int index) {
     categoryView[index] = !categoryView[index];
     notifyListeners();
-    Hive.box('userData').put('categoryView', categoryView);
+    userDataBox.put('categoryView', categoryView);
   }
 
-  Future resetCategory(int index) async {
+  Future<void> resetCategory(int index) async {
     _categories[index] = [
       57746,
       '',
@@ -148,52 +140,49 @@ class UserDataNotifier with ChangeNotifier {
     ];
     categoryView[index] = false;
     notifyListeners();
-    await Hive.box('userData').put('categories', _categories);
-    await Hive.box('userData').put('categoryView', categoryView);
+    await userDataBox.put('categories', _categories);
+    await userDataBox.put('categoryView', categoryView);
   }
 
-  Future addShortCuts(List item) async {
+  Future<void> addShortCuts(List item) async {
     keynum += 1;
     _shortCuts.add(item);
     notifyListeners();
-    await Hive.box('userData').put('shortCuts', _shortCuts);
-    await Hive.box('userData').put('keynum', keynum);
+    await userDataBox.put('shortCuts', _shortCuts);
+    await userDataBox.put('keynum', keynum);
   }
 
-  Future sort(int oldIndex, int newIndex) async {
+  Future<void> sort(int oldIndex, int newIndex) async {
     if (oldIndex < newIndex) {
       newIndex -= 1;
     }
     final model = _shortCuts.removeAt(oldIndex);
     _shortCuts.insert(newIndex, model);
     notifyListeners();
-    await Hive.box('userData').put('shortCuts', _shortCuts);
+    await userDataBox.put('shortCuts', _shortCuts);
   }
 
-  Future deleteShortCut(int index) async {
+  Future<void> deleteShortCut(int index) async {
     _shortCuts.removeAt(index);
     notifyListeners();
-    await Hive.box('userData').put('shortCuts', _shortCuts);
+    await userDataBox.put('shortCuts', _shortCuts);
   }
 
   //activity関連
-  Future addActivity(
-    DateTime startTime,
-    String title,
-    int categoryIndex,
-  ) async {
+  Future<void> addActivity(
+      DateTime startTime, String title, int categoryIndex) async {
     _activities.add([startTime, false, title, categoryIndex, 1, 1]);
     notifyListeners();
-    await Hive.box('userData').put('activities', _activities);
+    await userDataBox.put('activities', _activities);
   }
 
-  Future finishActivity(int i) async {
+  Future<void> finishActivity(int i) async {
     _activities.removeAt(i);
     notifyListeners();
-    await Hive.box('userData').put('activities', _activities);
+    await userDataBox.put('activities', _activities);
   }
 
-  Future loopReflesh() async {
+  Future<void> loopReflesh() async {
     for (int i = 0; i < _activities.length; i++) {
       if (_activities[i][1]) {
       } else {
@@ -202,35 +191,27 @@ class UserDataNotifier with ChangeNotifier {
       }
     }
     notifyListeners();
-    await Hive.box('userData').put('activities', _activities);
+    await userDataBox.put('activities', _activities);
   }
 
-  Future startTimer(int i) async {
+  Future<void> startTimer(int i) async {
     Vib.select();
     _activities[i][0] = DateTime.now();
     _activities[i][1] = false;
     notifyListeners();
-    await Hive.box('userData').put('activities', _activities);
+    await userDataBox.put('activities', _activities);
   }
 
-  Future stopTimer(int i) async {
+  Future<void> stopTimer(int i) async {
     Vib.select();
     _activities[i][1] = true;
     _activities[i][4] += DateTime.now().difference(activities[i][0]).inMinutes;
     _activities[i][5] = _activities[i][4];
     notifyListeners();
-    await Hive.box('userData').put('activities', _activities);
+    await userDataBox.put('activities', _activities);
   }
 
-  /*ListDataとカテゴリーのインデックスを渡す。
-  つまりカテゴリーのインデックスの変数を作る必要がある。
-  つまりカテゴリーの変数ではなくて
-  カテゴリーインデックスからcategoriesにアクセスをして
-  アイコンデータを取得して表示する必要がある。*/
-  Future<void> addTime(
-    int index,
-    int time,
-  ) async {
+  Future<void> addTime(int index, int time) async {
     //0:category 1:title 2:time 3:isGood
     bool isGood = _todayDoneList[index][3];
     _allTime += time;
@@ -252,6 +233,10 @@ class UserDataNotifier with ChangeNotifier {
                 100 /
                 _categories[_todayDoneList[index][0]][2][0])
             .round();
+    _latelyData[_latelyData.length - 1][1] = _todayTime;
+    _latelyData[_latelyData.length - 1][2] = _todayGood;
+    _latelyData[_latelyData.length - 1][3] = _todayPer;
+    _latelyData[_latelyData.length - 1][4] = _todayDoneList;
     for (int i = 0; i < achiveM.length; i++) {
       if (!checkM[i]) {
         if (allTime >= achiveM[i]) {
@@ -264,7 +249,7 @@ class UserDataNotifier with ChangeNotifier {
     }
     notifyListeners();
     //保存メソッド
-    await Hive.box('userData').put('userValue', [
+    await userDataBox.put('userValue', [
       _allTime,
       _allGood,
       _allPer,
@@ -275,16 +260,14 @@ class UserDataNotifier with ChangeNotifier {
       _todayGood,
       _todayPer,
     ]);
-    await Hive.box('userData').put('categories', _categories);
-    await Hive.box('userData').put('todayDoneList', _todayDoneList);
-    await Hive.box('userData').put('latelyData', _latelyData);
-    await Hive.box('userData').put('checkM', checkM);
-    await Hive.box('userData').put('myColors', _myColors);
+    await userDataBox.put('categories', _categories);
+    await userDataBox.put('todayDoneList', _todayDoneList);
+    await userDataBox.put('latelyData', _latelyData);
+    await userDataBox.put('checkM', checkM);
+    await userDataBox.put('myColors', _myColors);
   }
 
-  Future<void> recordDone(
-    List listData,
-  ) async {
+  Future<void> recordDone(List listData) async {
     int time = listData[2];
     _allTime += time;
     _thisMonthTime += time;
@@ -336,14 +319,14 @@ class UserDataNotifier with ChangeNotifier {
       _todayGood,
       _todayPer,
     ]);
-    await Hive.box('userData').put('categories', _categories);
-    await Hive.box('userData').put('todayDoneList', _todayDoneList);
-    await Hive.box('userData').put('latelyData', _latelyData);
-    await Hive.box('userData').put('checkM', checkM);
-    await Hive.box('userData').put('myColors', _myColors);
+    await userDataBox.put('categories', _categories);
+    await userDataBox.put('todayDoneList', _todayDoneList);
+    await userDataBox.put('latelyData', _latelyData);
+    await userDataBox.put('checkM', checkM);
+    await userDataBox.put('myColors', _myColors);
   }
 
-  Future deleteDone(List listData, int index) async {
+  Future<void> deleteDone(List listData, int index) async {
     Vib.select();
     int time = listData[2];
     _allTime -= time;
@@ -396,7 +379,7 @@ class UserDataNotifier with ChangeNotifier {
     await Hive.box('userData').put('categories', _categories);
   }
 
-  Future initialize() async {
+  Future<void> initialize() async {
     var box = Hive.box('userData');
     var userValue = await box.get('userValue');
     _allTime = userValue[0];
@@ -424,5 +407,196 @@ class UserDataNotifier with ChangeNotifier {
     totalPassedDays = await box.get('totalPassedDays');
     passedDays = await box.get('passedDays');
     keynum = await box.get('keynum');
+  }
+
+  Future<void> firstOpneDataSet(String version) async {
+    final String firstdate = DateFormat('yyyy年MM月dd日').format(DateTime.now());
+    final String firstMonth = DateFormat('MM').format(DateTime.now());
+    await userDataBox.put('welcome', 'Yey!');
+    await userDataBox.put('version', version);
+    await userDataBox.put('readGuide', false);
+    await userDataBox.put('myColors', [
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+    ]);
+    await userDataBox.put('checkM', [false, false, false, false, false]);
+    await userDataBox.put('checkD', [true, false, false, false, false]);
+    /*userValue=[
+        all       Time,Good,Per,
+        thisMonth Time,Good,Per,
+        today     Time,Good,Per
+      ]*/
+    await userDataBox.put('userValue', [0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    //latelyData=[date,totaltime,goodtime,percent,donelist]
+    await userDataBox.put('latelyData', [
+      [firstdate, 0, 0, 0, []],
+    ]);
+    await userDataBox.put('todayDoneList', []);
+    //shortcut=[icon,title,time,isGood,keynum,isRecord]
+    await userDataBox.put(
+      'shortCuts',
+      [],
+    );
+    //category=[iconNumber,title,data[total,good,percent]]
+    await userDataBox.put(
+      'categories',
+      [
+        [
+          57746,
+          '指定なし',
+          [0, 0, 0]
+        ],
+        [
+          57746,
+          '',
+          [0, 0, 0]
+        ],
+        [
+          57746,
+          '',
+          [0, 0, 0]
+        ],
+        [
+          57746,
+          '',
+          [0, 0, 0]
+        ],
+        [
+          57746,
+          '',
+          [0, 0, 0]
+        ],
+        [
+          57746,
+          '',
+          [0, 0, 0]
+        ],
+        [
+          57746,
+          '',
+          [0, 0, 0]
+        ],
+        [
+          57746,
+          '',
+          [0, 0, 0]
+        ],
+      ],
+    );
+    await userDataBox.put('categoryView',
+        [true, false, false, false, false, false, false, false]);
+    await userDataBox.put('keynum', 5);
+    await userDataBox.put('activities', []);
+    await userDataBox.put('userName', 'ゲスト');
+    await userDataBox.put('previousDate', firstdate);
+    await userDataBox.put('thisMonth', firstMonth);
+    await userDataBox.put('passedDays', 1);
+    await userDataBox.put('totalPassedDays', 1);
+    await initialize();
+  }
+
+  Future<void> updateCheckM(int time) async {
+    for (int i = 0; i < achiveM.length; i++) {
+      if (time >= achiveM[i]) {
+        checkM[i] = true;
+        _myColors[2 * i + 3] = true;
+      } else {
+        break;
+      }
+    }
+    notifyListeners();
+    await userDataBox.put('checkM', checkM);
+    await userDataBox.put('myColors', _myColors);
+  }
+
+  Future<void> updateCheckD(int day) async {
+    for (int i = 0; i < achiveD.length; i++) {
+      if (day >= achiveD[i]) {
+        checkD[i] = true;
+        myColors[2 * i + 2] = true;
+      } else {
+        break;
+      }
+    }
+    await userDataBox.put('checkD', checkD);
+    await userDataBox.put('myColors', _myColors);
+  }
+
+  Future<void> takeOver(int time, int day) async {
+    checkM = [false, false, false, false, false];
+    checkD = [true, false, false, false, false];
+    _myColors = [
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+    ];
+    notifyListeners();
+    await updateCheckM(time);
+    await updateCheckD(day);
+    await userDataBox.put('latelyData', [
+      [DateFormat('yyyy年MM月dd日').format(DateTime.now()), 0, 0, 0, []],
+    ]);
+    await userDataBox.put('todayDoneList', []);
+    await userDataBox.put('shortCuts', []);
+    await userDataBox.put('keynum', 5);
+    await userDataBox.put('activities', []);
+    await userDataBox.put('passedDays', 1);
+    await initialize();
+  }
+
+  Future<void> splashFunc() async {
+    final date = DateFormat('yyyy年MM月dd日').format(DateTime.now());
+    final month = DateFormat('MM').format(DateTime.now());
+    if (date != userDataBox.get('previousDate')) {
+      userDataBox.put('backupFinish', false);
+      userDataBox.put('takeoverFinish', false);
+      await userDataBox.put('previousDate', date);
+      await userDataBox.put('todayDoneList', []);
+      var latelyData = userDataBox.get('latelyData');
+      if (latelyData.length >= 8) {
+        latelyData.removeAt(0);
+      }
+      latelyData.add([date, 0, 0, 0, []]);
+      await userDataBox.put('latelyData', latelyData);
+      var userValue = userDataBox.get('userValue');
+      if (month != userDataBox.get('thisMonth')) {
+        userValue[3] = 0;
+        userValue[4] = 0;
+        userValue[5] = 0;
+        await userDataBox.put('thisMonth', month);
+        await userDataBox.put('passedDays', 1);
+      } else {
+        await userDataBox.put('passedDays', userDataBox.get('passedDays') + 1);
+      }
+      userValue[6] = 0;
+      userValue[7] = 0;
+      userValue[8] = 0;
+      await userDataBox.put('userValue', userValue);
+      await userDataBox.put(
+          'totalPassedDays', userDataBox.get('totalPassedDays') + 1);
+    }
   }
 }

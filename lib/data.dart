@@ -1,3 +1,4 @@
+//packages
 import 'package:flutter/material.dart';
 import 'package:vibration/vibration.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -64,8 +65,8 @@ const List<int> iconList = [
   58899,
 ];
 
-List<int> achiveM = [500, 1000, 3000, 5000, 10000];
-List<int> achiveD = [1, 3, 7, 30, 100];
+const List<int> achiveM = [500, 1000, 3000, 5000, 10000];
+const List<int> achiveD = [1, 3, 7, 30, 100];
 
 //BaseColor
 //単色をベースにしていく

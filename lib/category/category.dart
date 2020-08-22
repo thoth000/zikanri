@@ -1,5 +1,8 @@
+//packages
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+//my files
 import 'package:zikanri/category/category_edit.dart';
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
@@ -25,7 +28,9 @@ class CategoryPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
-              children: <Widget>[for (int i = 1; i < 8; i++) CategoryCard(i)],
+              children: <Widget>[
+                for (int i = 1; i < 8; i++) CategoryCard(i),
+              ],
             ),
           ),
         ],
@@ -113,32 +118,33 @@ class CategoryCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
                 color: color,
-                width: 1,
+                width: 2,
               ),
             ),
             child: RaisedButton(
-                elevation: 6,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Text(
+                '編集',
+                style: TextStyle(
+                  fontSize: FontSize.small,
+                  fontWeight: FontWeight.w700,
                 ),
-                child: Text(
-                  '編集',
-                  style: TextStyle(
-                    fontSize: FontSize.small,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                color: theme.isDark ? const Color(0XFF424242) : Colors.white,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CategoryEditPage(
-                        index: index,
-                      ),
+              ),
+              color: theme.isDark ? const Color(0XFF424242) : Colors.white,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CategoryEditPage(
+                      index: index,
                     ),
-                  );
-                }),
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),

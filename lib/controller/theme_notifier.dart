@@ -1,16 +1,21 @@
+//packages
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+
+//my files
 import 'package:zikanri/data.dart';
 
 //changeNotifier for theme
 class ThemeNotifier with ChangeNotifier {
+  final themeBox = Hive.box('theme');
+
   bool _isDark = false;
   bool get isDark => _isDark;
   int _themeColorsIndex = 0;
   //List _myColors = [true,true,true,false,false,false,false,false,false,false];
   //List get myColors => _myColors;
   List<Color> _themeColors() => baseColors[_themeColorsIndex];
-  List get themeColors => _themeColors();
+  List<Color> get themeColors => _themeColors();
   ThemeData buildTheme() => ThemeData(
         fontFamily: 'NotoSansJP',
         brightness: _isDark ? Brightness.dark : Brightness.light,
@@ -26,24 +31,29 @@ class ThemeNotifier with ChangeNotifier {
           ),
         ),
       );
-  Future changeMode() async {
+  Future<void> changeMode() async {
     Vib.select();
     _isDark = !_isDark;
     notifyListeners();
-    await Hive.box('theme').put('isDark', _isDark);
+    await themeBox.put('isDark', _isDark);
   }
 
-  Future changeTheme(int i) async {
+  Future<void> changeTheme(int i) async {
     Vib.select();
     _themeColorsIndex = i;
     notifyListeners();
-    await Hive.box('theme').put('themeColorsIndex', _themeColorsIndex);
+    await themeBox.put('themeColorsIndex', _themeColorsIndex);
   }
 
-  Future initialize() async {
-    var box = Hive.box('theme');
-    _isDark = await box.get('isDark');
-    _themeColorsIndex = await box.get('themeColorsIndex');
+  Future<void> initialize() async {
+    _isDark = await themeBox.get('isDark');
+    _themeColorsIndex = await themeBox.get('themeColorsIndex');
     notifyListeners();
+  }
+
+  Future<void> firstOpenDataSet() async {
+    await themeBox.put('isDark', false);
+    await themeBox.put('themeColorsIndex', 0);
+    await initialize();
   }
 }

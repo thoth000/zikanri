@@ -1,5 +1,8 @@
+//packages
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+//my files
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/data.dart';
@@ -82,31 +85,39 @@ class _EditNameSheetState extends State<EditNameSheet> {
           ),
           Padding(
             padding: const EdgeInsets.all(10),
-            child: FlatButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(500),
+                border: Border.all(
+                  color: color,
+                  width: 3,
+                ),
               ),
-              color: color,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Text(
-                      '保存する',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: FontSize.small,
-                        fontWeight: FontWeight.w700,
+              child: FlatButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                color: Colors.transparent,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: Text(
+                        '保存する',
+                        style: TextStyle(
+                          fontSize: FontSize.small,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
+                onPressed: () {
+                  userData.editCategoryTitle(widget.index, controller.text);
+                  Navigator.pop(context);
+                },
               ),
-              onPressed: () {
-                userData.editCategoryTitle(widget.index, controller.text);
-                Navigator.pop(context);
-              },
             ),
           ),
           const SizedBox(

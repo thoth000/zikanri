@@ -1,4 +1,7 @@
+//packages
 import 'package:flutter/material.dart';
+
+//my files
 import 'package:zikanri/data.dart';
 import 'package:zikanri/parts/general_app_bar.dart';
 
@@ -139,6 +142,7 @@ class _AnalyzeData extends StatelessWidget {
       children: <Widget>[
         Icon(
           Icons.assessment,
+          color: Colors.blue,
           size: displaySize.width / 8,
         ),
         SizedBox(
@@ -146,6 +150,7 @@ class _AnalyzeData extends StatelessWidget {
         ),
         Icon(
           Icons.data_usage,
+          color: Colors.blue,
           size: displaySize.width / 8,
         ),
       ],
@@ -160,6 +165,7 @@ class _Share extends StatelessWidget {
       children: <Widget>[
         Icon(
           Icons.share,
+          color: Colors.blue,
           size: displaySize.width / 8,
         ),
       ],
