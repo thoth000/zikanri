@@ -81,7 +81,7 @@ class UserDataNotifier with ChangeNotifier {
 
   //リストはHive保存のため構造体（Class）に代替しない。プログラムは複雑になるが処理は他の保存・読み込み手段に比べて速い。
 
-  Future checkGuide() async {
+  Future<void> checkGuide() async {
     readGuide = true;
     await Hive.box('userData').put('readGuide', readGuide);
     notifyListeners();
@@ -93,19 +93,19 @@ class UserDataNotifier with ChangeNotifier {
     notifyListeners();
   }
 
-  Future addTheme(int i) async {
+  Future<void> addTheme(int i) async {
     _myColors[i] = true;
     await userDataBox.put('myColors', _myColors);
     notifyListeners();
   }
 
-  Future editProfile(String name) async {
+  Future<void> editProfile(String name) async {
     userName = name;
     notifyListeners();
     await userDataBox.put('userName', userName);
   }
 
-  Future dicideCategory() async {
+  Future<void> dicideCategory() async {
     notifyListeners();
     await userDataBox.put('categories', _categories);
     await userDataBox.put('categoryView', categoryView);
@@ -129,7 +129,7 @@ class UserDataNotifier with ChangeNotifier {
     userDataBox.put('categoryView', categoryView);
   }
 
-  Future resetCategory(int index) async {
+  Future<void> resetCategory(int index) async {
     _categories[index] = [
       57746,
       '',
@@ -141,7 +141,7 @@ class UserDataNotifier with ChangeNotifier {
     await userDataBox.put('categoryView', categoryView);
   }
 
-  Future addShortCuts(List item) async {
+  Future<void> addShortCuts(List item) async {
     keynum += 1;
     _shortCuts.add(item);
     notifyListeners();
@@ -149,7 +149,7 @@ class UserDataNotifier with ChangeNotifier {
     await userDataBox.put('keynum', keynum);
   }
 
-  Future sort(int oldIndex, int newIndex) async {
+  Future<void> sort(int oldIndex, int newIndex) async {
     if (oldIndex < newIndex) {
       newIndex -= 1;
     }
@@ -159,27 +159,27 @@ class UserDataNotifier with ChangeNotifier {
     await userDataBox.put('shortCuts', _shortCuts);
   }
 
-  Future deleteShortCut(int index) async {
+  Future<void> deleteShortCut(int index) async {
     _shortCuts.removeAt(index);
     notifyListeners();
     await userDataBox.put('shortCuts', _shortCuts);
   }
 
   //activity関連
-  Future addActivity(
+  Future<void> addActivity(
       DateTime startTime, String title, int categoryIndex) async {
     _activities.add([startTime, false, title, categoryIndex, 1, 1]);
     notifyListeners();
     await userDataBox.put('activities', _activities);
   }
 
-  Future finishActivity(int i) async {
+  Future<void> finishActivity(int i) async {
     _activities.removeAt(i);
     notifyListeners();
     await userDataBox.put('activities', _activities);
   }
 
-  Future loopReflesh() async {
+  Future<void> loopReflesh() async {
     for (int i = 0; i < _activities.length; i++) {
       if (_activities[i][1]) {
       } else {
@@ -191,7 +191,7 @@ class UserDataNotifier with ChangeNotifier {
     await userDataBox.put('activities', _activities);
   }
 
-  Future startTimer(int i) async {
+  Future<void> startTimer(int i) async {
     Vib.select();
     _activities[i][0] = DateTime.now();
     _activities[i][1] = false;
@@ -199,7 +199,7 @@ class UserDataNotifier with ChangeNotifier {
     await userDataBox.put('activities', _activities);
   }
 
-  Future stopTimer(int i) async {
+  Future<void> stopTimer(int i) async {
     Vib.select();
     _activities[i][1] = true;
     _activities[i][4] += DateTime.now().difference(activities[i][0]).inMinutes;
@@ -323,7 +323,7 @@ class UserDataNotifier with ChangeNotifier {
     await userDataBox.put('myColors', _myColors);
   }
 
-  Future deleteDone(List listData, int index) async {
+  Future<void> deleteDone(List listData, int index) async {
     Vib.select();
     int time = listData[2];
     _allTime -= time;
@@ -376,7 +376,7 @@ class UserDataNotifier with ChangeNotifier {
     await Hive.box('userData').put('categories', _categories);
   }
 
-  Future initialize() async {
+  Future<void> initialize() async {
     var box = Hive.box('userData');
     var userValue = await box.get('userValue');
     _allTime = userValue[0];

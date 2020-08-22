@@ -144,7 +144,8 @@ class _SignUpPageState extends State<SignUpPage> {
                             if (result == 'error:email') {
                               result = 'データの登録に失敗しました。\n登録無効なメールアドレスです。';
                             } else if (result == 'error:password') {
-                              result = 'データの再登録に失敗しました。\n：一度設定したパスワードを使用してください。';
+                              result =
+                                  'データの再登録に失敗しました。\n：一度設定したパスワードを使用してください。';
                             } else if (result == 'error:unknown') {
                               result = 'データの登録に失敗しました。';
                             } else {
@@ -208,11 +209,11 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
         (isLoad)
             ? Container(
-              color: Colors.grey.withOpacity(0.4),
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
-            )
+                color: Colors.grey.withOpacity(0.4),
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              )
             : SizedBox(),
       ],
     );

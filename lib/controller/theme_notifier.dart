@@ -12,7 +12,7 @@ class ThemeNotifier with ChangeNotifier {
   //List _myColors = [true,true,true,false,false,false,false,false,false,false];
   //List get myColors => _myColors;
   List<Color> _themeColors() => baseColors[_themeColorsIndex];
-  List get themeColors => _themeColors();
+  List<Color> get themeColors => _themeColors();
   ThemeData buildTheme() => ThemeData(
         fontFamily: 'NotoSansJP',
         brightness: _isDark ? Brightness.dark : Brightness.light,
@@ -28,27 +28,27 @@ class ThemeNotifier with ChangeNotifier {
           ),
         ),
       );
-  Future changeMode() async {
+  Future<void> changeMode() async {
     Vib.select();
     _isDark = !_isDark;
     notifyListeners();
     await themeBox.put('isDark', _isDark);
   }
 
-  Future changeTheme(int i) async {
+  Future<void> changeTheme(int i) async {
     Vib.select();
     _themeColorsIndex = i;
     notifyListeners();
     await themeBox.put('themeColorsIndex', _themeColorsIndex);
   }
 
-  Future initialize() async {
+  Future<void> initialize() async {
     _isDark = await themeBox.get('isDark');
     _themeColorsIndex = await themeBox.get('themeColorsIndex');
     notifyListeners();
   }
 
-  Future firstOpenDataSet() async {
+  Future<void> firstOpenDataSet() async {
     await themeBox.put('isDark', false);
     await themeBox.put('themeColorsIndex', 0);
     await initialize();

@@ -68,7 +68,9 @@ class PRPage extends StatelessWidget {
                         ),
                         child: GridCard(i),
                       )
-                    : SizedBox(width: 0,),
+                    : SizedBox(
+                        width: 0,
+                      ),
             ],
           ),
           SizedBox(

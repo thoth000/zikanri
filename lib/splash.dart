@@ -58,13 +58,15 @@ class _SplashPageState extends State<SplashPage> {
           await userDataBox.put('thisMonth', month);
           await userDataBox.put('passedDays', 1);
         } else {
-          await userDataBox.put('passedDays', userDataBox.get('passedDays') + 1);
+          await userDataBox.put(
+              'passedDays', userDataBox.get('passedDays') + 1);
         }
         userValue[6] = 0;
         userValue[7] = 0;
         userValue[8] = 0;
         await userDataBox.put('userValue', userValue);
-        await userDataBox.put('totalPassedDays', userDataBox.get('totalPassedDays') + 1);
+        await userDataBox.put(
+            'totalPassedDays', userDataBox.get('totalPassedDays') + 1);
       }
       await theme.initialize();
       await userData.initialize();

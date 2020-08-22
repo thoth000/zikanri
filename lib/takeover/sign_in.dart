@@ -100,7 +100,8 @@ class _SignInPageState extends State<SignInPage> {
                     border: Border.all(
                       color: (email.isEmpty ||
                               password.isEmpty ||
-                              (Hive.box('userData').containsKey('takeoverFinish') &&
+                              (Hive.box('userData')
+                                      .containsKey('takeoverFinish') &&
                                   Hive.box('userData').get('takeoverFinish')))
                           ? Colors.grey
                           : color,
@@ -129,13 +130,15 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                     onPressed: (email.isEmpty ||
                             password.isEmpty ||
-                            (Hive.box('userData').containsKey('takeoverFinish') &&
+                            (Hive.box('userData')
+                                    .containsKey('takeoverFinish') &&
                                 Hive.box('userData').get('takeoverFinish')) ||
                             isLoad)
                         ? null
                         : () async {
                             switchLoad();
-                            String result = await Auth().signIn(email, password);
+                            String result =
+                                await Auth().signIn(email, password);
                             if (result == 'error:email') {
                               result = '失敗しました。\nメールアドレスが間違っています。';
                             } else if (result == 'error:password') {
@@ -196,11 +199,11 @@ class _SignInPageState extends State<SignInPage> {
         ),
         (isLoad)
             ? Container(
-              color: Colors.grey.withOpacity(0.4),
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
-            )
+                color: Colors.grey.withOpacity(0.4),
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              )
             : SizedBox(),
       ],
     );
