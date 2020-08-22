@@ -58,7 +58,7 @@ class UpdateNoticePage extends StatelessWidget {
               ),
               onPressed: () async {
                 await Hive.box('userData').put('version', newVersion);
-                await Provider.of<UserDataNotifier>(context).initialize();
+                await Provider.of<UserDataNotifier>(context, listen: false).initialize();
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(

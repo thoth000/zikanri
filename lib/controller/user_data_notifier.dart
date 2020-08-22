@@ -501,6 +501,7 @@ class UserDataNotifier with ChangeNotifier {
     await userDataBox.put('thisMonth', firstMonth);
     await userDataBox.put('passedDays', 1);
     await userDataBox.put('totalPassedDays', 1);
+    await initialize();
   }
 
   Future<void> updateCheckM(int time) async {

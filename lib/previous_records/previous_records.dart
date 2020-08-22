@@ -68,7 +68,7 @@ class PRPage extends StatelessWidget {
                         ),
                         child: GridCard(i),
                       )
-                    : Container(),
+                    : SizedBox(width: 0,),
             ],
           ),
           SizedBox(
@@ -92,12 +92,17 @@ class PRPage extends StatelessWidget {
           child: Text(
             value,
             style: TextStyle(
-                fontSize: FontSize.xlarge, fontWeight: FontWeight.w700),
+              fontSize: FontSize.xlarge,
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ),
         Text(
           title,
-          style: TextStyle(fontSize: FontSize.xsmall, color: Colors.grey),
+          style: TextStyle(
+            fontSize: FontSize.xsmall,
+            color: Colors.grey,
+          ),
         ),
       ],
     );
@@ -138,7 +143,7 @@ class GridCard extends StatelessWidget {
       ),
     ];
     return SizedBox(
-      width: displaySize.width / 2,
+      width: displaySize.width / 2.01,
       child: Center(
         child: SizedBox(
           height: displaySize.width / 2.8,

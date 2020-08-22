@@ -112,7 +112,7 @@ class _TimeValue extends StatelessWidget {
                 ),
               ),
               Text(
-                '価値アリと価値ナシの２種類の記録しか記録できません。',
+                '価値アリと価値ナシの２種類の活動しか記録できません。',
                 style: TextStyle(
                   fontSize: FontSize.small,
                 ),

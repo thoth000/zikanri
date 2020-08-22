@@ -100,7 +100,7 @@ class _SignInPageState extends State<SignInPage> {
                     border: Border.all(
                       color: (email.isEmpty ||
                               password.isEmpty ||
-                              (Hive.box('userData').containsKey('backupFinish') &&
+                              (Hive.box('userData').containsKey('takeoverFinish') &&
                                   Hive.box('userData').get('takeoverFinish')))
                           ? Colors.grey
                           : color,
@@ -129,7 +129,7 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                     onPressed: (email.isEmpty ||
                             password.isEmpty ||
-                            (Hive.box('userData').containsKey('backupFinish') &&
+                            (Hive.box('userData').containsKey('takeoverFinish') &&
                                 Hive.box('userData').get('takeoverFinish')) ||
                             isLoad)
                         ? null

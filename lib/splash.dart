@@ -20,8 +20,6 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  var box1;
-  var box2;
   @override
   void initState() {
     super.initState();
@@ -33,46 +31,44 @@ class _SplashPageState extends State<SplashPage> {
     String version = packageInfo.version;
     print(version);
     await Hive.initFlutter();
-    await Hive.openBox('theme');
-    await Hive.openBox('userData');
+    final userDataBox = await Hive.openBox('userData');
     final theme = Provider.of<ThemeNotifier>(context, listen: false);
     final userData = Provider.of<UserDataNotifier>(context, listen: false);
     //await Hive.box('theme').clear();
     //await Hive.box('userData').clear();
-    if (Hive.box('userData').containsKey('welcome')) {
+    if (userDataBox.containsKey('welcome')) {
       final date = DateFormat('yyyy年MM月dd日').format(DateTime.now());
       final month = DateFormat('MM').format(DateTime.now());
-      if (date != Hive.box('userData').get('previousDate')) {
-        var box = Hive.box('userData');
-        await box.put('previousDate', date);
-        await box.put('todayDoneList', []);
-        box1 = box.get('latelyData');
-        if (box1.length >= 8) {
-          box1.removeAt(0);
+      if (date != userDataBox.get('previousDate')) {
+        await userDataBox.put('previousDate', date);
+        await userDataBox.put('todayDoneList', []);
+        var latelyData = userDataBox.get('latelyData');
+        if (latelyData.length >= 8) {
+          latelyData.removeAt(0);
         }
-        box1.add([date, 0, 0, 0, []]);
-        await box.put('latelyData', box1);
-        box2 = box.get('userValue');
-        if (month != box.get('thisMonth')) {
-          box.put('backupFinish', false);
-          box.put('takeoverFinish', false);
-          box2[3] = 0;
-          box2[4] = 0;
-          box2[5] = 0;
-          await box.put('thisMonth', month);
-          await box.put('passedDays', 1);
+        latelyData.add([date, 0, 0, 0, []]);
+        await userDataBox.put('latelyData', latelyData);
+        var userValue = userDataBox.get('userValue');
+        if (month != userDataBox.get('thisMonth')) {
+          userDataBox.put('backupFinish', false);
+          userDataBox.put('takeoverFinish', false);
+          userValue[3] = 0;
+          userValue[4] = 0;
+          userValue[5] = 0;
+          await userDataBox.put('thisMonth', month);
+          await userDataBox.put('passedDays', 1);
         } else {
-          await box.put('passedDays', box.get('passedDays') + 1);
+          await userDataBox.put('passedDays', userDataBox.get('passedDays') + 1);
         }
-        box2[6] = 0;
-        box2[7] = 0;
-        box2[8] = 0;
-        await box.put('userValue', box2);
-        await box.put('totalPassedDays', box.get('totalPassedDays') + 1);
+        userValue[6] = 0;
+        userValue[7] = 0;
+        userValue[8] = 0;
+        await userDataBox.put('userValue', userValue);
+        await userDataBox.put('totalPassedDays', userDataBox.get('totalPassedDays') + 1);
       }
       await theme.initialize();
       await userData.initialize();
-      await userData.updateCheckD(1);
+      await userData.updateCheckD(userDataBox.get('totalPassedDays'));
       //version違う場合：1.1.0～ユーザー
       if (version != await Hive.box('userData').get('version')) {
         Future.delayed(
