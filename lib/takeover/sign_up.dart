@@ -259,7 +259,7 @@ class HelpDialog extends StatelessWidget {
     return AlertDialog(
       title: Text('データ登録'),
       content:
-          Text('ネット上にデータを保存することで他の端末からデータにアクセスできるようになります。\nデータの登録は月1回までです。'),
+          Text('ネット上にデータを保存することで他の端末からデータにアクセスできるようになります。\nデータの登録は1日1回までです。'),
       actions: [
         FlatButton(
           child: const Text('OK'),

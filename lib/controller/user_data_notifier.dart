@@ -571,6 +571,8 @@ class UserDataNotifier with ChangeNotifier {
     final date = DateFormat('yyyy年MM月dd日').format(DateTime.now());
     final month = DateFormat('MM').format(DateTime.now());
     if (date != userDataBox.get('previousDate')) {
+      userDataBox.put('backupFinish', false);
+      userDataBox.put('takeoverFinish', false);
       await userDataBox.put('previousDate', date);
       await userDataBox.put('todayDoneList', []);
       var latelyData = userDataBox.get('latelyData');
@@ -581,8 +583,6 @@ class UserDataNotifier with ChangeNotifier {
       await userDataBox.put('latelyData', latelyData);
       var userValue = userDataBox.get('userValue');
       if (month != userDataBox.get('thisMonth')) {
-        userDataBox.put('backupFinish', false);
-        userDataBox.put('takeoverFinish', false);
         userValue[3] = 0;
         userValue[4] = 0;
         userValue[5] = 0;

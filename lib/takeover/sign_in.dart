@@ -249,7 +249,7 @@ class HelpDialog extends StatelessWidget {
     return AlertDialog(
       title: Text('データ呼び出し'),
       content: Text(
-          'ネット上に保存したデータを呼び出すことができます。\n端末に保存されているデータは上書きされます。\nデータの呼び出しは月1回までです。'),
+          'ネット上に保存したデータを呼び出すことができます。\n端末に保存されているデータは上書きされます。\nデータの呼び出しは1日1回までです。'),
       actions: [
         FlatButton(
           child: const Text('OK'),
