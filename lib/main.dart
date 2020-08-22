@@ -1,15 +1,17 @@
+//packages
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+//my files
 import 'package:zikanri/controller/record_notifier.dart';
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-
-import 'Splash.dart';
-import 'data.dart';
+import 'package:zikanri/Splash.dart';
+import 'package:zikanri/data.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

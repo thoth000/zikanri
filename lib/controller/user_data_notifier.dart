@@ -1,6 +1,9 @@
+//packages
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
+
+//my files
 import 'package:zikanri/data.dart';
 
 //changeNotifier for userData
@@ -562,5 +565,38 @@ class UserDataNotifier with ChangeNotifier {
     await userDataBox.put('activities', []);
     await userDataBox.put('passedDays', 1);
     await initialize();
+  }
+
+  Future<void> splashFunc() async {
+    final date = DateFormat('yyyy年MM月dd日').format(DateTime.now());
+    final month = DateFormat('MM').format(DateTime.now());
+    if (date != userDataBox.get('previousDate')) {
+      await userDataBox.put('previousDate', date);
+      await userDataBox.put('todayDoneList', []);
+      var latelyData = userDataBox.get('latelyData');
+      if (latelyData.length >= 8) {
+        latelyData.removeAt(0);
+      }
+      latelyData.add([date, 0, 0, 0, []]);
+      await userDataBox.put('latelyData', latelyData);
+      var userValue = userDataBox.get('userValue');
+      if (month != userDataBox.get('thisMonth')) {
+        userDataBox.put('backupFinish', false);
+        userDataBox.put('takeoverFinish', false);
+        userValue[3] = 0;
+        userValue[4] = 0;
+        userValue[5] = 0;
+        await userDataBox.put('thisMonth', month);
+        await userDataBox.put('passedDays', 1);
+      } else {
+        await userDataBox.put('passedDays', userDataBox.get('passedDays') + 1);
+      }
+      userValue[6] = 0;
+      userValue[7] = 0;
+      userValue[8] = 0;
+      await userDataBox.put('userValue', userValue);
+      await userDataBox.put(
+          'totalPassedDays', userDataBox.get('totalPassedDays') + 1);
+    }
   }
 }

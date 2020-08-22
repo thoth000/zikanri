@@ -1,13 +1,16 @@
+//packages
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
+
+//my files
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
-import 'package:zikanri/data.dart';
 import 'package:zikanri/service/auth.dart';
 import 'package:zikanri/service/store_service.dart';
 import 'package:zikanri/takeover/result_dialog.dart';
 import 'package:zikanri/takeover/sign_in.dart';
+import 'package:zikanri/data.dart';
 
 class SignUpPage extends StatefulWidget {
   @override

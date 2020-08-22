@@ -1,14 +1,16 @@
+//packages
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
+//my files
 import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/guide/notice_guide.dart';
-
 import 'total_score.dart';
 import 'minute_meter.dart';
-import '../data.dart';
 import 'this_month.dart';
 import 'today.dart';
+import 'package:zikanri/data.dart';
 
 class HomePage extends StatelessWidget {
   final String today = DateFormat('yyyy年MM月dd日現在').format(DateTime.now());

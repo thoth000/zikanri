@@ -1,14 +1,17 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
+//dart
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+
+//packages
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:provider/provider.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
+
+//my files
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
-
-import '../data.dart';
+import 'package:zikanri/data.dart';
 
 class TotalScoreWidget extends StatelessWidget {
   Widget build(BuildContext context) {

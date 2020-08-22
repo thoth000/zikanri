@@ -1,12 +1,14 @@
+//packages
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
+
+//my files
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/previous_records/category_data.dart';
-
-import '../data.dart';
+import 'package:zikanri/data.dart';
 
 class PRPage extends StatelessWidget {
   @override

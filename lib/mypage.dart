@@ -1,13 +1,15 @@
+//packages
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:zikanri/controller/theme_notifier.dart';
 
-import 'home/home.dart';
-import 'lately/lately.dart';
-import 'previous_records/previous_records.dart';
-import 'setting/setting.dart';
-import 'home/record_button.dart';
-import 'data.dart';
+//my files
+import 'package:zikanri/controller/theme_notifier.dart';
+import 'package:zikanri/home/home.dart';
+import 'package:zikanri/lately/lately.dart';
+import 'package:zikanri/previous_records/previous_records.dart';
+import 'package:zikanri/setting/setting.dart';
+import 'package:zikanri/home/record_button.dart';
+import 'package:zikanri/data.dart';
 
 class MyAppPage extends StatelessWidget {
   MyAppPage._({Key key}) : super(key: key);
@@ -30,7 +32,7 @@ class MyAppPage extends StatelessWidget {
     final theme = Provider.of<ThemeNotifier>(context);
     final controller = Provider.of<MainPageController>(context);
     Color color = theme.isDark ? theme.themeColors[0] : theme.themeColors[1];
-    double iconsize = displaySize.width / 9.5;
+    final double iconsize = displaySize.width / 9.5;
     return Scaffold(
       body: SafeArea(child: pages[controller.currentIndex]),
       floatingActionButton: RButton(),

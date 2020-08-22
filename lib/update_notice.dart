@@ -1,9 +1,12 @@
+//packages
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
+
+//my files
 import 'package:zikanri/controller/user_data_notifier.dart';
-import 'package:zikanri/data.dart';
 import 'package:zikanri/mypage.dart';
+import 'package:zikanri/data.dart';
 
 class UpdateNoticePage extends StatelessWidget {
   const UpdateNoticePage({

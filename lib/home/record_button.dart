@@ -1,3 +1,4 @@
+//packages
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -5,13 +6,14 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
+
+//my files
 import 'package:zikanri/category/category.dart';
 import 'package:zikanri/controller/record_notifier.dart';
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
-
-import '../splash.dart';
-import '../data.dart';
+import 'package:zikanri/splash.dart';
+import 'package:zikanri/data.dart';
 
 void notification(String s, int length) async {
   AndroidNotificationDetails androidNotificationDetails =
