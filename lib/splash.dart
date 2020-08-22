@@ -54,6 +54,8 @@ class _SplashPageState extends State<SplashPage> {
         await box.put('latelyData', box1);
         box2 = box.get('userValue');
         if (month != box.get('thisMonth')) {
+          box.put('backupFinish', false);
+          box.put('takeoverFinish', false);
           box2[3] = 0;
           box2[4] = 0;
           box2[5] = 0;

@@ -31,20 +31,21 @@ class StoreService {
         await firestore.collection('v1/users/$uid').doc('data').get();
     final data = result.data();
     final userDataBox = Hive.box('userData');
-    await userDataBox.put('userValue', [data['allTime'],data['allGood'],data['allPer'],0,0,0,0,0,0]);
+    await userDataBox.put('userValue',
+        [data['allTime'], data['allGood'], data['allPer'], 0, 0, 0, 0, 0, 0]);
     await userDataBox.put('userName', data['name']);
     await userDataBox.put('totalPassedDays', data['passDay']);
     return [data['allTime'], data['passDay']];
   }
 
   Future<void> getUserCategory(String uid) async {
-    final QuerySnapshot querySnapshot = await firestore
-        .collection('v1/users/$uid/data/category').get();
+    final QuerySnapshot querySnapshot =
+        await firestore.collection('v1/users/$uid/data/category').get();
     List categories = [];
-    for(int i=0;i<querySnapshot.docs.length;i++){
+    for (int i = 0; i < querySnapshot.docs.length; i++) {
       final Map data = querySnapshot.docs[i].data();
       List<int> listData = data['dataList'].cast<int>();
-      final List category = [data['iconNumber'],data['title'], listData];
+      final List category = [data['iconNumber'], data['title'], listData];
       categories.add(category);
     }
     final userDataBox = Hive.box('userData');

@@ -230,6 +230,10 @@ class UserDataNotifier with ChangeNotifier {
                 100 /
                 _categories[_todayDoneList[index][0]][2][0])
             .round();
+    _latelyData[_latelyData.length - 1][1] = _todayTime;
+    _latelyData[_latelyData.length - 1][2] = _todayGood;
+    _latelyData[_latelyData.length - 1][3] = _todayPer;
+    _latelyData[_latelyData.length - 1][4] = _todayDoneList;
     for (int i = 0; i < achiveM.length; i++) {
       if (!checkM[i]) {
         if (allTime >= achiveM[i]) {

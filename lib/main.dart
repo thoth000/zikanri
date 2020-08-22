@@ -15,8 +15,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await Hive.initFlutter();
-    await Hive.openBox('theme');
-    await Hive.openBox('userData');
+  await Hive.openBox('theme');
+  await Hive.openBox('userData');
   runApp(
     MultiProvider(
       providers: [

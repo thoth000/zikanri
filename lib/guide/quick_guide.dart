@@ -219,71 +219,20 @@ class _ActiveTimer extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    SizedBox(
-                      height: displaySize.width / 12,
-                      width: displaySize.width / 12,
-                      child: Stack(
-                        children: <Widget>[
-                          Icon(
-                            Icons.play_circle_outline,
-                            size: displaySize.width / 12,
-                          ),
-                          SizedBox(
-                            height: displaySize.width / 12,
-                            width: displaySize.width / 12,
-                            child: FlatButton(
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              child: const SizedBox(),
-                              onPressed: () {},
-                            ),
-                          ),
-                        ],
-                      ),
+                    Icon(
+                      Icons.play_circle_outline,
+                      color: Colors.blue,
+                      size: displaySize.width / 12,
                     ),
-                    SizedBox(
-                      height: displaySize.width / 12,
-                      width: displaySize.width / 12,
-                      child: Stack(
-                        children: <Widget>[
-                          Icon(
-                            Icons.check_circle_outline,
-                            size: displaySize.width / 12,
-                          ),
-                          SizedBox(
-                            height: displaySize.width / 12,
-                            width: displaySize.width / 12,
-                            child: FlatButton(
-                              child: const SizedBox(),
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onPressed: () {},
-                            ),
-                          ),
-                        ],
-                      ),
+                    Icon(
+                      Icons.check_circle_outline,
+                      color: Colors.blue,
+                      size: displaySize.width / 12,
                     ),
-                    SizedBox(
-                      height: displaySize.width / 12,
-                      width: displaySize.width / 12,
-                      child: Stack(
-                        children: <Widget>[
-                          Icon(
-                            Icons.remove_circle_outline,
-                            size: displaySize.width / 12,
-                          ),
-                          SizedBox(
-                            height: displaySize.width / 12,
-                            width: displaySize.width / 12,
-                            child: FlatButton(
-                              child: const SizedBox(),
-                              splashColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              onPressed: () {},
-                            ),
-                          ),
-                        ],
-                      ),
+                    Icon(
+                      Icons.remove_circle_outline,
+                      color: Colors.blue,
+                      size: displaySize.width / 12,
                     ),
                   ],
                 ),
@@ -303,6 +252,7 @@ class _Category extends StatelessWidget {
       children: <Widget>[
         Icon(
           Icons.edit,
+          color: Colors.blue,
           size: displaySize.width / 7,
         ),
         SizedBox(
@@ -310,6 +260,7 @@ class _Category extends StatelessWidget {
         ),
         Icon(
           Icons.laptop_chromebook,
+          color: Colors.blue,
           size: displaySize.width / 7,
         ),
         SizedBox(
@@ -317,6 +268,7 @@ class _Category extends StatelessWidget {
         ),
         Icon(
           Icons.directions_run,
+          color: Colors.blue,
           size: displaySize.width / 7,
         ),
         SizedBox(
