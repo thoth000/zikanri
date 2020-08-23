@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 //my file
 import 'package:zikanri/controller/user_data_notifier.dart';
-import 'package:zikanri/data.dart';
+import 'package:zikanri/config.dart';
 import 'package:zikanri/ui/lately/day_data_widget.dart';
 
 class DayDataList extends StatelessWidget {

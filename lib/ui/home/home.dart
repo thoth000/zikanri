@@ -10,7 +10,7 @@ import 'total_score.dart';
 import 'minute_meter.dart';
 import 'this_month.dart';
 import 'today.dart';
-import 'package:zikanri/data.dart';
+import 'package:zikanri/config.dart';
 
 class HomePage extends StatelessWidget {
   final String today = DateFormat('yyyy年MM月dd日現在').format(DateTime.now());

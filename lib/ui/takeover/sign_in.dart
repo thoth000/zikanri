@@ -10,7 +10,7 @@ import 'package:zikanri/service/auth.dart';
 import 'package:zikanri/service/store_service.dart';
 import 'package:zikanri/ui/takeover/result_dialog.dart';
 import 'package:zikanri/ui/takeover/sign_up.dart';
-import 'package:zikanri/data.dart';
+import 'package:zikanri/config.dart';
 
 class SignInPage extends StatefulWidget {
   @override

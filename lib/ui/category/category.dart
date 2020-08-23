@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:zikanri/ui/category/category_edit.dart';
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
-import 'package:zikanri/data.dart';
+import 'package:zikanri/config.dart';
 
 class CategoryPage extends StatelessWidget {
   @override

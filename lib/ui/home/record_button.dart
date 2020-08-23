@@ -13,7 +13,7 @@ import 'package:zikanri/controller/record_notifier.dart';
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/ui/splash.dart';
-import 'package:zikanri/data.dart';
+import 'package:zikanri/config.dart';
 
 void notification(String s, int length) async {
   AndroidNotificationDetails androidNotificationDetails =

@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 //my files
 import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/ui/mypage.dart';
-import 'package:zikanri/data.dart';
+import 'package:zikanri/config.dart';
 
 class UpdateNoticePage extends StatelessWidget {
   const UpdateNoticePage({

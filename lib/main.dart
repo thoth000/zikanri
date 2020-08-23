@@ -10,7 +10,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/Splash.dart';
-import 'package:zikanri/data.dart';
+import 'package:zikanri/config.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

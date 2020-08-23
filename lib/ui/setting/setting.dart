@@ -16,7 +16,7 @@ import 'profile.dart';
 import 'theme.dart';
 import 'achieve.dart';
 import 'package:zikanri/ui/home/record_button.dart';
-import 'package:zikanri/data.dart';
+import 'package:zikanri/config.dart';
 
 class SettingPage extends StatelessWidget {
   Widget build(BuildContext context) {

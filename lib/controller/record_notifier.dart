@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 //my files
-import 'package:zikanri/data.dart';
+import 'package:zikanri/config.dart';
 
 //changeNotifier for record
 class RecordNotifier with ChangeNotifier {

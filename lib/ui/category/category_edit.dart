@@ -7,7 +7,7 @@ import 'package:zikanri/ui/category/icon.dart';
 import 'package:zikanri/ui/category/name.dart';
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
-import 'package:zikanri/data.dart';
+import 'package:zikanri/config.dart';
 import 'package:zikanri/ui/parts/general_app_bar.dart';
 
 class CategoryEditPage extends StatelessWidget {

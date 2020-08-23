@@ -13,7 +13,7 @@ import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/ui/update_notice.dart';
 import 'package:zikanri/ui/mypage.dart';
 import 'package:zikanri/ui/welcome.dart';
-import 'package:zikanri/data.dart';
+import 'package:zikanri/config.dart';
 
 class SplashPage extends StatefulWidget {
   _SplashPageState createState() => _SplashPageState();

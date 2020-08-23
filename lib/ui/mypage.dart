@@ -10,7 +10,7 @@ import 'package:zikanri/ui/lately/lately.dart';
 import 'package:zikanri/ui/previous_records/previous_records.dart';
 import 'package:zikanri/ui/setting/setting.dart';
 import 'package:zikanri/ui/home/record_button.dart';
-import 'package:zikanri/data.dart';
+import 'package:zikanri/config.dart';
 
 class MyAppPage extends StatelessWidget {
   MyAppPage._({Key key}) : super(key: key);

@@ -11,7 +11,7 @@ import 'package:zikanri/controller/activity_notifier.dart';
 //my files
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
-import 'package:zikanri/data.dart';
+import 'package:zikanri/config.dart';
 import 'package:zikanri/ui/splash.dart';
 
 class MinuteMeter extends StatefulWidget {

@@ -4,7 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 
 //my files
-import 'package:zikanri/data.dart';
+import 'package:zikanri/config.dart';
 
 //changeNotifier for userData
 class UserDataNotifier with ChangeNotifier {

@@ -10,7 +10,7 @@ import 'package:esys_flutter_share/esys_flutter_share.dart';
 
 //my files
 import 'package:zikanri/controller/theme_notifier.dart';
-import 'package:zikanri/data.dart';
+import 'package:zikanri/config.dart';
 
 class DayDataWidget extends StatelessWidget {
   DayDataWidget({this.itemList});

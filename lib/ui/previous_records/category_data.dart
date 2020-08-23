@@ -6,7 +6,7 @@ import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 //my files
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
-import 'package:zikanri/data.dart';
+import 'package:zikanri/config.dart';
 
 class CategoryDataPage extends StatelessWidget {
   const CategoryDataPage(this.index);
