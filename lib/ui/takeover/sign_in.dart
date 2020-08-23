@@ -8,16 +8,16 @@ import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/service/auth.dart';
 import 'package:zikanri/service/store_service.dart';
-import 'package:zikanri/takeover/result_dialog.dart';
-import 'package:zikanri/takeover/sign_in.dart';
+import 'package:zikanri/ui/takeover/result_dialog.dart';
+import 'package:zikanri/ui/takeover/sign_up.dart';
 import 'package:zikanri/data.dart';
 
-class SignUpPage extends StatefulWidget {
+class SignInPage extends StatefulWidget {
   @override
-  _SignUpPageState createState() => _SignUpPageState();
+  _SignInPageState createState() => _SignInPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _SignInPageState extends State<SignInPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   String email = '';
@@ -75,7 +75,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     fontSize: FontSize.midium,
                   ),
                   decoration: InputDecoration(
-                    hintText: '6文字以上のパスワード',
+                    hintText: 'パスワード',
                     focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
                         color: color,
@@ -102,10 +102,10 @@ class _SignUpPageState extends State<SignUpPage> {
                     borderRadius: BorderRadius.circular(500),
                     border: Border.all(
                       color: (email.isEmpty ||
-                              password.length < 6 ||
+                              password.isEmpty ||
                               (Hive.box('userData')
-                                      .containsKey('backupFinish') &&
-                                  Hive.box('userData').get('backupFinish')))
+                                      .containsKey('takeoverFinish') &&
+                                  Hive.box('userData').get('takeoverFinish')))
                           ? Colors.grey
                           : color,
                       width: 3,
@@ -122,7 +122,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         Padding(
                           padding: const EdgeInsets.all(15),
                           child: Text(
-                            'データを登録する',
+                            'データを呼び出す',
                             style: TextStyle(
                               fontSize: FontSize.small,
                               fontWeight: FontWeight.w700,
@@ -132,45 +132,35 @@ class _SignUpPageState extends State<SignUpPage> {
                       ],
                     ),
                     onPressed: (email.isEmpty ||
-                            password.length < 6 ||
-                            (Hive.box('userData').containsKey('backupFinish') &&
-                                Hive.box('userData').get('backupFinish')) ||
+                            password.isEmpty ||
+                            (Hive.box('userData')
+                                    .containsKey('takeoverFinish') &&
+                                Hive.box('userData').get('takeoverFinish')) ||
                             isLoad)
                         ? null
                         : () async {
                             switchLoad();
                             String result =
-                                await Auth().createUser(email, password);
-                            if (result == 'error:exist') {
-                              result = await Auth().signIn(email, password);
-                            }
+                                await Auth().signIn(email, password);
                             if (result == 'error:email') {
-                              result = 'データの登録に失敗しました。\n登録無効なメールアドレスです。';
+                              result = '失敗しました。\nメールアドレスが間違っています。';
                             } else if (result == 'error:password') {
-                              result =
-                                  'データの再登録に失敗しました。\n：一度設定したパスワードを使用してください。';
+                              result = '失敗しました。\nパスワードが間違っています。';
                             } else if (result == 'error:unknown') {
-                              result = 'データの登録に失敗しました。';
+                              result = '失敗しました。\nデータを呼び出せませんでした。';
                             } else {
-                              final userData = Provider.of<UserDataNotifier>(
-                                  context,
-                                  listen: false);
-                              final data = {
-                                'name': userData.userName,
-                                'passDay': userData.totalPassedDays,
-                                'allTime': userData.allTime,
-                                'allGood': userData.allGood,
-                                'allPer': userData.allPer,
-                              };
-                              final upload = await StoreService().uploadData(
-                                  result, data, userData.categories);
-                              if (upload == 'success') {
-                                result = '正常にデータを登録しました。';
-                                await Hive.box('userData')
-                                    .put('backupFinish', true);
-                              } else {
-                                result = 'データの登録に失敗しました。';
-                              }
+                              List achive =
+                                  await StoreService().getUserData(result);
+                              await StoreService().getUserCategory(result);
+                              await Provider.of<UserDataNotifier>(context,
+                                      listen: false)
+                                  .takeOver(achive[0], achive[1]);
+                              await Provider.of<ThemeNotifier>(context,
+                                      listen: false)
+                                  .firstOpenDataSet();
+                              result = '正常にデータを引き継ぎました。';
+                              await Hive.box('userData')
+                                  .put('takeoverFinish', true);
                             }
                             await Future.delayed(Duration(seconds: 1));
                             switchLoad();
@@ -189,7 +179,7 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               FlatButton(
                 child: Text(
-                  "データの呼び出しはこちらから",
+                  "データの登録はこちらから",
                   style: TextStyle(
                     fontSize: FontSize.xsmall,
                     fontWeight: FontWeight.w700,
@@ -199,7 +189,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => SignInPage(),
+                      builder: (context) => SignUpPage(),
                     ),
                   );
                 },
@@ -233,7 +223,7 @@ class _GuideAppBar extends StatelessWidget with PreferredSizeWidget {
       elevation: 0,
       backgroundColor: Colors.transparent,
       title: Text(
-        'データ登録',
+        'データ呼び出し',
         style: TextStyle(
           color: controller.isDark ? Colors.white : Colors.black,
         ),
@@ -257,9 +247,9 @@ class HelpDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('データ登録'),
-      content:
-          Text('ネット上にデータを保存することで他の端末からデータにアクセスできるようになります。\nデータの登録は1日1回までです。'),
+      title: Text('データ呼び出し'),
+      content: Text(
+          'ネット上に保存したデータを呼び出すことができます。\n端末に保存されているデータは上書きされます。\nデータの呼び出しは1日1回までです。'),
       actions: [
         FlatButton(
           child: const Text('OK'),

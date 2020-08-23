@@ -8,11 +8,11 @@ import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
 
 //my files
-import 'package:zikanri/category/category.dart';
+import 'package:zikanri/ui/category/category.dart';
 import 'package:zikanri/controller/record_notifier.dart';
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
-import 'package:zikanri/splash.dart';
+import 'package:zikanri/ui/splash.dart';
 import 'package:zikanri/data.dart';
 
 void notification(String s, int length) async {

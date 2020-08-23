@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/data.dart';
-import 'package:zikanri/lately/activity.dart';
+import 'package:zikanri/ui/lately/activity.dart';
 
 class ActivityList extends StatelessWidget {
   @override

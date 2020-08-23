@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 //my files
 import 'package:zikanri/controller/user_data_notifier.dart';
-import 'package:zikanri/guide/notice_guide.dart';
+import 'package:zikanri/ui/guide/notice_guide.dart';
 import 'total_score.dart';
 import 'minute_meter.dart';
 import 'this_month.dart';

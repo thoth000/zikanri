@@ -6,16 +6,16 @@ import 'package:launch_review/launch_review.dart';
 import 'package:provider/provider.dart';
 
 //my files
-import 'package:zikanri/category/category.dart';
+import 'package:zikanri/ui/category/category.dart';
 import 'package:zikanri/controller/theme_notifier.dart';
-import 'package:zikanri/guide/feature_guide.dart';
-import 'package:zikanri/guide/quick_guide.dart';
-import 'package:zikanri/setting/privacy.dart';
-import 'package:zikanri/takeover/sign_in.dart';
+import 'package:zikanri/ui/guide/feature_guide.dart';
+import 'package:zikanri/ui/guide/quick_guide.dart';
+import 'package:zikanri/ui/setting/privacy.dart';
+import 'package:zikanri/ui/takeover/sign_in.dart';
 import 'profile.dart';
 import 'theme.dart';
 import 'achieve.dart';
-import 'package:zikanri/home/record_button.dart';
+import 'package:zikanri/ui/home/record_button.dart';
 import 'package:zikanri/data.dart';
 
 class SettingPage extends StatelessWidget {

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 //my files
-import 'package:zikanri/category/category_edit.dart';
+import 'package:zikanri/ui/category/category_edit.dart';
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/data.dart';

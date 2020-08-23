@@ -5,11 +5,11 @@ import 'package:zikanri/controller/main_page_controller.dart';
 
 //my files
 import 'package:zikanri/controller/theme_notifier.dart';
-import 'package:zikanri/home/home.dart';
-import 'package:zikanri/lately/lately.dart';
-import 'package:zikanri/previous_records/previous_records.dart';
-import 'package:zikanri/setting/setting.dart';
-import 'package:zikanri/home/record_button.dart';
+import 'package:zikanri/ui/home/home.dart';
+import 'package:zikanri/ui/lately/lately.dart';
+import 'package:zikanri/ui/previous_records/previous_records.dart';
+import 'package:zikanri/ui/setting/setting.dart';
+import 'package:zikanri/ui/home/record_button.dart';
 import 'package:zikanri/data.dart';
 
 class MyAppPage extends StatelessWidget {

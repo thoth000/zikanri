@@ -10,9 +10,9 @@ import 'package:package_info/package_info.dart';
 //my files
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
-import 'package:zikanri/update_notice.dart';
-import 'package:zikanri/mypage.dart';
-import 'package:zikanri/welcome.dart';
+import 'package:zikanri/ui/update_notice.dart';
+import 'package:zikanri/ui/mypage.dart';
+import 'package:zikanri/ui/welcome.dart';
 import 'package:zikanri/data.dart';
 
 class SplashPage extends StatefulWidget {

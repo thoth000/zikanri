@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 ///my files
 import 'package:zikanri/data.dart';
-import 'package:zikanri/parts/general_app_bar.dart';
+import 'package:zikanri/ui/parts/general_app_bar.dart';
 
 class QuickGuide extends StatelessWidget {
   @override
