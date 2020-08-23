@@ -41,7 +41,22 @@ class RButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
-    final record = Provider.of<RecordNotifier>(context);
+
+    Future<void> pagechange() async {
+      await Future.delayed(
+        Duration(
+          milliseconds: 1500,
+        ),
+      );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SplashPage(),
+        ),
+      );
+    }
+
+    //widget
     return Container(
       height: displaySize.width / 5,
       width: displaySize.width / 5,
@@ -75,7 +90,7 @@ class RButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(500),
               ),
               child: SizedBox(),
-              onPressed: () {
+              onPressed: () async {
                 var date = DateFormat('yyyy年MM月dd日').format(DateTime.now());
                 if (date != Hive.box('userData').get('previousDate')) {
                   showDialog(
@@ -83,9 +98,10 @@ class RButton extends StatelessWidget {
                     context: (context),
                     builder: (context) => DateChangeDialog(),
                   );
+                  await pagechange();
                 } else {
                   Vib.select();
-                  record.reset();
+                  //record.reset();
                   showModalBottomSheet(
                     shape: RoundedRectangleBorder(
                       borderRadius:
@@ -93,11 +109,11 @@ class RButton extends StatelessWidget {
                     ),
                     context: context,
                     isScrollControlled: true,
-                    builder: (context) => RecordBottomSheet(),
+                    builder: (context) => RecordBottomSheet.wrapped(),
                   );
                 }
               },
-              onLongPress: () {
+              onLongPress: () async {
                 var date = DateFormat('yyyy年MM月dd日').format(DateTime.now());
                 if (date != Hive.box('userData').get('previousDate')) {
                   showDialog(
@@ -105,6 +121,7 @@ class RButton extends StatelessWidget {
                     context: (context),
                     builder: (context) => DateChangeDialog(),
                   );
+                  await pagechange();
                 } else {
                   Vib.decide();
                   showModalBottomSheet(
@@ -126,60 +143,42 @@ class RButton extends StatelessWidget {
   }
 }
 
-class DateChangeDialog extends StatefulWidget {
-  @override
-  _DateChangeDialogState createState() => _DateChangeDialogState();
-}
-
-class _DateChangeDialogState extends State<DateChangeDialog> {
-  void initState() {
-    super.initState();
-    pagechange();
-  }
-
-  Future pagechange() async {
-    Future.delayed(
-      Duration(milliseconds: 1500),
-      () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => SplashPage(),
-          ),
-        );
-      },
-    );
-  }
-
+class DateChangeDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
-      title: Text('日付が変わっています'),
-      content: Text('自動的にタイトル画面に戻ります'),
+      title: const Text('日付が変わっています'),
+      content: const Text('自動的にタイトル画面に戻ります'),
     );
   }
 }
 
-class RecordBottomSheet extends StatefulWidget {
-  RecordBottomSheet();
-  @override
-  _RecordBottomSheetState createState() => _RecordBottomSheetState();
-}
+class RecordBottomSheet extends StatelessWidget {
+  const RecordBottomSheet._({Key key}) : super(key: key);
+  static Widget wrapped() {
+    return ChangeNotifierProvider(
+      create: (_) => RecordNotifier(),
+      child: RecordBottomSheet._(),
+    );
+  }
 
-class _RecordBottomSheetState extends State<RecordBottomSheet> {
   @override
   Widget build(BuildContext context) {
+    //controllers
     final theme = Provider.of<ThemeNotifier>(context);
-    final userData = Provider.of<UserDataNotifier>(context);
-    final record = Provider.of<RecordNotifier>(context);
-    final _decorationStyle = BoxDecoration(
+    final record =
+        Provider.of<RecordNotifier>(context, listen: false); //Function用
+
+    Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
+
+    final BoxDecoration _decorationStyle = BoxDecoration(
       borderRadius: BorderRadius.circular(10),
       border: Border.all(color: Colors.grey),
     );
-    final _headlineStyle = TextStyle(
+    final TextStyle _headlineStyle = TextStyle(
       fontSize: FontSize.small,
       fontWeight: FontWeight.w700,
     );
@@ -191,7 +190,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
       child: FractionallySizedBox(
         heightFactor: 0.7,
         child: Padding(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             horizontal: 20,
           ),
           child: Column(
@@ -200,7 +199,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
               //ボトムシートの上のグレーのとこ
               Container(
                 height: 5,
-                width: 50,
+                width: 70,
                 margin: EdgeInsets.all(12.5),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
@@ -210,72 +209,20 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
               Text(
                 '記録の追加',
                 style: TextStyle(
-                    fontSize: FontSize.large, fontWeight: FontWeight.w700),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Container(
-                      height: displaySize.width / 7.5,
-                      width: displaySize.width / 2.5,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                          color: (record.isRecord)
-                              ? (theme.isDark)
-                                  ? theme.themeColors[0]
-                                  : theme.themeColors[1]
-                              : Colors.grey,
-                          width: (record.isRecord) ? 3 : 1,
-                        ),
-                      ),
-                      child: FlatButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(
-                          child: Text('記録する'),
-                        ),
-                        onPressed: record.recordMode,
-                      ),
-                    ),
-                    Container(
-                      height: displaySize.width / 7.5,
-                      width: displaySize.width / 2.5,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                          color: (!record.isRecord)
-                              ? (theme.isDark)
-                                  ? theme.themeColors[0]
-                                  : theme.themeColors[1]
-                              : Colors.grey,
-                          width: (!record.isRecord) ? 3 : 1,
-                        ),
-                      ),
-                      child: FlatButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: const Center(
-                          child: Text('開始する'),
-                        ),
-                        onPressed: record.startMode,
-                      ),
-                    ),
-                  ],
+                  fontSize: FontSize.large,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
               const SizedBox(
-                height: 10,
+                height: 20,
+              ),
+              SelectModeWidget(),
+              const SizedBox(
+                height: 20,
               ),
               const Divider(
                 height: 1,
+                thickness: 1,
               ),
               Expanded(
                 child: ListView(
@@ -283,7 +230,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Text(
@@ -298,232 +245,33 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                           ),
                           child: TextField(
                             textAlignVertical: TextAlignVertical.center,
-                            cursorColor: (theme.isDark)
-                                ? theme.themeColors[0]
-                                : theme.themeColors[1],
+                            cursorColor: color,
                             keyboardType: TextInputType.multiline,
                             style: TextStyle(
                               fontSize: FontSize.small,
                             ),
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              //ヒント文:記録モード:開始モード
-                              hintText: record.isRecord ? 'なにをしたの？' : 'なにをするの？',
+                              //ヒント文
+                              hintText: 'どんな活動？',
                             ),
                             inputFormatters: [
-                              LengthLimitingTextInputFormatter(20)
+                              LengthLimitingTextInputFormatter(30)
                             ],
                             textInputAction: TextInputAction.go,
-                            onChanged: (s) => record.changeTitle(s),
+                            onChanged: (s) {
+                              record.changeTitle(s);
+                            },
                           ),
                         ),
                       ],
                     ),
-                    (record.isRecord)
-                        ? Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  const SizedBox(
-                                    height: 25,
-                                  ),
-                                  Text(
-                                    '時間(分)',
-                                    style: _headlineStyle,
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Container(
-                                    height: displaySize.width / 7,
-                                    width: displaySize.width / 2.5,
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 5),
-                                    decoration: _decorationStyle,
-                                    child: TextField(
-                                      textAlignVertical:
-                                          TextAlignVertical.center,
-                                      cursorColor: (theme.isDark)
-                                          ? theme.themeColors[0]
-                                          : theme.themeColors[1],
-                                      style: TextStyle(
-                                        fontSize: FontSize.small,
-                                      ),
-                                      keyboardType: TextInputType.number,
-                                      inputFormatters: <TextInputFormatter>[
-                                        WhitelistingTextInputFormatter
-                                            .digitsOnly,
-                                      ],
-                                      textInputAction: TextInputAction.go,
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: '何分？',
-                                      ),
-                                      onChanged: (s) => record.changeTime(s),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  const SizedBox(
-                                    height: 25,
-                                  ),
-                                  Text(
-                                    '時間の価値',
-                                    style: _headlineStyle,
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  SizedBox(
-                                    width: displaySize.width / 2.5,
-                                    child: SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Row(
-                                        children: <Widget>[
-                                          Row(
-                                            children: <Widget>[
-                                              blocButton(theme, record, false),
-                                              SizedBox(
-                                                width: displaySize.width / 50,
-                                              ),
-                                              blocButton(theme, record, true),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          )
-                        : SizedBox(),
+                    ActivityInfoWidget(),
                     const SizedBox(
                       height: 20,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          height: displaySize.width / 6.5,
-                          width: displaySize.width / 1.5,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(500),
-                            border: Border.all(
-                              color: (theme.isDark)
-                                  ? record.check()
-                                      ? theme.themeColors[0]
-                                          .withOpacity(0.5) //opacityを無効時につける
-                                      : theme.themeColors[0]
-                                  : record.check()
-                                      ? theme.themeColors[1]
-                                          .withOpacity(0.5) //opacityを無効時につける
-                                      : theme.themeColors[1],
-                              width: 3,
-                            ),
-                          ),
-                          child: FlatButton(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(500),
-                            ),
-                            onLongPress: record.check()
-                                ? null
-                                : () async {
-                                    if (record.isRecord) {
-                                      Vib.shortCut();
-                                      userData.addShortCuts(
-                                        [
-                                          record.categoryIndex,
-                                          record.title,
-                                          record.time,
-                                          record.isGood,
-                                          userData.keynum,
-                                          true,
-                                        ],
-                                      );
-                                      userData.recordDone(
-                                        [
-                                          record.categoryIndex,
-                                          record.title,
-                                          record.time,
-                                          record.isGood,
-                                        ],
-                                      );
-                                      Navigator.pop(context);
-                                      record.reset();
-                                    } else {
-                                      notification(
-                                        record.title,
-                                        userData.activities.length,
-                                      );
-                                      Vib.shortCut();
-                                      userData.addShortCuts(
-                                        [
-                                          record.categoryIndex,
-                                          record.title,
-                                          0,
-                                          false,
-                                          userData.keynum,
-                                          false,
-                                        ],
-                                      );
-                                      userData.addActivity(
-                                        DateTime.now(),
-                                        record.title,
-                                        record.categoryIndex,
-                                      );
-                                      Navigator.pop(context);
-                                      record.reset();
-                                    }
-                                  },
-                            onPressed: record.check()
-                                ? null
-                                : () async {
-                                    if (record.isRecord) {
-                                      //記録モード
-                                      Vib.decide();
-                                      userData.recordDone(
-                                        [
-                                          record.categoryIndex,
-                                          record.title,
-                                          record.time,
-                                          record.isGood,
-                                        ],
-                                      );
-                                      record.reset();
-                                      Navigator.pop(context);
-                                    } else {
-                                      notification(
-                                        record.title,
-                                        userData.activities.length,
-                                      );
-                                      //開始モード
-                                      Vib.decide();
-                                      userData.addActivity(DateTime.now(),
-                                          record.title, record.categoryIndex);
-                                      Navigator.pop(context);
-                                      record.reset();
-                                    }
-                                  },
-                            child: Text(
-                              (record.isRecord) ? '記録する' : '開始する',
-                              style: TextStyle(
-                                fontSize: FontSize.midium,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                    Center(
+                      child: SaveActivityButton(),
                     ),
                     const Divider(
                       height: 30,
@@ -538,147 +286,7 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
                         const SizedBox(
                           height: 5,
                         ),
-                        Wrap(
-                          children: <Widget>[
-                            for (int i = 0; i < userData.categories.length; i++)
-                              (userData.categoryView[i])
-                                  ? Padding(
-                                      padding: const EdgeInsets.only(
-                                          right: 5, bottom: 10,),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          Container(
-                                            height: displaySize.width / 6.5,
-                                            width: displaySize.width / 6.5,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              border: Border.all(
-                                                color: (record.categoryIndex ==
-                                                        i)
-                                                    ? (theme.isDark)
-                                                        ? theme.themeColors[0]
-                                                        : theme.themeColors[1]
-                                                    : Colors.grey,
-                                                width:
-                                                    (record.categoryIndex == i)
-                                                        ? 3
-                                                        : 1,
-                                              ),
-                                            ),
-                                            child: Stack(
-                                              children: <Widget>[
-                                                Center(
-                                                  child: Icon(
-                                                    IconData(
-                                                      userData.categories[i][0],
-                                                      fontFamily:
-                                                          'MaterialIcons',
-                                                    ),
-                                                    color: (theme.isDark)
-                                                        ? Colors.white
-                                                        : Colors.black,
-                                                    size:
-                                                        displaySize.width / 15,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height:
-                                                      displaySize.width / 6.5,
-                                                  width:
-                                                      displaySize.width / 6.5,
-                                                  child: FlatButton(
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10,),
-                                                    ),
-                                                    child: const SizedBox(),
-                                                    color: Colors.transparent,
-                                                    onPressed: () => record
-                                                        .changeCategoryIndex(i),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: displaySize.width / 5.1,
-                                            child: Text(
-                                              userData.categories[i][1],
-                                              textAlign: TextAlign.center,
-                                              softWrap: false,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                fontSize: FontSize.xxsmall,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  : const SizedBox(),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 20),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  SizedBox(
-                                    width: displaySize.width / 5,
-                                  ),
-                                  Container(
-                                    height: displaySize.width / 6.5,
-                                    width: displaySize.width / 6.5,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(
-                                        color: Colors.grey,
-                                        width: 1,
-                                      ),
-                                    ),
-                                    child: Stack(
-                                      children: <Widget>[
-                                        Center(
-                                          child: Icon(
-                                            Icons.more_horiz,
-                                            color: (theme.isDark)
-                                                ? Colors.white
-                                                : Colors.black,
-                                            size: displaySize.width / 15,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: displaySize.width / 6.5,
-                                          width: displaySize.width / 6.5,
-                                          child: FlatButton(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                            child: SizedBox(),
-                                            color: Colors.transparent,
-                                            onPressed: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      CategoryPage(),
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                        SelectCategoryWidget(),
                       ],
                     ),
                   ],
@@ -690,28 +298,201 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
       ),
     );
   }
+}
 
-  Widget blocButton(theme, record, isGood) {
+class SelectModeWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    //controllers
+    final theme = Provider.of<ThemeNotifier>(context);
+    final record = Provider.of<RecordNotifier>(context);
+    //style
+    Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
+    //widget
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Container(
+          height: displaySize.width / 7.5,
+          width: displaySize.width / 2.5,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: (record.isRecord) ? color : Colors.grey,
+              width: (record.isRecord) ? 3 : 1,
+            ),
+          ),
+          child: FlatButton(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: const Center(
+              child: Text('記録する'),
+            ),
+            onPressed: record.recordMode,
+          ),
+        ),
+        Container(
+          height: displaySize.width / 7.5,
+          width: displaySize.width / 2.5,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: (!record.isRecord) ? color : Colors.grey,
+              width: (!record.isRecord) ? 3 : 1,
+            ),
+          ),
+          child: FlatButton(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: const Center(
+              child: Text('開始する'),
+            ),
+            onPressed: record.startMode,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class ActivityInfoWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    //controllers
+    final theme = Provider.of<ThemeNotifier>(context);
+    final record = Provider.of<RecordNotifier>(context);
+    //style
+    Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
+    final BoxDecoration _decorationStyle = BoxDecoration(
+      borderRadius: BorderRadius.circular(10),
+      border: Border.all(color: Colors.grey),
+    );
+    final TextStyle _headlineStyle = TextStyle(
+      fontSize: FontSize.small,
+      fontWeight: FontWeight.w700,
+    );
+    //Widget
+    if (record.isRecord) {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const SizedBox(
+                height: 25,
+              ),
+              Text(
+                '時間(分)',
+                style: _headlineStyle,
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Container(
+                height: displaySize.width / 7,
+                width: displaySize.width / 2.5,
+                padding: EdgeInsets.symmetric(horizontal: 5),
+                decoration: _decorationStyle,
+                child: TextField(
+                  textAlignVertical: TextAlignVertical.center,
+                  cursorColor: color,
+                  style: TextStyle(
+                    fontSize: FontSize.small,
+                  ),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    WhitelistingTextInputFormatter.digitsOnly,
+                  ],
+                  textInputAction: TextInputAction.go,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: '何分？',
+                  ),
+                  onChanged: (s) => record.changeTime(s),
+                ),
+              ),
+            ],
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const SizedBox(
+                height: 25,
+              ),
+              Text(
+                '時間の価値',
+                style: _headlineStyle,
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              SizedBox(
+                width: displaySize.width / 2.5,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          ValueSelectBloc(
+                            boolean: false,
+                          ),
+                          SizedBox(
+                            width: displaySize.width / 50,
+                          ),
+                          ValueSelectBloc(
+                            boolean: true,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+            ],
+          ),
+        ],
+      );
+    } else {
+      return const SizedBox();
+    }
+  }
+}
+
+class ValueSelectBloc extends StatelessWidget {
+  ValueSelectBloc({this.boolean});
+  final bool boolean;
+  @override
+  Widget build(BuildContext context) {
+    //controllers
+    final theme = Provider.of<ThemeNotifier>(context);
+    final record = Provider.of<RecordNotifier>(context);
+    //style
+    Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
+    //widget
     return Container(
       height: displaySize.width / 7,
       width: displaySize.width / 7,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
-          color: (record.isGood == isGood)
-              ? (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1]
-              : Colors.grey,
-          width: (record.isGood == isGood) ? 3 : 1,
+          color: (record.isGood == boolean) ? color : Colors.grey,
+          width: (record.isGood == boolean) ? 3 : 1,
         ),
       ),
       child: Stack(
         children: <Widget>[
           Center(
             child: Icon(
-              (isGood) ? Icons.trending_up : Icons.trending_flat,
-              color: (record.isGood == isGood)
-                  ? (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1]
-                  : Colors.grey,
+              (boolean) ? Icons.trending_up : Icons.trending_flat,
+              color: (record.isGood == boolean) ? color : Colors.grey,
               size: displaySize.width / 10,
             ),
           ),
@@ -723,12 +504,270 @@ class _RecordBottomSheetState extends State<RecordBottomSheet> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              onPressed: () => record.changeValue(isGood),
-              child: SizedBox(),
+              onPressed: () => record.changeValue(boolean),
+              child: const SizedBox(),
             ),
           ),
         ],
       ),
+    );
+  }
+}
+
+class SaveActivityButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    //controllers
+    final userData = Provider.of<UserDataNotifier>(context);
+    final theme = Provider.of<ThemeNotifier>(context);
+    final record = Provider.of<RecordNotifier>(context);
+
+    Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
+
+    return Container(
+      height: displaySize.width / 6.5,
+      width: displaySize.width / 1.5,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(500),
+        border: Border.all(
+          color: record.check()
+              ? color.withOpacity(0.5) //opacityを無効時につける
+              : color,
+          width: 3,
+        ),
+      ),
+      child: FlatButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(500),
+        ),
+        onLongPress: record.check()
+            ? null
+            : () async {
+                if (record.isRecord) {
+                  Vib.shortCut();
+                  userData.addShortCuts(
+                    [
+                      record.categoryIndex,
+                      record.title,
+                      record.time,
+                      record.isGood,
+                      userData.keynum,
+                      true,
+                    ],
+                  );
+                  userData.recordDone(
+                    [
+                      record.categoryIndex,
+                      record.title,
+                      record.time,
+                      record.isGood,
+                    ],
+                  );
+                  Navigator.pop(context);
+                  //record.reset();
+                } else {
+                  notification(
+                    record.title,
+                    userData.activities.length,
+                  );
+                  Vib.shortCut();
+                  userData.addShortCuts(
+                    [
+                      record.categoryIndex,
+                      record.title,
+                      0,
+                      false,
+                      userData.keynum,
+                      false,
+                    ],
+                  );
+                  userData.addActivity(
+                    DateTime.now(),
+                    record.title,
+                    record.categoryIndex,
+                  );
+                  Navigator.pop(context);
+                  //record.reset();
+                }
+              },
+        onPressed: record.check()
+            ? null
+            : () async {
+                if (record.isRecord) {
+                  //記録モード
+                  Vib.decide();
+                  userData.recordDone(
+                    [
+                      record.categoryIndex,
+                      record.title,
+                      record.time,
+                      record.isGood,
+                    ],
+                  );
+                  //record.reset();
+                  Navigator.pop(context);
+                } else {
+                  notification(
+                    record.title,
+                    userData.activities.length,
+                  );
+                  //開始モード
+                  Vib.decide();
+                  userData.addActivity(
+                    DateTime.now(),
+                    record.title,
+                    record.categoryIndex,
+                  );
+                  Navigator.pop(context);
+                  //record.reset();
+                }
+              },
+        child: Text(
+          (record.isRecord) ? '記録する' : '開始する',
+          style: TextStyle(
+            fontSize: FontSize.midium,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class SelectCategoryWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    //controller
+    final userData = Provider.of<UserDataNotifier>(context);
+    final theme = Provider.of<ThemeNotifier>(context);
+    final record = Provider.of<RecordNotifier>(context);
+    //style
+    Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
+    //widget
+    return Wrap(
+      children: <Widget>[
+        for (int i = 0; i < userData.categories.length; i++)
+          (userData.categoryView[i])
+              ? Padding(
+                  padding: const EdgeInsets.only(
+                    right: 5,
+                    bottom: 10,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        height: displaySize.width / 6.5,
+                        width: displaySize.width / 6.5,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: (record.categoryIndex == i)
+                                ? color
+                                : Colors.grey,
+                            width: (record.categoryIndex == i) ? 3 : 1,
+                          ),
+                        ),
+                        child: Stack(
+                          children: <Widget>[
+                            Center(
+                              child: Icon(
+                                IconData(
+                                  userData.categories[i][0],
+                                  fontFamily: 'MaterialIcons',
+                                ),
+                                color: (theme.isDark)
+                                    ? Colors.white
+                                    : Colors.black,
+                                size: displaySize.width / 15,
+                              ),
+                            ),
+                            SizedBox(
+                              height: displaySize.width / 6.5,
+                              width: displaySize.width / 6.5,
+                              child: FlatButton(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    10,
+                                  ),
+                                ),
+                                child: const SizedBox(),
+                                color: Colors.transparent,
+                                onPressed: () => record.changeCategoryIndex(i),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: displaySize.width / 5.1,
+                        child: Text(
+                          userData.categories[i][1],
+                          textAlign: TextAlign.center,
+                          softWrap: false,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: FontSize.xxsmall,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : const SizedBox(),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(
+                width: displaySize.width / 5,
+              ),
+              Container(
+                height: displaySize.width / 6.5,
+                width: displaySize.width / 6.5,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                    color: Colors.grey,
+                    width: 1,
+                  ),
+                ),
+                child: Stack(
+                  children: <Widget>[
+                    Center(
+                      child: Icon(
+                        Icons.more_horiz,
+                        color: (theme.isDark) ? Colors.white : Colors.black,
+                        size: displaySize.width / 15,
+                      ),
+                    ),
+                    SizedBox(
+                      height: displaySize.width / 6.5,
+                      width: displaySize.width / 6.5,
+                      child: FlatButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: SizedBox(),
+                        color: Colors.transparent,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CategoryPage(),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
@@ -956,7 +995,9 @@ class ShortCutsEditPage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         title: Text(
           'ショートカットの編集',
-          style: TextStyle(color: theme.isDark ? Colors.white : Colors.black,),
+          style: TextStyle(
+            color: theme.isDark ? Colors.white : Colors.black,
+          ),
         ),
       ),
       body: Column(

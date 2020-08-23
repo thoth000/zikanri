@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
+import 'package:zikanri/controller/activity_notifier.dart';
 
 //my files
-import 'package:zikanri/controller/record_notifier.dart';
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/data.dart';
@@ -20,6 +20,7 @@ class MinuteMeter extends StatefulWidget {
 }
 
 class _MinuteMeterState extends State<MinuteMeter> {
+  //function
   void initState() {
     super.initState();
     dateCheck();
@@ -41,16 +42,16 @@ class _MinuteMeterState extends State<MinuteMeter> {
   }
 
   Future pagechange() async {
-    Future.delayed(
-      Duration(milliseconds: 1500),
-      () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => SplashPage(),
-          ),
-        );
-      },
+    await Future.delayed(
+      Duration(
+        milliseconds: 1500,
+      ),
+    );
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SplashPage(),
+      ),
     );
   }
 
@@ -62,9 +63,10 @@ class _MinuteMeterState extends State<MinuteMeter> {
 
   @override
   Widget build(BuildContext context) {
+    //controller
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
-    final record = Provider.of<RecordNotifier>(context);
+    //function
     void checkDelete(int index) {
       showDialog(
         context: context,
@@ -92,6 +94,7 @@ class _MinuteMeterState extends State<MinuteMeter> {
       );
     }
 
+    //widget
     return Column(
       children: <Widget>[
         (userData.activities.length == 0)
@@ -161,7 +164,7 @@ class _MinuteMeterState extends State<MinuteMeter> {
                                 Flexible(
                                   child: Text(
                                     userData.activities[i][2],
-                                    overflow: TextOverflow.fade,
+                                    overflow: TextOverflow.ellipsis,
                                     softWrap: false,
                                     style: TextStyle(
                                       fontSize: FontSize.small,
@@ -256,15 +259,20 @@ class _MinuteMeterState extends State<MinuteMeter> {
                                       highlightColor: Colors.transparent,
                                       onPressed: () {
                                         Vib.select();
-                                        record.copyData(
-                                          userData.activities[i][3],
-                                          userData.activities[i][2],
-                                          userData.activities[i][5],
-                                        );
-                                        showDialog(
+                                        /*showDialog(
                                           context: context,
                                           builder: (context) =>
-                                              FinishRecordDialog(i),
+                                              FinishActivityDialog.wrapped(i),
+                                        );*/
+                                        showModalBottomSheet(
+                                          context: context,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.vertical(
+                                              top: Radius.circular(30),
+                                            ),
+                                          ),
+                                          builder: (context) =>
+                                              FinishActivitySheet.wrapped(i),
                                         );
                                       },
                                     ),
@@ -337,131 +345,204 @@ class _MinuteMeterState extends State<MinuteMeter> {
   }
 }
 
-class FinishRecordDialog extends StatelessWidget {
-  final index;
-  //activity[0:datetime 1:bool 2:title 3:categoryIndex 4:tmp 5:tmp]
-  FinishRecordDialog(this.index);
-  @override
-  Widget build(BuildContext context) {
-    final theme = Provider.of<ThemeNotifier>(context);
-    final userData = Provider.of<UserDataNotifier>(context);
-    final record = Provider.of<RecordNotifier>(context);
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30),
-      ),
-      child: SizedBox(
-        height: displaySize.width,
-        width: displaySize.width / 1.5,
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Icon(
-                IconData(
-                  userData.categories[record.categoryIndex][0],
-                  fontFamily: 'MaterialIcons',
-                ),
-                size: displaySize.width / 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 5.0,
-                ),
-                child: Text(
-                  record.title,
-                  softWrap: true,
-                  style: TextStyle(
-                    fontSize: FontSize.midium,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-              Divider(
-                height: displaySize.width / 30,
-              ),
-              Text(
-                '時間の価値',
-                style: TextStyle(
-                  fontSize: FontSize.small,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              SizedBox(
-                height: displaySize.width / 50,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  blocButton(theme, record, false),
-                  blocButton(theme, record, true),
-                ],
-              ),
-              SizedBox(
-                height: displaySize.width / 30,
-              ),
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100),
-                ),
-                elevation: 5,
-                child: SizedBox(
-                  height: displaySize.width / 7,
-                  width: displaySize.width / 3,
-                  child: FlatButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                    child: Text(
-                      '記録する',
-                      style: TextStyle(fontSize: FontSize.xsmall),
-                    ),
-                    onPressed: () async {
-                      Vib.decide();
-                      userData.recordDone(
-                        [
-                          record.categoryIndex,
-                          record.title,
-                          record.time,
-                          record.isGood,
-                        ],
-                      );
-                      userData.finishActivity(index);
-                      Navigator.pop(context);
-                    },
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+class FinishActivitySheet extends StatelessWidget {
+  const FinishActivitySheet._({Key key, this.index}) : super(key: key);
+
+  static Widget wrapped(int index) {
+    return ChangeNotifierProvider(
+      create: (_) => ActivityNotifier(),
+      child: FinishActivitySheet._(index: index),
     );
   }
 
-  Widget blocButton(theme, record, isGood) {
+  final int index;
+  //activity[0:datetime 1:bool 2:title 3:categoryIndex 4:tmp 5:tmp]
+  @override
+  Widget build(BuildContext context) {
+    //controller
+    final userData = Provider.of<UserDataNotifier>(context);
+    final theme = Provider.of<ThemeNotifier>(context);
+    final activityController = Provider.of<ActivityNotifier>(context);
+    //style
+    Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
+    //value
+    final activity = activityController.isRecording
+        ? ['', '', '', 0, 0, 0]
+        : userData.activities[index];
+    String title = activity[2];
+    int categoryIndex = activity[3];
+    int time = activity[5];
+    //widget
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: displaySize.width / 20),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            height: 5,
+            width: 70,
+            margin: EdgeInsets.all(12.5),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30),
+              color: Colors.grey,
+            ),
+          ),
+          Text(
+            '活動の記録',
+            style: TextStyle(
+              fontSize: FontSize.large,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          const Divider(
+            height: 1,
+            thickness: 1,
+          ),
+          Expanded(
+            child: ListView(
+              children: [
+                const SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  children: [
+                    Text(
+                      "活動の情報",
+                      style: TextStyle(
+                        fontSize: FontSize.small,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Row(
+                  children: [
+                    Icon(
+                      IconData(
+                        userData.categories[categoryIndex][0],
+                        fontFamily: 'MaterialIcons',
+                      ),
+                      size: displaySize.width / 7,
+                    ),
+                    SizedBox(
+                      width: displaySize.width / 20,
+                    ),
+                    Flexible(
+                      child: Text(
+                        title + 'aaaaaaaaaaaaa',
+                        style: TextStyle(
+                          fontSize: FontSize.midium,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    ValueSelectBloc(
+                      boolean: false,
+                    ),
+                    SizedBox(
+                      width: displaySize.width / 10,
+                    ),
+                    ValueSelectBloc(
+                      boolean: true,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: displaySize.width / 20,
+                ),
+                Center(
+                  child: Container(
+                    height: displaySize.width / 6.5,
+                    width: displaySize.width / 1.5,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(500),
+                      border: Border.all(
+                        color: color,
+                        width: 3,
+                      ),
+                    ),
+                    child: FlatButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(500),
+                      ),
+                      child: Text(
+                        '記録する',
+                        style: TextStyle(
+                          fontSize: FontSize.midium,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      onPressed: () async {
+                        Vib.decide();
+                        activityController.startRecord();
+                        await userData.recordDone(
+                          [
+                            categoryIndex,
+                            title,
+                            time,
+                            activityController.isGood,
+                          ],
+                        );
+                        await userData.finishActivity(index);
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ValueSelectBloc extends StatelessWidget {
+  ValueSelectBloc({this.boolean});
+  final bool boolean;
+  @override
+  Widget build(BuildContext context) {
+    //controllers
+    final theme = Provider.of<ThemeNotifier>(context);
+    final activityController = Provider.of<ActivityNotifier>(context);
+    //style
+    Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
+    //widget
     return Container(
       height: displaySize.width / 7,
       width: displaySize.width / 7,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
-          color: (record.isGood == isGood)
-              ? (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1]
-              : Colors.grey,
-          width: (record.isGood == isGood) ? 3 : 1,
+          color: (activityController.isGood == boolean) ? color : Colors.grey,
+          width: (activityController.isGood == boolean) ? 3 : 1,
         ),
       ),
       child: Stack(
         children: <Widget>[
           Center(
             child: Icon(
-              (isGood) ? Icons.trending_up : Icons.trending_flat,
-              color: (record.isGood == isGood)
-                  ? (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1]
-                  : Colors.grey,
+              (boolean) ? Icons.trending_up : Icons.trending_flat,
+              color:
+                  (activityController.isGood == boolean) ? color : Colors.grey,
               size: displaySize.width / 10,
             ),
           ),
@@ -473,8 +554,8 @@ class FinishRecordDialog extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              onPressed: () => record.changeValue(isGood),
-              child: SizedBox(),
+              onPressed: () => activityController.changeValue(boolean),
+              child: const SizedBox(),
             ),
           ),
         ],

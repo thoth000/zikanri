@@ -1,6 +1,7 @@
 //packages
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zikanri/controller/main_page_controller.dart';
 
 //my files
 import 'package:zikanri/controller/theme_notifier.dart';
@@ -84,13 +85,5 @@ class MyAppPage extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class MainPageController with ChangeNotifier {
-  int currentIndex = 0;
-  void changePage(int index) {
-    currentIndex = index;
-    notifyListeners();
   }
 }

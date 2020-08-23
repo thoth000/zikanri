@@ -13,6 +13,7 @@ class ProfileSettingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
+    Color color = theme.isDark ? theme.themeColors[0] : theme.themeColors[1];
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -28,6 +29,7 @@ class ProfileSettingPage extends StatelessWidget {
             icon: const Icon(Icons.check),
             onPressed: () async {
               await userData.editProfile(nameController.text);
+              nameController.clear();
             },
           ),
         ],
@@ -73,15 +75,11 @@ class ProfileSettingPage extends StatelessWidget {
               child: TextField(
                 controller: nameController,
                 maxLength: 94,
-                cursorColor: (theme.isDark)
-                    ? theme.themeColors[0]
-                    : theme.themeColors[1],
+                cursorColor: color,
                 decoration: InputDecoration(
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-                      color: (theme.isDark)
-                          ? theme.themeColors[0]
-                          : theme.themeColors[1],
+                      color: color,
                     ),
                   ),
                 ),

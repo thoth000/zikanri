@@ -267,6 +267,7 @@ class _AddSheetState extends State<AddSheet> {
           Padding(
             padding: const EdgeInsets.all(10),
             child: TextField(
+              autofocus: true,
               controller: timeController,
               style: TextStyle(
                 fontSize: FontSize.small,

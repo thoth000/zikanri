@@ -7,7 +7,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 //my files
-import 'package:zikanri/controller/record_notifier.dart';
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/Splash.dart';
@@ -28,22 +27,11 @@ void main() async {
         ChangeNotifierProvider(
           create: (_) => UserDataNotifier(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => RecordNotifier(),
-        ),
       ],
       child: MyApp(),
     ),
   );
 }
-
-/*Future a()async{
-  await Hive.initFlutter();
-  await Hive.openBox('theme');
-  await Hive.openBox('userData');
-  await Hive.box('theme').clear();
-  await Hive.box('userData').clear();
-}*/
 
 class MyApp extends StatefulWidget {
   @override
