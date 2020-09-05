@@ -1,11 +1,9 @@
 //packages
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-
 //my files
 import 'package:zikanri/config.dart';
 
-//changeNotifier for theme
 class ThemeNotifier with ChangeNotifier {
   final themeBox = Hive.box('theme');
 

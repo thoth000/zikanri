@@ -70,7 +70,7 @@ const List<int> achiveD = [1, 3, 7, 30, 100];
 
 //BaseColor
 //単色をベースにしていく
-//今なんこ,14
+//Color数=>14
 List<List<Color>> baseColors = const [
   [Color(0XFF39BAE8), Color(0XFF0000A1)], //青
   [Color(0XFFef473a), Color(0XFFcb2d3e)], //赤

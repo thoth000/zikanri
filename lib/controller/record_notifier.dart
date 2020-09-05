@@ -1,10 +1,8 @@
 //packages
 import 'package:flutter/material.dart';
-
 //my files
 import 'package:zikanri/config.dart';
 
-//changeNotifier for record
 class RecordNotifier with ChangeNotifier {
   String title = '';
   int time = 0;
