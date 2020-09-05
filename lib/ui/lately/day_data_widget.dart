@@ -1,13 +1,11 @@
 //dart
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-
 //packages
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
-
 //my files
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/config.dart';
@@ -51,7 +49,8 @@ class DayDataWidget extends StatelessWidget {
       child: Container(
         height: displaySize.width / 2 + 20,
         width: displaySize.width,
-        color: (theme.isDark) ? Colors.white : const Color(0XFFFAFAFA),
+        color:
+            (theme.isDark) ? const Color(0XFF303030) : const Color(0XFFFAFAFA),
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Card(

@@ -8,22 +8,26 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  share: ^0.6.3+6
+  #for DateTime
   intl: ^0.16.1
   provider: ^4.0.4
+  #Data Base
   hive: ^1.4.3
   hive_flutter: ^0.3.0+2
   path_provider: ^1.6.5
+  #Share with image
   esys_flutter_share: ^1.0.2
   vibration: ^1.2.4
+  #Circle_chart
   flutter_circular_chart: ^0.1.0
   flutter_swiper : ^1.1.6
-  introduction_screen: ^1.0.8
   cupertino_icons: ^0.1.2
-  flutter_svg: ^0.17.4
+  #notification for activity
   flutter_local_notifications: ^1.4.4+2
+  #get app version
   package_info: ^0.4.1
   launch_review: ^2.0.0
+  #firebase
   firebase_core: ^0.5.0
   firebase_auth: ^0.18.0+1
   cloud_firestore: ^0.14.0+1

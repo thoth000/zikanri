@@ -402,7 +402,8 @@ class FinishActivitySheet extends StatelessWidget {
             height: 1,
             thickness: 1,
           ),
-          Expanded(
+          SizedBox(
+            height: displaySize.width / 1.35,
             child: ListView(
               children: [
                 const SizedBox(
@@ -419,11 +420,14 @@ class FinishActivitySheet extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Row(
                   children: [
+                    SizedBox(
+                      width: displaySize.width / 25,
+                    ),
                     Icon(
                       IconData(
                         userData.categories[categoryIndex][0],
@@ -432,11 +436,11 @@ class FinishActivitySheet extends StatelessWidget {
                       size: displaySize.width / 7,
                     ),
                     SizedBox(
-                      width: displaySize.width / 20,
+                      width: displaySize.width / 25,
                     ),
                     Flexible(
                       child: Text(
-                        title + 'aaaaaaaaaaaaa',
+                        title,
                         style: TextStyle(
                           fontSize: FontSize.midium,
                         ),
@@ -444,7 +448,7 @@ class FinishActivitySheet extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(

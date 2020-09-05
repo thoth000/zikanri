@@ -6,12 +6,13 @@ import 'package:intl/intl.dart';
 import 'package:zikanri/config.dart';
 
 class UserDataNotifier with ChangeNotifier {
+  //ローカルDB
   final userDataBox = Hive.box('userData');
-
-  String userName = 'ゲスト';
-  String previousDate = '2020年01月01日';
-  String thisMonth = '01';
-  int totalPassedDays = 1;
+  //初期値
+  String userName = 'ゲスト'; //SNSシェア時に使用
+  String previousDate = '2020年01月01日'; //日付確認
+  String thisMonth = '01'; //今月判定
+  int totalPassedDays = 1; //ログイン日数（主に実績用）
   //実績
   List<bool> checkM = [false, false, false, false, false];
   List<bool> checkD = [true, false, false, false, false];
@@ -80,7 +81,8 @@ class UserDataNotifier with ChangeNotifier {
   List _activities = [];
   List get activities => _activities;
 
-  //リストはHive保存のため構造体（Class）に代替しない。プログラムは複雑になるが処理は他の保存・読み込み手段に比べて速い。
+  //配列（リスト）はHive保存のために構造体（Class）に代替しないこととする。
+  //プログラムは複雑になるが処理は他の保存・読み込み手段に比べて速いためである。
 
   Future<void> checkGuide() async {
     readGuide = true;
