@@ -32,7 +32,7 @@ class MyAppPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
     final controller = Provider.of<MainPageController>(context);
-    Color color = theme.isDark ? theme.themeColors[0] : theme.themeColors[1];
+    Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     final double iconsize = displaySize.width / 9.5;
     return Scaffold(
       body: SafeArea(child: pages[controller.currentIndex]),

@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/config.dart';
 
-
 class TMWidget extends StatefulWidget {
   @override
   _TMWidgetState createState() => _TMWidgetState();

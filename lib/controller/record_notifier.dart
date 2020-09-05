@@ -6,9 +6,9 @@ import 'package:zikanri/config.dart';
 
 //changeNotifier for record
 class RecordNotifier with ChangeNotifier {
-  String title='';
-  int time=0;
-  int categoryIndex=0;
+  String title = '';
+  int time = 0;
+  int categoryIndex = 0;
   bool isGood = false;
   bool isRecord = true;
   bool timeCheck = true;

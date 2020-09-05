@@ -16,7 +16,7 @@ class ActivityList extends StatelessWidget {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
     //style
-    Color color = theme.isDark ? theme.themeColors[0] : theme.themeColors[1];
+    Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     //value
     int index = userData.index;
     //widget

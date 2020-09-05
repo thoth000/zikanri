@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zikanri/config.dart';
 
-class ActivityNotifier with ChangeNotifier{
+class ActivityNotifier with ChangeNotifier {
   bool isGood = false;
   bool isRecording = false;
 
@@ -14,7 +14,7 @@ class ActivityNotifier with ChangeNotifier{
     notifyListeners();
   }
 
-  void startRecord(){
+  void startRecord() {
     isRecording = true;
     notifyListeners();
   }

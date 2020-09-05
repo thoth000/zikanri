@@ -8,7 +8,6 @@ import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/config.dart';
 
-
 class TodayWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);

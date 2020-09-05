@@ -21,7 +21,7 @@ class DayDataWidget extends StatelessWidget {
     //controller
     final theme = Provider.of<ThemeNotifier>(context);
     //style
-    Color color = theme.isDark ? theme.themeColors[0] : theme.themeColors[1];
+    Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     //key
     final GlobalKey _globalKey = GlobalKey();
     //function
@@ -44,14 +44,14 @@ class DayDataWidget extends StatelessWidget {
         text: '毎日の記録　#ジカンリ',
       );
     }
+
     //widget
     return RepaintBoundary(
       key: _globalKey,
       child: Container(
         height: displaySize.width / 2 + 20,
         width: displaySize.width,
-        color:
-            (theme.isDark) ? Colors.white : const Color(0XFFFAFAFA),
+        color: (theme.isDark) ? Colors.white : const Color(0XFFFAFAFA),
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Card(

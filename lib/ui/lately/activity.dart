@@ -8,7 +8,6 @@ import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/config.dart';
 
-
 class Activity extends StatelessWidget {
   Activity({this.itemList});
   final List itemList;
@@ -18,7 +17,7 @@ class Activity extends StatelessWidget {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
     //style
-    Color color = theme.isDark ? theme.themeColors[0] : theme.themeColors[1];
+    Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     //widget
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -37,9 +36,7 @@ class Activity extends StatelessWidget {
                 fontFamily: 'MaterialIcons',
               ),
               size: displaySize.width / 12,
-              color: (itemList[3])
-                  ? color
-                  : Colors.grey,
+              color: (itemList[3]) ? color : Colors.grey,
             ),
           ),
           Expanded(

@@ -15,13 +15,16 @@ class PRPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
+    Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return SizedBox(
       width: displaySize.width,
       child: ListView(
         children: <Widget>[
           Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: displaySize.width / 5.5, vertical: 10),
+              horizontal: displaySize.width / 5.5,
+              vertical: 10,
+            ),
             child: Card(
               elevation: 5,
               shape: RoundedRectangleBorder(
@@ -32,9 +35,7 @@ class PRPage extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
-                    color: theme.isDark
-                        ? theme.themeColors[0]
-                        : theme.themeColors[1],
+                    color: color,
                     width: 3,
                   ),
                 ),
@@ -70,7 +71,7 @@ class PRPage extends StatelessWidget {
                         ),
                         child: GridCard(i),
                       )
-                    : SizedBox(
+                    : const SizedBox(
                         width: 0,
                       ),
             ],
@@ -205,7 +206,9 @@ class GridCard extends StatelessWidget {
                         initialChartData: data,
                         key: _chartKey,
                         size: Size(
-                            displaySize.width / 4.5, displaySize.width / 4.5),
+                          displaySize.width / 4.5,
+                          displaySize.width / 4.5,
+                        ),
                         holeLabel: list[2][2].toString() + '%',
                         labelStyle: TextStyle(
                           fontSize: FontSize.small,
