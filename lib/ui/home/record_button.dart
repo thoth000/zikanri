@@ -405,7 +405,7 @@ class ActivityInfoWidget extends StatelessWidget {
                   ),
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[
-                    WhitelistingTextInputFormatter.digitsOnly,
+                    FilteringTextInputFormatter.digitsOnly,
                   ],
                   textInputAction: TextInputAction.go,
                   decoration: InputDecoration(

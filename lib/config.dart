@@ -35,7 +35,7 @@ class Vib {
   }
 }
 
-const List<int> iconList = [
+final List<int> iconList = [
   57746,
   57680,
   58726,
@@ -63,6 +63,36 @@ const List<int> iconList = [
   59596,
   58386,
   58899,
+];
+
+final List<int> newIconList = [
+  Icons.access_time.codePoint,
+  Icons.edit.codePoint,
+  Icons.directions_run.codePoint,
+  Icons.store.codePoint,
+  Icons.headset.codePoint,
+  Icons.local_library.codePoint,
+  Icons.palette.codePoint,
+  Icons.videogame_asset.codePoint,
+  Icons.pets.codePoint,
+  Icons.ondemand_video.codePoint,
+  Icons.chat.codePoint,
+  Icons.computer.codePoint,
+  Icons.build.codePoint,
+  Icons.kitchen.codePoint,
+  Icons.fitness_center.codePoint,
+  Icons.spa.codePoint,
+  Icons.account_balance.codePoint,
+  Icons.explore.codePoint,
+  Icons.music_note.codePoint,
+  Icons.local_florist.codePoint,
+  Icons.movie.codePoint,
+  Icons.beach_access.codePoint,
+  Icons.local_play.codePoint,
+  Icons.favorite.codePoint,
+  Icons.local_grocery_store.codePoint,
+  Icons.local_see.codePoint,
+  Icons.time_to_leave.codePoint,
 ];
 
 const List<int> achiveM = [500, 1000, 3000, 5000, 10000];

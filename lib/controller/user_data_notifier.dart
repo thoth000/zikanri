@@ -454,42 +454,42 @@ class UserDataNotifier with ChangeNotifier {
       'categories',
       [
         [
-          57746,
+          newIconList[0],
           '指定なし',
           [0, 0, 0]
         ],
         [
-          57746,
+          newIconList[0],
           '',
           [0, 0, 0]
         ],
         [
-          57746,
+          newIconList[0],
           '',
           [0, 0, 0]
         ],
         [
-          57746,
+          newIconList[0],
           '',
           [0, 0, 0]
         ],
         [
-          57746,
+          newIconList[0],
           '',
           [0, 0, 0]
         ],
         [
-          57746,
+          newIconList[0],
           '',
           [0, 0, 0]
         ],
         [
-          57746,
+          newIconList[0],
           '',
           [0, 0, 0]
         ],
         [
-          57746,
+          newIconList[0],
           '',
           [0, 0, 0]
         ],
@@ -598,5 +598,12 @@ class UserDataNotifier with ChangeNotifier {
       await userDataBox.put(
           'totalPassedDays', userDataBox.get('totalPassedDays') + 1);
     }
+  }
+
+  Future switchIconNum() async{
+    for(int i=0;i<8;i++){
+      categories[i][0] = newIconList[iconList.indexOf(categories[i][0])];
+    }
+    await userDataBox.put('categories', categories);
   }
 }

@@ -57,7 +57,7 @@ class _EditIconPageState extends State<EditIconPage> {
         padding: const EdgeInsets.all(10),
         child: Wrap(
           children: [
-            for (int i = 0; i < iconList.length; i++)
+            for (int i = 0; i < newIconList.length; i++)
               Container(
                 height: displaySize.width / 5 - 8,
                 width: displaySize.width / 5 - 8,
@@ -65,17 +65,17 @@ class _EditIconPageState extends State<EditIconPage> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(
-                    color: (selectedIcon == iconList[i]) ? color : Colors.grey,
+                    color: (selectedIcon == newIconList[i]) ? color : Colors.grey,
                     width: 3,
                   ),
                 ),
                 child: FlatButton(
                   onPressed: () {
-                    selectIcon(iconList[i]);
+                    selectIcon(newIconList[i]);
                   },
                   child: Center(
                     child: Icon(
-                      IconData(iconList[i], fontFamily: 'MaterialIcons'),
+                      IconData(newIconList[i], fontFamily: 'MaterialIcons'),
                     ),
                   ),
                 ),

@@ -274,7 +274,7 @@ class _AddSheetState extends State<AddSheet> {
               keyboardType: TextInputType.number,
               textInputAction: TextInputAction.go,
               inputFormatters: [
-                WhitelistingTextInputFormatter.digitsOnly,
+                FilteringTextInputFormatter.digitsOnly,
               ],
               decoration: InputDecoration(
                 fillColor: Colors.grey,

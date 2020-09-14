@@ -39,6 +39,10 @@ class _SplashPageState extends State<SplashPage> {
       await userData.splashFunc();
       await theme.initialize();
       await userData.initialize();
+      if(userData.categories[0][0]==57746){
+        await userData.switchIconNum();
+        await userData.initialize();
+      }
       await userData.updateCheckD(userDataBox.get('totalPassedDays'));
       //version違う場合：1.1.0～ユーザー
       if (version != await Hive.box('userData').get('version')) {
