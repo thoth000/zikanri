@@ -1,53 +1,48 @@
 //packages
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-
 //my files
-import 'package:zikanri/data.dart';
+import 'package:zikanri/config.dart';
 
-//changeNotifier for theme
 class ThemeNotifier with ChangeNotifier {
   final themeBox = Hive.box('theme');
 
-  bool _isDark = false;
-  bool get isDark => _isDark;
-  int _themeColorsIndex = 0;
-  //List _myColors = [true,true,true,false,false,false,false,false,false,false];
-  //List get myColors => _myColors;
-  List<Color> _themeColors() => baseColors[_themeColorsIndex];
+  bool isDark = false;
+  int themeColorIndex = 0;
+  List<Color> _themeColors() => baseColors[themeColorIndex];
   List<Color> get themeColors => _themeColors();
   ThemeData buildTheme() => ThemeData(
         fontFamily: 'NotoSansJP',
-        brightness: _isDark ? Brightness.dark : Brightness.light,
+        brightness: isDark ? Brightness.dark : Brightness.light,
         primaryIconTheme: IconThemeData(
-          color: _isDark ? _themeColors()[0] : _themeColors()[1],
+          color: isDark ? _themeColors()[0] : _themeColors()[1],
         ),
         iconTheme: IconThemeData(
-          color: _isDark ? _themeColors()[0] : _themeColors()[1],
+          color: isDark ? _themeColors()[0] : _themeColors()[1],
         ),
         textTheme: TextTheme(
           bodyText2: TextStyle(
-            color: _isDark ? Colors.white : Colors.black,
+            color: isDark ? Colors.white : Colors.black,
           ),
         ),
       );
   Future<void> changeMode() async {
     Vib.select();
-    _isDark = !_isDark;
+    isDark = !isDark;
     notifyListeners();
-    await themeBox.put('isDark', _isDark);
+    await themeBox.put('isDark', isDark);
   }
 
   Future<void> changeTheme(int i) async {
     Vib.select();
-    _themeColorsIndex = i;
+    themeColorIndex = i;
     notifyListeners();
-    await themeBox.put('themeColorsIndex', _themeColorsIndex);
+    await themeBox.put('themeColorsIndex', themeColorIndex);
   }
 
   Future<void> initialize() async {
-    _isDark = await themeBox.get('isDark');
-    _themeColorsIndex = await themeBox.get('themeColorsIndex');
+    isDark = await themeBox.get('isDark');
+    themeColorIndex = await themeBox.get('themeColorsIndex');
     notifyListeners();
   }
 
