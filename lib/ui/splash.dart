@@ -29,12 +29,10 @@ class _SplashPageState extends State<SplashPage> {
   void _initialize() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     String version = packageInfo.version;
-    print(version);
+    //print(version);
     final userDataBox = await Hive.openBox('userData');
     final theme = Provider.of<ThemeNotifier>(context, listen: false);
     final userData = Provider.of<UserDataNotifier>(context, listen: false);
-    //await Hive.box('theme').clear();
-    //await Hive.box('userData').clear();
     if (userDataBox.containsKey('welcome')) {
       await userData.splashFunc();
       await theme.initialize();

@@ -167,10 +167,7 @@ class RecordBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //controllers
     final theme = Provider.of<ThemeNotifier>(context);
-    final record =
-        Provider.of<RecordNotifier>(context, listen: false); //Function用
 
     Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
 
@@ -196,7 +193,6 @@ class RecordBottomSheet extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              //ボトムシートの上のグレーのとこ
               Container(
                 height: 5,
                 width: 70,
@@ -252,7 +248,6 @@ class RecordBottomSheet extends StatelessWidget {
                             ),
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              //ヒント文
                               hintText: 'どんな活動？',
                             ),
                             inputFormatters: [
@@ -260,7 +255,7 @@ class RecordBottomSheet extends StatelessWidget {
                             ],
                             textInputAction: TextInputAction.go,
                             onChanged: (s) {
-                              record.changeTitle(s);
+                              Provider.of<RecordNotifier>(context, listen: false).changeTitle(s);
                             },
                           ),
                         ),
@@ -564,7 +559,6 @@ class SaveActivityButton extends StatelessWidget {
                     ],
                   );
                   Navigator.pop(context);
-                  //record.reset();
                 } else {
                   notification(
                     record.title,
@@ -587,7 +581,6 @@ class SaveActivityButton extends StatelessWidget {
                     record.categoryIndex,
                   );
                   Navigator.pop(context);
-                  //record.reset();
                 }
               },
         onPressed: record.check()
@@ -619,7 +612,6 @@ class SaveActivityButton extends StatelessWidget {
                     record.categoryIndex,
                   );
                   Navigator.pop(context);
-                  //record.reset();
                 }
               },
         child: Text(
@@ -1062,7 +1054,7 @@ class ShortCutsEditPage extends StatelessWidget {
                                 ? theme.themeColors[0]
                                 : theme.themeColors[1],
                             onPressed: () =>
-                                deleteCheck(i) //userData.deleteShortCut(i),
+                                deleteCheck(i)
                             ),
                         const SizedBox(
                           width: 5,

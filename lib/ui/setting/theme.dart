@@ -68,7 +68,7 @@ class ThemeSettingPage extends StatelessWidget {
                             'Good Rate',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: FontSize.xlarge, //12.5
+                              fontSize: FontSize.xlarge,
                               fontWeight: FontWeight.w300,
                             ),
                           ),

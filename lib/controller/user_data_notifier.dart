@@ -17,7 +17,7 @@ class UserDataNotifier with ChangeNotifier {
   List<bool> checkM = [false, false, false, false, false];
   List<bool> checkD = [true, false, false, false, false];
   //実績によるテーマ開放
-  List<bool> _myColors = [
+  List<bool> myColors = [
     true,
     true,
     true,
@@ -29,7 +29,6 @@ class UserDataNotifier with ChangeNotifier {
     false,
     false
   ];
-  List<bool> get myColors => _myColors;
   //アプリ初回起動のガイド示唆
   bool readGuide = false;
   //ログイン日数
@@ -37,24 +36,15 @@ class UserDataNotifier with ChangeNotifier {
   //ショートカット区別のキー
   int keynum = 5;
   //データ一覧
-  int _allTime = 0;
-  int get allTime => _allTime;
-  int _allGood = 0;
-  int get allGood => _allGood;
-  int _allPer = 0;
-  int get allPer => _allPer;
-  int _thisMonthTime = 0;
-  int get thisMonthTime => _thisMonthTime;
-  int _thisMonthGood = 0;
-  int get thisMonthGood => _thisMonthGood;
-  int _thisMonthPer = 0;
-  int get thisMonthPer => _thisMonthPer;
-  int _todayTime = 0;
-  int get todayTime => _todayTime;
-  int _todayGood = 0;
-  int get todayGood => _todayGood;
-  int _todayPer = 0;
-  int get todayPer => _todayPer;
+  int allTime = 0;
+  int allGood = 0;
+  int allPer = 0;
+  int thisMonthTime = 0;
+  int thisMonthGood = 0;
+  int thisMonthPer = 0;
+  int todayTime = 0;
+  int todayGood = 0;
+  int todayPer = 0;
 
   //最近の記録用の日数判定
   int index = 0;
@@ -63,23 +53,18 @@ class UserDataNotifier with ChangeNotifier {
     notifyListeners();
   }
 
-  //category[]
-  List _categories = [];
-  List get categories => _categories;
+  //カテゴリー [[iconNumber,title,data[total,good,percent],...]
+  List categories = [];
   //categoryの表示・非表示判定
   List<bool> categoryView = [];
-  //日々の記録用配列[todayDoneList,...]
-  List _latelyData = [];
-  List get latelyData => _latelyData;
-  //今日の記録配列
-  List _todayDoneList = [];
-  List get todayDoneList => _todayDoneList;
-  //shortCut用配列
-  List _shortCuts = [];
-  List get shortCuts => _shortCuts;
-  //進行中の活動用配列（タイマー配列）
-  List _activities = [];
-  List get activities => _activities;
+  //日々の記録用 [[date,totaltime,goodtime,percent,donelist],...]
+  List latelyData = [];
+  //今日の記録配列 [[icon,title,time,isGood],...]
+  List todayDoneList = [];
+  //shortCut用配列 [icon,title,time,isGood,keynum,isRecord]
+  List shortCuts = [];
+  //進行中の活動用配列（タイマー配列）[[datetime, bool, title, categoryIndex, tmp, tmp],...]
+  List activities = [];
 
   //配列（リスト）はHive保存のために構造体（Class）に代替しないこととする。
   //プログラムは複雑になるが処理は他の保存・読み込み手段に比べて速いためである。
@@ -97,8 +82,8 @@ class UserDataNotifier with ChangeNotifier {
   }
 
   Future<void> addTheme(int i) async {
-    _myColors[i] = true;
-    await userDataBox.put('myColors', _myColors);
+    myColors[i] = true;
+    await userDataBox.put('myColors', myColors);
     notifyListeners();
   }
 
@@ -110,20 +95,20 @@ class UserDataNotifier with ChangeNotifier {
 
   Future<void> dicideCategory() async {
     notifyListeners();
-    await userDataBox.put('categories', _categories);
+    await userDataBox.put('categories', categories);
     await userDataBox.put('categoryView', categoryView);
   }
 
   void editCategoryIcon(int index, int icon) {
-    _categories[index][0] = icon;
+    categories[index][0] = icon;
     notifyListeners();
-    userDataBox.put('categories', _categories);
+    userDataBox.put('categories', categories);
   }
 
   void editCategoryTitle(int index, String s) {
-    _categories[index][1] = s;
+    categories[index][1] = s;
     notifyListeners();
-    userDataBox.put('categories', _categories);
+    userDataBox.put('categories', categories);
   }
 
   void switchCategoryView(int index) {
@@ -133,22 +118,22 @@ class UserDataNotifier with ChangeNotifier {
   }
 
   Future<void> resetCategory(int index) async {
-    _categories[index] = [
+    categories[index] = [
       57746,
       '',
       [0, 0, 0]
     ];
     categoryView[index] = false;
     notifyListeners();
-    await userDataBox.put('categories', _categories);
+    await userDataBox.put('categories', categories);
     await userDataBox.put('categoryView', categoryView);
   }
 
   Future<void> addShortCuts(List item) async {
     keynum += 1;
-    _shortCuts.add(item);
+    shortCuts.add(item);
     notifyListeners();
-    await userDataBox.put('shortCuts', _shortCuts);
+    await userDataBox.put('shortCuts', shortCuts);
     await userDataBox.put('keynum', keynum);
   }
 
@@ -156,92 +141,90 @@ class UserDataNotifier with ChangeNotifier {
     if (oldIndex < newIndex) {
       newIndex -= 1;
     }
-    final model = _shortCuts.removeAt(oldIndex);
-    _shortCuts.insert(newIndex, model);
+    final model = shortCuts.removeAt(oldIndex);
+    shortCuts.insert(newIndex, model);
     notifyListeners();
-    await userDataBox.put('shortCuts', _shortCuts);
+    await userDataBox.put('shortCuts', shortCuts);
   }
 
   Future<void> deleteShortCut(int index) async {
-    _shortCuts.removeAt(index);
+    shortCuts.removeAt(index);
     notifyListeners();
-    await userDataBox.put('shortCuts', _shortCuts);
+    await userDataBox.put('shortCuts', shortCuts);
   }
 
-  //activity関連
   Future<void> addActivity(
       DateTime startTime, String title, int categoryIndex) async {
-    _activities.add([startTime, false, title, categoryIndex, 1, 1]);
+    activities.add([startTime, false, title, categoryIndex, 1, 1]);
     notifyListeners();
-    await userDataBox.put('activities', _activities);
+    await userDataBox.put('activities', activities);
   }
 
   Future<void> finishActivity(int i) async {
-    _activities.removeAt(i);
+    activities.removeAt(i);
     notifyListeners();
-    await userDataBox.put('activities', _activities);
+    await userDataBox.put('activities', activities);
   }
 
   Future<void> loopReflesh() async {
-    for (int i = 0; i < _activities.length; i++) {
-      if (_activities[i][1]) {
+    for (int i = 0; i < activities.length; i++) {
+      if (activities[i][1]) {
       } else {
-        _activities[i][5] = _activities[i][4] +
-            DateTime.now().difference(_activities[i][0]).inMinutes;
+        activities[i][5] = activities[i][4] +
+            DateTime.now().difference(activities[i][0]).inMinutes;
       }
     }
     notifyListeners();
-    await userDataBox.put('activities', _activities);
+    await userDataBox.put('activities', activities);
   }
 
   Future<void> startTimer(int i) async {
     Vib.select();
-    _activities[i][0] = DateTime.now();
-    _activities[i][1] = false;
+    activities[i][0] = DateTime.now();
+    activities[i][1] = false;
     notifyListeners();
-    await userDataBox.put('activities', _activities);
+    await userDataBox.put('activities', activities);
   }
 
   Future<void> stopTimer(int i) async {
     Vib.select();
-    _activities[i][1] = true;
-    _activities[i][4] += DateTime.now().difference(activities[i][0]).inMinutes;
-    _activities[i][5] = _activities[i][4];
+    activities[i][1] = true;
+    activities[i][4] += DateTime.now().difference(activities[i][0]).inMinutes;
+    activities[i][5] = activities[i][4];
     notifyListeners();
-    await userDataBox.put('activities', _activities);
+    await userDataBox.put('activities', activities);
   }
 
   Future<void> addTime(int index, int time) async {
-    //0:category 1:title 2:time 3:isGood
-    bool isGood = _todayDoneList[index][3];
-    _allTime += time;
-    _thisMonthTime += time;
-    _todayTime += time;
-    _todayDoneList[index][2] += time;
-    _categories[_todayDoneList[index][0]][2][0] += time;
+    bool isGood = todayDoneList[index][3];
+    allTime += time;
+    thisMonthTime += time;
+    todayTime += time;
+    todayDoneList[index][2] += time;
+    categories[todayDoneList[index][0]][2][0] += time;
     if (isGood) {
-      _allGood += time;
-      _thisMonthGood += time;
-      _todayGood += time;
-      _categories[_todayDoneList[index][0]][2][1] += time;
+      allGood += time;
+      thisMonthGood += time;
+      todayGood += time;
+      categories[todayDoneList[index][0]][2][1] += time;
     }
-    _allPer = (_allGood * 100 / _allTime).round();
-    _thisMonthPer = (_thisMonthGood * 100 / _thisMonthTime).round();
-    _todayPer = (_todayGood * 100 / _todayTime).round();
-    _categories[_todayDoneList[index][0]][2][2] =
-        (_categories[_todayDoneList[index][0]][2][1] *
+    allPer = (allGood * 100 / allTime).round();
+    thisMonthPer = (thisMonthGood * 100 / thisMonthTime).round();
+    todayPer = (todayGood * 100 / todayTime).round();
+    categories[todayDoneList[index][0]][2][2] =
+        (categories[todayDoneList[index][0]][2][1] *
                 100 /
-                _categories[_todayDoneList[index][0]][2][0])
+                categories[todayDoneList[index][0]][2][0])
             .round();
-    _latelyData[_latelyData.length - 1][1] = _todayTime;
-    _latelyData[_latelyData.length - 1][2] = _todayGood;
-    _latelyData[_latelyData.length - 1][3] = _todayPer;
-    _latelyData[_latelyData.length - 1][4] = _todayDoneList;
+    latelyData[latelyData.length - 1][1] = todayTime;
+    latelyData[latelyData.length - 1][2] = todayGood;
+    latelyData[latelyData.length - 1][3] = todayPer;
+    latelyData[latelyData.length - 1][4] = todayDoneList;
     for (int i = 0; i < achiveM.length; i++) {
       if (!checkM[i]) {
         if (allTime >= achiveM[i]) {
           checkM[i] = true;
-          _myColors[2 * i + 3] = true;
+          myColors[2 * i + 3] = true;
         } else {
           break;
         }
@@ -250,57 +233,57 @@ class UserDataNotifier with ChangeNotifier {
     notifyListeners();
     //保存メソッド
     await userDataBox.put('userValue', [
-      _allTime,
-      _allGood,
-      _allPer,
-      _thisMonthTime,
-      _thisMonthGood,
-      _thisMonthPer,
-      _todayTime,
-      _todayGood,
-      _todayPer,
+      allTime,
+      allGood,
+      allPer,
+      thisMonthTime,
+      thisMonthGood,
+      thisMonthPer,
+      todayTime,
+      todayGood,
+      todayPer,
     ]);
-    await userDataBox.put('categories', _categories);
-    await userDataBox.put('todayDoneList', _todayDoneList);
-    await userDataBox.put('latelyData', _latelyData);
+    await userDataBox.put('categories', categories);
+    await userDataBox.put('todayDoneList', todayDoneList);
+    await userDataBox.put('latelyData', latelyData);
     await userDataBox.put('checkM', checkM);
-    await userDataBox.put('myColors', _myColors);
+    await userDataBox.put('myColors', myColors);
   }
 
   Future<void> recordDone(List listData) async {
     int time = listData[2];
-    _allTime += time;
-    _thisMonthTime += time;
-    _todayTime += time;
-    _categories[listData[0]][2][0] += time;
+    allTime += time;
+    thisMonthTime += time;
+    todayTime += time;
+    categories[listData[0]][2][0] += time;
     if (listData[3]) {
-      _allGood += time;
-      _thisMonthGood += time;
-      _todayGood += time;
-      _categories[listData[0]][2][1] += time;
+      allGood += time;
+      thisMonthGood += time;
+      todayGood += time;
+      categories[listData[0]][2][1] += time;
     }
-    _allPer = (_allGood * 100 / _allTime).round();
-    _thisMonthPer = (_thisMonthGood * 100 / _thisMonthTime).round();
-    _todayPer = (_todayGood * 100 / _todayTime).round();
-    _categories[listData[0]][2][2] =
-        (_categories[listData[0]][2][1] * 100 / _categories[listData[0]][2][0])
+    allPer = (allGood * 100 / allTime).round();
+    thisMonthPer = (thisMonthGood * 100 / thisMonthTime).round();
+    todayPer = (todayGood * 100 / todayTime).round();
+    categories[listData[0]][2][2] =
+        (categories[listData[0]][2][1] * 100 / categories[listData[0]][2][0])
             .round();
-    _todayDoneList.add(listData);
-    _latelyData.removeAt(_latelyData.length - 1);
-    _latelyData.add(
+    todayDoneList.add(listData);
+    latelyData.removeAt(latelyData.length - 1);
+    latelyData.add(
       [
         previousDate,
-        _todayTime,
-        _todayGood,
-        _todayPer,
-        _todayDoneList,
+        todayTime,
+        todayGood,
+        todayPer,
+        todayDoneList,
       ],
     );
     for (int i = 0; i < achiveM.length; i++) {
       if (!checkM[i]) {
-        if (_allTime >= achiveM[i]) {
+        if (allTime >= achiveM[i]) {
           checkM[i] = true;
-          _myColors[2 * i + 3] = true;
+          myColors[2 * i + 3] = true;
         } else {
           break;
         }
@@ -309,97 +292,95 @@ class UserDataNotifier with ChangeNotifier {
     notifyListeners();
     //保存メソッド
     await Hive.box('userData').put('userValue', [
-      _allTime,
-      _allGood,
-      _allPer,
-      _thisMonthTime,
-      _thisMonthGood,
-      _thisMonthPer,
-      _todayTime,
-      _todayGood,
-      _todayPer,
+      allTime,
+      allGood,
+      allPer,
+      thisMonthTime,
+      thisMonthGood,
+      thisMonthPer,
+      todayTime,
+      todayGood,
+      todayPer,
     ]);
-    await userDataBox.put('categories', _categories);
-    await userDataBox.put('todayDoneList', _todayDoneList);
-    await userDataBox.put('latelyData', _latelyData);
+    await userDataBox.put('categories', categories);
+    await userDataBox.put('todayDoneList', todayDoneList);
+    await userDataBox.put('latelyData', latelyData);
     await userDataBox.put('checkM', checkM);
-    await userDataBox.put('myColors', _myColors);
+    await userDataBox.put('myColors', myColors);
   }
 
   Future<void> deleteDone(List listData, int index) async {
     Vib.select();
     int time = listData[2];
-    _allTime -= time;
-    _thisMonthTime -= time;
-    _todayTime -= time;
-    _categories[listData[0]][2][0] -= time;
+    allTime -= time;
+    thisMonthTime -= time;
+    todayTime -= time;
+    categories[listData[0]][2][0] -= time;
     if (listData[3]) {
-      _allGood -= time;
-      _thisMonthGood -= time;
-      _todayGood -= time;
-      _categories[listData[0]][2][1] -= time;
+      allGood -= time;
+      thisMonthGood -= time;
+      todayGood -= time;
+      categories[listData[0]][2][1] -= time;
     }
-    _allPer = (_allTime == 0) ? 0 : (_allGood * 100 / _allTime).round();
-    _thisMonthPer = (_thisMonthTime == 0)
+    allPer = (allTime == 0) ? 0 : (allGood * 100 / allTime).round();
+    thisMonthPer = (thisMonthTime == 0)
         ? 0
-        : (_thisMonthGood * 100 / _thisMonthTime).round();
-    _todayPer = (_todayTime == 0) ? 0 : (_todayGood * 100 / _todayTime).round();
-    _categories[listData[0]][2][2] = (_categories[listData[0]][2][0] == 0)
+        : (thisMonthGood * 100 / thisMonthTime).round();
+    todayPer = (todayTime == 0) ? 0 : (todayGood * 100 / todayTime).round();
+    categories[listData[0]][2][2] = (categories[listData[0]][2][0] == 0)
         ? 0
-        : (_categories[listData[0]][2][1] *
-                100 /
-                _categories[listData[0]][2][0])
+        : (categories[listData[0]][2][1] * 100 / categories[listData[0]][2][0])
             .round();
-    _todayDoneList.removeAt(index);
-    _latelyData.removeAt(_latelyData.length - 1);
-    _latelyData.add(
+    todayDoneList.removeAt(index);
+    latelyData.removeAt(latelyData.length - 1);
+    latelyData.add(
       [
         previousDate,
-        _todayTime,
-        _todayGood,
-        _todayPer,
-        _todayDoneList,
+        todayTime,
+        todayGood,
+        todayPer,
+        todayDoneList,
       ],
     );
     notifyListeners();
     //保存メソッド
     await Hive.box('userData').put('userValue', [
-      _allTime,
-      _allGood,
-      _allPer,
-      _thisMonthTime,
-      _thisMonthGood,
-      _thisMonthPer,
-      _todayTime,
-      _todayGood,
-      _todayPer,
+      allTime,
+      allGood,
+      allPer,
+      thisMonthTime,
+      thisMonthGood,
+      thisMonthPer,
+      todayTime,
+      todayGood,
+      todayPer,
     ]);
-    await Hive.box('userData').put('todayDoneList', _todayDoneList);
-    await Hive.box('userData').put('latelyData', _latelyData);
-    await Hive.box('userData').put('categories', _categories);
+    await Hive.box('userData').put('todayDoneList', todayDoneList);
+    await Hive.box('userData').put('latelyData', latelyData);
+    await Hive.box('userData').put('categories', categories);
   }
 
   Future<void> initialize() async {
     var box = Hive.box('userData');
     var userValue = await box.get('userValue');
-    _allTime = userValue[0];
-    _allGood = userValue[1];
-    _allPer = userValue[2];
-    _thisMonthTime = userValue[3];
-    _thisMonthGood = userValue[4];
-    _thisMonthPer = userValue[5];
-    _todayTime = userValue[6];
-    _todayGood = userValue[7];
-    _todayPer = userValue[8];
-    _latelyData = await box.get('latelyData');
-    _todayDoneList = await box.get('todayDoneList');
-    _categories = await box.get('categories');
+    allTime = userValue[0];
+    allGood = userValue[1];
+    allPer = userValue[2];
+    thisMonthTime = userValue[3];
+    thisMonthGood = userValue[4];
+    thisMonthPer = userValue[5];
+    todayTime = userValue[6];
+    todayGood = userValue[7];
+    todayPer = userValue[8];
+    latelyData = await box.get('latelyData');
+    todayDoneList = await box.get('todayDoneList');
+    categories = await box.get('categories');
     categoryView = await box.get('categoryView');
-    _shortCuts = await box.get('shortCuts');
-    _activities = await box.get('activities');
+    shortCuts = await box.get('shortCuts');
+    activities = await box.get('activities');
     userName = await box.get('userName');
     readGuide = await box.get('readGuide');
-    _myColors = await box.get('myColors');
+    myColors = await box.get('myColors');
     checkM = await box.get('checkM');
     checkD = await box.get('checkD');
     previousDate = await box.get('previousDate');
@@ -439,17 +420,14 @@ class UserDataNotifier with ChangeNotifier {
         today     Time,Good,Per
       ]*/
     await userDataBox.put('userValue', [0, 0, 0, 0, 0, 0, 0, 0, 0]);
-    //latelyData=[date,totaltime,goodtime,percent,donelist]
     await userDataBox.put('latelyData', [
       [firstdate, 0, 0, 0, []],
     ]);
     await userDataBox.put('todayDoneList', []);
-    //shortcut=[icon,title,time,isGood,keynum,isRecord]
     await userDataBox.put(
       'shortCuts',
       [],
     );
-    //category=[iconNumber,title,data[total,good,percent]]
     await userDataBox.put(
       'categories',
       [
@@ -511,14 +489,14 @@ class UserDataNotifier with ChangeNotifier {
     for (int i = 0; i < achiveM.length; i++) {
       if (time >= achiveM[i]) {
         checkM[i] = true;
-        _myColors[2 * i + 3] = true;
+        myColors[2 * i + 3] = true;
       } else {
         break;
       }
     }
     notifyListeners();
     await userDataBox.put('checkM', checkM);
-    await userDataBox.put('myColors', _myColors);
+    await userDataBox.put('myColors', myColors);
   }
 
   Future<void> updateCheckD(int day) async {
@@ -531,13 +509,13 @@ class UserDataNotifier with ChangeNotifier {
       }
     }
     await userDataBox.put('checkD', checkD);
-    await userDataBox.put('myColors', _myColors);
+    await userDataBox.put('myColors', myColors);
   }
 
   Future<void> takeOver(int time, int day) async {
     checkM = [false, false, false, false, false];
     checkD = [true, false, false, false, false];
-    _myColors = [
+    myColors = [
       true,
       true,
       true,
@@ -600,8 +578,8 @@ class UserDataNotifier with ChangeNotifier {
     }
   }
 
-  Future switchIconNum() async{
-    for(int i=0;i<8;i++){
+  Future switchIconNum() async {
+    for (int i = 0; i < 8; i++) {
       categories[i][0] = newIconList[iconList.indexOf(categories[i][0])];
     }
     await userDataBox.put('categories', categories);

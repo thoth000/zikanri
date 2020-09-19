@@ -120,7 +120,9 @@ class TodayDone extends StatelessWidget {
               size: displaySize.width / 10,
               //カラーは価値時間ならテーマカラーを、価値なしではグレーを用いる
               color: (itemList[3])
-                  ? (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1]
+                  ? (theme.isDark)
+                      ? theme.themeColors[0]
+                      : theme.themeColors[1]
                   : Colors.grey,
             ),
           ),

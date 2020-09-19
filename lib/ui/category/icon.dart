@@ -65,7 +65,8 @@ class _EditIconPageState extends State<EditIconPage> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(
-                    color: (selectedIcon == newIconList[i]) ? color : Colors.grey,
+                    color:
+                        (selectedIcon == newIconList[i]) ? color : Colors.grey,
                     width: 3,
                   ),
                 ),

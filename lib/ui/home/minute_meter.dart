@@ -356,7 +356,6 @@ class FinishActivitySheet extends StatelessWidget {
   }
 
   final int index;
-  //activity[0:datetime 1:bool 2:title 3:categoryIndex 4:tmp 5:tmp]
   @override
   Widget build(BuildContext context) {
     //controller
