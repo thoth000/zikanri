@@ -149,6 +149,13 @@ class RegisterButton extends StatelessWidget {
                 if (result == 'success') {
                   await Provider.of<UserDataNotifier>(context, listen: false)
                       .initialize();
+                  final ids =
+                      Provider.of<UserDataNotifier>(context, listen: false)
+                          .favoriteIDs;
+                  await Provider.of<UsersController>(context,listen: false)
+                      .getFavoriteUsers(ids);
+                  await Provider.of<UsersController>(context, listen: false)
+                      .getFeaturedUsers();
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(

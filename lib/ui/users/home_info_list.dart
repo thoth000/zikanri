@@ -101,7 +101,7 @@ class FavoriteUserList extends StatelessWidget {
       child: Card(
         child: ConstrainedBox(
           constraints: BoxConstraints(
-            maxHeight: displaySize.width / 1.7,
+            maxHeight: displaySize.width / 1.8,
           ),
           child: (usersController.isGetFavorite)
               ? ListView.builder(
@@ -182,7 +182,7 @@ class FeaturedUserList extends StatelessWidget {
       child: Card(
         child: ConstrainedBox(
           constraints: BoxConstraints(
-            maxHeight: displaySize.width / 1.7,
+            maxHeight: displaySize.width / 1.8,
           ),
           child: (usersController.isGetFeatured)
               ? ListView.builder(
