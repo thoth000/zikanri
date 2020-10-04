@@ -59,6 +59,26 @@ class FeatureGuide extends StatelessWidget {
             Divider(
               height: displaySize.width / 6,
             ),
+            _Register(),
+            SizedBox(
+              height: displaySize.width / 20,
+            ),
+            Text(
+              'ユーザー登録',
+              style: TextStyle(
+                fontSize: FontSize.midium,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            SizedBox(
+              height: displaySize.width / 50,
+            ),
+            const Text(
+              '登録で他のユーザーを見つけて価値時間で競えます。\nまた、オンライン上にバックアップを取れます。\nこれで新しい携帯にデータを引き継げます。',
+            ),
+            Divider(
+              height: displaySize.width / 6,
+            ),
             _Theme(),
             SizedBox(
               height: displaySize.width / 20,
@@ -165,6 +185,29 @@ class _Share extends StatelessWidget {
       children: <Widget>[
         Icon(
           Icons.share,
+          color: Colors.blue,
+          size: displaySize.width / 8,
+        ),
+      ],
+    );
+  }
+}
+
+class _Register extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Icon(
+          Icons.people,
+          color: Colors.blue,
+          size: displaySize.width / 8,
+        ),
+        SizedBox(
+          width: displaySize.width / 20,
+        ),
+        Icon(
+          Icons.emoji_events,
           color: Colors.blue,
           size: displaySize.width / 8,
         ),
