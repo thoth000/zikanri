@@ -7,6 +7,9 @@ class ResultDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
       title: Text('結果'),
       content: Text(message),
       actions: [

@@ -9,6 +9,7 @@ import 'package:esys_flutter_share/esys_flutter_share.dart';
 //my files
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/config.dart';
+import 'package:zikanri/controller/user_data_notifier.dart';
 
 class DayDataWidget extends StatelessWidget {
   DayDataWidget({this.itemList});
@@ -34,12 +35,14 @@ class DayDataWidget extends StatelessWidget {
         format: ui.ImageByteFormat.png,
       );
       final _pngBytes = byteData.buffer.asUint8List();
+      String uid = Provider.of<UserDataNotifier>(context).userID;
+      uid = (uid != '未登録') ? '\nID:@$uid' : '';
       await Share.file(
-        'ジカンリ',
+        '毎日の記録を共有',
         'image.png',
         _pngBytes,
         'image/png',
-        text: '毎日の記録　#ジカンリ',
+        text: '毎日の記録$uid\n#ジカンリ',
       );
     }
 

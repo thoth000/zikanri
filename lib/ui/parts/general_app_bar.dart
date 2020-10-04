@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:zikanri/controller/theme_notifier.dart';
 
 class GeneralAppBar extends StatelessWidget with PreferredSizeWidget {
-  GeneralAppBar({this.pageTitle});
+  GeneralAppBar({@required this.pageTitle});
   final String pageTitle;
 
   @override
@@ -17,6 +17,7 @@ class GeneralAppBar extends StatelessWidget with PreferredSizeWidget {
     return AppBar(
       elevation: 0,
       backgroundColor: Colors.transparent,
+      centerTitle: true,
       title: Text(
         pageTitle,
         style: TextStyle(

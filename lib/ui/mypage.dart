@@ -11,13 +11,15 @@ import 'package:zikanri/ui/previous_records/previous_records.dart';
 import 'package:zikanri/ui/setting/setting.dart';
 import 'package:zikanri/ui/home/record_button.dart';
 import 'package:zikanri/config.dart';
+import 'package:zikanri/ui/users/users.dart';
 
 class MyAppPage extends StatelessWidget {
   MyAppPage._({Key key}) : super(key: key);
   final List pages = [
     HomePage(),
-    LatelyPage(),
+    LatelyPage.wrapped(),
     PRPage(),
+    UsersPage(),
     SettingPage(),
   ];
 
@@ -34,12 +36,11 @@ class MyAppPage extends StatelessWidget {
     final controller = Provider.of<MainPageController>(context);
     Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     final double iconsize = displaySize.width / 9.5;
+
     return Scaffold(
       body: SafeArea(child: pages[controller.currentIndex]),
       floatingActionButton: RButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           mainAxisSize: MainAxisSize.max,
@@ -62,9 +63,6 @@ class MyAppPage extends StatelessWidget {
                 controller.changePage(1);
               },
             ),
-            SizedBox(
-              width: displaySize.width / 5,
-            ),
             IconButton(
               icon: const Icon(Icons.assessment),
               iconSize: iconsize,
@@ -74,11 +72,19 @@ class MyAppPage extends StatelessWidget {
               },
             ),
             IconButton(
-              icon: const Icon(Icons.settings),
+              icon: const Icon(Icons.people),
               iconSize: iconsize,
               color: (controller.currentIndex == 3) ? color : Colors.grey,
               onPressed: () {
                 controller.changePage(3);
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.settings),
+              iconSize: iconsize,
+              color: (controller.currentIndex == 4) ? color : Colors.grey,
+              onPressed: () {
+                controller.changePage(4);
               },
             ),
           ],

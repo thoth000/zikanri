@@ -9,6 +9,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 //my files
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
+import 'package:zikanri/controller/users_controller.dart';
 import 'package:zikanri/ui/splash.dart';
 import 'package:zikanri/config.dart';
 
@@ -26,6 +27,9 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (_) => UserDataNotifier(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => UsersController(),
         ),
       ],
       child: MyApp(),

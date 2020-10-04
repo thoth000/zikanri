@@ -23,7 +23,7 @@ class UpdateNoticePage extends StatelessWidget {
           ),
           Center(
             child: Text(
-              'Ver.1.4.0',
+              'Ver $newVersion',
               style: TextStyle(
                 fontSize: FontSize.xlarge,
                 fontWeight: FontWeight.w700,
@@ -33,9 +33,9 @@ class UpdateNoticePage extends StatelessWidget {
           SizedBox(
             height: displaySize.width / 8,
           ),
-          _Cloud(),
+          _Register(),
           SizedBox(height: displaySize.width / 10),
-          _Takeover(),
+          _Friends(),
           SizedBox(
             height: displaySize.width / 10,
           ),
@@ -61,6 +61,18 @@ class UpdateNoticePage extends StatelessWidget {
               ),
               onPressed: () async {
                 await Hive.box('userData').put('version', newVersion);
+                if (newVersion == '1.6.0') {
+                  //新規処理
+                  await Hive.box('userData').put('userID', '未登録');
+                  await Hive.box('userData').put('backUpCode', '未登録');
+                  await Hive.box('userData')
+                      .put('myIcon', Icons.access_time.codePoint);
+                  List<String> favoriteIDs = [];
+                  await Hive.box('userData').put('favoriteIDs', favoriteIDs);
+                  await Hive.box('userData')
+                      .put('backUpCanDate', DateTime.now());
+                  //ここまで
+                }
                 await Provider.of<UserDataNotifier>(context, listen: false)
                     .initialize();
                 Navigator.pushReplacement(
@@ -81,7 +93,7 @@ class UpdateNoticePage extends StatelessWidget {
   }
 }
 
-class _Cloud extends StatelessWidget {
+class _Register extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -98,14 +110,14 @@ class _Cloud extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                'データの保存',
+                'ユーザーの登録',
                 style: TextStyle(
                   fontSize: FontSize.midium,
                   fontWeight: FontWeight.w700,
                 ),
               ),
               Text(
-                'ネット上にデータを保存できるようになりました。（ログイン必要）',
+                'IDだけで登録ができるようになりました。',
                 style: TextStyle(
                   fontSize: FontSize.small,
                 ),
@@ -122,14 +134,14 @@ class _Cloud extends StatelessWidget {
 
   Widget item() {
     return Icon(
-      Icons.cloud_upload,
+      Icons.person,
       color: Colors.blue,
       size: displaySize.width / 5,
     );
   }
 }
 
-class _Takeover extends StatelessWidget {
+class _Friends extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -146,14 +158,14 @@ class _Takeover extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                'データの引き継ぎ',
+                '他のユーザー',
                 style: TextStyle(
                   fontSize: FontSize.midium,
                   fontWeight: FontWeight.w700,
                 ),
               ),
               Text(
-                '他の端末にデータを引き継げるようになりました。（ログイン必要）',
+                'ユーザー登録で他のユーザーと競えます。',
                 style: TextStyle(
                   fontSize: FontSize.small,
                 ),
@@ -170,8 +182,8 @@ class _Takeover extends StatelessWidget {
 
   Widget item() {
     return Icon(
-      Icons.directions_car,
-      color: Colors.green,
+      Icons.people,
+      color: Colors.orange,
       size: displaySize.width / 5,
     );
   }

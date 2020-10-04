@@ -199,6 +199,7 @@ class TodayDone extends StatelessWidget {
         FlatButton(
           child: const Text('はい'),
           onPressed: () {
+            Vib.select();
             userData.deleteDone(itemList, index);
             Navigator.pop(context);
           },
@@ -249,7 +250,9 @@ class _AddSheetState extends State<AddSheet> {
           Text(
             '時間の追加',
             style: TextStyle(
-                fontSize: FontSize.large, fontWeight: FontWeight.w700),
+              fontSize: FontSize.large,
+              fontWeight: FontWeight.w700,
+            ),
           ),
           SizedBox(
             height: displaySize.width / 20,

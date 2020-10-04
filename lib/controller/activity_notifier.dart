@@ -1,7 +1,5 @@
 //packages
 import 'package:flutter/material.dart';
-//myfiles
-import 'package:zikanri/config.dart';
 
 class ActivityNotifier with ChangeNotifier {
   bool isGood = false;
@@ -12,7 +10,6 @@ class ActivityNotifier with ChangeNotifier {
       return;
     }
     isGood = b;
-    Vib.select();
     notifyListeners();
   }
 

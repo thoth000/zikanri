@@ -1,6 +1,7 @@
 //package
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zikanri/controller/lately_controller.dart';
 //my file
 import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/config.dart';
@@ -10,12 +11,13 @@ class DayDataList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context);
+    final controller = Provider.of<LatelyController>(context);
     return SizedBox(
       height: displaySize.width / 2 + 20,
       child: PageView(
         scrollDirection: Axis.horizontal,
         onPageChanged: (i) {
-          userData.setIndex(i);
+          controller.changeIndex(i);
         },
         controller: PageController(
           initialPage: userData.latelyData.length,

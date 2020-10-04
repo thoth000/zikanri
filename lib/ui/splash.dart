@@ -10,6 +10,7 @@ import 'package:package_info/package_info.dart';
 //my files
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
+import 'package:zikanri/controller/users_controller.dart';
 import 'package:zikanri/ui/update_notice.dart';
 import 'package:zikanri/ui/mypage.dart';
 import 'package:zikanri/ui/welcome.dart';
@@ -29,7 +30,6 @@ class _SplashPageState extends State<SplashPage> {
   void _initialize() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     String version = packageInfo.version;
-    //print(version);
     final userDataBox = await Hive.openBox('userData');
     final theme = Provider.of<ThemeNotifier>(context, listen: false);
     final userData = Provider.of<UserDataNotifier>(context, listen: false);
@@ -37,7 +37,7 @@ class _SplashPageState extends State<SplashPage> {
       await userData.splashFunc();
       await theme.initialize();
       await userData.initialize();
-      if(userData.categories[0][0]==57746){
+      if (userData.categories[0][0] == 57746) {
         await userData.switchIconNum();
         await userData.initialize();
       }
@@ -58,6 +58,12 @@ class _SplashPageState extends State<SplashPage> {
       }
       //version合ってる場合
       else {
+        final List<String> ids =
+            Provider.of<UserDataNotifier>(context, listen: false).favoriteIDs;
+        await Provider.of<UsersController>(context, listen: false)
+            .getFavoriteUsers(ids);
+        await Provider.of<UsersController>(context, listen: false)
+            .getFeaturedUsers();
         Future.delayed(
           const Duration(seconds: 1),
           () => Navigator.pushReplacement(

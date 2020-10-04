@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:launch_review/launch_review.dart';
 import 'package:provider/provider.dart';
+import 'package:zikanri/controller/user_data_notifier.dart';
 
 //my files
 import 'package:zikanri/ui/category/category.dart';
@@ -11,8 +12,9 @@ import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/ui/guide/feature_guide.dart';
 import 'package:zikanri/ui/guide/quick_guide.dart';
 import 'package:zikanri/ui/setting/privacy.dart';
-import 'package:zikanri/ui/takeover/sign_in.dart';
-import 'profile.dart';
+import 'package:zikanri/ui/setting/takeover/back_up.dart';
+import 'package:zikanri/ui/setting/takeover/copy.dart';
+import 'package:zikanri/ui/setting/profile/profile.dart';
 import 'theme.dart';
 import 'achieve.dart';
 import 'package:zikanri/ui/home/record_button.dart';
@@ -62,7 +64,7 @@ class SettingPage extends StatelessWidget {
               children: <Widget>[
                 ListTile(
                   title: Text(
-                    'ユーザ名を変更する',
+                    'ユーザ情報を確認・変更する',
                     style: TextStyle(fontSize: FontSize.xsmall),
                   ),
                   trailing: Icon(
@@ -289,6 +291,30 @@ class SettingPage extends StatelessWidget {
                 ),
                 ListTile(
                   title: Text(
+                    'データのバックアップ',
+                    style: TextStyle(
+                      fontSize: FontSize.xsmall,
+                    ),
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.grey,
+                    size: displaySize.width / 20,
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      _createRoute(
+                        BackUpPage(),
+                      ),
+                    );
+                  },
+                ),
+                const Divider(
+                  height: 0,
+                ),
+                ListTile(
+                  title: Text(
                     'データの引き継ぎ',
                     style: TextStyle(
                       fontSize: FontSize.xsmall,
@@ -303,7 +329,9 @@ class SettingPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       _createRoute(
-                        SignInPage(),
+                        CopyPage.wrapped(Provider.of<UserDataNotifier>(context,
+                                listen: false)
+                            .userID),
                       ),
                     );
                   },

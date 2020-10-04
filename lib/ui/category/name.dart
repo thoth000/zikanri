@@ -53,10 +53,10 @@ class _EditNameSheetState extends State<EditNameSheet> {
             ),
           ),
           SizedBox(
-            height: displaySize.width / 20,
+            height: displaySize.width / 50,
           ),
           Padding(
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.all(10),
             child: TextField(
               controller: controller,
               maxLength: 20,
@@ -80,8 +80,8 @@ class _EditNameSheetState extends State<EditNameSheet> {
               ),
             ),
           ),
-          const SizedBox(
-            height: 15,
+          SizedBox(
+            height: displaySize.width / 100,
           ),
           Padding(
             padding: const EdgeInsets.all(10),
@@ -102,7 +102,7 @@ class _EditNameSheetState extends State<EditNameSheet> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(15),
+                      padding: EdgeInsets.all(displaySize.width / 100),
                       child: Text(
                         '保存する',
                         style: TextStyle(
@@ -121,7 +121,7 @@ class _EditNameSheetState extends State<EditNameSheet> {
             ),
           ),
           const SizedBox(
-            height: 15,
+            height: 10,
           ),
         ],
       ),

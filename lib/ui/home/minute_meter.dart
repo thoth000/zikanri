@@ -222,11 +222,13 @@ class _MinuteMeterState extends State<MinuteMeter> {
                                       child: SizedBox(),
                                       onPressed: () async {
                                         if (userData.activities[i][1]) {
+                                          Vib.select();
                                           userData.startTimer(i);
                                           Scaffold.of(context).showSnackBar(
                                             notifySnackBar('タイマーをスタートさせました'),
                                           );
                                         } else {
+                                          Vib.select();
                                           userData.stopTimer(i);
                                           Scaffold.of(context).showSnackBar(
                                             notifySnackBar('タイマーをストップさせました'),
@@ -557,7 +559,10 @@ class ValueSelectBloc extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              onPressed: () => activityController.changeValue(boolean),
+              onPressed: () {
+                Vib.select();
+                activityController.changeValue(boolean);
+              },
               child: const SizedBox(),
             ),
           ),

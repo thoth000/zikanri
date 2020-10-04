@@ -1,18 +1,29 @@
 //packages
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 //my files
 import 'package:zikanri/config.dart';
+import 'package:zikanri/service/firebase_user_service.dart';
 
 class UserDataNotifier with ChangeNotifier {
   //ローカルDB
   final userDataBox = Hive.box('userData');
   //初期値
+  String userID = ''; //バックアップ・ランキングに使用
+  String backUpCode = ''; //上記と等しい
   String userName = 'ゲスト'; //SNSシェア時に使用
+  int myIcon = Icons.access_time.codePoint; //ユーザ情報に出る
+
   String previousDate = '2020年01月01日'; //日付確認
   String thisMonth = '01'; //今月判定
   int totalPassedDays = 1; //ログイン日数（主に実績用）
+
+  //お気に入りユーザーIDリスト
+  List<String> favoriteIDs = [];
+
+  DateTime backUpCanDate = DateTime(2020, 1, 1); //バックアップ可能日付
   //実績
   List<bool> checkM = [false, false, false, false, false];
   List<bool> checkD = [true, false, false, false, false];
@@ -27,12 +38,11 @@ class UserDataNotifier with ChangeNotifier {
     false,
     false,
     false,
-    false
+    false,
   ];
   //アプリ初回起動のガイド示唆
   bool readGuide = false;
-  //ログイン日数
-  int passedDays = 1;
+
   //ショートカット区別のキー
   int keynum = 5;
   //データ一覧
@@ -45,13 +55,6 @@ class UserDataNotifier with ChangeNotifier {
   int todayTime = 0;
   int todayGood = 0;
   int todayPer = 0;
-
-  //最近の記録用の日数判定
-  int index = 0;
-  void setIndex(int i) {
-    index = i;
-    notifyListeners();
-  }
 
   //カテゴリー [[iconNumber,title,data[total,good,percent],...]
   List categories = [];
@@ -69,54 +72,63 @@ class UserDataNotifier with ChangeNotifier {
   //配列（リスト）はHive保存のために構造体（Class）に代替しないこととする。
   //プログラムは複雑になるが処理は他の保存・読み込み手段に比べて速いためである。
 
+  //ガイドを一度だけ読むための処理
   Future<void> checkGuide() async {
     readGuide = true;
     await Hive.box('userData').put('readGuide', readGuide);
     notifyListeners();
   }
 
-  //ver1.0.0用,変数追加関数
-  void addGuide() {
-    readGuide = true;
+  Future<void> addFavoriteID(String id) async {
+    favoriteIDs.add(id);
     notifyListeners();
+    await userDataBox.put('favoriteIDs', favoriteIDs);
   }
 
-  Future<void> addTheme(int i) async {
-    myColors[i] = true;
-    await userDataBox.put('myColors', myColors);
+  Future<void> removeFavoriteID(String id) async {
+    favoriteIDs.remove(id);
     notifyListeners();
+    await userDataBox.put('favoriteIDs', favoriteIDs);
   }
 
-  Future<void> editProfile(String name) async {
+  Future<void> editUserName(String name) async {
     userName = name;
     notifyListeners();
     await userDataBox.put('userName', userName);
+    //ネットワーク処理
+    await setUserData();
   }
 
-  Future<void> dicideCategory() async {
+  Future<void> editMyIcon(int iconNumber) async {
+    myIcon = iconNumber;
     notifyListeners();
-    await userDataBox.put('categories', categories);
-    await userDataBox.put('categoryView', categoryView);
+    await userDataBox.put('myIcon', myIcon);
+    //ネットワーク処理
+    await setUserData();
   }
 
+  //カテゴリーのアイコンを変更
   void editCategoryIcon(int index, int icon) {
     categories[index][0] = icon;
     notifyListeners();
     userDataBox.put('categories', categories);
   }
 
+  //カテゴリーの名前を変更
   void editCategoryTitle(int index, String s) {
     categories[index][1] = s;
     notifyListeners();
     userDataBox.put('categories', categories);
   }
 
+  //カテゴリーを表示・非表示を切り替える
   void switchCategoryView(int index) {
     categoryView[index] = !categoryView[index];
     notifyListeners();
     userDataBox.put('categoryView', categoryView);
   }
 
+  //カテゴリーをリセットする
   Future<void> resetCategory(int index) async {
     categories[index] = [
       57746,
@@ -129,6 +141,7 @@ class UserDataNotifier with ChangeNotifier {
     await userDataBox.put('categoryView', categoryView);
   }
 
+  //ショートカットを追加する
   Future<void> addShortCuts(List item) async {
     keynum += 1;
     shortCuts.add(item);
@@ -137,6 +150,7 @@ class UserDataNotifier with ChangeNotifier {
     await userDataBox.put('keynum', keynum);
   }
 
+  //長押し用の並び替え処理
   Future<void> sort(int oldIndex, int newIndex) async {
     if (oldIndex < newIndex) {
       newIndex -= 1;
@@ -147,12 +161,14 @@ class UserDataNotifier with ChangeNotifier {
     await userDataBox.put('shortCuts', shortCuts);
   }
 
+  //ショートカットを削除する
   Future<void> deleteShortCut(int index) async {
     shortCuts.removeAt(index);
     notifyListeners();
     await userDataBox.put('shortCuts', shortCuts);
   }
 
+  //活動を始める
   Future<void> addActivity(
       DateTime startTime, String title, int categoryIndex) async {
     activities.add([startTime, false, title, categoryIndex, 1, 1]);
@@ -160,12 +176,14 @@ class UserDataNotifier with ChangeNotifier {
     await userDataBox.put('activities', activities);
   }
 
+  //活動を終了する
   Future<void> finishActivity(int i) async {
     activities.removeAt(i);
     notifyListeners();
     await userDataBox.put('activities', activities);
   }
 
+  //活動の時間を測定・計算する
   Future<void> loopReflesh() async {
     for (int i = 0; i < activities.length; i++) {
       if (activities[i][1]) {
@@ -178,16 +196,16 @@ class UserDataNotifier with ChangeNotifier {
     await userDataBox.put('activities', activities);
   }
 
+  //活動を再開
   Future<void> startTimer(int i) async {
-    Vib.select();
     activities[i][0] = DateTime.now();
     activities[i][1] = false;
     notifyListeners();
     await userDataBox.put('activities', activities);
   }
 
+  //活動をストップ
   Future<void> stopTimer(int i) async {
-    Vib.select();
     activities[i][1] = true;
     activities[i][4] += DateTime.now().difference(activities[i][0]).inMinutes;
     activities[i][5] = activities[i][4];
@@ -195,6 +213,7 @@ class UserDataNotifier with ChangeNotifier {
     await userDataBox.put('activities', activities);
   }
 
+  //既にある記録に時間を追加する
   Future<void> addTime(int index, int time) async {
     bool isGood = todayDoneList[index][3];
     allTime += time;
@@ -248,8 +267,11 @@ class UserDataNotifier with ChangeNotifier {
     await userDataBox.put('latelyData', latelyData);
     await userDataBox.put('checkM', checkM);
     await userDataBox.put('myColors', myColors);
+    //ネットワーク処理
+    await setUserData();
   }
 
+  //活動を記録する
   Future<void> recordDone(List listData) async {
     int time = listData[2];
     allTime += time;
@@ -290,7 +312,7 @@ class UserDataNotifier with ChangeNotifier {
       }
     }
     notifyListeners();
-    //保存メソッド
+    //ローカル保存メソッド
     await Hive.box('userData').put('userValue', [
       allTime,
       allGood,
@@ -307,10 +329,12 @@ class UserDataNotifier with ChangeNotifier {
     await userDataBox.put('latelyData', latelyData);
     await userDataBox.put('checkM', checkM);
     await userDataBox.put('myColors', myColors);
+    //ネットワーク処理
+    await setUserData();
   }
 
+  //記録削除用メソッド
   Future<void> deleteDone(List listData, int index) async {
-    Vib.select();
     int time = listData[2];
     allTime -= time;
     thisMonthTime -= time;
@@ -342,6 +366,15 @@ class UserDataNotifier with ChangeNotifier {
         todayDoneList,
       ],
     );
+    for (int i = 0; i < achiveM.length; i++) {
+      if (allTime >= achiveM[i]) {
+        checkM[i] = true;
+        myColors[2 * i + 3] = true;
+      } else {
+        checkM[i] = false;
+        myColors[2 * i + 3] = false;
+      }
+    }
     notifyListeners();
     //保存メソッド
     await Hive.box('userData').put('userValue', [
@@ -358,8 +391,38 @@ class UserDataNotifier with ChangeNotifier {
     await Hive.box('userData').put('todayDoneList', todayDoneList);
     await Hive.box('userData').put('latelyData', latelyData);
     await Hive.box('userData').put('categories', categories);
+    //ネットワーク処理
+    await setUserData();
   }
 
+  //FireStoreへのデータ保存メソッド
+  Future<void> setUserData() async {
+    if (userID == '未登録') {
+      return;
+    }
+    final DateTime now = DateTime.now();
+    final Timestamp today =
+        Timestamp.fromDate(DateTime(now.year, now.month, now.day));
+    Map<String, dynamic> uploadData = {
+      'userID': userID,
+      'backUpCode': backUpCode,
+      'name': userName,
+      'myIcon': myIcon,
+      'myColors': myColors,
+      'todayTime': todayTime,
+      'todayGood': todayGood,
+      'totalMinute': allTime,
+      'openDate': today,
+      'totalOpen': totalPassedDays,
+    };
+    try {
+      await FirebaseUserService().setData(userID, uploadData);
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  //アプリ起動時のデータ読み込み
   Future<void> initialize() async {
     var box = Hive.box('userData');
     var userValue = await box.get('userValue');
@@ -378,7 +441,13 @@ class UserDataNotifier with ChangeNotifier {
     categoryView = await box.get('categoryView');
     shortCuts = await box.get('shortCuts');
     activities = await box.get('activities');
+    userID = await box.get('userID');
+    backUpCode = await box.get('backUpCode');
+    myIcon = await box.get('myIcon');
+    favoriteIDs = await box.get('favoriteIDs');
+    backUpCanDate = await box.get('backUpCanDate');
     userName = await box.get('userName');
+    backUpCode = await box.get('backUpCode');
     readGuide = await box.get('readGuide');
     myColors = await box.get('myColors');
     checkM = await box.get('checkM');
@@ -386,10 +455,10 @@ class UserDataNotifier with ChangeNotifier {
     previousDate = await box.get('previousDate');
     thisMonth = await box.get('thisMonth');
     totalPassedDays = await box.get('totalPassedDays');
-    passedDays = await box.get('passedDays');
     keynum = await box.get('keynum');
   }
 
+  //アプリ初回起動時のデータ処理メソッド
   Future<void> firstOpneDataSet(String version) async {
     final String firstdate = DateFormat('yyyy年MM月dd日').format(DateTime.now());
     final String firstMonth = DateFormat('MM').format(DateTime.now());
@@ -414,11 +483,13 @@ class UserDataNotifier with ChangeNotifier {
     ]);
     await userDataBox.put('checkM', [false, false, false, false, false]);
     await userDataBox.put('checkD', [true, false, false, false, false]);
-    /*userValue=[
+    /*
+    userValue=[
         all       Time,Good,Per,
         thisMonth Time,Good,Per,
-        today     Time,Good,Per
-      ]*/
+        today     Time,Good,Per,
+    ]
+    */
     await userDataBox.put('userValue', [0, 0, 0, 0, 0, 0, 0, 0, 0]);
     await userDataBox.put('latelyData', [
       [firstdate, 0, 0, 0, []],
@@ -477,7 +548,9 @@ class UserDataNotifier with ChangeNotifier {
         [true, false, false, false, false, false, false, false]);
     await userDataBox.put('keynum', 5);
     await userDataBox.put('activities', []);
-    await userDataBox.put('userName', 'ゲスト');
+    await userDataBox.put('myIcon', Icons.access_time.codePoint);
+    await userDataBox.put('backUpCanDate', DateTime.now());
+    await userDataBox.put('userName', 'Zikanriゲスト');
     await userDataBox.put('previousDate', firstdate);
     await userDataBox.put('thisMonth', firstMonth);
     await userDataBox.put('passedDays', 1);
@@ -485,6 +558,7 @@ class UserDataNotifier with ChangeNotifier {
     await initialize();
   }
 
+  //記録時間と実績の照らし合わせ
   Future<void> updateCheckM(int time) async {
     for (int i = 0; i < achiveM.length; i++) {
       if (time >= achiveM[i]) {
@@ -499,6 +573,7 @@ class UserDataNotifier with ChangeNotifier {
     await userDataBox.put('myColors', myColors);
   }
 
+  //ログイン日数と実績の照らし合わせ
   Future<void> updateCheckD(int day) async {
     for (int i = 0; i < achiveD.length; i++) {
       if (day >= achiveD[i]) {
@@ -512,7 +587,9 @@ class UserDataNotifier with ChangeNotifier {
     await userDataBox.put('myColors', myColors);
   }
 
-  Future<void> takeOver(int time, int day) async {
+  //データ引き継ぎ用メソッド
+  Future<void> takeOver(Map<String, dynamic> data) async {
+    backUpCanDate = DateTime.now().add(Duration(days: 30));
     checkM = [false, false, false, false, false];
     checkD = [true, false, false, false, false];
     myColors = [
@@ -531,9 +608,35 @@ class UserDataNotifier with ChangeNotifier {
       false,
       false,
     ];
-    notifyListeners();
-    await updateCheckM(time);
-    await updateCheckD(day);
+    await updateCheckM(data['allTime']);
+    await updateCheckD(data['passDay']);
+    //元々Service側で行っていた処理
+    List<dynamic> _categories = [];
+    for (int i = 0; i < 8; i++) {
+      final json = data['category$i'];
+      final List<int> listData = json['dataList'].cast<int>();
+      final List category = [json['iconNumber'], json['title'], listData];
+      _categories.add(category);
+    }
+    await userDataBox.put('userValue', [
+      data['allTime'],
+      data['allGood'],
+      data['allPer'],
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+    ]);
+    await userDataBox.put('userName', data['name']);
+    await userDataBox.put('totalPassedDays', data['passDay']);
+    await userDataBox.put('categories', _categories);
+    await userDataBox.put('userID', data['userID']);
+    await userDataBox.put('backUpCode', data['backUpCode']);
+    final List<String> ids = [data['userID']];
+    await userDataBox.put('backUpCanDate', backUpCanDate);
+    await userDataBox.put('favoriteIDs', ids);
     await userDataBox.put('latelyData', [
       [DateFormat('yyyy年MM月dd日').format(DateTime.now()), 0, 0, 0, []],
     ]);
@@ -541,16 +644,16 @@ class UserDataNotifier with ChangeNotifier {
     await userDataBox.put('shortCuts', []);
     await userDataBox.put('keynum', 5);
     await userDataBox.put('activities', []);
-    await userDataBox.put('passedDays', 1);
     await initialize();
+    //バックアップデータをランキングの方のデータに読み込む
+    await setUserData();
   }
 
+  //アプリ起動時の初期メソッド
   Future<void> splashFunc() async {
     final date = DateFormat('yyyy年MM月dd日').format(DateTime.now());
     final month = DateFormat('MM').format(DateTime.now());
     if (date != userDataBox.get('previousDate')) {
-      userDataBox.put('backupFinish', false);
-      userDataBox.put('takeoverFinish', false);
       await userDataBox.put('previousDate', date);
       await userDataBox.put('todayDoneList', []);
       var latelyData = userDataBox.get('latelyData');
@@ -578,7 +681,8 @@ class UserDataNotifier with ChangeNotifier {
     }
   }
 
-  Future switchIconNum() async {
+  //旧アプリのアイコンを変更するメソッド（いづれ必要ない）
+  Future<void> switchIconNum() async {
     for (int i = 0; i < 8; i++) {
       categories[i][0] = newIconList[iconList.indexOf(categories[i][0])];
     }

@@ -6,6 +6,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
+import 'package:zikanri/controller/main_page_controller.dart';
 
 //my files
 import 'package:zikanri/ui/category/category.dart';
@@ -41,7 +42,7 @@ class RButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
-
+    final int pageindex = Provider.of<MainPageController>(context).currentIndex;
     Future<void> pagechange() async {
       await Future.delayed(
         Duration(
@@ -57,6 +58,9 @@ class RButton extends StatelessWidget {
     }
 
     //widget
+    if (pageindex == 4 || pageindex == 3) {
+      return Container();
+    }
     return Container(
       height: displaySize.width / 5,
       width: displaySize.width / 5,
@@ -255,7 +259,9 @@ class RecordBottomSheet extends StatelessWidget {
                             ],
                             textInputAction: TextInputAction.go,
                             onChanged: (s) {
-                              Provider.of<RecordNotifier>(context, listen: false).changeTitle(s);
+                              Provider.of<RecordNotifier>(context,
+                                      listen: false)
+                                  .changeTitle(s);
                             },
                           ),
                         ),
@@ -1053,9 +1059,7 @@ class ShortCutsEditPage extends StatelessWidget {
                             color: theme.isDark
                                 ? theme.themeColors[0]
                                 : theme.themeColors[1],
-                            onPressed: () =>
-                                deleteCheck(i)
-                            ),
+                            onPressed: () => deleteCheck(i)),
                         const SizedBox(
                           width: 5,
                         ),
