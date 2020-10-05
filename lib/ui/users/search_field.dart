@@ -34,12 +34,23 @@ class _SearchFieldState extends State<SearchField> {
             controller: textEditingController,
             decoration: InputDecoration(
               hintText: '@でID検索, 名前検索',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(5),
-              ),
               contentPadding: EdgeInsets.symmetric(
-                vertical: 10,
+                vertical: displaySize.width / 30,
                 horizontal: 10,
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(
+                  color: themeColor,
+                  width: 2,
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(
+                  color: Colors.grey,
+                  width: 2,
+                ),
               ),
             ),
           ),

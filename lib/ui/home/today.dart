@@ -240,7 +240,7 @@ class _AddSheetState extends State<AddSheet> {
         children: [
           Container(
             height: 5,
-            width: 50,
+            width: 70,
             margin: const EdgeInsets.all(12.5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
@@ -269,12 +269,12 @@ class _AddSheetState extends State<AddSheet> {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.symmetric(horizontal:displaySize.width/30,vertical: displaySize.width/50),
             child: TextField(
               autofocus: true,
               controller: timeController,
               style: TextStyle(
-                fontSize: FontSize.small,
+                fontSize: FontSize.midium,
               ),
               keyboardType: TextInputType.number,
               textInputAction: TextInputAction.go,
@@ -284,15 +284,21 @@ class _AddSheetState extends State<AddSheet> {
               decoration: InputDecoration(
                 fillColor: Colors.grey,
                 focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
                   borderSide: BorderSide(
                     color: color,
-                    width: 1,
+                    width: 2,
                   ),
                 ),
-                enabledBorder: const OutlineInputBorder(
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 10,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
                   borderSide: BorderSide(
                     color: Colors.grey,
-                    width: 1,
+                    width: 2,
                   ),
                 ),
               ),
@@ -313,11 +319,12 @@ class _AddSheetState extends State<AddSheet> {
           Padding(
             padding: const EdgeInsets.all(10),
             child: Container(
+              height: displaySize.width/6.5,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(500),
                 border: Border.all(
                   color:
-                      (time > 0 && time < 501) ? color : color.withOpacity(0.5),
+                      (time > 0 && time <= 1000) ? color : color.withOpacity(0.5),
                   width: 3,
                 ),
               ),
@@ -329,20 +336,17 @@ class _AddSheetState extends State<AddSheet> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Text(
-                        '保存する',
-                        style: TextStyle(
-                          color: (time > 0 && time < 501) ? null : Colors.grey,
-                          fontSize: FontSize.small,
-                          fontWeight: FontWeight.w700,
-                        ),
+                    Text(
+                      '追加する',
+                      style: TextStyle(
+                        color: (time > 0 && time <= 1000) ? null : Colors.grey,
+                        fontSize: FontSize.small,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                   ],
                 ),
-                onPressed: (time > 0 && time < 501)
+                onPressed: (time > 0 && time <= 1000)
                     ? () async {
                         userData.addTime(widget.index, time);
                         Navigator.pop(context);

@@ -51,8 +51,8 @@ class _ChangeNameSheetState extends State<ChangeNameSheet> {
         children: [
           Container(
             margin: EdgeInsets.all(10),
-            height: 8,
-            width: 60,
+            height: 5,
+            width: 70,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(500),
               color: Colors.grey,
@@ -67,20 +67,34 @@ class _ChangeNameSheetState extends State<ChangeNameSheet> {
               autofocus: true,
               controller: nameController,
               decoration: InputDecoration(
-                hintText: '名前',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5),
+                hintText: 'ユーザーの名前',
+                labelStyle: TextStyle(
+                  color: themeColor,
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(
+                    color: themeColor,
+                    width: 2,
+                  ),
                 ),
                 contentPadding: EdgeInsets.symmetric(
-                  vertical: 10,
+                  vertical: displaySize.width/30,
                   horizontal: 10,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(
+                    color: Colors.grey,
+                    width: 2,
+                  ),
                 ),
               ),
               onChanged: (text) {
                 check(text);
               },
               style: TextStyle(
-                fontSize: 20,
+                fontSize: FontSize.midium,
               ),
             ),
           ),
@@ -89,7 +103,7 @@ class _ChangeNameSheetState extends State<ChangeNameSheet> {
           ),
           Container(
             margin: EdgeInsets.all(15),
-            height: 50,
+            height: displaySize.width/6.5,
             width: double.infinity,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(500),

@@ -36,7 +36,7 @@ class _EditNameSheetState extends State<EditNameSheet> {
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context, listen: false);
     final theme = Provider.of<ThemeNotifier>(context);
-    Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
+    Color themeColor = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return Padding(
       padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom * 1.1),
@@ -45,7 +45,7 @@ class _EditNameSheetState extends State<EditNameSheet> {
         children: [
           Container(
             height: 5,
-            width: 50,
+            width: 70,
             margin: const EdgeInsets.all(12.5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
@@ -64,14 +64,20 @@ class _EditNameSheetState extends State<EditNameSheet> {
                 fontSize: FontSize.small,
               ),
               decoration: InputDecoration(
-                fillColor: Colors.grey,
+                hintText: 'カテゴリーの名前',
                 focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
                   borderSide: BorderSide(
-                    color: color,
-                    width: 3,
+                    color: themeColor,
+                    width: 2,
                   ),
                 ),
-                enabledBorder: const OutlineInputBorder(
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: displaySize.width/30,
+                  horizontal: 10,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
                   borderSide: BorderSide(
                     color: Colors.grey,
                     width: 2,
@@ -80,16 +86,14 @@ class _EditNameSheetState extends State<EditNameSheet> {
               ),
             ),
           ),
-          SizedBox(
-            height: displaySize.width / 100,
-          ),
           Padding(
             padding: const EdgeInsets.all(10),
             child: Container(
+              height: displaySize.width/6.5,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(500),
                 border: Border.all(
-                  color: color,
+                  color: themeColor,
                   width: 3,
                 ),
               ),
@@ -120,8 +124,8 @@ class _EditNameSheetState extends State<EditNameSheet> {
               ),
             ),
           ),
-          const SizedBox(
-            height: 10,
+          SizedBox(
+            height: displaySize.width/20,
           ),
         ],
       ),

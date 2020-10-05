@@ -36,53 +36,6 @@ class ProfileSettingPage extends StatelessWidget {
   }
 }
 
-class UserIDListTile extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final userData = Provider.of<UserDataNotifier>(context);
-    return ListTile(
-      title: Text('ユーザーID'),
-      subtitle: Text('@' + userData.userID),
-      onTap: () {},
-    );
-  }
-}
-
-class BackUpCodeListTile extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final userData = Provider.of<UserDataNotifier>(context);
-    return ListTile(
-      title: Text('バックアップコード'),
-      subtitle: Text(userData.backUpCode),
-      onTap: () {},
-    );
-  }
-}
-
-class NameListTile extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final userData = Provider.of<UserDataNotifier>(context);
-    return ListTile(
-      title: Text('名前'),
-      subtitle: Text(userData.userName),
-      onTap: () {
-        showModalBottomSheet(
-          context: context,
-          isScrollControlled: true,
-          builder: (context) => ChangeNameSheet(),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(30),
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
-
 class MyIconWidget extends StatelessWidget {
   MyIconWidget({@required this.themeColor});
   final Color themeColor;
@@ -154,6 +107,101 @@ class MyIconWidget extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class NameListTile extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final userData = Provider.of<UserDataNotifier>(context);
+    return ListTile(
+      title: Text(
+        '名前',
+        style: TextStyle(
+          fontSize: FontSize.small,
+        ),
+      ),
+      subtitle: Text(
+        userData.userName,
+        style: TextStyle(
+          fontSize: FontSize.xsmall,
+        ),
+      ),
+      onTap: () {
+        showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          builder: (context) => ChangeNameSheet(),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(30),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class UserIDListTile extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final userData = Provider.of<UserDataNotifier>(context);
+    return ListTile(
+      title: Text(
+        'ユーザーID',
+        style: TextStyle(
+          fontSize: FontSize.small,
+        ),
+      ),
+      subtitle: Text(
+        '@' + userData.userID,
+        style: TextStyle(
+          fontSize: FontSize.xsmall,
+        ),
+      ),
+      onTap: () {
+        Scaffold.of(context).showSnackBar(
+          SnackBar(
+            content: Text('この情報は変更できません。'),
+            duration: Duration(
+              milliseconds: 800,
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class BackUpCodeListTile extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final userData = Provider.of<UserDataNotifier>(context);
+    return ListTile(
+      title: Text(
+        'バックアップコード',
+        style: TextStyle(
+          fontSize: FontSize.small,
+        ),
+      ),
+      subtitle: Text(
+        userData.backUpCode,
+        style: TextStyle(
+          fontSize: FontSize.xsmall,
+        ),
+      ),
+      onTap: () {
+        Scaffold.of(context).showSnackBar(
+          SnackBar(
+            content: Text('この情報は変更できません。'),
+            duration: Duration(
+              milliseconds: 800,
+            ),
+          ),
+        );
+      },
     );
   }
 }

@@ -15,9 +15,9 @@ import 'package:zikanri/ui/setting/privacy.dart';
 import 'package:zikanri/ui/setting/takeover/back_up.dart';
 import 'package:zikanri/ui/setting/takeover/copy.dart';
 import 'package:zikanri/ui/setting/profile/profile.dart';
-import 'theme.dart';
-import 'achieve.dart';
-import 'package:zikanri/ui/home/record_button.dart';
+import 'package:zikanri/ui/short_cut/short_cut_edit.dart';
+import 'package:zikanri/ui/setting/theme.dart';
+import 'package:zikanri/ui/setting/achieve.dart';
 import 'package:zikanri/config.dart';
 
 class SettingPage extends StatelessWidget {
@@ -247,50 +247,6 @@ class SettingPage extends StatelessWidget {
                 ),
                 ListTile(
                   title: Text(
-                    'アプリをレビューする',
-                    style: TextStyle(
-                      fontSize: FontSize.xsmall,
-                    ),
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: Colors.grey,
-                    size: displaySize.width / 20,
-                  ),
-                  onTap: () {
-                    LaunchReview.launch(
-                        androidAppId: 'com.thoth000.zikanri_app');
-                  },
-                ),
-                const Divider(
-                  height: 0,
-                ),
-                ListTile(
-                  title: Text(
-                    'プライバシーポリシー',
-                    style: TextStyle(
-                      fontSize: FontSize.xsmall,
-                    ),
-                  ),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios,
-                    color: Colors.grey,
-                    size: displaySize.width / 20,
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      _createRoute(
-                        PrivacyPage(),
-                      ),
-                    );
-                  },
-                ),
-                const Divider(
-                  height: 0,
-                ),
-                ListTile(
-                  title: Text(
                     'データのバックアップ',
                     style: TextStyle(
                       fontSize: FontSize.xsmall,
@@ -332,6 +288,50 @@ class SettingPage extends StatelessWidget {
                         CopyPage.wrapped(Provider.of<UserDataNotifier>(context,
                                 listen: false)
                             .userID),
+                      ),
+                    );
+                  },
+                ),
+                const Divider(
+                  height: 0,
+                ),
+                ListTile(
+                  title: Text(
+                    'アプリをレビューする',
+                    style: TextStyle(
+                      fontSize: FontSize.xsmall,
+                    ),
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.grey,
+                    size: displaySize.width / 20,
+                  ),
+                  onTap: () {
+                    LaunchReview.launch(
+                        androidAppId: 'com.thoth000.zikanri_app');
+                  },
+                ),
+                const Divider(
+                  height: 0,
+                ),
+                ListTile(
+                  title: Text(
+                    'プライバシーポリシー',
+                    style: TextStyle(
+                      fontSize: FontSize.xsmall,
+                    ),
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.grey,
+                    size: displaySize.width / 20,
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      _createRoute(
+                        PrivacyPage(),
                       ),
                     );
                   },
