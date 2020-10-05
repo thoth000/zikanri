@@ -23,8 +23,10 @@ class _MinuteMeterState extends State<MinuteMeter> {
   //function
   void initState() {
     super.initState();
-    dateCheck();
-    loopReflesh();
+    Future(()async{
+      await dateCheck();
+      await loopReflesh();
+    });
   }
 
   Future dateCheck() async {
@@ -222,11 +224,13 @@ class _MinuteMeterState extends State<MinuteMeter> {
                                       child: SizedBox(),
                                       onPressed: () async {
                                         if (userData.activities[i][1]) {
+                                          Vib.select();
                                           userData.startTimer(i);
                                           Scaffold.of(context).showSnackBar(
                                             notifySnackBar('タイマーをスタートさせました'),
                                           );
                                         } else {
+                                          Vib.select();
                                           userData.stopTimer(i);
                                           Scaffold.of(context).showSnackBar(
                                             notifySnackBar('タイマーをストップさせました'),
@@ -425,30 +429,32 @@ class FinishActivitySheet extends StatelessWidget {
                 Row(
                   children: [
                     SizedBox(
-                      width: displaySize.width / 25,
+                      width: displaySize.width / 50,
                     ),
                     Icon(
                       IconData(
                         userData.categories[categoryIndex][0],
                         fontFamily: 'MaterialIcons',
                       ),
-                      size: displaySize.width / 7,
+                      size: displaySize.width / 6,
                     ),
                     SizedBox(
-                      width: displaySize.width / 25,
+                      width: displaySize.width / 50,
                     ),
                     Flexible(
                       child: Text(
                         title,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          fontSize: FontSize.midium,
+                          fontSize: FontSize.large,
                         ),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: displaySize.width / 30,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -465,12 +471,12 @@ class FinishActivitySheet extends StatelessWidget {
                   ],
                 ),
                 SizedBox(
-                  height: displaySize.width / 20,
+                  height: displaySize.width / 15,
                 ),
                 Center(
                   child: Container(
                     height: displaySize.width / 6.5,
-                    width: displaySize.width / 1.5,
+                    width: displaySize.width,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(500),
                       border: Border.all(
@@ -507,7 +513,7 @@ class FinishActivitySheet extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 20,
+                  height: displaySize.width/15,
                 ),
               ],
             ),
@@ -557,7 +563,10 @@ class ValueSelectBloc extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              onPressed: () => activityController.changeValue(boolean),
+              onPressed: () {
+                Vib.select();
+                activityController.changeValue(boolean);
+              },
               child: const SizedBox(),
             ),
           ),

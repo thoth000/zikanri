@@ -5,8 +5,8 @@ import 'package:provider/provider.dart';
 //my files
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
-import 'package:zikanri/ui/mypage.dart';
 import 'package:zikanri/config.dart';
+import 'package:zikanri/ui/register/first_register.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({this.version});
@@ -15,17 +15,10 @@ class WelcomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
-
-    void makeDir() async {
-      //アプリ初回起動時の動作
+    //アプリ初回起動時の動作
+    Future<void> makeDir() async {
       await theme.firstOpenDataSet();
       await userData.firstOpneDataSet(version);
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => MyAppPage.wrapped(),
-        ),
-      );
     }
 
     return Scaffold(
@@ -43,19 +36,13 @@ class WelcomePage extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
-            height: displaySize.width / 8,
-          ),
+          SizedBox(height: displaySize.width / 8),
           _TimeValue(),
           SizedBox(height: displaySize.width / 20),
           _Category(),
-          SizedBox(
-            height: displaySize.width / 20,
-          ),
+          SizedBox(height: displaySize.width / 20),
           _Theme(),
-          SizedBox(
-            height: displaySize.width / 8,
-          ),
+          SizedBox(height: displaySize.width / 8),
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: displaySize.width / 10,
@@ -64,7 +51,7 @@ class WelcomePage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(15),
                 child: Text(
-                  '始める',
+                  '次に進む',
                   style: TextStyle(
                     fontSize: FontSize.small,
                     fontWeight: FontWeight.w700,
@@ -77,7 +64,13 @@ class WelcomePage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.0),
               ),
               onPressed: () async {
-                makeDir();
+                await makeDir();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FirstRegisterPage.wrapped(),
+                  ),
+                );
               },
             ),
           ),

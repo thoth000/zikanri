@@ -6,21 +6,15 @@ import 'package:provider/provider.dart';
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/config.dart';
+import 'package:zikanri/ui/parts/general_app_bar.dart';
 
 class ThemeSettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        title: Text(
-          'テーマの変更',
-          style: TextStyle(
-            color: theme.isDark ? Colors.white : Colors.black,
-          ),
-        ),
+      appBar: GeneralAppBar(
+        pageTitle: 'テーマの変更',
       ),
       body: ListView(
         children: <Widget>[
@@ -136,7 +130,10 @@ class ThemeSettingPage extends StatelessWidget {
                 ),
                 Switch(
                   value: theme.isDark,
-                  onChanged: (boolean) => theme.changeMode(),
+                  onChanged: (boolean) {
+                    Vib.select();
+                    theme.changeMode();
+                  },
                   activeColor: (theme.isDark)
                       ? theme.themeColors[0]
                       : theme.themeColors[1],
@@ -203,7 +200,10 @@ class _ThemeChanger extends StatelessWidget {
             ),
             color: Colors.transparent,
             child: const SizedBox(),
-            onPressed: () async => await theme.changeTheme(i),
+            onPressed: () async {
+              Vib.select();
+              await theme.changeTheme(i);
+            },
           ),
         ),
       );

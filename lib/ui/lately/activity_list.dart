@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
+import 'package:zikanri/controller/lately_controller.dart';
 //my files
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
@@ -11,13 +12,11 @@ import 'package:zikanri/ui/lately/activity.dart';
 class ActivityList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    //controller
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
-    //style
+    final controller = Provider.of<LatelyController>(context);
     Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
-    //value
-    int index = userData.index;
+    int index = controller.index;
     //widget
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),

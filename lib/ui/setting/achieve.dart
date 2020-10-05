@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/config.dart';
+import 'package:zikanri/ui/parts/general_app_bar.dart';
 
 class AchievePage extends StatefulWidget {
   @override
@@ -24,15 +25,8 @@ class _AchievePageState extends State<AchievePage> {
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        title: Text(
-          '実績',
-          style: TextStyle(
-            color: theme.isDark ? Colors.white : Colors.black,
-          ),
-        ),
+      appBar: GeneralAppBar(
+        pageTitle: '実績',
       ),
       body: Column(
         children: <Widget>[

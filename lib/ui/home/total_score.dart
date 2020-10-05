@@ -30,12 +30,13 @@ class TotalScoreWidget extends StatelessWidget {
         format: ui.ImageByteFormat.png,
       );
       final _pngBytes = byteData.buffer.asUint8List();
+      String uid = (userData.userID != '未登録') ? '\nID:@${userData.userID}' : '';
       await Share.file(
-        '今までの記録',
+        '価値時間を共有',
         'goodRate.png',
         _pngBytes,
         'image/png',
-        text: '${userData.userName}さんの価値時間が${userData.allGood}分に到達！\n#ジカンリ',
+        text: '${userData.userName}さんの価値時間が${userData.allGood}分に到達！$uid\n#ジカンリ',
       );
     }
 

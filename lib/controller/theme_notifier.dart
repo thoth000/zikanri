@@ -27,14 +27,12 @@ class ThemeNotifier with ChangeNotifier {
         ),
       );
   Future<void> changeMode() async {
-    Vib.select();
     isDark = !isDark;
     notifyListeners();
     await themeBox.put('isDark', isDark);
   }
 
   Future<void> changeTheme(int i) async {
-    Vib.select();
     themeColorIndex = i;
     notifyListeners();
     await themeBox.put('themeColorsIndex', themeColorIndex);

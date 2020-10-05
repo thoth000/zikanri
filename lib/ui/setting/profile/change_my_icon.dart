@@ -1,38 +1,35 @@
-//packages
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-//my files
+import 'package:zikanri/config.dart';
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
-import 'package:zikanri/config.dart';
 
-class EditIconPage extends StatefulWidget {
-  const EditIconPage({this.index, this.iconNum});
-  final int index;
-  final int iconNum;
+class ChangeMyIconPage extends StatefulWidget {
   @override
-  _EditIconPageState createState() => _EditIconPageState();
+  _ChangeMyIconPageState createState() => _ChangeMyIconPageState();
 }
 
-class _EditIconPageState extends State<EditIconPage> {
-  int selectedIcon;
+class _ChangeMyIconPageState extends State<ChangeMyIconPage> {
+  int iconNumber = 0;
+  int beforeIcon = 0;
   void initState() {
-    selectedIcon = widget.iconNum;
+    beforeIcon = Provider.of<UserDataNotifier>(context, listen: false).myIcon;
+    iconNumber = beforeIcon;
     super.initState();
+  }
+
+  void changeIcon(int selectedIconNumber) {
+    setState(() {
+      iconNumber = selectedIconNumber;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Provider.of<ThemeNotifier>(context);
-    final userData = Provider.of<UserDataNotifier>(context);
-    Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
-    void selectIcon(int iconNum) {
-      setState(() {
-        selectedIcon = iconNum;
-      });
-    }
-
+    final ThemeNotifier themeNotifier = Provider.of<ThemeNotifier>(context);
+    final Color themeColor = (themeNotifier.isDark)
+        ? themeNotifier.themeColors[0]
+        : themeNotifier.themeColors[1];
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -41,14 +38,17 @@ class _EditIconPageState extends State<EditIconPage> {
         title: Text(
           'アイコン',
           style: TextStyle(
-            color: theme.isDark ? Colors.white : Colors.black,
+            color: themeNotifier.isDark ? Colors.white : Colors.black,
           ),
         ),
         actions: [
           IconButton(
             icon: const Icon(Icons.check),
-            onPressed: () {
-              userData.editCategoryIcon(widget.index, selectedIcon);
+            onPressed: () async {
+              if (beforeIcon != iconNumber) {
+                await Provider.of<UserDataNotifier>(context, listen: false)
+                    .editMyIcon(iconNumber);
+              }
               Navigator.pop(context);
             },
           ),
@@ -66,8 +66,9 @@ class _EditIconPageState extends State<EditIconPage> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(
-                    color:
-                        (selectedIcon == newIconList[i]) ? color : Colors.grey,
+                    color: (iconNumber == newIconList[i])
+                        ? themeColor
+                        : Colors.grey,
                     width: 3,
                   ),
                 ),
@@ -75,9 +76,14 @@ class _EditIconPageState extends State<EditIconPage> {
                   children: [
                     Center(
                       child: Icon(
-                        IconData(newIconList[i], fontFamily: 'MaterialIcons'),
+                        IconData(
+                          newIconList[i],
+                          fontFamily: 'MaterialIcons',
+                        ),
+                        color: (themeNotifier.isDark)
+                            ? Colors.white
+                            : Colors.black,
                         size: displaySize.width / 12,
-                        color: theme.isDark ? Colors.white : Colors.black,
                       ),
                     ),
                     SizedBox(
@@ -88,7 +94,7 @@ class _EditIconPageState extends State<EditIconPage> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         onPressed: () {
-                          selectIcon(newIconList[i]);
+                          changeIcon(newIconList[i]);
                         },
                         child: const SizedBox(),
                       ),
