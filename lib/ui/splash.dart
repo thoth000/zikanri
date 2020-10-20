@@ -54,13 +54,12 @@ class _SplashPageState extends State<SplashPage> {
       }
       //version合ってる場合
       else {
-        final List<String> ids =
-            Provider.of<UserDataNotifier>(context, listen: false).favoriteIDs;
+        final UsersController usersController =
+            Provider.of<UsersController>(context, listen: false);
+        final List<String> ids = userData.favoriteIDs;
         if (ids.isNotEmpty) {
-          Provider.of<UsersController>(context, listen: false)
-              .getFavoriteUsers(ids);
-          Provider.of<UsersController>(context, listen: false)
-              .getFeaturedUsers();
+          usersController.getFavoriteUsers(ids);
+          usersController.getFeaturedUsers();
         }
         await Future.delayed(Duration(milliseconds: 600));
         Navigator.pushReplacement(

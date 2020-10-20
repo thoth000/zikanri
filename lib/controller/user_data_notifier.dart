@@ -131,7 +131,7 @@ class UserDataNotifier with ChangeNotifier {
   //カテゴリーをリセットする
   Future<void> resetCategory(int index) async {
     categories[index] = [
-      57746,
+      Icons.access_time.codePoint,
       '',
       [0, 0, 0]
     ];
