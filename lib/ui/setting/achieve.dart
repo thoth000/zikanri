@@ -1,6 +1,7 @@
 //packages
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zikanri/controller/achieve_controller.dart';
 
 //my files
 import 'package:zikanri/controller/theme_notifier.dart';
@@ -8,22 +9,17 @@ import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/config.dart';
 import 'package:zikanri/ui/parts/general_app_bar.dart';
 
-class AchievePage extends StatefulWidget {
-  @override
-  _AchievePageState createState() => _AchievePageState();
-}
-
-class _AchievePageState extends State<AchievePage> {
-  bool page = true;
-  void change(bool b) {
-    setState(() {
-      page = b;
-    });
+class AchievePage extends StatelessWidget {
+  AchievePage._();
+  static Widget wrapped() {
+    return ChangeNotifierProvider(
+      create: (_) => AchieveController(),
+      child: AchievePage._(),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Provider.of<ThemeNotifier>(context);
     return Scaffold(
       appBar: GeneralAppBar(
         pageTitle: '実績',
@@ -36,61 +32,89 @@ class _AchievePageState extends State<AchievePage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Container(
-                height: displaySize.width / 7.5,
-                width: displaySize.width / 2.5,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(
-                    color: (page)
-                        ? (theme.isDark)
-                            ? theme.themeColors[0]
-                            : theme.themeColors[1]
-                        : Colors.grey,
-                    width: (page) ? 3 : 1,
-                  ),
-                ),
-                child: FlatButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Center(
-                    child: Text('記録'),
-                  ),
-                  onPressed: () => change(true),
-                ),
-              ),
-              Container(
-                height: displaySize.width / 7.5,
-                width: displaySize.width / 2.5,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(
-                    color: (!page)
-                        ? (theme.isDark)
-                            ? theme.themeColors[0]
-                            : theme.themeColors[1]
-                        : Colors.grey,
-                    width: (!page) ? 3 : 1,
-                  ),
-                ),
-                child: FlatButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Center(
-                    child: Text('ログイン'),
-                  ),
-                  onPressed: () => change(false),
-                ),
-              ),
+              RecordAchieveButton(),
+              DayAchieveButton(),
             ],
           ),
-          Expanded(
-            child: (page) ? AchiveMiniteWidget() : AchiveDayWidget(),
-          ),
+          AchieveBody(),
         ],
       ),
+    );
+  }
+}
+
+class RecordAchieveButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeNotifier>(context);
+    final achieveController = Provider.of<AchieveController>(context);
+    return Container(
+      height: displaySize.width / 7.5,
+      width: displaySize.width / 2.5,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+          color: (achieveController.isRecord)
+              ? (theme.isDark)
+                  ? theme.themeColors[0]
+                  : theme.themeColors[1]
+              : Colors.grey,
+          width: (achieveController.isRecord) ? 3 : 1,
+        ),
+      ),
+      child: FlatButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: const Center(
+          child: Text('記録'),
+        ),
+        onPressed: () => achieveController.changeAchieve(true),
+      ),
+    );
+  }
+}
+
+class DayAchieveButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeNotifier>(context);
+    final achieveController = Provider.of<AchieveController>(context);
+    return Container(
+      height: displaySize.width / 7.5,
+      width: displaySize.width / 2.5,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+          color: (!achieveController.isRecord)
+              ? (theme.isDark)
+                  ? theme.themeColors[0]
+                  : theme.themeColors[1]
+              : Colors.grey,
+          width: (!achieveController.isRecord) ? 3 : 1,
+        ),
+      ),
+      child: FlatButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: const Center(
+          child: Text('記録'),
+        ),
+        onPressed: () => achieveController.changeAchieve(false),
+      ),
+    );
+  }
+}
+
+class AchieveBody extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final achieveController = Provider.of<AchieveController>(context);
+    return Expanded(
+      child: (achieveController.isRecord)
+          ? AchiveMiniteWidget()
+          : AchiveDayWidget(),
     );
   }
 }
@@ -223,7 +247,9 @@ class AchiveDayWidget extends StatelessWidget {
   Widget achive(int i, check) {
     return Padding(
       padding: EdgeInsets.symmetric(
-          horizontal: displaySize.width / 20, vertical: 10),
+        horizontal: displaySize.width / 20,
+        vertical: 10,
+      ),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),

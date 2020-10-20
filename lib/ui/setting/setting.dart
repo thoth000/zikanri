@@ -172,7 +172,7 @@ class SettingPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       _createRoute(
-                        AchievePage(),
+                        AchievePage.wrapped(),
                       ),
                     );
                   },
