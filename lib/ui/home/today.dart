@@ -282,6 +282,7 @@ class _AddSheetState extends State<AddSheet> {
                 FilteringTextInputFormatter.digitsOnly,
               ],
               decoration: InputDecoration(
+                hintText: '追加する時間',
                 fillColor: Colors.grey,
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),

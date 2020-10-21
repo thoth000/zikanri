@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:zikanri/controller/achieve_controller.dart';
-
 //my files
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
@@ -99,7 +98,7 @@ class DayAchieveButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: const Center(
-          child: Text('記録'),
+          child: Text('日数'),
         ),
         onPressed: () => achieveController.changeAchieve(false),
       ),
@@ -151,7 +150,9 @@ class AchiveMiniteWidget extends StatelessWidget {
   Widget achive(int i, check) {
     return Padding(
       padding: EdgeInsets.symmetric(
-          horizontal: displaySize.width / 20, vertical: 10),
+        horizontal: displaySize.width / 20,
+        vertical: 10,
+      ),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
@@ -171,40 +172,9 @@ class AchiveMiniteWidget extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                Container(
-                  width: displaySize.width / 4,
-                  height: displaySize.width / 9,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(1000),
-                  ),
-                  child: check
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              '達成',
-                              style: TextStyle(
-                                fontSize: FontSize.xsmall,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            Icon(
-                              Icons.check,
-                              color: Colors.lightGreen,
-                              size: displaySize.width / 15,
-                            ),
-                          ],
-                        )
-                      : Center(
-                          child: Text(
-                            '未達成',
-                            style: TextStyle(
-                              fontSize: FontSize.xsmall,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
+                ColorBox(
+                  index: i * 2 + 3,
+                  isGetTheme: check,
                 ),
               ],
             ),
@@ -218,7 +188,7 @@ class AchiveMiniteWidget extends StatelessWidget {
 class AchiveDayWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final userData = Provider.of<UserDataNotifier>(context);
+    final userData = Provider.of<UserDataNotifier>(context, listen: false);
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -228,7 +198,9 @@ class AchiveDayWidget extends StatelessWidget {
           ),
           Text(
             'ログイン日数',
-            style: TextStyle(fontSize: FontSize.small),
+            style: TextStyle(
+              fontSize: FontSize.small,
+            ),
           ),
           Text(
             userData.totalPassedDays.toString() + '日',
@@ -269,42 +241,78 @@ class AchiveDayWidget extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                Container(
-                  width: displaySize.width / 4,
-                  height: displaySize.width / 9,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(1000),
-                  ),
-                  child: check
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              '達成',
-                              style: TextStyle(
-                                fontSize: FontSize.xsmall,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            Icon(
-                              Icons.check,
-                              color: Colors.lightGreen,
-                              size: displaySize.width / 15,
-                            ),
-                          ],
-                        )
-                      : Center(
-                          child: Text(
-                            '未達成',
-                            style: TextStyle(
-                              fontSize: FontSize.xsmall,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
+                ColorBox(
+                  index: i * 2 + 2,
+                  isGetTheme: check,
                 ),
               ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ColorBox extends StatelessWidget {
+  ColorBox({@required this.index, @required this.isGetTheme});
+  final int index;
+  final bool isGetTheme;
+  @override
+  Widget build(BuildContext context) {
+    if (index == 2) {
+      return Row(
+        children: List.generate(3, (_index) {
+          return Padding(
+            padding: EdgeInsets.only(right: displaySize.width / 50),
+            child: Container(
+              height: displaySize.width / 7,
+              width: displaySize.width / 7,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                gradient: LinearGradient(
+                  colors: baseColors[_index],
+                ),
+              ),
+            ),
+          );
+        }),
+      );
+    }
+    if (isGetTheme) {
+      return Padding(
+        padding: EdgeInsets.only(right: displaySize.width / 50),
+        child: Container(
+          height: displaySize.width / 7,
+          width: displaySize.width / 7,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            gradient: LinearGradient(
+              colors: baseColors[index],
+            ),
+          ),
+        ),
+      );
+    }
+    return Padding(
+      padding: EdgeInsets.only(right: displaySize.width / 50),
+      child: Tooltip(
+        message: '未達成',
+        child: Container(
+          height: displaySize.width / 7,
+          width: displaySize.width / 7,
+          decoration: BoxDecoration(
+            color: Colors.grey[700],
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: Center(
+            child: Text(
+              "？",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+                fontSize: FontSize.large,
+              ),
             ),
           ),
         ),

@@ -63,10 +63,11 @@ class _EditNameSheetState extends State<EditNameSheet> {
               style: TextStyle(
                 fontSize: FontSize.small,
               ),
+              autofocus: true,
               decoration: InputDecoration(
                 hintText: 'カテゴリーの名前',
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(5),
                   borderSide: BorderSide(
                     color: themeColor,
                     width: 2,

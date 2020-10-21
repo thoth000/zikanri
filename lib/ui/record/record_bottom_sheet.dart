@@ -23,14 +23,6 @@ class RecordBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Provider.of<ThemeNotifier>(context);
-
-    Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
-
-    final BoxDecoration _decorationStyle = BoxDecoration(
-      borderRadius: BorderRadius.circular(10),
-      border: Border.all(color: Colors.grey),
-    );
     final TextStyle _headlineStyle = TextStyle(
       fontSize: FontSize.small,
       fontWeight: FontWeight.w700,
@@ -89,34 +81,10 @@ class RecordBottomSheet extends StatelessWidget {
                           'タイトル',
                           style: _headlineStyle,
                         ),
-                        Container(
-                          margin: const EdgeInsets.only(top: 5),
-                          decoration: _decorationStyle,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 5,
-                          ),
-                          child: TextField(
-                            textAlignVertical: TextAlignVertical.center,
-                            cursorColor: color,
-                            keyboardType: TextInputType.multiline,
-                            style: TextStyle(
-                              fontSize: FontSize.small,
-                            ),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: 'どんな活動？',
-                            ),
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(30)
-                            ],
-                            textInputAction: TextInputAction.go,
-                            onChanged: (s) {
-                              Provider.of<RecordNotifier>(context,
-                                      listen: false)
-                                  .changeTitle(s);
-                            },
-                          ),
+                        const SizedBox(
+                          height: 10,
                         ),
+                        TitleFieldWidget(),
                       ],
                     ),
                     ActivityInfoWidget(),
@@ -210,18 +178,91 @@ class SelectModeWidget extends StatelessWidget {
   }
 }
 
+class TitleFieldWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeNotifier>(context);
+    final color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
+    return TextField(
+      textAlignVertical: TextAlignVertical.center,
+      cursorColor: color,
+      keyboardType: TextInputType.multiline,
+      style: TextStyle(
+        fontSize: FontSize.small,
+      ),
+      decoration: InputDecoration(
+        hintText: 'どんな活動？',
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: color,
+            width: 2,
+          ),
+        ),
+        contentPadding: EdgeInsets.all(displaySize.width / 30),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: Colors.grey,
+            width: 2,
+          ),
+        ),
+      ),
+      inputFormatters: [LengthLimitingTextInputFormatter(30)],
+      textInputAction: TextInputAction.go,
+      onChanged: (s) {
+        Provider.of<RecordNotifier>(context, listen: false).changeTitle(s);
+      },
+    );
+  }
+}
+
+class MinuteFieldWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final recordNotifier = Provider.of<RecordNotifier>(context, listen: false);
+    final theme = Provider.of<ThemeNotifier>(context);
+    final color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
+    return TextField(
+      textAlignVertical: TextAlignVertical.center,
+      cursorColor: color,
+      style: TextStyle(
+        fontSize: FontSize.small,
+      ),
+      keyboardType: TextInputType.number,
+      inputFormatters: <TextInputFormatter>[
+        FilteringTextInputFormatter.digitsOnly,
+      ],
+      textInputAction: TextInputAction.go,
+      decoration: InputDecoration(
+        hintText: '何分？',
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: color,
+            width: 2,
+          ),
+        ),
+        contentPadding: EdgeInsets.all(displaySize.width / 30),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: Colors.grey,
+            width: 2,
+          ),
+        ),
+      ),
+      onChanged: (s) => recordNotifier.changeTime(s),
+    );
+  }
+}
+
 class ActivityInfoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //controllers
-    final theme = Provider.of<ThemeNotifier>(context);
     final record = Provider.of<RecordNotifier>(context);
     //style
-    Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
-    final BoxDecoration _decorationStyle = BoxDecoration(
-      borderRadius: BorderRadius.circular(10),
-      border: Border.all(color: Colors.grey),
-    );
     final TextStyle _headlineStyle = TextStyle(
       fontSize: FontSize.small,
       fontWeight: FontWeight.w700,
@@ -245,28 +286,10 @@ class ActivityInfoWidget extends StatelessWidget {
               const SizedBox(
                 height: 5,
               ),
-              Container(
+              SizedBox(
                 height: displaySize.width / 7,
                 width: displaySize.width / 2.5,
-                padding: EdgeInsets.symmetric(horizontal: 5),
-                decoration: _decorationStyle,
-                child: TextField(
-                  textAlignVertical: TextAlignVertical.center,
-                  cursorColor: color,
-                  style: TextStyle(
-                    fontSize: FontSize.small,
-                  ),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly,
-                  ],
-                  textInputAction: TextInputAction.go,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: '何分？',
-                  ),
-                  onChanged: (s) => record.changeTime(s),
-                ),
+                child: MinuteFieldWidget(),
               ),
             ],
           ),
