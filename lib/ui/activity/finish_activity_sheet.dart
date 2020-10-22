@@ -58,7 +58,9 @@ class FinishActivitySheet extends StatelessWidget {
                   height: displaySize.width / 15,
                 ),
                 Center(
-                  child: RecordActivityButton(index: index,),
+                  child: RecordActivityButton(
+                    index: index,
+                  ),
                 ),
                 SizedBox(
                   height: displaySize.width / 15,

@@ -118,10 +118,10 @@ class CopyButton extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(500),
         border: Border.all(
-          color: (copyController.checkUserID.isEmpty &&
-                copyController.checkCode)
-              ? themeColor
-              : themeColor.withOpacity(0.5),
+          color:
+              (copyController.checkUserID.isEmpty && copyController.checkCode)
+                  ? themeColor
+                  : themeColor.withOpacity(0.5),
           width: 3,
         ),
       ),

@@ -23,7 +23,7 @@ class ShortCutsEditPage extends StatelessWidget {
               children: List.generate(userData.shortCuts.length, (index) {
                 return SizedBox(
                   key: Key(userData.shortCuts[index][4].toString()),
-      width: displaySize.width,
+                  width: displaySize.width,
                   child: ShortCutItem(index: index),
                 );
               }),

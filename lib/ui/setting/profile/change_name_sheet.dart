@@ -79,7 +79,7 @@ class _ChangeNameSheetState extends State<ChangeNameSheet> {
                   ),
                 ),
                 contentPadding: EdgeInsets.symmetric(
-                  vertical: displaySize.width/30,
+                  vertical: displaySize.width / 30,
                   horizontal: 10,
                 ),
                 enabledBorder: OutlineInputBorder(
@@ -103,7 +103,7 @@ class _ChangeNameSheetState extends State<ChangeNameSheet> {
           ),
           Container(
             margin: EdgeInsets.all(15),
-            height: displaySize.width/6.5,
+            height: displaySize.width / 6.5,
             width: double.infinity,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(500),

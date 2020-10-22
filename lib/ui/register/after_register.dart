@@ -155,7 +155,7 @@ class RegisterButton extends StatelessWidget {
                   final ids =
                       Provider.of<UserDataNotifier>(context, listen: false)
                           .favoriteIDs;
-                  await Provider.of<UsersController>(context,listen: false)
+                  await Provider.of<UsersController>(context, listen: false)
                       .getFavoriteUsers(ids);
                   await Provider.of<UsersController>(context, listen: false)
                       .getFeaturedUsers();

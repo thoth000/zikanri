@@ -104,7 +104,8 @@ class _ActivityActionButtonList extends StatelessWidget {
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context);
     final theme = Provider.of<ThemeNotifier>(context);
-    final Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
+    final Color color =
+        (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return SizedBox(
       width: displaySize.width / 2.5,
       child: Row(

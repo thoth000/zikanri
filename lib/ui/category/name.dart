@@ -36,7 +36,8 @@ class _EditNameSheetState extends State<EditNameSheet> {
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context, listen: false);
     final theme = Provider.of<ThemeNotifier>(context);
-    Color themeColor = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
+    Color themeColor =
+        (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return Padding(
       padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom * 1.1),
@@ -74,7 +75,7 @@ class _EditNameSheetState extends State<EditNameSheet> {
                   ),
                 ),
                 contentPadding: EdgeInsets.symmetric(
-                  vertical: displaySize.width/30,
+                  vertical: displaySize.width / 30,
                   horizontal: 10,
                 ),
                 enabledBorder: OutlineInputBorder(
@@ -90,7 +91,7 @@ class _EditNameSheetState extends State<EditNameSheet> {
           Padding(
             padding: const EdgeInsets.all(10),
             child: Container(
-              height: displaySize.width/6.5,
+              height: displaySize.width / 6.5,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(500),
                 border: Border.all(
@@ -126,7 +127,7 @@ class _EditNameSheetState extends State<EditNameSheet> {
             ),
           ),
           SizedBox(
-            height: displaySize.width/20,
+            height: displaySize.width / 20,
           ),
         ],
       ),
