@@ -20,8 +20,7 @@ class DayDataWidget extends StatelessWidget {
     //controller
     final theme = Provider.of<ThemeNotifier>(context);
     //style
-    Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
-    //key
+    final Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     final GlobalKey _globalKey = GlobalKey();
     //function
     Future _exportToImage() async {
@@ -122,23 +121,7 @@ class DayDataWidget extends StatelessWidget {
                   const Divider(
                     thickness: 1,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      valueItem(
-                        '記録時間',
-                        itemList[1].toString() + '分',
-                      ),
-                      valueItem(
-                        '価値時間',
-                        itemList[2].toString() + '分',
-                      ),
-                      valueItem(
-                        '価値の割合',
-                        itemList[3].toString() + '%',
-                      ),
-                    ],
-                  ),
+                  _DataList(itemList: itemList),
                 ],
               ),
             ),
@@ -173,6 +156,68 @@ class DayDataWidget extends StatelessWidget {
           ),
           Text(
             title,
+            style: TextStyle(
+              color: Colors.grey,
+              fontSize: FontSize.xxsmall,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DataList extends StatelessWidget {
+  _DataList({@required this.itemList});
+  final List itemList;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        _DataWidget(
+          dataTitle: '記録時間',
+          dataValue: itemList[1].toString() + '分',
+        ),
+        _DataWidget(
+          dataTitle: '価値時間',
+          dataValue: itemList[2].toString() + '分',
+        ),
+        _DataWidget(
+          dataTitle: '価値の割合',
+          dataValue: itemList[3].toString() + '%',
+        ),
+      ],
+    );
+  }
+}
+
+class _DataWidget extends StatelessWidget {
+  _DataWidget({@required this.dataTitle, @required this.dataValue});
+  final String dataTitle;
+  final String dataValue;
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: displaySize.width / 3.5,
+      width: displaySize.width / 3.7,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          const Icon(
+            Icons.bubble_chart,
+          ),
+          Text(
+            dataValue,
+            softWrap: false,
+            overflow: TextOverflow.fade,
+            style: TextStyle(
+              fontSize: FontSize.large,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          Text(
+            dataTitle,
             style: TextStyle(
               color: Colors.grey,
               fontSize: FontSize.xxsmall,

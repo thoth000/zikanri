@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-
 //my files
 import 'package:zikanri/ui/category/category.dart';
 import 'package:zikanri/controller/record_notifier.dart';
@@ -179,11 +178,13 @@ class SelectModeWidget extends StatelessWidget {
 }
 
 class TitleFieldWidget extends StatelessWidget {
+  final textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
     final color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return TextField(
+      controller: textController,
       textAlignVertical: TextAlignVertical.center,
       cursorColor: color,
       keyboardType: TextInputType.multiline,

@@ -21,88 +21,8 @@ class ThemeSettingPage extends StatelessWidget {
           SizedBox(
             height: displaySize.width / 20,
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding:
-                    EdgeInsets.symmetric(horizontal: displaySize.width / 20),
-                child: Container(
-                  height: displaySize.width / 2.2,
-                  width: displaySize.width,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(colors: theme.themeColors),
-                    borderRadius: BorderRadius.all(
-                        Radius.circular(displaySize.width / 12)),
-                    boxShadow: const [
-                      BoxShadow(
-                        spreadRadius: 1.0,
-                        color: Colors.black26,
-                        blurRadius: 10,
-                        offset: Offset(10, 10),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        height: displaySize.width / 40,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          IconButton(
-                            onPressed: null,
-                            iconSize: displaySize.width / 15,
-                            icon: const Icon(null),
-                          ),
-                          Text(
-                            'Good Rate',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: FontSize.xlarge,
-                              fontWeight: FontWeight.w300,
-                            ),
-                          ),
-                          IconButton(
-                            highlightColor: Colors.transparent,
-                            splashColor: Colors.transparent,
-                            icon: Icon(
-                              Icons.share,
-                              color: Colors.white,
-                              size: displaySize.width / 15,
-                            ),
-                            onPressed: null,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: displaySize.width / 100,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: displaySize.width / 30),
-                        child: SizedBox(
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Text(
-                              '7777',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: FontSize.big,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+          Center(
+            child: _ThemeSampleWidget(),
           ),
           SizedBox(
             height: displaySize.width / 20,
@@ -113,34 +33,7 @@ class ThemeSettingPage extends StatelessWidget {
             indent: 10,
             endIndent: 10,
           ),
-          Container(
-            height: displaySize.width / 9,
-            width: displaySize.width,
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  'ダークモード',
-                  style: TextStyle(
-                    fontSize: FontSize.midium,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Switch(
-                  value: theme.isDark,
-                  onChanged: (boolean) {
-                    Vib.select();
-                    theme.changeMode();
-                  },
-                  activeColor: (theme.isDark)
-                      ? theme.themeColors[0]
-                      : theme.themeColors[1],
-                ),
-              ],
-            ),
-          ),
+          _DarkModeChanger(),
           const Divider(
             height: 30,
             thickness: 1,
@@ -148,26 +41,145 @@ class ThemeSettingPage extends StatelessWidget {
             endIndent: 10,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
                   'テーマ一覧',
                   style: TextStyle(
-                      fontSize: FontSize.midium, fontWeight: FontWeight.w700),
+                    fontSize: FontSize.midium,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 Wrap(
-                  children: <Widget>[
-                    for (int i = 0; i < baseColors.length; i++)
-                      _ThemeChanger(i),
-                  ],
+                  children: List.generate(
+                    baseColors.length,
+                    (index) => _ThemeChanger(index),
+                  ),
                 ),
               ],
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ThemeSampleWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeNotifier>(context);
+    return Container(
+      height: displaySize.width / 2.2,
+      width: displaySize.width / 1.1,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(colors: theme.themeColors),
+        borderRadius: BorderRadius.all(
+          Radius.circular(displaySize.width / 12),
+        ),
+        boxShadow: const [
+          BoxShadow(
+            spreadRadius: 1.0,
+            color: Colors.black26,
+            blurRadius: 10,
+            offset: Offset(10, 10),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          SizedBox(
+            height: displaySize.width / 40,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              IconButton(
+                onPressed: null,
+                iconSize: displaySize.width / 15,
+                icon: const Icon(null),
+              ),
+              Text(
+                'Good Rate',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: FontSize.xlarge,
+                  fontWeight: FontWeight.w300,
+                ),
+              ),
+              IconButton(
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                icon: Icon(
+                  Icons.share,
+                  color: Colors.white,
+                  size: displaySize.width / 15,
+                ),
+                onPressed: null,
+              ),
+            ],
+          ),
+          SizedBox(
+            height: displaySize.width / 100,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: displaySize.width / 30),
+            child: SizedBox(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Text(
+                  '7777',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: FontSize.big,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DarkModeChanger extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeNotifier>(context);
+    return Container(
+      height: displaySize.width / 9,
+      width: displaySize.width,
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            'ダークモード',
+            style: TextStyle(
+              fontSize: FontSize.midium,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Switch(
+            value: theme.isDark,
+            onChanged: (boolean) {
+              Vib.select();
+              theme.changeMode();
+            },
+            activeColor:
+                (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1],
           ),
         ],
       ),

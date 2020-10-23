@@ -78,7 +78,9 @@ class MyIconWidget extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ChangeMyIconPage(),
+                        builder: (context) => ChangeMyIconPage.wrapped(
+                          beforeIcon: userData.myIcon,
+                        ),
                       ),
                     );
                   },
@@ -95,7 +97,9 @@ class MyIconWidget extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ChangeMyIconPage(),
+                builder: (context) => ChangeMyIconPage.wrapped(
+                  beforeIcon: userData.myIcon,
+                ),
               ),
             );
           },

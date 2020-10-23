@@ -42,21 +42,7 @@ class AfterRegisterPage extends StatelessWidget {
         UserIDField(),
         SizedBox(height: displaySize.width / 10),
         RegisterButton(),
-        Center(
-          child: FlatButton(
-            child: Text('バックアップがある方はこちら'),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CopyPage.wrapped(
-                    Provider.of<UserDataNotifier>(context).userID,
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
+        SwitchBackUpButton(),
         SizedBox(height: displaySize.width / 20),
       ],
     );
@@ -280,6 +266,27 @@ class _Friend extends StatelessWidget {
       Icons.people,
       color: Colors.orange,
       size: displaySize.width / 5,
+    );
+  }
+}
+
+class SwitchBackUpButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: FlatButton(
+        child: Text('バックアップがある方はこちら'),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CopyPage.wrapped(
+                Provider.of<UserDataNotifier>(context).userID,
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

@@ -1,6 +1,5 @@
 //packages
 import 'package:flutter/material.dart';
-
 //my files
 import 'package:zikanri/ui/parts/general_app_bar.dart';
 

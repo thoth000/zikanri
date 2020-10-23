@@ -20,7 +20,6 @@ class FirstRegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userData = Provider.of<UserDataNotifier>(context);
     return Scaffold(
       body: ListView(
         children: [
@@ -42,28 +41,7 @@ class FirstRegisterPage extends StatelessWidget {
           UserIDField(),
           SizedBox(height: displaySize.width / 10),
           RegisterButton(),
-          Center(
-            child: FlatButton(
-              onPressed: () async {
-                await Hive.box('userData').put('userID', '未登録');
-                await Hive.box('userData').put('backUpCode', '未登録');
-                List<String> favoriteIDs = [];
-                await Hive.box('userData').put('favoriteIDs', favoriteIDs);
-                await userData.initialize();
-                await Provider.of<UsersController>(context, listen: false)
-                    .getFavoriteUsers(userData.favoriteIDs);
-                await Provider.of<UsersController>(context, listen: false)
-                    .getFeaturedUsers();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MyAppPage.wrapped(),
-                  ),
-                );
-              },
-              child: Text('スキップして始める'),
-            ),
-          ),
+          PassRegisterButton(),
           SizedBox(height: displaySize.width / 10),
         ],
       ),
@@ -180,6 +158,35 @@ class RegisterButton extends StatelessWidget {
             fontWeight: FontWeight.w700,
           ),
         ),
+      ),
+    );
+  }
+}
+
+class PassRegisterButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final userData = Provider.of<UserDataNotifier>(context);
+    return Center(
+      child: FlatButton(
+        onPressed: () async {
+          await Hive.box('userData').put('userID', '未登録');
+          await Hive.box('userData').put('backUpCode', '未登録');
+          List<String> favoriteIDs = [];
+          await Hive.box('userData').put('favoriteIDs', favoriteIDs);
+          await userData.initialize();
+          await Provider.of<UsersController>(context, listen: false)
+              .getFavoriteUsers(userData.favoriteIDs);
+          await Provider.of<UsersController>(context, listen: false)
+              .getFeaturedUsers();
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MyAppPage.wrapped(),
+            ),
+          );
+        },
+        child: const Text('スキップして始める'),
       ),
     );
   }

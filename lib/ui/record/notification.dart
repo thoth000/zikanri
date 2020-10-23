@@ -2,7 +2,7 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 //my files
 import 'package:zikanri/config.dart';
-
+//notification action
 void notification(String s, int length) async {
   AndroidNotificationDetails androidNotificationDetails =
       AndroidNotificationDetails(

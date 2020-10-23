@@ -163,9 +163,13 @@ class GridCard extends StatelessWidget {
               ),
               onPressed: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => CategoryDataPage(index)));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CategoryDataPage(
+                      index: index,
+                    ),
+                  ),
+                );
               },
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

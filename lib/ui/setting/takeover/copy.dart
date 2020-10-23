@@ -1,5 +1,7 @@
+//packages
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+//my files
 import 'package:zikanri/config.dart';
 import 'package:zikanri/controller/copy_controller.dart';
 import 'package:zikanri/controller/theme_notifier.dart';

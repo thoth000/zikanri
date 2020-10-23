@@ -39,7 +39,7 @@ class MyAppPage extends StatelessWidget {
 
     return Scaffold(
       body: SafeArea(child: pages[controller.currentIndex]),
-      floatingActionButton: RButton(),
+      floatingActionButton: RecordButton(),
       bottomNavigationBar: BottomAppBar(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
