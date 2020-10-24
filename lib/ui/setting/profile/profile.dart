@@ -24,20 +24,20 @@ class ProfileSettingPage extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          MyIconWidget(
+          _MyIconWidget(
             themeColor: color,
           ),
-          NameListTile(),
-          UserIDListTile(),
-          BackUpCodeListTile(),
+          _NameListTile(),
+          _UserIDListTile(),
+          _BackUpCodeListTile(),
         ],
       ),
     );
   }
 }
 
-class MyIconWidget extends StatelessWidget {
-  MyIconWidget({@required this.themeColor});
+class _MyIconWidget extends StatelessWidget {
+  _MyIconWidget({@required this.themeColor});
   final Color themeColor;
   @override
   Widget build(BuildContext context) {
@@ -115,7 +115,7 @@ class MyIconWidget extends StatelessWidget {
   }
 }
 
-class NameListTile extends StatelessWidget {
+class _NameListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context);
@@ -148,7 +148,7 @@ class NameListTile extends StatelessWidget {
   }
 }
 
-class UserIDListTile extends StatelessWidget {
+class _UserIDListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context);
@@ -179,7 +179,7 @@ class UserIDListTile extends StatelessWidget {
   }
 }
 
-class BackUpCodeListTile extends StatelessWidget {
+class _BackUpCodeListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context);

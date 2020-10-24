@@ -57,14 +57,14 @@ class AddSheet extends StatelessWidget {
               horizontal: displaySize.width / 30,
               vertical: displaySize.width / 50,
             ),
-            child: TimeFieldWidget(),
+            child: _TimeFieldWidget(),
           ),
           const SizedBox(
             height: 15,
           ),
           Padding(
             padding: const EdgeInsets.all(10),
-            child: AddTimeButton(),
+            child: _AddTimeButton(),
           ),
           const SizedBox(
             height: 15,
@@ -75,8 +75,22 @@ class AddSheet extends StatelessWidget {
   }
 }
 
-class TimeFieldWidget extends StatelessWidget {
-  final TextEditingController textController = TextEditingController();
+class _TimeFieldWidget extends StatefulWidget {
+  @override
+  __TimeFieldWidgetState createState() => __TimeFieldWidgetState();
+}
+
+class __TimeFieldWidgetState extends State<_TimeFieldWidget> {
+  TextEditingController textController;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      textController = TextEditingController();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final addTimeController = Provider.of<AddTimeController>(context);
@@ -127,7 +141,7 @@ class TimeFieldWidget extends StatelessWidget {
   }
 }
 
-class AddTimeButton extends StatelessWidget {
+class _AddTimeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final addTimeController = Provider.of<AddTimeController>(context);

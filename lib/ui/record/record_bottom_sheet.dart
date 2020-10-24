@@ -59,7 +59,7 @@ class RecordBottomSheet extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              SelectModeWidget(),
+              _SelectModeWidget(),
               const SizedBox(
                 height: 20,
               ),
@@ -83,15 +83,15 @@ class RecordBottomSheet extends StatelessWidget {
                         const SizedBox(
                           height: 10,
                         ),
-                        TitleFieldWidget(),
+                        _TitleFieldWidget(),
                       ],
                     ),
-                    ActivityInfoWidget(),
+                    _ActivityInfoWidget(),
                     const SizedBox(
                       height: 20,
                     ),
                     Center(
-                      child: SaveActivityButton(),
+                      child: _SaveActivityButton(),
                     ),
                     const Divider(
                       height: 30,
@@ -106,7 +106,7 @@ class RecordBottomSheet extends StatelessWidget {
                         const SizedBox(
                           height: 5,
                         ),
-                        SelectCategoryWidget(),
+                        _SelectCategoryWidget(),
                       ],
                     ),
                   ],
@@ -120,7 +120,7 @@ class RecordBottomSheet extends StatelessWidget {
   }
 }
 
-class SelectModeWidget extends StatelessWidget {
+class _SelectModeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //controllers
@@ -177,12 +177,12 @@ class SelectModeWidget extends StatelessWidget {
   }
 }
 
-class TitleFieldWidget extends StatefulWidget {
+class _TitleFieldWidget extends StatefulWidget {
   @override
-  _TitleFieldWidgetState createState() => _TitleFieldWidgetState();
+  __TitleFieldWidgetState createState() => __TitleFieldWidgetState();
 }
 
-class _TitleFieldWidgetState extends State<TitleFieldWidget> {
+class __TitleFieldWidgetState extends State<_TitleFieldWidget> {
   TextEditingController textController;
 
   @override
@@ -232,12 +232,12 @@ class _TitleFieldWidgetState extends State<TitleFieldWidget> {
   }
 }
 
-class MinuteFieldWidget extends StatefulWidget {
+class _MinuteFieldWidget extends StatefulWidget {
   @override
-  _MinuteFieldWidgetState createState() => _MinuteFieldWidgetState();
+  __MinuteFieldWidgetState createState() => __MinuteFieldWidgetState();
 }
 
-class _MinuteFieldWidgetState extends State<MinuteFieldWidget> {
+class __MinuteFieldWidgetState extends State<_MinuteFieldWidget> {
   TextEditingController textController;
 
   @override
@@ -288,7 +288,7 @@ class _MinuteFieldWidgetState extends State<MinuteFieldWidget> {
   }
 }
 
-class ActivityInfoWidget extends StatelessWidget {
+class _ActivityInfoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //controllers
@@ -320,7 +320,7 @@ class ActivityInfoWidget extends StatelessWidget {
               SizedBox(
                 height: displaySize.width / 7,
                 width: displaySize.width / 2.5,
-                child: MinuteFieldWidget(),
+                child: _MinuteFieldWidget(),
               ),
             ],
           ),
@@ -345,13 +345,13 @@ class ActivityInfoWidget extends StatelessWidget {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          ValueSelectBloc(
+                          _ValueSelectBloc(
                             boolean: false,
                           ),
                           SizedBox(
                             width: displaySize.width / 50,
                           ),
-                          ValueSelectBloc(
+                          _ValueSelectBloc(
                             boolean: true,
                           ),
                         ],
@@ -373,8 +373,8 @@ class ActivityInfoWidget extends StatelessWidget {
   }
 }
 
-class ValueSelectBloc extends StatelessWidget {
-  ValueSelectBloc({this.boolean});
+class _ValueSelectBloc extends StatelessWidget {
+  _ValueSelectBloc({this.boolean});
   final bool boolean;
   @override
   Widget build(BuildContext context) {
@@ -421,7 +421,7 @@ class ValueSelectBloc extends StatelessWidget {
   }
 }
 
-class SaveActivityButton extends StatelessWidget {
+class _SaveActivityButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //controllers
@@ -538,7 +538,7 @@ class SaveActivityButton extends StatelessWidget {
   }
 }
 
-class SelectCategoryWidget extends StatelessWidget {
+class _SelectCategoryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //controller

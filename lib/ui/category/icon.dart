@@ -28,7 +28,7 @@ class EditIconPage extends StatelessWidget {
         child: Wrap(
           children: List.generate(
             newIconList.length,
-            (index) => CategoryIconButton(index: index),
+            (index) => _CategoryIconButton(index: index),
           ),
         ),
       ),
@@ -69,8 +69,8 @@ class _AppBar extends StatelessWidget with PreferredSizeWidget {
   }
 }
 
-class CategoryIconButton extends StatelessWidget {
-  CategoryIconButton({@required this.index});
+class _CategoryIconButton extends StatelessWidget {
+  _CategoryIconButton({@required this.index});
   final int index;
   @override
   Widget build(BuildContext context) {

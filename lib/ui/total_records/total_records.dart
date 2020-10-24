@@ -136,7 +136,7 @@ class _CategoryGrid extends StatelessWidget {
               padding: const EdgeInsets.only(
                 bottom: 10.0,
               ),
-              child: GridCard(index),
+              child: _GridCard(index: index),
             );
           } else {
             return const SizedBox();
@@ -147,10 +147,9 @@ class _CategoryGrid extends StatelessWidget {
   }
 }
 
-class GridCard extends StatelessWidget {
-  const GridCard(this.index);
+class _GridCard extends StatelessWidget {
+  const _GridCard({@required this.index});
   final int index;
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(

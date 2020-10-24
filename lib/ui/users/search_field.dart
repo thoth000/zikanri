@@ -15,9 +15,8 @@ class SearchField extends StatelessWidget {
         SizedBox(
           width: displaySize.width / 50,
         ),
-        SearchTextField(),
-        //検索ボタン
-        SearchButton(),
+        _SearchTextField(),
+        _SearchButton(),
         SizedBox(
           width: displaySize.width / 50,
         ),
@@ -26,12 +25,12 @@ class SearchField extends StatelessWidget {
   }
 }
 
-class SearchTextField extends StatefulWidget {
+class _SearchTextField extends StatefulWidget {
   @override
-  _SearchTextFieldState createState() => _SearchTextFieldState();
+  __SearchTextFieldState createState() => __SearchTextFieldState();
 }
 
-class _SearchTextFieldState extends State<SearchTextField> {
+class __SearchTextFieldState extends State<_SearchTextField> {
   TextEditingController textEditingController;
 
   @override
@@ -131,7 +130,7 @@ class _SearchTextFieldState extends State<SearchTextField> {
   }
 }
 
-class SearchButton extends StatelessWidget {
+class _SearchButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);

@@ -31,18 +31,18 @@ class AchievePage extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              RecordAchieveButton(),
-              DayAchieveButton(),
+              _RecordAchieveButton(),
+              _DayAchieveButton(),
             ],
           ),
-          AchieveBody(),
+          _AchieveBody(),
         ],
       ),
     );
   }
 }
 
-class RecordAchieveButton extends StatelessWidget {
+class _RecordAchieveButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
@@ -74,7 +74,7 @@ class RecordAchieveButton extends StatelessWidget {
   }
 }
 
-class DayAchieveButton extends StatelessWidget {
+class _DayAchieveButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
@@ -106,19 +106,19 @@ class DayAchieveButton extends StatelessWidget {
   }
 }
 
-class AchieveBody extends StatelessWidget {
+class _AchieveBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final achieveController = Provider.of<AchieveController>(context);
     return Expanded(
       child: (achieveController.isRecord)
-          ? AchiveMiniteWidget()
-          : AchiveDayWidget(),
+          ? _AchiveMiniteWidget()
+          : _AchiveDayWidget(),
     );
   }
 }
 
-class AchiveMiniteWidget extends StatelessWidget {
+class _AchiveMiniteWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context);
@@ -172,7 +172,7 @@ class AchiveMiniteWidget extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                ColorBox(
+                _ColorBox(
                   index: i * 2 + 3,
                   isGetTheme: check,
                 ),
@@ -185,7 +185,7 @@ class AchiveMiniteWidget extends StatelessWidget {
   }
 }
 
-class AchiveDayWidget extends StatelessWidget {
+class _AchiveDayWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context, listen: false);
@@ -241,7 +241,7 @@ class AchiveDayWidget extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                ColorBox(
+                _ColorBox(
                   index: i * 2 + 2,
                   isGetTheme: check,
                 ),
@@ -254,8 +254,8 @@ class AchiveDayWidget extends StatelessWidget {
   }
 }
 
-class ColorBox extends StatelessWidget {
-  ColorBox({@required this.index, @required this.isGetTheme});
+class _ColorBox extends StatelessWidget {
+  _ColorBox({@required this.index, @required this.isGetTheme});
   final int index;
   final bool isGetTheme;
   @override

@@ -26,10 +26,10 @@ class HomeInfoList extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
-            FavoriteRefleshButton(),
+            _FavoriteRefleshButton(),
           ],
         ),
-        FavoriteUserList(),
+        _FavoriteUserList(),
         Row(
           children: [
             SizedBox(
@@ -42,10 +42,10 @@ class HomeInfoList extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
-            FeaturedRefleshButton(),
+            _FeaturedRefleshButton(),
           ],
         ),
-        FeaturedUserList(),
+        _FeaturedUserList(),
         SizedBox(
           height: displaySize.width / 10,
         ),
@@ -54,7 +54,7 @@ class HomeInfoList extends StatelessWidget {
   }
 }
 
-class FavoriteRefleshButton extends StatelessWidget {
+class _FavoriteRefleshButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context);
@@ -73,7 +73,7 @@ class FavoriteRefleshButton extends StatelessWidget {
   }
 }
 
-class FeaturedRefleshButton extends StatelessWidget {
+class _FeaturedRefleshButton extends StatelessWidget {
   @override
   @override
   Widget build(BuildContext context) {
@@ -90,7 +90,7 @@ class FeaturedRefleshButton extends StatelessWidget {
   }
 }
 
-class FavoriteUserList extends StatelessWidget {
+class _FavoriteUserList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context);
@@ -148,10 +148,12 @@ class FavoriteUserList extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => UserDetailPage(
+                            builder: (context) => UserDetailPage.wrapped(
                               user: user,
                               isFavorite:
                                   userData.favoriteIDs.contains(user['userID']),
+                              themeColor: themeColor,
+                              isDark: theme.isDark,
                             ),
                           ),
                         );
@@ -171,7 +173,7 @@ class FavoriteUserList extends StatelessWidget {
   }
 }
 
-class FeaturedUserList extends StatelessWidget {
+class _FeaturedUserList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final usersController = Provider.of<UsersController>(context);
@@ -231,10 +233,12 @@ class FeaturedUserList extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => UserDetailPage(
+                            builder: (context) => UserDetailPage.wrapped(
                               user: user,
                               isFavorite:
                                   userData.favoriteIDs.contains(user['userID']),
+                              themeColor: themeColor,
+                              isDark: theme.isDark,
                             ),
                           ),
                         );

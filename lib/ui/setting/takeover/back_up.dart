@@ -47,11 +47,11 @@ class BackUpPage extends StatelessWidget {
           SizedBox(
             height: displaySize.width / 20,
           ),
-          UserIDField(),
+          _UserIDField(),
           SizedBox(
             height: displaySize.width / 20,
           ),
-          CodeField(),
+          _CodeField(),
           SizedBox(
             height: displaySize.width / 10,
           ),
@@ -182,12 +182,12 @@ class BackUpButton extends StatelessWidget {
   }
 }
 
-class UserIDField extends StatefulWidget {
+class _UserIDField extends StatefulWidget {
   @override
-  _UserIDFieldState createState() => _UserIDFieldState();
+  __UserIDFieldState createState() => __UserIDFieldState();
 }
 
-class _UserIDFieldState extends State<UserIDField> {
+class __UserIDFieldState extends State<_UserIDField> {
   TextEditingController userIDController;
   @override
   void initState() {
@@ -222,12 +222,12 @@ class _UserIDFieldState extends State<UserIDField> {
   }
 }
 
-class CodeField extends StatefulWidget {
+class _CodeField extends StatefulWidget {
   @override
-  _CodeFieldState createState() => _CodeFieldState();
+  __CodeFieldState createState() => __CodeFieldState();
 }
 
-class _CodeFieldState extends State<CodeField> {
+class __CodeFieldState extends State<_CodeField> {
   TextEditingController codeController;
   @override
   void initState() {

@@ -49,16 +49,16 @@ class FinishActivitySheet extends StatelessWidget {
                 const SizedBox(
                   height: 15,
                 ),
-                ActivityInfo(index: index),
+                _ActivityInfo(index: index),
                 SizedBox(
                   height: displaySize.width / 30,
                 ),
-                SelectValueBlocList(),
+                _SelectValueBlocList(),
                 SizedBox(
                   height: displaySize.width / 15,
                 ),
                 Center(
-                  child: RecordActivityButton(
+                  child: _RecordActivityButton(
                     index: index,
                   ),
                 ),
@@ -74,8 +74,8 @@ class FinishActivitySheet extends StatelessWidget {
   }
 }
 
-class ActivityInfo extends StatelessWidget {
-  ActivityInfo({@required this.index});
+class _ActivityInfo extends StatelessWidget {
+  _ActivityInfo({@required this.index});
   final int index;
   @override
   Widget build(BuildContext context) {
@@ -132,19 +132,19 @@ class ActivityInfo extends StatelessWidget {
   }
 }
 
-class SelectValueBlocList extends StatelessWidget {
+class _SelectValueBlocList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        SelectValueBloc(
+        _SelectValueBloc(
           boolean: false,
         ),
         SizedBox(
           width: displaySize.width / 10,
         ),
-        SelectValueBloc(
+        _SelectValueBloc(
           boolean: true,
         ),
       ],
@@ -152,8 +152,8 @@ class SelectValueBlocList extends StatelessWidget {
   }
 }
 
-class SelectValueBloc extends StatelessWidget {
-  SelectValueBloc({this.boolean});
+class _SelectValueBloc extends StatelessWidget {
+  _SelectValueBloc({this.boolean});
   final bool boolean;
   @override
   Widget build(BuildContext context) {
@@ -204,8 +204,8 @@ class SelectValueBloc extends StatelessWidget {
   }
 }
 
-class RecordActivityButton extends StatelessWidget {
-  RecordActivityButton({@required this.index});
+class _RecordActivityButton extends StatelessWidget {
+  _RecordActivityButton({@required this.index});
   final int index;
   @override
   Widget build(BuildContext context) {

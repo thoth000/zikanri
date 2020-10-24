@@ -39,22 +39,22 @@ class AfterRegisterPage extends StatelessWidget {
         SizedBox(height: displaySize.width / 10),
         _Friend(),
         SizedBox(height: displaySize.width / 10),
-        UserIDField(),
+        _UserIDField(),
         SizedBox(height: displaySize.width / 10),
-        RegisterButton(),
-        SwitchBackUpButton(),
+        _RegisterButton(),
+        _SwitchBackUpButton(),
         SizedBox(height: displaySize.width / 20),
       ],
     );
   }
 }
 
-class UserIDField extends StatefulWidget {
+class _UserIDField extends StatefulWidget {
   @override
-  _UserIDFieldState createState() => _UserIDFieldState();
+  __UserIDFieldState createState() => __UserIDFieldState();
 }
 
-class _UserIDFieldState extends State<UserIDField> {
+class __UserIDFieldState extends State<_UserIDField> {
   TextEditingController userIDController;
   @override
   void initState() {
@@ -95,7 +95,7 @@ class _UserIDFieldState extends State<UserIDField> {
   }
 }
 
-class RegisterButton extends StatelessWidget {
+class _RegisterButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final RegisterController registerController =
@@ -270,7 +270,7 @@ class _Friend extends StatelessWidget {
   }
 }
 
-class SwitchBackUpButton extends StatelessWidget {
+class _SwitchBackUpButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(

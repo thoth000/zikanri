@@ -38,10 +38,10 @@ class FirstRegisterPage extends StatelessWidget {
           SizedBox(height: displaySize.width / 10),
           _Friend(),
           SizedBox(height: displaySize.width / 10),
-          UserIDField(),
+          _UserIDField(),
           SizedBox(height: displaySize.width / 10),
-          RegisterButton(),
-          PassRegisterButton(),
+          _RegisterButton(),
+          _PassRegisterButton(),
           SizedBox(height: displaySize.width / 10),
         ],
       ),
@@ -49,12 +49,12 @@ class FirstRegisterPage extends StatelessWidget {
   }
 }
 
-class UserIDField extends StatefulWidget {
+class _UserIDField extends StatefulWidget {
   @override
-  _UserIDFieldState createState() => _UserIDFieldState();
+  __UserIDFieldState createState() => __UserIDFieldState();
 }
 
-class _UserIDFieldState extends State<UserIDField> {
+class __UserIDFieldState extends State<_UserIDField> {
   TextEditingController userIDController;
   @override
   void initState() {
@@ -95,7 +95,7 @@ class _UserIDFieldState extends State<UserIDField> {
   }
 }
 
-class RegisterButton extends StatelessWidget {
+class _RegisterButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final RegisterController registerController =
@@ -163,7 +163,7 @@ class RegisterButton extends StatelessWidget {
   }
 }
 
-class PassRegisterButton extends StatelessWidget {
+class _PassRegisterButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context);

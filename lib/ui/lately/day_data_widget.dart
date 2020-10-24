@@ -19,7 +19,6 @@ class DayDataWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     //controller
     final theme = Provider.of<ThemeNotifier>(context);
-    //style
     final Color color =
         (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     final GlobalKey _globalKey = GlobalKey();
@@ -128,41 +127,6 @@ class DayDataWidget extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  //記録時間・価値時間・価値の割合
-  Widget valueItem(
-    String title,
-    String value,
-  ) {
-    return SizedBox(
-      height: displaySize.width / 3.5,
-      width: displaySize.width / 3.7,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          const Icon(
-            Icons.bubble_chart,
-          ),
-          Text(
-            value,
-            softWrap: false,
-            overflow: TextOverflow.fade,
-            style: TextStyle(
-              fontSize: FontSize.large,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          Text(
-            title,
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: FontSize.xxsmall,
-            ),
-          ),
-        ],
       ),
     );
   }

@@ -20,7 +20,7 @@ class CategoryPage extends StatelessWidget {
             child: Column(
               children: List<Widget>.generate(
                 7,
-                (index) => CategoryCard(index + 1),
+                (index) => _CategoryCard(index: index + 1),
               ),
             ),
           ),
@@ -30,8 +30,8 @@ class CategoryPage extends StatelessWidget {
   }
 }
 
-class CategoryCard extends StatelessWidget {
-  const CategoryCard(this.index);
+class _CategoryCard extends StatelessWidget {
+  const _CategoryCard({@required this.index});
   final int index;
   @override
   Widget build(BuildContext context) {
@@ -45,17 +45,17 @@ class CategoryCard extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            child: CategoryDataWidget(index: index),
+            child: _CategoryDataWidget(index: index),
           ),
-          EditButton(index: index),
+          _EditButton(index: index),
         ],
       ),
     );
   }
 }
 
-class CategoryDataWidget extends StatelessWidget {
-  CategoryDataWidget({@required this.index});
+class _CategoryDataWidget extends StatelessWidget {
+  _CategoryDataWidget({@required this.index});
   final int index;
   @override
   Widget build(BuildContext context) {
@@ -116,8 +116,8 @@ class CategoryDataWidget extends StatelessWidget {
   }
 }
 
-class EditButton extends StatelessWidget {
-  EditButton({@required this.index});
+class _EditButton extends StatelessWidget {
+  _EditButton({@required this.index});
   final int index;
   @override
   Widget build(BuildContext context) {

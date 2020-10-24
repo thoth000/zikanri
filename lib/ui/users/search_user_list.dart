@@ -68,9 +68,11 @@ class SearchUserList extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => UserDetailPage(
+                  builder: (context) => UserDetailPage.wrapped(
                     user: user,
                     isFavorite: userData.favoriteIDs.contains(user['userID']),
+                    themeColor: themeColor,
+                    isDark: theme.isDark,
                   ),
                 ),
               );

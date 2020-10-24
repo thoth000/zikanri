@@ -204,7 +204,7 @@ class _ActivityActionButtonList extends StatelessWidget {
                     highlightColor: Colors.transparent,
                     onPressed: () => showDialog(
                       context: context,
-                      builder: (context) => RemoveActivityDialog(
+                      builder: (context) => _RemoveActivityDialog(
                         index: index,
                       ),
                     ),
@@ -235,8 +235,8 @@ class _ActivityActionButtonList extends StatelessWidget {
   }
 }
 
-class RemoveActivityDialog extends StatelessWidget {
-  RemoveActivityDialog({@required this.index});
+class _RemoveActivityDialog extends StatelessWidget {
+  _RemoveActivityDialog({@required this.index});
   final int index;
   @override
   Widget build(BuildContext context) {

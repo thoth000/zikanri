@@ -31,7 +31,7 @@ class _ShortCutList extends StatelessWidget {
           return SizedBox(
             key: Key(userData.shortCuts[index][4].toString()),
             width: displaySize.width,
-            child: ShortCutItem(index: index),
+            child: _ShortCutItem(index: index),
           );
         },
       ),
@@ -42,8 +42,8 @@ class _ShortCutList extends StatelessWidget {
   }
 }
 
-class ShortCutItem extends StatelessWidget {
-  ShortCutItem({@required this.index});
+class _ShortCutItem extends StatelessWidget {
+  _ShortCutItem({@required this.index});
   final int index;
   @override
   Widget build(BuildContext context) {
@@ -99,7 +99,7 @@ class ShortCutItem extends StatelessWidget {
           onPressed: () {
             showDialog(
               context: context,
-              builder: (context) => RemoveShortCutDialog(index: index),
+              builder: (context) => _RemoveShortCutDialog(index: index),
             );
           },
         ),
@@ -111,8 +111,8 @@ class ShortCutItem extends StatelessWidget {
   }
 }
 
-class RemoveShortCutDialog extends StatelessWidget {
-  RemoveShortCutDialog({@required this.index});
+class _RemoveShortCutDialog extends StatelessWidget {
+  _RemoveShortCutDialog({@required this.index});
   final int index;
   @override
   Widget build(BuildContext context) {
