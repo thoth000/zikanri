@@ -11,28 +11,33 @@ import 'package:zikanri/ui/parts/general_app_bar.dart';
 class ShortCutsEditPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final userData = Provider.of<UserDataNotifier>(context);
     return Scaffold(
       appBar: GeneralAppBar(
         pageTitle: 'ショートカットの編集',
       ),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: ReorderableListView(
-              children: List.generate(userData.shortCuts.length, (index) {
-                return SizedBox(
-                  key: Key(userData.shortCuts[index][4].toString()),
-                  width: displaySize.width,
-                  child: ShortCutItem(index: index),
-                );
-              }),
-              onReorder: (oldIndex, newIndex) =>
-                  userData.sort(oldIndex, newIndex),
-            ),
-          ),
-        ],
+      body: _ShortCutList(),
+    );
+  }
+}
+
+class _ShortCutList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final userData = Provider.of<UserDataNotifier>(context);
+    return ReorderableListView(
+      children: List.generate(
+        userData.shortCuts.length,
+        (index) {
+          return SizedBox(
+            key: Key(userData.shortCuts[index][4].toString()),
+            width: displaySize.width,
+            child: ShortCutItem(index: index),
+          );
+        },
       ),
+      onReorder: (oldIndex, newIndex) {
+        userData.sort(oldIndex, newIndex);
+      },
     );
   }
 }
@@ -44,6 +49,8 @@ class ShortCutItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
+    final Color color =
+        (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return Row(
       children: <Widget>[
         const SizedBox(
@@ -57,11 +64,7 @@ class ShortCutItem extends StatelessWidget {
                   userData.categories[userData.shortCuts[index][0]][0],
                   fontFamily: 'MaterialIcons',
                 ),
-                color: (userData.shortCuts[index][3])
-                    ? (theme.isDark)
-                        ? theme.themeColors[0]
-                        : theme.themeColors[1]
-                    : Colors.grey,
+                color: (userData.shortCuts[index][3]) ? color : Colors.grey,
                 size: displaySize.width / 12,
               ),
               title: Text(
@@ -92,7 +95,7 @@ class ShortCutItem extends StatelessWidget {
             Icons.remove_circle_outline,
           ),
           iconSize: displaySize.width / 12,
-          color: theme.isDark ? theme.themeColors[0] : theme.themeColors[1],
+          color: color,
           onPressed: () {
             showDialog(
               context: context,
