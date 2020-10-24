@@ -14,7 +14,8 @@ class ActivityList extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
     final controller = Provider.of<LatelyController>(context);
-    final Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
+    final Color color =
+        (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     final int index = controller.index;
     //widget
     return Padding(

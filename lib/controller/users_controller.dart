@@ -18,7 +18,7 @@ class UsersController with ChangeNotifier {
   //オススメを取得済みか
   bool isGetFeatured = false;
 
-  void changeText(String text){
+  void changeText(String text) {
     inputText = text;
     print(inputText);
     notifyListeners();

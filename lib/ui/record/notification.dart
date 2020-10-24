@@ -2,6 +2,7 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 //my files
 import 'package:zikanri/config.dart';
+
 //notification action
 void notification(String s, int length) async {
   AndroidNotificationDetails androidNotificationDetails =
@@ -15,10 +16,12 @@ void notification(String s, int length) async {
   );
   IOSNotificationDetails iosNotificationDetails = IOSNotificationDetails();
 
-  NotificationDetails notificationDetails =
-      NotificationDetails(androidNotificationDetails, iosNotificationDetails);
+  NotificationDetails notificationDetails = NotificationDetails(
+    androidNotificationDetails,
+    iosNotificationDetails,
+  );
   await flutterNotification.show(
-    0,
+    length,
     '活動',
     (length + 1).toString() + '件目: ' + s,
     notificationDetails,

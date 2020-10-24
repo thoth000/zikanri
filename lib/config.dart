@@ -34,6 +34,7 @@ class Vib {
     Vibration.vibrate(pattern: [0, 50, 100, 50, 100, 50]);
   }
 }
+
 //old icons
 final List<int> iconList = [
   57746,

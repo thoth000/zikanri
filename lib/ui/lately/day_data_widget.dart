@@ -20,7 +20,8 @@ class DayDataWidget extends StatelessWidget {
     //controller
     final theme = Provider.of<ThemeNotifier>(context);
     //style
-    final Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
+    final Color color =
+        (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     final GlobalKey _globalKey = GlobalKey();
     //function
     Future _exportToImage() async {

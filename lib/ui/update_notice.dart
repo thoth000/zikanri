@@ -33,6 +33,7 @@ class UpdateNoticePage extends StatelessWidget {
         ),
       );
     }
+
     //widget
     return Scaffold(
       body: ListView(

@@ -1,8 +1,8 @@
 //packages
 import 'package:flutter/material.dart';
 
-class SelectIconController with ChangeNotifier{
-  SelectIconController({@required this.beforeIcon}){
+class SelectIconController with ChangeNotifier {
+  SelectIconController({@required this.beforeIcon}) {
     selectedIcon = this.beforeIcon;
     notifyListeners();
   }
@@ -10,7 +10,7 @@ class SelectIconController with ChangeNotifier{
   int beforeIcon;
   int selectedIcon;
 
-  void selectIcon(int iconNum){
+  void selectIcon(int iconNum) {
     selectedIcon = iconNum;
     notifyListeners();
   }

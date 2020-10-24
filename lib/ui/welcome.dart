@@ -19,6 +19,7 @@ class WelcomePage extends StatelessWidget {
       await theme.firstOpenDataSet();
       await userData.firstOpneDataSet(version);
     }
+
     //widget
     return Scaffold(
       body: ListView(

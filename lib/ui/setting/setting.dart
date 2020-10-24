@@ -38,7 +38,7 @@ class SettingPage extends StatelessWidget {
         },
       );
     }
-    
+
     final theme = Provider.of<ThemeNotifier>(context);
 
     return Container(
