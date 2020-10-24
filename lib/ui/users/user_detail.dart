@@ -183,12 +183,13 @@ class _PageCover extends StatelessWidget {
     final userDetailController = Provider.of<UserDetailController>(context);
     return Center(
       child: AnimatedContainer(
-        duration: Duration(milliseconds: 250),
+        duration: Duration(milliseconds: 300),
         width: userDetailController.hideWidth,
         height: userDetailController.hideHeight,
         curve: Curves.linear,
         decoration: BoxDecoration(
           color: userDetailController.hideColor.withOpacity(0.7),
+          borderRadius: BorderRadius.circular(userDetailController.borderRadius),
         ),
       ),
     );
