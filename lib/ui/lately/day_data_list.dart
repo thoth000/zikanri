@@ -21,7 +21,7 @@ class DayDataList extends StatelessWidget {
           controller.changeIndex(i);
         },
         controller: PageController(
-          initialPage: userData.latelyData.length,
+          initialPage: controller.index,
         ),
         children: List.generate(
           latelyData.length,

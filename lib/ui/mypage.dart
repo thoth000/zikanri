@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:zikanri/controller/main_page_controller.dart';
 //my files
 import 'package:zikanri/controller/theme_notifier.dart';
+import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/ui/home/home.dart';
 import 'package:zikanri/ui/lately/lately.dart';
 import 'package:zikanri/ui/previous_records/previous_records.dart';
@@ -14,13 +15,6 @@ import 'package:zikanri/ui/users/users.dart';
 
 class MyAppPage extends StatelessWidget {
   MyAppPage._({Key key}) : super(key: key);
-  final List pages = [
-    HomePage(),
-    LatelyPage.wrapped(),
-    PRPage(),
-    UsersPage(),
-    SettingPage(),
-  ];
 
   static Widget wrapped() {
     return ChangeNotifierProvider<MainPageController>(
@@ -31,6 +25,16 @@ class MyAppPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List pages = [
+      HomePage(),
+      LatelyPage.wrapped(
+        Provider.of<UserDataNotifier>(context, listen: false).latelyData.length,
+      ),
+      PRPage(),
+      UsersPage(),
+      SettingPage(),
+    ];
+
     final controller = Provider.of<MainPageController>(context);
     return Scaffold(
       body: SafeArea(child: pages[controller.currentIndex]),

@@ -9,9 +9,9 @@ import 'package:zikanri/config.dart';
 
 class LatelyPage extends StatelessWidget {
   LatelyPage._();
-  static Widget wrapped() {
+  static Widget wrapped(int length) {
     return ChangeNotifierProvider(
-      create: (_) => LatelyController(),
+      create: (_) => LatelyController(length),
       child: LatelyPage._(),
     );
   }
