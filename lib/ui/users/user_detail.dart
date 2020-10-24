@@ -1,5 +1,7 @@
+//packages
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+//my files
 import 'package:zikanri/config.dart';
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
@@ -297,11 +299,20 @@ class TodayDataWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          valueItem('記録時間', allTime.toString() + '分'),
+          _MonthlyDataItem(
+            dataTitle: '記録時間',
+            dataValue: allTime.toString() + '分',
+          ),
           verticalLine(),
-          valueItem('価値時間', goodTime.toString() + '分'),
+          _MonthlyDataItem(
+            dataTitle: '価値時間',
+            dataValue: goodTime.toString() + '分',
+          ),
           verticalLine(),
-          valueItem('価値の割合', percent.toString() + '%'),
+          _MonthlyDataItem(
+            dataTitle: '価値の割合',
+            dataValue: percent.toString() + '%',
+          ),
         ],
       ),
     );
@@ -312,40 +323,6 @@ class TodayDataWidget extends StatelessWidget {
       height: displaySize.width / 3.5,
       width: 1,
       color: Colors.grey,
-    );
-  }
-
-  Widget valueItem(
-    String title,
-    String value,
-  ) {
-    return SizedBox(
-      height: displaySize.width / 3.5,
-      width: displaySize.width / 3.5,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          const Icon(
-            Icons.bubble_chart,
-          ),
-          Text(
-            value,
-            softWrap: false,
-            overflow: TextOverflow.fade,
-            style: TextStyle(
-              fontSize: FontSize.large,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          Text(
-            title,
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: FontSize.xxsmall,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
@@ -374,9 +351,15 @@ class AchiveDataWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          valueItem('ログイン日数', day.toString() + '日'),
+          _TotalDataItem(
+            dataTitle: 'ログイン日数',
+            dataValue: day.toString() + '日',
+          ),
           verticalLine(),
-          valueItem('総記録時間', time.toString() + '分'),
+          _TotalDataItem(
+            dataTitle: '総記録時間',
+            dataValue: time.toString() + '分',
+          ),
         ],
       ),
     );
@@ -389,11 +372,51 @@ class AchiveDataWidget extends StatelessWidget {
       color: Colors.grey,
     );
   }
+}
 
-  Widget valueItem(
-    String title,
-    String value,
-  ) {
+class _MonthlyDataItem extends StatelessWidget {
+  _MonthlyDataItem({@required this.dataTitle, @required this.dataValue});
+  final String dataTitle;
+  final String dataValue;
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: displaySize.width / 3.5,
+      width: displaySize.width / 3.5,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          const Icon(
+            Icons.bubble_chart,
+          ),
+          Text(
+            dataValue,
+            softWrap: false,
+            overflow: TextOverflow.fade,
+            style: TextStyle(
+              fontSize: FontSize.large,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          Text(
+            dataTitle,
+            style: TextStyle(
+              color: Colors.grey,
+              fontSize: FontSize.xxsmall,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _TotalDataItem extends StatelessWidget {
+  _TotalDataItem({@required this.dataTitle, @required this.dataValue});
+  final String dataTitle;
+  final String dataValue;
+  @override
+  Widget build(BuildContext context) {
     return SizedBox(
       height: displaySize.width / 3.5,
       width: displaySize.width / 2.5,
@@ -404,7 +427,7 @@ class AchiveDataWidget extends StatelessWidget {
             Icons.bubble_chart,
           ),
           Text(
-            value,
+            dataValue,
             softWrap: false,
             overflow: TextOverflow.fade,
             style: TextStyle(
@@ -413,7 +436,7 @@ class AchiveDataWidget extends StatelessWidget {
             ),
           ),
           Text(
-            title,
+            dataTitle,
             style: TextStyle(
               color: Colors.grey,
               fontSize: FontSize.xxsmall,

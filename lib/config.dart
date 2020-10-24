@@ -34,7 +34,7 @@ class Vib {
     Vibration.vibrate(pattern: [0, 50, 100, 50, 100, 50]);
   }
 }
-
+//old icons
 final List<int> iconList = [
   57746,
   57680,
@@ -64,7 +64,7 @@ final List<int> iconList = [
   58386,
   58899,
 ];
-
+//new icons
 final List<int> newIconList = [
   Icons.access_time.codePoint,
   Icons.edit.codePoint,

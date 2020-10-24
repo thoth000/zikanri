@@ -139,7 +139,7 @@ class SelectModeWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             border: Border.all(
               color: (record.isRecord) ? color : Colors.grey,
-              width: (record.isRecord) ? 3 : 1,
+              width: (record.isRecord) ? 3 : 1.5,
             ),
           ),
           child: FlatButton(
@@ -159,7 +159,7 @@ class SelectModeWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             border: Border.all(
               color: (!record.isRecord) ? color : Colors.grey,
-              width: (!record.isRecord) ? 3 : 1,
+              width: (!record.isRecord) ? 3 : 1.5,
             ),
           ),
           child: FlatButton(
@@ -177,8 +177,22 @@ class SelectModeWidget extends StatelessWidget {
   }
 }
 
-class TitleFieldWidget extends StatelessWidget {
-  final textController = TextEditingController();
+class TitleFieldWidget extends StatefulWidget {
+  @override
+  _TitleFieldWidgetState createState() => _TitleFieldWidgetState();
+}
+
+class _TitleFieldWidgetState extends State<TitleFieldWidget> {
+  TextEditingController textController;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      textController = TextEditingController();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
@@ -205,7 +219,7 @@ class TitleFieldWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
             color: Colors.grey,
-            width: 2,
+            width: 1.5,
           ),
         ),
       ),
@@ -218,13 +232,29 @@ class TitleFieldWidget extends StatelessWidget {
   }
 }
 
-class MinuteFieldWidget extends StatelessWidget {
+class MinuteFieldWidget extends StatefulWidget {
+  @override
+  _MinuteFieldWidgetState createState() => _MinuteFieldWidgetState();
+}
+
+class _MinuteFieldWidgetState extends State<MinuteFieldWidget> {
+  TextEditingController textController;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      textController = TextEditingController();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final recordNotifier = Provider.of<RecordNotifier>(context, listen: false);
     final theme = Provider.of<ThemeNotifier>(context);
     final color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return TextField(
+      controller: textController,
       textAlignVertical: TextAlignVertical.center,
       cursorColor: color,
       style: TextStyle(
@@ -249,7 +279,7 @@ class MinuteFieldWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
             color: Colors.grey,
-            width: 2,
+            width: 1.5,
           ),
         ),
       ),
@@ -361,7 +391,7 @@ class ValueSelectBloc extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
           color: (record.isGood == boolean) ? color : Colors.grey,
-          width: (record.isGood == boolean) ? 3 : 1,
+          width: (record.isGood == boolean) ? 3 : 1.5,
         ),
       ),
       child: Stack(
@@ -539,7 +569,7 @@ class SelectCategoryWidget extends StatelessWidget {
                             color: (record.categoryIndex == i)
                                 ? color
                                 : Colors.grey,
-                            width: (record.categoryIndex == i) ? 3 : 1,
+                            width: (record.categoryIndex == i) ? 3 : 1.5,
                           ),
                         ),
                         child: Stack(

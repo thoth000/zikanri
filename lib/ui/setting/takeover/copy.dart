@@ -187,10 +187,14 @@ class _UserIDFieldState extends State<UserIDField> {
   @override
   Widget build(BuildContext context) {
     final CopyController copyController = Provider.of<CopyController>(context);
+    final theme = Provider.of<ThemeNotifier>(context);
+    final Color themeColor =
+        (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: TextField(
         controller: userIDController,
+        cursorColor: themeColor,
         decoration: InputDecoration(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5),
@@ -232,10 +236,14 @@ class _CodeFieldState extends State<CodeField> {
   @override
   Widget build(BuildContext context) {
     final CopyController copyController = Provider.of<CopyController>(context);
+    final theme = Provider.of<ThemeNotifier>(context);
+    final Color themeColor =
+        (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: TextField(
         controller: codeController,
+        cursorColor: themeColor,
         decoration: InputDecoration(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5),

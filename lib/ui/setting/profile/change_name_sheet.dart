@@ -66,6 +66,7 @@ class _ChangeNameSheetState extends State<ChangeNameSheet> {
             child: TextField(
               autofocus: true,
               controller: nameController,
+              cursorColor: themeColor,
               decoration: InputDecoration(
                 hintText: 'ユーザーの名前',
                 labelStyle: TextStyle(

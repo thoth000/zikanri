@@ -1,7 +1,6 @@
 //packages
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 //my files
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
@@ -15,12 +14,12 @@ class WelcomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
-    //アプリ初回起動時の動作
+    //function
     Future<void> makeDir() async {
       await theme.firstOpenDataSet();
       await userData.firstOpneDataSet(version);
     }
-
+    //widget
     return Scaffold(
       body: ListView(
         children: <Widget>[

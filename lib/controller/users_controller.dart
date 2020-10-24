@@ -1,8 +1,12 @@
+//packages
 import 'package:flutter/material.dart';
+//my files
 import 'package:zikanri/service/firebase_user_service.dart';
 
 class UsersController with ChangeNotifier {
   List<Map<String, dynamic>> searchedUsers = [];
+  //
+  String inputText = '';
   //検索文字
   String searchWord = '';
   //検索中か
@@ -13,6 +17,12 @@ class UsersController with ChangeNotifier {
   List<Map<String, dynamic>> featuredUsers = [];
   //オススメを取得済みか
   bool isGetFeatured = false;
+
+  void changeText(String text){
+    inputText = text;
+    print(inputText);
+    notifyListeners();
+  }
 
   Future<void> searchUsers(String text) async {
     searchWord = text;
