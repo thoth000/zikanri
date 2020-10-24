@@ -83,6 +83,7 @@ class _CircularChart extends StatelessWidget {
     final userData = Provider.of<UserDataNotifier>(context, listen: false);
     Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     Color subcolor = (theme.isDark) ? Colors.grey[700] : Colors.grey[200];
+    //chart data
     final GlobalKey<AnimatedCircularChartState> _chartKey =
         new GlobalKey<AnimatedCircularChartState>();
     final list = userData.categories[index];
@@ -104,14 +105,18 @@ class _CircularChart extends StatelessWidget {
         rankKey: 'Quarterly Profits',
       ),
     ];
+    //widget
     return Hero(
       tag: index.toString(),
       child: AnimatedCircularChart(
         edgeStyle: SegmentEdgeStyle.round,
-        duration: Duration.zero,
+        duration: Duration(milliseconds: 800),
         initialChartData: data,
         key: _chartKey,
-        size: Size(displaySize.width / 2, displaySize.width / 2),
+        size: Size(
+          displaySize.width / 2,
+          displaySize.width / 2,
+        ),
         holeLabel: list[2][2].toString() + '%',
         labelStyle: TextStyle(
           fontSize: FontSize.large,

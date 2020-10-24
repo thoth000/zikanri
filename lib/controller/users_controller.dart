@@ -19,8 +19,11 @@ class UsersController with ChangeNotifier {
   bool isGetFeatured = false;
 
   void changeText(String text) {
-    inputText = text;
-    print(inputText);
+    if (text.isEmpty) {
+      inputText = '';
+    } else {
+      inputText = text;
+    }
     notifyListeners();
   }
 

@@ -7,7 +7,7 @@ import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/ui/home/home.dart';
 import 'package:zikanri/ui/lately/lately.dart';
-import 'package:zikanri/ui/previous_records/previous_records.dart';
+import 'package:zikanri/ui/total_records/total_records.dart';
 import 'package:zikanri/ui/setting/setting.dart';
 import 'package:zikanri/ui/record/record_button.dart';
 import 'package:zikanri/config.dart';
@@ -30,7 +30,7 @@ class MyAppPage extends StatelessWidget {
       LatelyPage.wrapped(
         Provider.of<UserDataNotifier>(context, listen: false).latelyData.length,
       ),
-      PRPage(),
+      TotalRecordPage(),
       UsersPage(),
       SettingPage(),
     ];

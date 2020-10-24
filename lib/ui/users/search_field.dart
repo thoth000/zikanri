@@ -94,7 +94,7 @@ class _SearchTextFieldState extends State<SearchTextField> {
                     shape: BoxShape.circle,
                     border: Border.all(
                       color: themeColor,
-                      width: 3,
+                      width: 2,
                     ),
                   ),
                   child: Stack(
@@ -115,6 +115,7 @@ class _SearchTextFieldState extends State<SearchTextField> {
                           ),
                           onPressed: () {
                             textEditingController.clear();
+                            usersController.changeText('');
                             FocusScope.of(context).unfocus();
                             usersController.resetSearch();
                           },
@@ -144,7 +145,7 @@ class SearchButton extends StatelessWidget {
         shape: BoxShape.circle,
         border: Border.all(
           color: themeColor,
-          width: 3,
+          width: 2,
         ),
       ),
       child: Stack(
