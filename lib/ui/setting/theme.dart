@@ -11,7 +11,6 @@ import 'package:zikanri/ui/parts/general_app_bar.dart';
 class ThemeSettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final theme = Provider.of<ThemeNotifier>(context);
     return Scaffold(
       appBar: GeneralAppBar(
         pageTitle: 'テーマの変更',
