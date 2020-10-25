@@ -170,7 +170,10 @@ class UserDataNotifier with ChangeNotifier {
 
   //活動を始める
   Future<void> addActivity(
-      DateTime startTime, String title, int categoryIndex) async {
+    DateTime startTime,
+    String title,
+    int categoryIndex,
+  ) async {
     activities.add([startTime, false, title, categoryIndex, 1, 1]);
     notifyListeners();
     await userDataBox.put('activities', activities);
@@ -585,6 +588,12 @@ class UserDataNotifier with ChangeNotifier {
     }
     await userDataBox.put('checkD', checkD);
     await userDataBox.put('myColors', myColors);
+  }
+
+  Future<void> changeBackUpCanDate() async {
+    backUpCanDate = DateTime.now().add(Duration(days: 30));
+    notifyListeners();
+    await userDataBox.put('backUpCanDate', backUpCanDate);
   }
 
   //データ引き継ぎ用メソッド

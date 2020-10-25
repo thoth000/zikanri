@@ -6,47 +6,47 @@ import 'package:provider/provider.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/config.dart';
 
-class TMWidget extends StatefulWidget {
+class ThisMonthWidget extends StatelessWidget {
   @override
-  _TMWidgetState createState() => _TMWidgetState();
-}
-
-class _TMWidgetState extends State<TMWidget> {
-  @override
-  //今日の日付
-  //総ポイント thisMonthPoint
-  //時間の平均価値　thisMonthValue
-  //日平均ポイント　averagePoint
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context);
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: EdgeInsets.all(displaySize.width / 35),
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         elevation: 5,
         child: Container(
-          padding: const EdgeInsets.all(10),
+          padding: EdgeInsets.all(displaySize.width / 35),
           height: displaySize.width / 2.2,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              _widget(
-                '記録時間',
-                userData.thisMonthTime.toString() + '分',
+              _DataWidget(
+                dataTitle: '記録時間',
+                dataValue: userData.thisMonthTime.toString() + '分',
               ),
-              _widget('価値時間', userData.thisMonthGood.toString() + '分'),
-              _widget('価値の割合', userData.thisMonthPer.toString() + '%'),
+              _DataWidget(
+                dataTitle: '価値時間',
+                dataValue: userData.thisMonthGood.toString() + '分',
+              ),
+              _DataWidget(
+                dataTitle: '価値の割合',
+                dataValue: userData.thisMonthPer.toString() + '%',
+              ),
             ],
           ),
         ),
       ),
     );
   }
+}
 
-  Widget _widget(
-    String title,
-    var value,
-  ) {
+class _DataWidget extends StatelessWidget {
+  _DataWidget({@required this.dataTitle, @required this.dataValue});
+  final String dataTitle;
+  final String dataValue;
+  @override
+  Widget build(BuildContext context) {
     return SizedBox(
       width: displaySize.width / 3.7,
       child: Column(
@@ -56,7 +56,7 @@ class _TMWidgetState extends State<TMWidget> {
             Icons.radio_button_checked,
           ),
           Text(
-            value,
+            dataValue,
             softWrap: false,
             overflow: TextOverflow.fade,
             style: TextStyle(
@@ -65,7 +65,7 @@ class _TMWidgetState extends State<TMWidget> {
             ),
           ),
           Text(
-            title,
+            dataTitle,
             style: TextStyle(
               color: Colors.grey,
               fontSize: FontSize.xxsmall,

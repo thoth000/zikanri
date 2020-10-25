@@ -39,36 +39,22 @@ class AfterRegisterPage extends StatelessWidget {
         SizedBox(height: displaySize.width / 10),
         _Friend(),
         SizedBox(height: displaySize.width / 10),
-        UserIDField(),
+        _UserIDField(),
         SizedBox(height: displaySize.width / 10),
-        RegisterButton(),
-        Center(
-          child: FlatButton(
-            child: Text('バックアップがある方はこちら'),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CopyPage.wrapped(
-                    Provider.of<UserDataNotifier>(context).userID,
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
+        _RegisterButton(),
+        _SwitchBackUpButton(),
         SizedBox(height: displaySize.width / 20),
       ],
     );
   }
 }
 
-class UserIDField extends StatefulWidget {
+class _UserIDField extends StatefulWidget {
   @override
-  _UserIDFieldState createState() => _UserIDFieldState();
+  __UserIDFieldState createState() => __UserIDFieldState();
 }
 
-class _UserIDFieldState extends State<UserIDField> {
+class __UserIDFieldState extends State<_UserIDField> {
   TextEditingController userIDController;
   @override
   void initState() {
@@ -80,18 +66,45 @@ class _UserIDFieldState extends State<UserIDField> {
   Widget build(BuildContext context) {
     final RegisterController registerController =
         Provider.of<RegisterController>(context);
+    final theme = Provider.of<ThemeNotifier>(context);
+    final Color themeColor =
+        (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: displaySize.width / 15),
+      margin: EdgeInsets.symmetric(
+        horizontal: displaySize.width / 15,
+      ),
       child: TextField(
         controller: userIDController,
+        cursorColor: themeColor,
         decoration: InputDecoration(
           hintText: 'ユーザーID',
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5),
           ),
           contentPadding: EdgeInsets.symmetric(
-            vertical: 10,
-            horizontal: 10,
+            vertical: displaySize.width / 35,
+            horizontal: displaySize.width / 35,
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: themeColor,
+              width: 2,
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: Colors.grey,
+              width: 2,
+            ),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: Colors.red,
+              width: 2,
+            ),
           ),
           errorText:
               registerController.isCanRegister || !registerController.isTap
@@ -109,7 +122,7 @@ class _UserIDFieldState extends State<UserIDField> {
   }
 }
 
-class RegisterButton extends StatelessWidget {
+class _RegisterButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final RegisterController registerController =
@@ -155,7 +168,7 @@ class RegisterButton extends StatelessWidget {
                   final ids =
                       Provider.of<UserDataNotifier>(context, listen: false)
                           .favoriteIDs;
-                  await Provider.of<UsersController>(context,listen: false)
+                  await Provider.of<UsersController>(context, listen: false)
                       .getFavoriteUsers(ids);
                   await Provider.of<UsersController>(context, listen: false)
                       .getFeaturedUsers();
@@ -280,6 +293,27 @@ class _Friend extends StatelessWidget {
       Icons.people,
       color: Colors.orange,
       size: displaySize.width / 5,
+    );
+  }
+}
+
+class _SwitchBackUpButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: FlatButton(
+        child: Text('バックアップがある方はこちら'),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CopyPage.wrapped(
+                Provider.of<UserDataNotifier>(context).userID,
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

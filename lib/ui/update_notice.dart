@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
-
 //my files
 import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/ui/mypage.dart';
@@ -15,6 +14,27 @@ class UpdateNoticePage extends StatelessWidget {
   final String newVersion;
   @override
   Widget build(BuildContext context) {
+    //function
+    Future updateProcess() async {
+      await Hive.box('userData').put('version', newVersion);
+      if (newVersion == '1.6.0') {
+        await Hive.box('userData').put('userID', '未登録');
+        await Hive.box('userData').put('backUpCode', '未登録');
+        await Hive.box('userData').put('myIcon', Icons.access_time.codePoint);
+        List<String> favoriteIDs = [];
+        await Hive.box('userData').put('favoriteIDs', favoriteIDs);
+        await Hive.box('userData').put('backUpCanDate', DateTime.now());
+      }
+      await Provider.of<UserDataNotifier>(context, listen: false).initialize();
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MyAppPage.wrapped(),
+        ),
+      );
+    }
+
+    //widget
     return Scaffold(
       body: ListView(
         children: <Widget>[
@@ -45,7 +65,7 @@ class UpdateNoticePage extends StatelessWidget {
             ),
             child: RaisedButton(
               child: Padding(
-                padding: const EdgeInsets.all(15),
+                padding: EdgeInsets.all(displaySize.width / 25),
                 child: Text(
                   '続ける',
                   style: TextStyle(
@@ -60,27 +80,7 @@ class UpdateNoticePage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.0),
               ),
               onPressed: () async {
-                await Hive.box('userData').put('version', newVersion);
-                if (newVersion == '1.6.0') {
-                  //新規処理
-                  await Hive.box('userData').put('userID', '未登録');
-                  await Hive.box('userData').put('backUpCode', '未登録');
-                  await Hive.box('userData')
-                      .put('myIcon', Icons.access_time.codePoint);
-                  List<String> favoriteIDs = [];
-                  await Hive.box('userData').put('favoriteIDs', favoriteIDs);
-                  await Hive.box('userData')
-                      .put('backUpCanDate', DateTime.now());
-                  //ここまで
-                }
-                await Provider.of<UserDataNotifier>(context, listen: false)
-                    .initialize();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MyAppPage.wrapped(),
-                  ),
-                );
+                await updateProcess();
               },
             ),
           ),

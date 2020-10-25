@@ -21,23 +21,23 @@ class ProfileSettingPage extends StatelessWidget {
       ),
       body: ListView(
         children: <Widget>[
-          const SizedBox(
-            height: 10,
+          SizedBox(
+            height: displaySize.width / 35,
           ),
-          MyIconWidget(
+          _MyIconWidget(
             themeColor: color,
           ),
-          NameListTile(),
-          UserIDListTile(),
-          BackUpCodeListTile(),
+          _NameListTile(),
+          _UserIDListTile(),
+          _BackUpCodeListTile(),
         ],
       ),
     );
   }
 }
 
-class MyIconWidget extends StatelessWidget {
-  MyIconWidget({@required this.themeColor});
+class _MyIconWidget extends StatelessWidget {
+  _MyIconWidget({@required this.themeColor});
   final Color themeColor;
   @override
   Widget build(BuildContext context) {
@@ -78,7 +78,9 @@ class MyIconWidget extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ChangeMyIconPage(),
+                        builder: (context) => ChangeMyIconPage.wrapped(
+                          beforeIcon: userData.myIcon,
+                        ),
                       ),
                     );
                   },
@@ -95,7 +97,9 @@ class MyIconWidget extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ChangeMyIconPage(),
+                builder: (context) => ChangeMyIconPage.wrapped(
+                  beforeIcon: userData.myIcon,
+                ),
               ),
             );
           },
@@ -111,7 +115,7 @@ class MyIconWidget extends StatelessWidget {
   }
 }
 
-class NameListTile extends StatelessWidget {
+class _NameListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context);
@@ -144,7 +148,7 @@ class NameListTile extends StatelessWidget {
   }
 }
 
-class UserIDListTile extends StatelessWidget {
+class _UserIDListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context);
@@ -175,7 +179,7 @@ class UserIDListTile extends StatelessWidget {
   }
 }
 
-class BackUpCodeListTile extends StatelessWidget {
+class _BackUpCodeListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context);

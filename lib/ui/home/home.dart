@@ -6,10 +6,10 @@ import 'package:provider/provider.dart';
 //my files
 import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/ui/guide/notice_guide.dart';
-import 'total_score.dart';
-import 'minute_meter.dart';
-import 'this_month.dart';
-import 'today.dart';
+import 'package:zikanri/ui/home/total_score.dart';
+import 'package:zikanri/ui/activity/minute_meter.dart';
+import 'package:zikanri/ui/home/this_month.dart';
+import 'package:zikanri/ui/home/today/today.dart';
 import 'package:zikanri/config.dart';
 
 class HomePage extends StatelessWidget {
@@ -19,64 +19,62 @@ class HomePage extends StatelessWidget {
       children: <Widget>[
         _NoticeGuide(),
         TotalScoreWidget(),
-        const Divider(
-          height: 20,
+        Divider(
+          height: displaySize.width / 17,
           thickness: 1,
-          indent: 10,
-          endIndent: 10,
+          indent: displaySize.width / 35,
+          endIndent: displaySize.width / 35,
         ),
         MinuteMeter(),
         Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                '今月の情報',
-                style: TextStyle(
-                  fontSize: FontSize.large,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              Text(
-                today,
-                style: TextStyle(
-                  fontSize: FontSize.xxsmall,
-                  color: Colors.grey,
-                ),
-              ),
-            ],
+          padding: EdgeInsets.all(displaySize.width / 35),
+          child: _DataInfoText(
+            today: today,
+            dataTitle: '今月の情報',
           ),
         ),
-        TMWidget(),
-        const SizedBox(
-          height: 20,
+        ThisMonthWidget(),
+        SizedBox(
+          height: displaySize.width / 17,
         ),
         Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            children: <Widget>[
-              Text(
-                '今日の情報',
-                style: TextStyle(
-                  fontSize: FontSize.large,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              Text(
-                today,
-                style: TextStyle(
-                  fontSize: FontSize.xxsmall,
-                  color: Colors.grey,
-                ),
-              ),
-            ],
+          padding: EdgeInsets.all(displaySize.width / 35),
+          child: _DataInfoText(
+            today: today,
+            dataTitle: '今日の情報',
           ),
         ),
         TodayWidget(),
         SizedBox(
           height: displaySize.width / 10,
-          width: displaySize.width,
+        ),
+      ],
+    );
+  }
+}
+
+class _DataInfoText extends StatelessWidget {
+  _DataInfoText({@required this.today, @required this.dataTitle});
+  final String today;
+  final String dataTitle;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          dataTitle,
+          style: TextStyle(
+            fontSize: FontSize.large,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        Text(
+          today,
+          style: TextStyle(
+            fontSize: FontSize.xxsmall,
+            color: Colors.grey,
+          ),
         ),
       ],
     );

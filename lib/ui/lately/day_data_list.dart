@@ -12,6 +12,7 @@ class DayDataList extends StatelessWidget {
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context);
     final controller = Provider.of<LatelyController>(context);
+    final latelyData = userData.latelyData;
     return SizedBox(
       height: displaySize.width / 2 + 20,
       child: PageView(
@@ -20,14 +21,17 @@ class DayDataList extends StatelessWidget {
           controller.changeIndex(i);
         },
         controller: PageController(
-          initialPage: userData.latelyData.length,
+          initialPage: controller.index,
         ),
-        children: <Widget>[
-          for (var itemList in userData.latelyData)
-            DayDataWidget(
-              itemList: itemList,
-            ),
-        ],
+        children: List.generate(
+          latelyData.length,
+          (index) {
+            final dayData = latelyData[index];
+            return DayDataWidget(
+              itemList: dayData,
+            );
+          },
+        ),
       ),
     );
   }

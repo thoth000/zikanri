@@ -3,12 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-
 //my files
 import 'package:zikanri/ui/category/category.dart';
 import 'package:zikanri/controller/record_notifier.dart';
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
+import 'package:zikanri/ui/parts/bottom_sheet_bar.dart';
 import 'package:zikanri/ui/record/notification.dart';
 import 'package:zikanri/config.dart';
 
@@ -23,14 +23,6 @@ class RecordBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Provider.of<ThemeNotifier>(context);
-
-    Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
-
-    final BoxDecoration _decorationStyle = BoxDecoration(
-      borderRadius: BorderRadius.circular(10),
-      border: Border.all(color: Colors.grey),
-    );
     final TextStyle _headlineStyle = TextStyle(
       fontSize: FontSize.small,
       fontWeight: FontWeight.w700,
@@ -43,21 +35,13 @@ class RecordBottomSheet extends StatelessWidget {
       child: FractionallySizedBox(
         heightFactor: 0.7,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
+          padding: EdgeInsets.symmetric(
+            horizontal: displaySize.width / 17,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Container(
-                height: 5,
-                width: 70,
-                margin: const EdgeInsets.all(12.5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: Colors.grey,
-                ),
-              ),
+              BottomSheetBar(),
               Text(
                 '記録の追加',
                 style: TextStyle(
@@ -65,12 +49,12 @@ class RecordBottomSheet extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              const SizedBox(
-                height: 20,
+              SizedBox(
+                height: displaySize.width / 17,
               ),
-              SelectModeWidget(),
-              const SizedBox(
-                height: 20,
+              _SelectModeWidget(),
+              SizedBox(
+                height: displaySize.width / 17,
               ),
               const Divider(
                 height: 1,
@@ -82,52 +66,28 @@ class RecordBottomSheet extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        const SizedBox(
-                          height: 10,
+                        SizedBox(
+                          height: displaySize.width / 35,
                         ),
                         Text(
                           'タイトル',
                           style: _headlineStyle,
                         ),
-                        Container(
-                          margin: const EdgeInsets.only(top: 5),
-                          decoration: _decorationStyle,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 5,
-                          ),
-                          child: TextField(
-                            textAlignVertical: TextAlignVertical.center,
-                            cursorColor: color,
-                            keyboardType: TextInputType.multiline,
-                            style: TextStyle(
-                              fontSize: FontSize.small,
-                            ),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: 'どんな活動？',
-                            ),
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(30)
-                            ],
-                            textInputAction: TextInputAction.go,
-                            onChanged: (s) {
-                              Provider.of<RecordNotifier>(context,
-                                      listen: false)
-                                  .changeTitle(s);
-                            },
-                          ),
+                        SizedBox(
+                          height: displaySize.width / 70,
                         ),
+                        _TitleFieldWidget(),
                       ],
                     ),
-                    ActivityInfoWidget(),
-                    const SizedBox(
-                      height: 20,
+                    _ActivityInfoWidget(),
+                    SizedBox(
+                      height: displaySize.width / 17,
                     ),
                     Center(
-                      child: SaveActivityButton(),
+                      child: _SaveActivityButton(),
                     ),
-                    const Divider(
-                      height: 30,
+                    Divider(
+                      height: displaySize.width / 17,
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,10 +96,10 @@ class RecordBottomSheet extends StatelessWidget {
                           'カテゴリー',
                           style: _headlineStyle,
                         ),
-                        const SizedBox(
-                          height: 5,
+                        SizedBox(
+                          height: displaySize.width / 70,
                         ),
-                        SelectCategoryWidget(),
+                        _SelectCategoryWidget(),
                       ],
                     ),
                   ],
@@ -153,7 +113,7 @@ class RecordBottomSheet extends StatelessWidget {
   }
 }
 
-class SelectModeWidget extends StatelessWidget {
+class _SelectModeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //controllers
@@ -172,7 +132,7 @@ class SelectModeWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             border: Border.all(
               color: (record.isRecord) ? color : Colors.grey,
-              width: (record.isRecord) ? 3 : 1,
+              width: (record.isRecord) ? 3 : 1.5,
             ),
           ),
           child: FlatButton(
@@ -192,7 +152,7 @@ class SelectModeWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             border: Border.all(
               color: (!record.isRecord) ? color : Colors.grey,
-              width: (!record.isRecord) ? 3 : 1,
+              width: (!record.isRecord) ? 3 : 1.5,
             ),
           ),
           child: FlatButton(
@@ -210,18 +170,123 @@ class SelectModeWidget extends StatelessWidget {
   }
 }
 
-class ActivityInfoWidget extends StatelessWidget {
+class _TitleFieldWidget extends StatefulWidget {
+  @override
+  __TitleFieldWidgetState createState() => __TitleFieldWidgetState();
+}
+
+class __TitleFieldWidgetState extends State<_TitleFieldWidget> {
+  TextEditingController textController;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      textController = TextEditingController();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeNotifier>(context);
+    final color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
+    return TextField(
+      controller: textController,
+      textAlignVertical: TextAlignVertical.center,
+      cursorColor: color,
+      keyboardType: TextInputType.multiline,
+      style: TextStyle(
+        fontSize: FontSize.small,
+      ),
+      decoration: InputDecoration(
+        hintText: 'どんな活動？',
+        contentPadding: EdgeInsets.all(displaySize.width / 35),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: color,
+            width: 2,
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: Colors.grey,
+            width: 1.5,
+          ),
+        ),
+      ),
+      inputFormatters: [LengthLimitingTextInputFormatter(30)],
+      textInputAction: TextInputAction.go,
+      onChanged: (s) {
+        Provider.of<RecordNotifier>(context, listen: false).changeTitle(s);
+      },
+    );
+  }
+}
+
+class _MinuteFieldWidget extends StatefulWidget {
+  @override
+  __MinuteFieldWidgetState createState() => __MinuteFieldWidgetState();
+}
+
+class __MinuteFieldWidgetState extends State<_MinuteFieldWidget> {
+  TextEditingController textController;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      textController = TextEditingController();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final recordNotifier = Provider.of<RecordNotifier>(context, listen: false);
+    final theme = Provider.of<ThemeNotifier>(context);
+    final color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
+    return TextField(
+      controller: textController,
+      textAlignVertical: TextAlignVertical.center,
+      cursorColor: color,
+      style: TextStyle(
+        fontSize: FontSize.small,
+      ),
+      keyboardType: TextInputType.number,
+      inputFormatters: <TextInputFormatter>[
+        FilteringTextInputFormatter.digitsOnly,
+      ],
+      textInputAction: TextInputAction.go,
+      decoration: InputDecoration(
+        hintText: '何分？',
+        contentPadding: EdgeInsets.all(displaySize.width / 35),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: color,
+            width: 2,
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(
+            color: Colors.grey,
+            width: 1.5,
+          ),
+        ),
+      ),
+      onChanged: (s) => recordNotifier.changeTime(s),
+    );
+  }
+}
+
+class _ActivityInfoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //controllers
-    final theme = Provider.of<ThemeNotifier>(context);
     final record = Provider.of<RecordNotifier>(context);
     //style
-    Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
-    final BoxDecoration _decorationStyle = BoxDecoration(
-      borderRadius: BorderRadius.circular(10),
-      border: Border.all(color: Colors.grey),
-    );
     final TextStyle _headlineStyle = TextStyle(
       fontSize: FontSize.small,
       fontWeight: FontWeight.w700,
@@ -235,53 +300,35 @@ class ActivityInfoWidget extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const SizedBox(
-                height: 25,
+              SizedBox(
+                height: displaySize.width / 20,
               ),
               Text(
                 '時間(分)',
                 style: _headlineStyle,
               ),
-              const SizedBox(
-                height: 5,
+              SizedBox(
+                height: displaySize.width / 70,
               ),
-              Container(
+              SizedBox(
                 height: displaySize.width / 7,
                 width: displaySize.width / 2.5,
-                padding: EdgeInsets.symmetric(horizontal: 5),
-                decoration: _decorationStyle,
-                child: TextField(
-                  textAlignVertical: TextAlignVertical.center,
-                  cursorColor: color,
-                  style: TextStyle(
-                    fontSize: FontSize.small,
-                  ),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly,
-                  ],
-                  textInputAction: TextInputAction.go,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: '何分？',
-                  ),
-                  onChanged: (s) => record.changeTime(s),
-                ),
+                child: _MinuteFieldWidget(),
               ),
             ],
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const SizedBox(
-                height: 25,
+              SizedBox(
+                height: displaySize.width / 20,
               ),
               Text(
                 '時間の価値',
                 style: _headlineStyle,
               ),
-              const SizedBox(
-                height: 5,
+              SizedBox(
+                height: displaySize.width / 70,
               ),
               SizedBox(
                 width: displaySize.width / 2.5,
@@ -291,13 +338,13 @@ class ActivityInfoWidget extends StatelessWidget {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          ValueSelectBloc(
+                          _ValueSelectBloc(
                             boolean: false,
                           ),
                           SizedBox(
-                            width: displaySize.width / 50,
+                            width: displaySize.width / 35,
                           ),
-                          ValueSelectBloc(
+                          _ValueSelectBloc(
                             boolean: true,
                           ),
                         ],
@@ -306,8 +353,8 @@ class ActivityInfoWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 5,
+              SizedBox(
+                height: displaySize.width / 70,
               ),
             ],
           ),
@@ -319,8 +366,8 @@ class ActivityInfoWidget extends StatelessWidget {
   }
 }
 
-class ValueSelectBloc extends StatelessWidget {
-  ValueSelectBloc({this.boolean});
+class _ValueSelectBloc extends StatelessWidget {
+  _ValueSelectBloc({this.boolean});
   final bool boolean;
   @override
   Widget build(BuildContext context) {
@@ -331,13 +378,13 @@ class ValueSelectBloc extends StatelessWidget {
     Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     //widget
     return Container(
-      height: displaySize.width / 7,
-      width: displaySize.width / 7,
+      height: displaySize.width / 7.5,
+      width: displaySize.width / 7.5,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
           color: (record.isGood == boolean) ? color : Colors.grey,
-          width: (record.isGood == boolean) ? 3 : 1,
+          width: (record.isGood == boolean) ? 3 : 1.5,
         ),
       ),
       child: Stack(
@@ -367,7 +414,7 @@ class ValueSelectBloc extends StatelessWidget {
   }
 }
 
-class SaveActivityButton extends StatelessWidget {
+class _SaveActivityButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //controllers
@@ -484,7 +531,32 @@ class SaveActivityButton extends StatelessWidget {
   }
 }
 
-class SelectCategoryWidget extends StatelessWidget {
+class _SelectCategoryWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final userData = Provider.of<UserDataNotifier>(context);
+    return Wrap(
+      children: List.generate(
+        userData.categories.length + 1,
+        (index) {
+          if (index == userData.categories.length) {
+            return _CategoryEditButton();
+          } else {
+            if (userData.categoryView[index]) {
+              return _SelectCategoryButton(index: index);
+            } else {
+              return const SizedBox();
+            }
+          }
+        },
+      ),
+    );
+  }
+}
+
+class _SelectCategoryButton extends StatelessWidget {
+  _SelectCategoryButton({@required this.index});
+  final int index;
   @override
   Widget build(BuildContext context) {
     //controller
@@ -493,131 +565,124 @@ class SelectCategoryWidget extends StatelessWidget {
     final record = Provider.of<RecordNotifier>(context);
     //style
     Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
-    //widget
-    return Wrap(
-      children: <Widget>[
-        for (int i = 0; i < userData.categories.length; i++)
-          (userData.categoryView[i])
-              ? Padding(
-                  padding: const EdgeInsets.only(
-                    right: 5,
-                    bottom: 10,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        height: displaySize.width / 6.5,
-                        width: displaySize.width / 6.5,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            color: (record.categoryIndex == i)
-                                ? color
-                                : Colors.grey,
-                            width: (record.categoryIndex == i) ? 3 : 1,
-                          ),
-                        ),
-                        child: Stack(
-                          children: <Widget>[
-                            Center(
-                              child: Icon(
-                                IconData(
-                                  userData.categories[i][0],
-                                  fontFamily: 'MaterialIcons',
-                                ),
-                                color: (theme.isDark)
-                                    ? Colors.white
-                                    : Colors.black,
-                                size: displaySize.width / 15,
-                              ),
-                            ),
-                            SizedBox(
-                              height: displaySize.width / 6.5,
-                              width: displaySize.width / 6.5,
-                              child: FlatButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                    10,
-                                  ),
-                                ),
-                                child: const SizedBox(),
-                                color: Colors.transparent,
-                                onPressed: () => record.changeCategoryIndex(i),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: displaySize.width / 5.1,
-                        child: Text(
-                          userData.categories[i][1],
-                          textAlign: TextAlign.center,
-                          softWrap: false,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: FontSize.xxsmall,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              : const SizedBox(),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(
-                width: displaySize.width / 5,
+    return Padding(
+      padding: EdgeInsets.only(
+        right: displaySize.width / 70,
+        bottom: displaySize.width / 35,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            height: displaySize.width / 6.5,
+            width: displaySize.width / 6.5,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: (record.categoryIndex == index) ? color : Colors.grey,
+                width: (record.categoryIndex == index) ? 3 : 1.5,
               ),
-              Container(
-                height: displaySize.width / 6.5,
-                width: displaySize.width / 6.5,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(
-                    color: Colors.grey,
-                    width: 1,
+            ),
+            child: Stack(
+              children: <Widget>[
+                Center(
+                  child: Icon(
+                    IconData(
+                      userData.categories[index][0],
+                      fontFamily: 'MaterialIcons',
+                    ),
+                    color: (theme.isDark) ? Colors.white : Colors.black,
+                    size: displaySize.width / 15,
                   ),
                 ),
-                child: Stack(
-                  children: <Widget>[
-                    Center(
-                      child: Icon(
-                        Icons.more_horiz,
-                        color: (theme.isDark) ? Colors.white : Colors.black,
-                        size: displaySize.width / 15,
-                      ),
+                SizedBox(
+                  height: displaySize.width / 6.5,
+                  width: displaySize.width / 6.5,
+                  child: FlatButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    SizedBox(
-                      height: displaySize.width / 6.5,
-                      width: displaySize.width / 6.5,
-                      child: FlatButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: SizedBox(),
-                        color: Colors.transparent,
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CategoryPage(),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
+                    child: const SizedBox(),
+                    color: Colors.transparent,
+                    onPressed: () => record.changeCategoryIndex(index),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+          SizedBox(
+            width: displaySize.width / 5.1,
+            child: Text(
+              userData.categories[index][1],
+              textAlign: TextAlign.center,
+              softWrap: false,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: FontSize.xxsmall,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CategoryEditButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeNotifier>(context, listen: false);
+    return Padding(
+      padding: EdgeInsets.only(bottom: displaySize.width / 17),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          SizedBox(
+            width: displaySize.width / 5,
+          ),
+          Container(
+            height: displaySize.width / 6.5,
+            width: displaySize.width / 6.5,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: Colors.grey,
+                width: 1.5,
+              ),
+            ),
+            child: Stack(
+              children: <Widget>[
+                Center(
+                  child: Icon(
+                    Icons.more_horiz,
+                    color: (theme.isDark) ? Colors.white : Colors.black,
+                    size: displaySize.width / 15,
+                  ),
+                ),
+                SizedBox(
+                  height: displaySize.width / 6.5,
+                  width: displaySize.width / 6.5,
+                  child: FlatButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: SizedBox(),
+                    color: Colors.transparent,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CategoryPage(),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

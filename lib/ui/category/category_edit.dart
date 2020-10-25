@@ -25,13 +25,13 @@ class CategoryEditPage extends StatelessWidget {
             index: index,
           ),
           const Divider(
-            height: 0,
+            height: 1,
           ),
           _CategoryIcon(
             index: index,
           ),
           const Divider(
-            height: 0,
+            height: 1,
           ),
           _ViewSwitch(
             index: index,
@@ -75,7 +75,9 @@ class _CategoryName extends StatelessWidget {
       onTap: () {
         showModalBottomSheet(
           shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(30),
+            ),
           ),
           context: context,
           isScrollControlled: true,
@@ -122,9 +124,9 @@ class _CategoryIcon extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => EditIconPage(
+            builder: (context) => EditIconPage.wrapped(
               index: index,
-              iconNum: iconNum,
+              selectedIcon: iconNum,
             ),
           ),
         );
@@ -169,37 +171,8 @@ class _DeleteData extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    final userData = Provider.of<UserDataNotifier>(context, listen: false);
-    void resetCheck(int index) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          title: const Text('リセット'),
-          content: const Text('このカテゴリーの記録が全てリセットされます。\nそれでもよろしいですか？'),
-          actions: <Widget>[
-            FlatButton(
-              child: const Text('いいえ'),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            FlatButton(
-              child: const Text('はい'),
-              onPressed: () {
-                userData.resetCategory(index);
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      );
-    }
-
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: EdgeInsets.all(displaySize.width / 35),
       child: FlatButton(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
@@ -209,7 +182,7 @@ class _DeleteData extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.all(15),
+              padding: EdgeInsets.symmetric(vertical: displaySize.width / 25),
               child: Text(
                 'リセットする',
                 style: TextStyle(
@@ -222,9 +195,43 @@ class _DeleteData extends StatelessWidget {
           ],
         ),
         onPressed: () {
-          resetCheck(index);
+          showDialog(
+            context: context,
+            builder: (context) => _ResetCategoryDialog(index: index),
+          );
         },
       ),
+    );
+  }
+}
+
+class _ResetCategoryDialog extends StatelessWidget {
+  _ResetCategoryDialog({@required this.index});
+  final int index;
+  @override
+  Widget build(BuildContext context) {
+    final userData = Provider.of<UserDataNotifier>(context, listen: false);
+    return AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      title: const Text('リセット'),
+      content: const Text('このカテゴリーの記録が全てリセットされます。\nそれでもよろしいですか？'),
+      actions: <Widget>[
+        FlatButton(
+          child: const Text('いいえ'),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        FlatButton(
+          child: const Text('はい'),
+          onPressed: () {
+            userData.resetCategory(index);
+            Navigator.pop(context);
+          },
+        ),
+      ],
     );
   }
 }

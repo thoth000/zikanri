@@ -1,13 +1,10 @@
-//dart
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-
 //packages
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
-
 //my files
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
@@ -89,24 +86,26 @@ class TotalScoreWidget extends StatelessWidget {
                       ),
                     ),
                     IconButton(
-                        highlightColor: Colors.transparent,
-                        splashColor: Colors.transparent,
-                        icon: Icon(
-                          Icons.share,
-                          color: Colors.white,
-                          size: displaySize.width / 15,
-                        ),
-                        onPressed: () async {
-                          await _exportToImage();
-                        }),
+                      highlightColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                      icon: Icon(
+                        Icons.share,
+                        color: Colors.white,
+                        size: displaySize.width / 15,
+                      ),
+                      onPressed: () async {
+                        await _exportToImage();
+                      },
+                    ),
                   ],
                 ),
                 SizedBox(
                   height: displaySize.width / 100,
                 ),
                 Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: displaySize.width / 30),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: displaySize.width / 30,
+                  ),
                   child: SizedBox(
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,

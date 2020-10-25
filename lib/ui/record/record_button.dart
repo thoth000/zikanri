@@ -13,7 +13,7 @@ import 'package:zikanri/ui/short_cut/short_cut_sheet.dart';
 import 'package:zikanri/ui/splash.dart';
 import 'package:zikanri/config.dart';
 
-class RButton extends StatelessWidget {
+class RecordButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Provider.of<ThemeNotifier>(context);

@@ -1,6 +1,8 @@
+//packages
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+//my files
 import 'package:zikanri/config.dart';
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
@@ -45,15 +47,15 @@ class BackUpPage extends StatelessWidget {
           SizedBox(
             height: displaySize.width / 20,
           ),
-          UserIDField(),
+          _UserIDField(),
           SizedBox(
             height: displaySize.width / 20,
           ),
-          CodeField(),
+          _CodeField(),
           SizedBox(
             height: displaySize.width / 10,
           ),
-          BackUpButton(),
+          _BackUpButton(),
         ],
       ),
     );
@@ -112,7 +114,7 @@ class _HelpDialog extends StatelessWidget {
   }
 }
 
-class BackUpButton extends StatelessWidget {
+class _BackUpButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context);
@@ -149,6 +151,7 @@ class BackUpButton extends StatelessWidget {
                     final String result = await FirebaseBackUpService()
                         .uploadData(userID, data, userData.categories);
                     if (result == 'success') {
+                      await userData.changeBackUpCanDate();
                       final String message =
                           'データのバックアップが完了しました。次のバックアップは1ヶ月後に可能です。';
                       await showDialog(
@@ -180,12 +183,12 @@ class BackUpButton extends StatelessWidget {
   }
 }
 
-class UserIDField extends StatefulWidget {
+class _UserIDField extends StatefulWidget {
   @override
-  _UserIDFieldState createState() => _UserIDFieldState();
+  __UserIDFieldState createState() => __UserIDFieldState();
 }
 
-class _UserIDFieldState extends State<UserIDField> {
+class __UserIDFieldState extends State<_UserIDField> {
   TextEditingController userIDController;
   @override
   void initState() {
@@ -197,21 +200,41 @@ class _UserIDFieldState extends State<UserIDField> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeNotifier>(context);
+    final Color themeColor =
+        (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 15,
+      padding: EdgeInsets.symmetric(
+        horizontal: displaySize.width / 25,
       ),
       child: TextField(
         controller: userIDController,
         decoration: InputDecoration(
+          labelText: 'ユーザーID',
+          labelStyle: TextStyle(
+            color: themeColor,
+          ),
+          contentPadding: EdgeInsets.symmetric(
+            vertical: displaySize.width / 35,
+            horizontal: displaySize.width / 35,
+          ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5),
           ),
-          contentPadding: EdgeInsets.symmetric(
-            vertical: 10,
-            horizontal: 10,
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: themeColor,
+              width: 2,
+            ),
           ),
-          labelText: 'ユーザーID',
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: Colors.grey,
+              width: 2,
+            ),
+          ),
         ),
         readOnly: true,
         onTap: () {},
@@ -220,12 +243,12 @@ class _UserIDFieldState extends State<UserIDField> {
   }
 }
 
-class CodeField extends StatefulWidget {
+class _CodeField extends StatefulWidget {
   @override
-  _CodeFieldState createState() => _CodeFieldState();
+  __CodeFieldState createState() => __CodeFieldState();
 }
 
-class _CodeFieldState extends State<CodeField> {
+class __CodeFieldState extends State<_CodeField> {
   TextEditingController codeController;
   @override
   void initState() {
@@ -237,21 +260,41 @@ class _CodeFieldState extends State<CodeField> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeNotifier>(context);
+    final Color themeColor =
+        (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 15,
+      padding: EdgeInsets.symmetric(
+        horizontal: displaySize.width / 25,
       ),
       child: TextField(
         controller: codeController,
         decoration: InputDecoration(
+          labelText: 'バックアップコード',
+          labelStyle: TextStyle(
+            color: themeColor,
+          ),
+          contentPadding: EdgeInsets.symmetric(
+            vertical: displaySize.width / 35,
+            horizontal: displaySize.width / 35,
+          ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5),
           ),
-          contentPadding: EdgeInsets.symmetric(
-            vertical: 10,
-            horizontal: 10,
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: themeColor,
+              width: 2,
+            ),
           ),
-          labelText: 'バックアップコード',
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: Colors.grey,
+              width: 2,
+            ),
+          ),
         ),
         readOnly: true,
       ),

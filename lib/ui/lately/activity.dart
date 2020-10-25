@@ -19,24 +19,22 @@ class Activity extends StatelessWidget {
     Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     //widget
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 8,
+      padding: EdgeInsets.only(
+        top: displaySize.width / 30,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(
-              right: 10,
+          Icon(
+            IconData(
+              userData.categories[itemList[0]][0],
+              fontFamily: 'MaterialIcons',
             ),
-            child: Icon(
-              IconData(
-                userData.categories[itemList[0]][0],
-                fontFamily: 'MaterialIcons',
-              ),
-              size: displaySize.width / 12,
-              color: (itemList[3]) ? color : Colors.grey,
-            ),
+            size: displaySize.width / 12,
+            color: (itemList[3]) ? color : Colors.grey,
+          ),
+          SizedBox(
+            width: displaySize.width / 35,
           ),
           Expanded(
             child: Row(
@@ -47,28 +45,20 @@ class Activity extends StatelessWidget {
                   child: Text(
                     itemList[1], //タイトル
                     softWrap: false,
-                    overflow: TextOverflow.fade,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      fontSize: FontSize.midium,
+                      fontSize: FontSize.small,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
                 SizedBox(
-                  width: displaySize.width / 7,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text(
-                        itemList[2].toString() + '分',
-                        style: TextStyle(
-                          fontSize: FontSize.xsmall,
-                        ),
-                      ),
-                    ],
+                  width: displaySize.width / 35,
+                ),
+                Text(
+                  itemList[2].toString() + '分',
+                  style: TextStyle(
+                    fontSize: FontSize.xsmall,
                   ),
                 ),
               ],

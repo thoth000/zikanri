@@ -1,5 +1,7 @@
+//packages
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+//my files
 import 'package:zikanri/config.dart';
 import 'package:zikanri/controller/copy_controller.dart';
 import 'package:zikanri/controller/theme_notifier.dart';
@@ -43,15 +45,15 @@ class CopyPage extends StatelessWidget {
           SizedBox(
             height: displaySize.width / 20,
           ),
-          UserIDField(),
+          _UserIDField(),
           SizedBox(
             height: displaySize.width / 20,
           ),
-          CodeField(),
+          _CodeField(),
           SizedBox(
             height: displaySize.width / 10,
           ),
-          CopyButton(),
+          _CopyButton(),
         ],
       ),
     );
@@ -104,7 +106,7 @@ class _HelpDialog extends StatelessWidget {
   }
 }
 
-class CopyButton extends StatelessWidget {
+class _CopyButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context);
@@ -118,10 +120,10 @@ class CopyButton extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(500),
         border: Border.all(
-          color: (copyController.checkUserID.isEmpty &&
-                copyController.checkCode)
-              ? themeColor
-              : themeColor.withOpacity(0.5),
+          color:
+              (copyController.checkUserID.isEmpty && copyController.checkCode)
+                  ? themeColor
+                  : themeColor.withOpacity(0.5),
           width: 3,
         ),
       ),
@@ -169,12 +171,12 @@ class CopyButton extends StatelessWidget {
   }
 }
 
-class UserIDField extends StatefulWidget {
+class _UserIDField extends StatefulWidget {
   @override
-  _UserIDFieldState createState() => _UserIDFieldState();
+  __UserIDFieldState createState() => __UserIDFieldState();
 }
 
-class _UserIDFieldState extends State<UserIDField> {
+class __UserIDFieldState extends State<_UserIDField> {
   TextEditingController userIDController;
   @override
   void initState() {
@@ -185,23 +187,44 @@ class _UserIDFieldState extends State<UserIDField> {
   @override
   Widget build(BuildContext context) {
     final CopyController copyController = Provider.of<CopyController>(context);
+    final theme = Provider.of<ThemeNotifier>(context);
+    final Color themeColor =
+        (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      padding: EdgeInsets.symmetric(horizontal: displaySize.width / 25),
       child: TextField(
         controller: userIDController,
+        cursorColor: themeColor,
         decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-          ),
-          contentPadding: EdgeInsets.symmetric(
-            vertical: 10,
-            horizontal: 10,
-          ),
           labelText: 'ユーザーID',
+          labelStyle: TextStyle(
+            color: userIDController.text.isEmpty ? Colors.grey : themeColor,
+          ),
           errorText:
               (copyController.checkUserID.isEmpty || !copyController.isTapID)
                   ? null
                   : copyController.checkUserID,
+          contentPadding: EdgeInsets.symmetric(
+            vertical: displaySize.width / 35,
+            horizontal: displaySize.width / 35,
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: themeColor,
+              width: 2,
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: Colors.grey,
+              width: 2,
+            ),
+          ),
         ),
         onChanged: (text) {
           copyController.changeUserID(text);
@@ -214,12 +237,12 @@ class _UserIDFieldState extends State<UserIDField> {
   }
 }
 
-class CodeField extends StatefulWidget {
+class _CodeField extends StatefulWidget {
   @override
-  _CodeFieldState createState() => _CodeFieldState();
+  __CodeFieldState createState() => __CodeFieldState();
 }
 
-class _CodeFieldState extends State<CodeField> {
+class __CodeFieldState extends State<_CodeField> {
   TextEditingController codeController;
   @override
   void initState() {
@@ -230,22 +253,43 @@ class _CodeFieldState extends State<CodeField> {
   @override
   Widget build(BuildContext context) {
     final CopyController copyController = Provider.of<CopyController>(context);
+    final theme = Provider.of<ThemeNotifier>(context);
+    final Color themeColor =
+        (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      padding: EdgeInsets.symmetric(horizontal: displaySize.width / 25),
       child: TextField(
         controller: codeController,
+        cursorColor: themeColor,
         decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-          ),
-          contentPadding: EdgeInsets.symmetric(
-            vertical: 10,
-            horizontal: 10,
-          ),
           labelText: 'バックアップコード',
+          labelStyle: TextStyle(
+            color: codeController.text.isEmpty ? Colors.grey : themeColor,
+          ),
           errorText: (copyController.checkCode || !copyController.isTapCode)
               ? null
               : 'バックアップコードは6文字です。',
+          contentPadding: EdgeInsets.symmetric(
+            vertical: displaySize.width / 35,
+            horizontal: displaySize.width / 35,
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: themeColor,
+              width: 2,
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: Colors.grey,
+              width: 2,
+            ),
+          ),
         ),
         onChanged: (text) {
           copyController.changeCode(text);

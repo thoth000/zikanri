@@ -1,152 +1,145 @@
+//packages
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+//my files
 import 'package:zikanri/config.dart';
-import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
+import 'package:zikanri/controller/user_detail_controller.dart';
 import 'package:zikanri/controller/users_controller.dart';
 
 class UserDetailPage extends StatelessWidget {
-  UserDetailPage({
-    @required this.user,
-    @required this.isFavorite,
-  });
-  final Map<String, dynamic> user;
-  final bool isFavorite;
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: FavoriteAppBar(
+  UserDetailPage._();
+  static Widget wrapped(
+      {bool isDark,
+      bool isFavorite,
+      Map<String, dynamic> user,
+      Color themeColor}) {
+    return ChangeNotifierProvider(
+      create: (_) => UserDetailController(
         isFavorite: isFavorite,
         user: user,
+        themeColor: themeColor,
+        isDark: isDark,
       ),
-      body: ListView(
-        children: [
-          SizedBox(
-            height: displaySize.width / 50,
-          ),
-          ProfileDataWidget(user: user),
-          SizedBox(
-            height: displaySize.width / 20,
-          ),
-          Row(
+      child: UserDetailPage._(),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: _FavoriteAppBar(),
+          body: ListView(
             children: [
               SizedBox(
-                width: displaySize.width / 50,
+                height: displaySize.width / 50,
               ),
-              Text(
-                '所持テーマ',
-                style: TextStyle(
-                  fontSize: FontSize.midium,
-                  fontWeight: FontWeight.w700,
-                ),
+              _ProfileDataWidget(),
+              SizedBox(
+                height: displaySize.width / 20,
+              ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: displaySize.width / 50,
+                  ),
+                  Text(
+                    '所持テーマ',
+                    style: TextStyle(
+                      fontSize: FontSize.midium,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+              _MyThemesWidget(),
+              SizedBox(
+                height: displaySize.width / 20,
+              ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: displaySize.width / 50,
+                  ),
+                  Text(
+                    '今日の記録',
+                    style: TextStyle(
+                      fontSize: FontSize.midium,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: displaySize.width / 50,
+              ),
+              Center(
+                child: _TodayDataWidget(),
+              ),
+              SizedBox(
+                height: displaySize.width / 20,
+              ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: displaySize.width / 50,
+                  ),
+                  Text(
+                    '実績',
+                    style: TextStyle(
+                      fontSize: FontSize.midium,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: displaySize.width / 50,
+              ),
+              Center(
+                child: _AchiveDataWidget(),
+              ),
+              SizedBox(
+                height: displaySize.width / 20,
               ),
             ],
           ),
-          MyThemesWidget(colors: user['myColors']),
-          SizedBox(
-            height: displaySize.width / 20,
-          ),
-          Row(
-            children: [
-              SizedBox(
-                width: displaySize.width / 50,
-              ),
-              Text(
-                '今日の記録',
-                style: TextStyle(
-                  fontSize: FontSize.midium,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: displaySize.width / 50,
-          ),
-          Center(
-            child: TodayDataWidget(user: user),
-          ),
-          SizedBox(
-            height: displaySize.width / 20,
-          ),
-          Row(
-            children: [
-              SizedBox(
-                width: displaySize.width / 50,
-              ),
-              Text(
-                '実績',
-                style: TextStyle(
-                  fontSize: FontSize.midium,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: displaySize.width / 50,
-          ),
-          Center(
-            child: AchiveDataWidget(user: user),
-          ),
-          SizedBox(
-            height: displaySize.width / 20,
-          ),
-        ],
-      ),
+        ),
+        _PageCover(),
+      ],
     );
   }
 }
 
-class FavoriteAppBar extends StatefulWidget with PreferredSizeWidget {
-  FavoriteAppBar({
-    @required this.user,
-    @required this.isFavorite,
-  });
-  final Map<String, dynamic> user;
-  final bool isFavorite;
-  @override
-  _FavoriteAppBarState createState() => _FavoriteAppBarState();
-
+class _FavoriteAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
-}
-
-class _FavoriteAppBarState extends State<FavoriteAppBar> {
-  Map<String, dynamic> user;
-  bool isFavorite;
-  @override
-  void initState() {
-    setState(() {
-      user = widget.user;
-      isFavorite = widget.isFavorite;
-    });
-    super.initState();
-  }
-
-  Future<void> changeIsFavorite() async {
-    setState(() {
-      isFavorite = !isFavorite;
-    });
-    if (isFavorite) {
-      Provider.of<UsersController>(context, listen: false)
-          .addFavoriteUser(user);
-      await Provider.of<UserDataNotifier>(context, listen: false)
-          .addFavoriteID(user['userID']);
-    } else {
-      Provider.of<UsersController>(context, listen: false)
-          .removeFavoriteUser(user);
-      await Provider.of<UserDataNotifier>(context, listen: false)
-          .removeFavoriteID(user['userID']);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
+    final userDetailController = Provider.of<UserDetailController>(context);
+    final user = userDetailController.user;
+    final isFavorite = userDetailController.isFavorite;
+    final themeColor = userDetailController.themeColor;
+    final isDark = userDetailController.isDark;
     final userData = Provider.of<UserDataNotifier>(context);
-    final theme = Provider.of<ThemeNotifier>(context);
-    final Color themeColor =
-        (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
+
+    Future<void> changeIsFavorite(bool isFavorite) async {
+      if (!isFavorite) {
+        Provider.of<UsersController>(context, listen: false)
+            .addFavoriteUser(user);
+        await Provider.of<UserDataNotifier>(context, listen: false)
+            .addFavoriteID(user['userID']);
+      } else {
+        Provider.of<UsersController>(context, listen: false)
+            .removeFavoriteUser(user);
+        await Provider.of<UserDataNotifier>(context, listen: false)
+            .removeFavoriteID(user['userID']);
+      }
+    }
+
     return AppBar(
       elevation: 0,
       backgroundColor: Colors.transparent,
@@ -154,7 +147,7 @@ class _FavoriteAppBarState extends State<FavoriteAppBar> {
       title: Text(
         '@' + user['userID'],
         style: TextStyle(
-          color: theme.isDark ? Colors.white : Colors.black,
+          color: isDark ? Colors.white : Colors.black,
         ),
       ),
       actions: [
@@ -165,24 +158,54 @@ class _FavoriteAppBarState extends State<FavoriteAppBar> {
                 ),
                 color: (isFavorite) ? themeColor : Colors.grey,
                 onPressed: () async {
-                  await changeIsFavorite();
+                  await changeIsFavorite(isFavorite);
+                  userDetailController.switchFavorite();
+                  await Future.delayed(Duration(milliseconds: 100));
+                  print(isFavorite);
                 },
               )
             : SizedBox(),
       ],
+      leading: IconButton(
+        icon: Icon(
+          Icons.arrow_back,
+          color: themeColor,
+        ),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
     );
   }
 }
 
-class ProfileDataWidget extends StatelessWidget {
-  ProfileDataWidget({@required this.user});
-  final Map<String, dynamic> user;
+class _PageCover extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final userDetailController = Provider.of<UserDetailController>(context);
+    return Center(
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 300),
+        width: userDetailController.hideWidth,
+        height: userDetailController.hideHeight,
+        curve: Curves.linear,
+        decoration: BoxDecoration(
+          color: userDetailController.hideColor.withOpacity(0.7),
+          borderRadius:
+              BorderRadius.circular(userDetailController.borderRadius),
+        ),
+      ),
+    );
+  }
+}
+
+class _ProfileDataWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final userDetailController = Provider.of<UserDetailController>(context);
+    final user = userDetailController.user;
+    final themeColor = userDetailController.themeColor;
     final int iconNumber = user['myIcon'];
-    final theme = Provider.of<ThemeNotifier>(context);
-    final Color themeColor =
-        (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return Row(
       children: [
         SizedBox(
@@ -239,50 +262,81 @@ class ProfileDataWidget extends StatelessWidget {
   }
 }
 
-class MyThemesWidget extends StatelessWidget {
-  MyThemesWidget({@required this.colors});
-  final List<dynamic> colors;
+class _MyThemesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final userDetailController = Provider.of<UserDetailController>(context);
+    final colors = userDetailController.user['myColors'];
     return SizedBox(
       height: displaySize.width / 7 + 20,
       child: ListView(
         scrollDirection: Axis.horizontal,
-        children: List.generate(colors.length, (index) {
-          bool isMyColor = colors[index];
-          if (isMyColor) {
-            return Padding(
-              padding: const EdgeInsets.all(10),
-              child: Container(
-                height: displaySize.width / 7,
-                width: displaySize.width / 7,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  gradient: LinearGradient(
-                    colors: baseColors[index],
-                  ),
-                ),
-              ),
-            );
-          }
-          return const SizedBox();
-        }),
+        children: List.generate(
+          colors.length,
+          (index) {
+            bool isMyColor = colors[index];
+            if (isMyColor) {
+              return _ThemeChanger(index: index);
+            }
+            return const SizedBox();
+          },
+        ),
       ),
     );
   }
 }
 
-class TodayDataWidget extends StatelessWidget {
-  TodayDataWidget({@required this.user});
-  final Map<String, dynamic> user;
+class _ThemeChanger extends StatelessWidget {
+  _ThemeChanger({@required this.index});
+  final int index;
   @override
   Widget build(BuildContext context) {
+    final userDetailController =
+        Provider.of<UserDetailController>(context, listen: false);
+    return Container(
+      height: displaySize.width / 7,
+      width: displaySize.width / 7,
+      margin: EdgeInsets.all(displaySize.width / 35),
+      child: Stack(
+        children: [
+          Container(
+            height: displaySize.width / 7,
+            width: displaySize.width / 7,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              gradient: LinearGradient(
+                colors: baseColors[index],
+              ),
+            ),
+          ),
+          SizedBox(
+            height: displaySize.width / 7,
+            width: displaySize.width / 7,
+            child: FlatButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: const SizedBox(),
+              onPressed: () {
+                userDetailController.changeColor(index);
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _TodayDataWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final userDetailController = Provider.of<UserDetailController>(context);
+    final user = userDetailController.user;
+    final themeColor = userDetailController.themeColor;
     final int allTime = user['todayTime'];
     final int goodTime = user['todayGood'];
     final int percent = (allTime > 0) ? (goodTime * 100 ~/ allTime) : 0;
-    final theme = Provider.of<ThemeNotifier>(context);
-    final Color themeColor =
-        (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return Container(
       height: displaySize.width / 2.7,
       width: displaySize.width / 1.1,
@@ -297,11 +351,20 @@ class TodayDataWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          valueItem('記録時間', allTime.toString() + '分'),
+          _MonthlyDataItem(
+            dataTitle: '記録時間',
+            dataValue: allTime.toString() + '分',
+          ),
           verticalLine(),
-          valueItem('価値時間', goodTime.toString() + '分'),
+          _MonthlyDataItem(
+            dataTitle: '価値時間',
+            dataValue: goodTime.toString() + '分',
+          ),
           verticalLine(),
-          valueItem('価値の割合', percent.toString() + '%'),
+          _MonthlyDataItem(
+            dataTitle: '価値の割合',
+            dataValue: percent.toString() + '%',
+          ),
         ],
       ),
     );
@@ -314,22 +377,73 @@ class TodayDataWidget extends StatelessWidget {
       color: Colors.grey,
     );
   }
+}
 
-  Widget valueItem(
-    String title,
-    String value,
-  ) {
+class _AchiveDataWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final userDetailController = Provider.of<UserDetailController>(context);
+    final user = userDetailController.user;
+    final themeColor = userDetailController.themeColor;
+    final int time = user['totalMinute'];
+    final int day = user['totalOpen'];
+    return Container(
+      height: displaySize.width / 2.7,
+      width: displaySize.width / 1.1,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(displaySize.width / 15),
+        border: Border.all(
+          color: themeColor,
+          width: 2,
+        ),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          _TotalDataItem(
+            dataTitle: 'ログイン日数',
+            dataValue: day.toString() + '日',
+          ),
+          verticalLine(),
+          _TotalDataItem(
+            dataTitle: '総記録時間',
+            dataValue: time.toString() + '分',
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget verticalLine() {
+    return Container(
+      height: displaySize.width / 3.5,
+      width: 1,
+      color: Colors.grey,
+    );
+  }
+}
+
+class _MonthlyDataItem extends StatelessWidget {
+  _MonthlyDataItem({@required this.dataTitle, @required this.dataValue});
+  final String dataTitle;
+  final String dataValue;
+  @override
+  Widget build(BuildContext context) {
+    final userDetailController = Provider.of<UserDetailController>(context);
+    final themeColor = userDetailController.themeColor;
     return SizedBox(
       height: displaySize.width / 3.5,
       width: displaySize.width / 3.5,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          const Icon(
+          Icon(
             Icons.bubble_chart,
+            color: themeColor,
           ),
           Text(
-            value,
+            dataValue,
             softWrap: false,
             overflow: TextOverflow.fade,
             style: TextStyle(
@@ -338,7 +452,7 @@ class TodayDataWidget extends StatelessWidget {
             ),
           ),
           Text(
-            title,
+            dataTitle,
             style: TextStyle(
               color: Colors.grey,
               fontSize: FontSize.xxsmall,
@@ -350,61 +464,26 @@ class TodayDataWidget extends StatelessWidget {
   }
 }
 
-class AchiveDataWidget extends StatelessWidget {
-  AchiveDataWidget({@required this.user});
-  final Map<String, dynamic> user;
+class _TotalDataItem extends StatelessWidget {
+  _TotalDataItem({@required this.dataTitle, @required this.dataValue});
+  final String dataTitle;
+  final String dataValue;
   @override
   Widget build(BuildContext context) {
-    final int time = user['totalMinute'];
-    final int day = user['totalOpen'];
-    final theme = Provider.of<ThemeNotifier>(context);
-    final Color themeColor =
-        (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
-    return Container(
-      height: displaySize.width / 2.7,
-      width: displaySize.width / 1.1,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(displaySize.width / 15),
-        border: Border.all(
-          color: themeColor,
-          width: 2,
-        ),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          valueItem('ログイン日数', day.toString() + '日'),
-          verticalLine(),
-          valueItem('総記録時間', time.toString() + '分'),
-        ],
-      ),
-    );
-  }
-
-  Widget verticalLine() {
-    return Container(
-      height: displaySize.width / 3.5,
-      width: 1,
-      color: Colors.grey,
-    );
-  }
-
-  Widget valueItem(
-    String title,
-    String value,
-  ) {
+    final userDetailController = Provider.of<UserDetailController>(context);
+    final themeColor = userDetailController.themeColor;
     return SizedBox(
       height: displaySize.width / 3.5,
       width: displaySize.width / 2.5,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          const Icon(
+          Icon(
             Icons.bubble_chart,
+            color: themeColor,
           ),
           Text(
-            value,
+            dataValue,
             softWrap: false,
             overflow: TextOverflow.fade,
             style: TextStyle(
@@ -413,7 +492,7 @@ class AchiveDataWidget extends StatelessWidget {
             ),
           ),
           Text(
-            title,
+            dataTitle,
             style: TextStyle(
               color: Colors.grey,
               fontSize: FontSize.xxsmall,

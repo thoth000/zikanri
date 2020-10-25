@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/config.dart';
+import 'package:zikanri/ui/parts/bottom_sheet_bar.dart';
 
 class EditNameSheet extends StatefulWidget {
   const EditNameSheet({this.name, this.index});
@@ -36,22 +37,16 @@ class _EditNameSheetState extends State<EditNameSheet> {
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context, listen: false);
     final theme = Provider.of<ThemeNotifier>(context);
-    Color themeColor = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
+    Color themeColor =
+        (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return Padding(
       padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom * 1.1),
+        bottom: MediaQuery.of(context).viewInsets.bottom * 1.1,
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            height: 5,
-            width: 70,
-            margin: const EdgeInsets.all(12.5),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
-              color: Colors.grey,
-            ),
-          ),
+          BottomSheetBar(),
           SizedBox(
             height: displaySize.width / 50,
           ),
@@ -63,18 +58,22 @@ class _EditNameSheetState extends State<EditNameSheet> {
               style: TextStyle(
                 fontSize: FontSize.small,
               ),
+              autofocus: true,
               decoration: InputDecoration(
                 hintText: 'カテゴリーの名前',
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: displaySize.width / 35,
+                  horizontal: displaySize.width / 35,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                   borderSide: BorderSide(
                     color: themeColor,
                     width: 2,
                   ),
-                ),
-                contentPadding: EdgeInsets.symmetric(
-                  vertical: displaySize.width/30,
-                  horizontal: 10,
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -87,9 +86,9 @@ class _EditNameSheetState extends State<EditNameSheet> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.all(displaySize.width / 35),
             child: Container(
-              height: displaySize.width/6.5,
+              height: displaySize.width / 6.5,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(500),
                 border: Border.all(
@@ -99,23 +98,17 @@ class _EditNameSheetState extends State<EditNameSheet> {
               ),
               child: FlatButton(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
+                  borderRadius: BorderRadius.circular(500),
                 ),
                 color: Colors.transparent,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(displaySize.width / 100),
-                      child: Text(
-                        '保存する',
-                        style: TextStyle(
-                          fontSize: FontSize.small,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
+                child: Center(
+                  child: Text(
+                    '保存する',
+                    style: TextStyle(
+                      fontSize: FontSize.small,
+                      fontWeight: FontWeight.w700,
                     ),
-                  ],
+                  ),
                 ),
                 onPressed: () {
                   userData.editCategoryTitle(widget.index, controller.text);
@@ -125,7 +118,7 @@ class _EditNameSheetState extends State<EditNameSheet> {
             ),
           ),
           SizedBox(
-            height: displaySize.width/20,
+            height: displaySize.width / 20,
           ),
         ],
       ),

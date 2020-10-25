@@ -20,131 +20,29 @@ class FeatureGuide extends StatelessWidget {
               height: displaySize.width / 20,
             ),
             _AnalyzeData(),
-            SizedBox(
-              height: displaySize.width / 20,
-            ),
-            Text(
-              '記録データの集計',
-              style: TextStyle(
-                fontSize: FontSize.midium,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            SizedBox(
-              height: displaySize.width / 50,
-            ),
-            const Text(
-              '時間価値・記録した日付・カテゴリーで\n記録データを分析します。\n振り返ることで気づきがあるかもしれません。',
-            ),
             Divider(
               height: displaySize.width / 6,
             ),
             _Share(),
-            SizedBox(
-              height: displaySize.width / 20,
-            ),
-            Text(
-              'SNSシェア',
-              style: TextStyle(
-                fontSize: FontSize.midium,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            SizedBox(
-              height: displaySize.width / 50,
-            ),
-            const Text(
-              '集計した記録データをSNSを使って共有できます。\n上のような共有ボタンを押すとシェア画面が開きます。',
-            ),
             Divider(
               height: displaySize.width / 6,
             ),
             _Register(),
-            SizedBox(
-              height: displaySize.width / 20,
-            ),
-            Text(
-              'ユーザー登録',
-              style: TextStyle(
-                fontSize: FontSize.midium,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            SizedBox(
-              height: displaySize.width / 50,
-            ),
-            const Text(
-              '登録で他のユーザーを見つけて価値時間で競えます。\nまた、オンライン上にバックアップを取れます。\nこれで新しい携帯にデータを引き継げます。',
-            ),
             Divider(
               height: displaySize.width / 6,
             ),
             _Theme(),
-            SizedBox(
-              height: displaySize.width / 20,
-            ),
-            Text(
-              'テーマ・実績',
-              style: TextStyle(
-                fontSize: FontSize.midium,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            SizedBox(
-              height: displaySize.width / 50,
-            ),
-            const Text(
-              'アプリのテーマを最大12種類から選べます。\n実績はアプリを使い込むことで解除されて\n毎回新しいテーマを獲得できます。\nお気に入りのテーマを選びましょう。',
-            ),
             Divider(
               height: displaySize.width / 6,
             ),
             _ShortCut(),
-            SizedBox(
-              height: displaySize.width / 20,
-            ),
-            Text(
-              '記録のショートカット',
-              style: TextStyle(
-                fontSize: FontSize.midium,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            SizedBox(
-              height: displaySize.width / 50,
-            ),
-            const Text(
-                '記録が面倒ではありませんか？\nジカンリにはショートカット機能がついています。\n「記録する」「開始する」ボタンを長押しすると\n記録だけでなくショートカットにも保存されます。'),
-            const Text(
-              '保存したショートカットを使うには\n記録ボタンを長押しするだけです。',
-            ),
-            RecordButton(),
             Divider(
               height: displaySize.width / 10,
             ),
             SizedBox(
               height: displaySize.width / 20,
             ),
-            RaisedButton(
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Text(
-                  '機能ガイドを閉じる',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: FontSize.small,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-              color: Colors.blue,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
+            _ClosePageButton(),
             SizedBox(
               height: displaySize.width / 10,
             ),
@@ -158,6 +56,31 @@ class FeatureGuide extends StatelessWidget {
 class _AnalyzeData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        image(),
+        SizedBox(
+          height: displaySize.width / 20,
+        ),
+        Text(
+          '記録データの集計',
+          style: TextStyle(
+            fontSize: FontSize.midium,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        SizedBox(
+          height: displaySize.width / 50,
+        ),
+        const Text(
+          '時間価値・記録した日付・カテゴリーで\n記録データを分析します。\n振り返ることで気づきがあるかもしれません。',
+        ),
+      ],
+    );
+  }
+
+  Widget image() {
     return Row(
       children: <Widget>[
         Icon(
@@ -181,6 +104,31 @@ class _AnalyzeData extends StatelessWidget {
 class _Share extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        image(),
+        SizedBox(
+          height: displaySize.width / 20,
+        ),
+        Text(
+          'SNSシェア',
+          style: TextStyle(
+            fontSize: FontSize.midium,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        SizedBox(
+          height: displaySize.width / 50,
+        ),
+        const Text(
+          '集計した記録データをSNSを使って共有できます。\n上のような共有ボタンを押すとシェア画面が開きます。',
+        ),
+      ],
+    );
+  }
+
+  Widget image() {
     return Row(
       children: <Widget>[
         Icon(
@@ -196,6 +144,31 @@ class _Share extends StatelessWidget {
 class _Register extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        image(),
+        SizedBox(
+          height: displaySize.width / 20,
+        ),
+        Text(
+          'ユーザー登録',
+          style: TextStyle(
+            fontSize: FontSize.midium,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        SizedBox(
+          height: displaySize.width / 50,
+        ),
+        const Text(
+          '登録で他のユーザーを見つけて価値時間で競えます。\nまた、オンライン上にバックアップを取れます。\nこれで新しい携帯にデータを引き継げます。',
+        ),
+      ],
+    );
+  }
+
+  Widget image() {
     return Row(
       children: <Widget>[
         Icon(
@@ -219,6 +192,31 @@ class _Register extends StatelessWidget {
 class _Theme extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        image(),
+        SizedBox(
+          height: displaySize.width / 20,
+        ),
+        Text(
+          'テーマ・実績',
+          style: TextStyle(
+            fontSize: FontSize.midium,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        SizedBox(
+          height: displaySize.width / 50,
+        ),
+        const Text(
+          'アプリのテーマを最大12種類から選べます。\n実績はアプリを使い込むことで解除されて\n毎回新しいテーマを獲得できます。\nお気に入りのテーマを選びましょう。',
+        ),
+      ],
+    );
+  }
+
+  Widget image() {
     return Row(
       children: <Widget>[
         item(0),
@@ -260,16 +258,35 @@ class _ShortCut extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        item('ショートカットで時短', '記録'),
+        image(),
+        SizedBox(
+          height: displaySize.width / 20,
+        ),
+        Text(
+          '記録のショートカット',
+          style: TextStyle(
+            fontSize: FontSize.midium,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        SizedBox(
+          height: displaySize.width / 50,
+        ),
+        const Text(
+            '記録が面倒ではありませんか？\nジカンリにはショートカット機能がついています。\n「記録する」「開始する」ボタンを長押しすると\n記録だけでなくショートカットにも保存されます。'),
+        const Text(
+          '保存したショートカットを使うには\n記録ボタンを長押しするだけです。',
+        ),
+        Center(
+          child: _RecordButton(),
+        ),
       ],
     );
   }
 
-  Widget item(
-    String title,
-    String which,
-  ) {
+  Widget image() {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
@@ -284,19 +301,20 @@ class _ShortCut extends StatelessWidget {
           size: displaySize.width / 12,
         ),
         title: Text(
-          title,
-          overflow: TextOverflow.fade,
+          'ショートカット時短',
+          overflow: TextOverflow.ellipsis,
           softWrap: false,
         ),
         trailing: Container(
-          padding: const EdgeInsets.all(5),
+          padding: EdgeInsets.all(displaySize.width / 70),
           decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.grey[300],
-              ),
-              borderRadius: BorderRadius.circular(10)),
+            border: Border.all(
+              color: Colors.grey[300],
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
           child: Text(
-            which,
+            '記録',
             style: TextStyle(
               fontSize: FontSize.small,
               fontWeight: FontWeight.w700,
@@ -308,11 +326,13 @@ class _ShortCut extends StatelessWidget {
   }
 }
 
-class RecordButton extends StatelessWidget {
+class _RecordButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
-          horizontal: displaySize.width / 10, vertical: 15),
+        horizontal: displaySize.width / 10,
+        vertical: 15,
+      ),
       child: Container(
         height: displaySize.width / 7,
         width: displaySize.width / 1.5,
@@ -356,6 +376,32 @@ class RecordButton extends StatelessWidget {
       behavior: SnackBarBehavior.floating,
       content: Text(title),
       duration: const Duration(milliseconds: 1500),
+    );
+  }
+}
+
+class _ClosePageButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return RaisedButton(
+      child: Padding(
+        padding: EdgeInsets.all(displaySize.width / 35),
+        child: Text(
+          '機能ガイドを閉じる',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: FontSize.small,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ),
+      color: Colors.blue,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      onPressed: () {
+        Navigator.pop(context);
+      },
     );
   }
 }

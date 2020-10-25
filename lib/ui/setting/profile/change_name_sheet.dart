@@ -5,6 +5,7 @@ import 'package:zikanri/config.dart';
 import 'package:zikanri/controller/theme_notifier.dart';
 //my files
 import 'package:zikanri/controller/user_data_notifier.dart';
+import 'package:zikanri/ui/parts/bottom_sheet_bar.dart';
 
 class ChangeNameSheet extends StatefulWidget {
   @override
@@ -49,27 +50,27 @@ class _ChangeNameSheetState extends State<ChangeNameSheet> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            margin: EdgeInsets.all(10),
-            height: 5,
-            width: 70,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(500),
-              color: Colors.grey,
-            ),
-          ),
-          const SizedBox(
-            height: 20,
+          BottomSheetBar(),
+          SizedBox(
+            height: displaySize.width / 17,
           ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 15),
+            margin: EdgeInsets.symmetric(horizontal: displaySize.width / 25),
             child: TextField(
               autofocus: true,
               controller: nameController,
+              cursorColor: themeColor,
               decoration: InputDecoration(
                 hintText: 'ユーザーの名前',
                 labelStyle: TextStyle(
                   color: themeColor,
+                ),
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: displaySize.width / 35,
+                  horizontal: displaySize.width / 35,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -77,10 +78,6 @@ class _ChangeNameSheetState extends State<ChangeNameSheet> {
                     color: themeColor,
                     width: 2,
                   ),
-                ),
-                contentPadding: EdgeInsets.symmetric(
-                  vertical: displaySize.width/30,
-                  horizontal: 10,
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -94,16 +91,16 @@ class _ChangeNameSheetState extends State<ChangeNameSheet> {
                 check(text);
               },
               style: TextStyle(
-                fontSize: FontSize.midium,
+                fontSize: FontSize.small,
               ),
             ),
           ),
-          const SizedBox(
-            height: 15,
+          SizedBox(
+            height: displaySize.width / 25,
           ),
           Container(
             margin: EdgeInsets.all(15),
-            height: displaySize.width/6.5,
+            height: displaySize.width / 6.5,
             width: double.infinity,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(500),

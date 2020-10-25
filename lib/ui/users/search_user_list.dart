@@ -1,5 +1,7 @@
+//packages
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+//my files
 import 'package:zikanri/config.dart';
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
@@ -66,9 +68,11 @@ class SearchUserList extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => UserDetailPage(
+                  builder: (context) => UserDetailPage.wrapped(
                     user: user,
                     isFavorite: userData.favoriteIDs.contains(user['userID']),
+                    themeColor: themeColor,
+                    isDark: theme.isDark,
                   ),
                 ),
               );

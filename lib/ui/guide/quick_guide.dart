@@ -1,7 +1,6 @@
 //packages
 import 'package:flutter/material.dart';
-
-///my files
+//my files
 import 'package:zikanri/config.dart';
 import 'package:zikanri/ui/parts/general_app_bar.dart';
 
@@ -20,99 +19,22 @@ class QuickGuide extends StatelessWidget {
               height: displaySize.width / 20,
             ),
             _RecordButton(),
-            SizedBox(
-              height: displaySize.width / 20,
-            ),
-            Text(
-              '記録ボタン',
-              style: TextStyle(
-                fontSize: FontSize.midium,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            SizedBox(
-              height: displaySize.width / 50,
-            ),
-            const Text(
-              'このボタンで活動の記録を始められます。\n・既に終わった活動を記録する「記録」モード\n・これから活動を始める「開始」モード\nの二つから記録方法を選択できます。',
-            ),
             Divider(
               height: displaySize.width / 6,
             ),
             _ActiveTimer(),
-            SizedBox(
-              height: displaySize.width / 20,
-            ),
-            Text(
-              '活動タイマー',
-              style: TextStyle(
-                fontSize: FontSize.midium,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            SizedBox(
-              height: displaySize.width / 50,
-            ),
-            const Text(
-              '記録が「開始」モードだとタイマーが作られます。\nボタンにはそれぞれアクションがあります。\n・左ボタン　　　タイマーのスタート・ストップ\n・中央ボタン　　活動の記録\n・右ボタン　　　タイマーの削除',
-            ),
             Divider(
               height: displaySize.width / 6,
             ),
             _Category(),
-            SizedBox(
-              height: displaySize.width / 20,
-            ),
-            Text(
-              'カテゴリー',
-              style: TextStyle(
-                fontSize: FontSize.midium,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            SizedBox(
-              height: displaySize.width / 50,
-            ),
-            const Text(
-              'アイコンとタイトルを自由に組み合わせて作ります。\nカテゴリーは最大8個まで設定できます。\nカテゴリーごとに記録のデータを取れます。',
-            ),
             Divider(
               height: displaySize.width / 6,
             ),
-            Text(
-              'ガイドの続き',
-              style: TextStyle(
-                fontSize: FontSize.midium,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            SizedBox(
-              height: displaySize.width / 50,
-            ),
-            const Text('Zikanriには他にも便利な機能があります。\n気になる方は設定ページの機能ガイドも見てください。'),
+            _GuideIntroduction(),
             SizedBox(
               height: displaySize.width / 10,
             ),
-            RaisedButton(
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Text(
-                  'クイックガイドを閉じる',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: FontSize.small,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-              color: Colors.blue,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
+            _ClosePageButton(),
             SizedBox(
               height: displaySize.width / 10,
             ),
@@ -126,24 +48,45 @@ class QuickGuide extends StatelessWidget {
 class _RecordButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Container(
-          height: displaySize.width / 5,
-          width: displaySize.width / 5,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(colors: baseColors[0]),
-            shape: BoxShape.circle,
-          ),
-          child: Center(
-            child: Icon(
-              Icons.access_time,
-              color: Colors.white,
-              size: displaySize.width / 7,
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        image(),
+        SizedBox(
+          height: displaySize.width / 20,
+        ),
+        Text(
+          '記録ボタン',
+          style: TextStyle(
+            fontSize: FontSize.midium,
+            fontWeight: FontWeight.w700,
           ),
         ),
+        SizedBox(
+          height: displaySize.width / 50,
+        ),
+        const Text(
+          'このボタンで活動の記録を始められます。\n・既に終わった活動を記録する「記録」モード\n・これから活動を始める「開始」モード\n二種類から記録方法を選択できます。',
+        ),
       ],
+    );
+  }
+
+  Widget image() {
+    return Container(
+      height: displaySize.width / 5,
+      width: displaySize.width / 5,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(colors: baseColors[0]),
+        shape: BoxShape.circle,
+      ),
+      child: Center(
+        child: Icon(
+          Icons.access_time,
+          color: Colors.white,
+          size: displaySize.width / 7,
+        ),
+      ),
     );
   }
 }
@@ -151,6 +94,31 @@ class _RecordButton extends StatelessWidget {
 class _ActiveTimer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        image(),
+        SizedBox(
+          height: displaySize.width / 20,
+        ),
+        Text(
+          '活動タイマー',
+          style: TextStyle(
+            fontSize: FontSize.midium,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        SizedBox(
+          height: displaySize.width / 50,
+        ),
+        const Text(
+          '記録が「開始」モードだとタイマーが作られます。\nボタンにはそれぞれアクションがあります。\n・左ボタン　　　タイマーのスタート・ストップ\n・中央ボタン　　活動の記録\n・右ボタン　　　タイマーの削除',
+        ),
+      ],
+    );
+  }
+
+  Widget image() {
     return Card(
       elevation: 5,
       shape: RoundedRectangleBorder(
@@ -161,7 +129,7 @@ class _ActiveTimer extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
         ),
-        padding: const EdgeInsets.all(10),
+        padding: EdgeInsets.all(displaySize.width / 35),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -181,13 +149,11 @@ class _ActiveTimer extends StatelessWidget {
                           size: displaySize.width / 10,
                           color: Colors.grey,
                         ),
-                        const SizedBox(
-                          width: 10,
-                        ),
+                        SizedBox(width: displaySize.width / 35),
                         Flexible(
                           child: Text(
                             '活動タイトル',
-                            overflow: TextOverflow.fade,
+                            overflow: TextOverflow.ellipsis,
                             softWrap: false,
                             style: TextStyle(
                               fontSize: FontSize.small,
@@ -203,7 +169,7 @@ class _ActiveTimer extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
                         Text(
-                          '20分',
+                          '30分',
                           style: TextStyle(fontSize: FontSize.midium),
                         ),
                       ],
@@ -251,6 +217,31 @@ class _ActiveTimer extends StatelessWidget {
 class _Category extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        image(),
+        SizedBox(
+          height: displaySize.width / 20,
+        ),
+        Text(
+          'カテゴリー',
+          style: TextStyle(
+            fontSize: FontSize.midium,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        SizedBox(
+          height: displaySize.width / 50,
+        ),
+        const Text(
+          'アイコンとタイトルを自由に組み合わせて作ります。\nカテゴリーは最大8個まで設定できます。\nカテゴリーごとに記録のデータを取れます。',
+        ),
+      ],
+    );
+  }
+
+  Widget image() {
     return Row(
       children: <Widget>[
         Icon(
@@ -274,10 +265,55 @@ class _Category extends StatelessWidget {
           color: Colors.blue,
           size: displaySize.width / 7,
         ),
-        SizedBox(
-          width: displaySize.width / 10,
-        ),
       ],
+    );
+  }
+}
+
+class _GuideIntroduction extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'ガイドの続き',
+          style: TextStyle(
+            fontSize: FontSize.midium,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        SizedBox(
+          height: displaySize.width / 50,
+        ),
+        const Text('Zikanriには他にも便利な機能があります。\n気になる方は設定ページの機能ガイドも見てください。'),
+      ],
+    );
+  }
+}
+
+class _ClosePageButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return RaisedButton(
+      child: Padding(
+        padding: EdgeInsets.all(displaySize.width / 35),
+        child: Text(
+          'クイックガイドを閉じる',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: FontSize.small,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ),
+      color: Colors.blue,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      onPressed: () {
+        Navigator.pop(context);
+      },
     );
   }
 }

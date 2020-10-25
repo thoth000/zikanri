@@ -5,7 +5,6 @@ import 'package:hive/hive.dart';
 import 'package:launch_review/launch_review.dart';
 import 'package:provider/provider.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
-
 //my files
 import 'package:zikanri/ui/category/category.dart';
 import 'package:zikanri/controller/theme_notifier.dart';
@@ -22,6 +21,7 @@ import 'package:zikanri/config.dart';
 
 class SettingPage extends StatelessWidget {
   Widget build(BuildContext context) {
+    //animation
     Route _createRoute(page) {
       return PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) => page,
@@ -45,11 +45,11 @@ class SettingPage extends StatelessWidget {
       color: theme.isDark ? null : const Color(0XFFe7ecf0),
       child: ListView(
         children: <Widget>[
-          const SizedBox(
-            height: 30,
+          SizedBox(
+            height: displaySize.width / 12,
           ),
           Padding(
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.all(displaySize.width / 35),
             child: Text(
               '基本機能',
               style: TextStyle(
@@ -172,7 +172,7 @@ class SettingPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       _createRoute(
-                        AchievePage(),
+                        AchievePage.wrapped(),
                       ),
                     );
                   },
@@ -180,11 +180,11 @@ class SettingPage extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(
-            height: 30,
+          SizedBox(
+            height: displaySize.width / 12,
           ),
           Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: EdgeInsets.all(displaySize.width / 35),
             child: Text(
               'その他',
               style: TextStyle(
@@ -285,9 +285,10 @@ class SettingPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       _createRoute(
-                        CopyPage.wrapped(Provider.of<UserDataNotifier>(context,
-                                listen: false)
-                            .userID),
+                        CopyPage.wrapped(
+                          Provider.of<UserDataNotifier>(context, listen: false)
+                              .userID,
+                        ),
                       ),
                     );
                   },
@@ -350,8 +351,9 @@ class SettingPage extends StatelessWidget {
                   ),
                   onTap: () {
                     showDialog(
-                        context: context,
-                        builder: (context) => clearAlert(context));
+                      context: context,
+                      builder: (context) => _ClearDataDialog(),
+                    );
                   },
                 ),
                 const Divider(
@@ -367,8 +369,11 @@ class SettingPage extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget clearAlert(BuildContext context) {
+class _ClearDataDialog extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return AlertDialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),

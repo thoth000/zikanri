@@ -1,4 +1,3 @@
-//dart
 import 'dart:async';
 //packages
 import 'package:flutter/material.dart';
@@ -23,6 +22,46 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
     _initialize();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    displaySize = MediaQuery.of(context).size;
+    var width = displaySize.width;
+    var height = displaySize.height;
+    if (width > height) {
+      width = height;
+    }
+    return Scaffold(
+      backgroundColor: const Color(0XFFFAFAFA),
+      body: Stack(
+        children: <Widget>[
+          Center(
+            child: SizedBox(
+              height: displaySize.width / 2,
+              width: displaySize.width / 2,
+              child: const Image(
+                image: AssetImage('images/zikanri_shaped.png'),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: EdgeInsets.only(bottom: displaySize.width / 10),
+              child: Text(
+                'Zikanri',
+                style: TextStyle(
+                  fontSize: FontSize.big,
+                  fontWeight: FontWeight.w700,
+                  color: const Color(0XFF3A405A),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   void _initialize() async {
@@ -81,45 +120,5 @@ class _SplashPageState extends State<SplashPage> {
         ),
       );
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    displaySize = MediaQuery.of(context).size;
-    var width = displaySize.width;
-    var height = displaySize.height;
-    if (width > height) {
-      width = height;
-    }
-    return Scaffold(
-      backgroundColor: const Color(0XFFFAFAFA),
-      body: Stack(
-        children: <Widget>[
-          Center(
-            child: SizedBox(
-              height: displaySize.width / 2,
-              width: displaySize.width / 2,
-              child: const Image(
-                image: AssetImage('images/zikanri_shaped.png'),
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: EdgeInsets.only(bottom: displaySize.width / 10),
-              child: Text(
-                'Zikanri',
-                style: TextStyle(
-                  fontSize: FontSize.big,
-                  fontWeight: FontWeight.w700,
-                  color: const Color(0XFF3A405A),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }

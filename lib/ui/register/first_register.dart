@@ -20,7 +20,6 @@ class FirstRegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userData = Provider.of<UserDataNotifier>(context);
     return Scaffold(
       body: ListView(
         children: [
@@ -39,31 +38,10 @@ class FirstRegisterPage extends StatelessWidget {
           SizedBox(height: displaySize.width / 10),
           _Friend(),
           SizedBox(height: displaySize.width / 10),
-          UserIDField(),
+          _UserIDField(),
           SizedBox(height: displaySize.width / 10),
-          RegisterButton(),
-          Center(
-            child: FlatButton(
-              onPressed: () async {
-                await Hive.box('userData').put('userID', '未登録');
-                await Hive.box('userData').put('backUpCode', '未登録');
-                List<String> favoriteIDs = [];
-                await Hive.box('userData').put('favoriteIDs', favoriteIDs);
-                await userData.initialize();
-                await Provider.of<UsersController>(context, listen: false)
-                    .getFavoriteUsers(userData.favoriteIDs);
-                await Provider.of<UsersController>(context, listen: false)
-                    .getFeaturedUsers();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MyAppPage.wrapped(),
-                  ),
-                );
-              },
-              child: Text('スキップして始める'),
-            ),
-          ),
+          _RegisterButton(),
+          _PassRegisterButton(),
           SizedBox(height: displaySize.width / 10),
         ],
       ),
@@ -71,12 +49,12 @@ class FirstRegisterPage extends StatelessWidget {
   }
 }
 
-class UserIDField extends StatefulWidget {
+class _UserIDField extends StatefulWidget {
   @override
-  _UserIDFieldState createState() => _UserIDFieldState();
+  __UserIDFieldState createState() => __UserIDFieldState();
 }
 
-class _UserIDFieldState extends State<UserIDField> {
+class __UserIDFieldState extends State<_UserIDField> {
   TextEditingController userIDController;
   @override
   void initState() {
@@ -88,15 +66,15 @@ class _UserIDFieldState extends State<UserIDField> {
   Widget build(BuildContext context) {
     final RegisterController registerController =
         Provider.of<RegisterController>(context);
+    final theme = Provider.of<ThemeNotifier>(context);
+    final Color themeColor =
+        (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return Container(
       margin: EdgeInsets.symmetric(horizontal: displaySize.width / 15),
       child: TextField(
         controller: userIDController,
         decoration: InputDecoration(
           hintText: 'ユーザーID',
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-          ),
           contentPadding: EdgeInsets.symmetric(
             vertical: 10,
             horizontal: 10,
@@ -105,6 +83,23 @@ class _UserIDFieldState extends State<UserIDField> {
               (registerController.isCanRegister || !registerController.isTap)
                   ? null
                   : registerController.message,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: themeColor,
+              width: 2,
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: Colors.grey,
+              width: 2,
+            ),
+          ),
         ),
         onChanged: (text) {
           registerController.changeID(text);
@@ -117,7 +112,7 @@ class _UserIDFieldState extends State<UserIDField> {
   }
 }
 
-class RegisterButton extends StatelessWidget {
+class _RegisterButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final RegisterController registerController =
@@ -152,7 +147,7 @@ class RegisterButton extends StatelessWidget {
                   final ids =
                       Provider.of<UserDataNotifier>(context, listen: false)
                           .favoriteIDs;
-                  await Provider.of<UsersController>(context,listen: false)
+                  await Provider.of<UsersController>(context, listen: false)
                       .getFavoriteUsers(ids);
                   await Provider.of<UsersController>(context, listen: false)
                       .getFeaturedUsers();
@@ -180,6 +175,35 @@ class RegisterButton extends StatelessWidget {
             fontWeight: FontWeight.w700,
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _PassRegisterButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final userData = Provider.of<UserDataNotifier>(context);
+    return Center(
+      child: FlatButton(
+        onPressed: () async {
+          await Hive.box('userData').put('userID', '未登録');
+          await Hive.box('userData').put('backUpCode', '未登録');
+          List<String> favoriteIDs = [];
+          await Hive.box('userData').put('favoriteIDs', favoriteIDs);
+          await userData.initialize();
+          await Provider.of<UsersController>(context, listen: false)
+              .getFavoriteUsers(userData.favoriteIDs);
+          await Provider.of<UsersController>(context, listen: false)
+              .getFeaturedUsers();
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MyAppPage.wrapped(),
+            ),
+          );
+        },
+        child: const Text('スキップして始める'),
       ),
     );
   }
