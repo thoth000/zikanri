@@ -58,6 +58,7 @@ class _ShortCutItem extends StatelessWidget {
         ),
         Expanded(
           child: Card(
+            elevation: 2,
             child: ListTile(
               leading: Icon(
                 IconData(
