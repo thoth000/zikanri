@@ -65,7 +65,7 @@ class UpdateNoticePage extends StatelessWidget {
             ),
             child: RaisedButton(
               child: Padding(
-                padding: const EdgeInsets.all(15),
+                padding: EdgeInsets.all(displaySize.width/25),
                 child: Text(
                   '続ける',
                   style: TextStyle(

@@ -25,13 +25,13 @@ class CategoryEditPage extends StatelessWidget {
             index: index,
           ),
           const Divider(
-            height: 0,
+            height: 1,
           ),
           _CategoryIcon(
             index: index,
           ),
           const Divider(
-            height: 0,
+            height: 1,
           ),
           _ViewSwitch(
             index: index,
@@ -75,7 +75,9 @@ class _CategoryName extends StatelessWidget {
       onTap: () {
         showModalBottomSheet(
           shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(30),
+            ),
           ),
           context: context,
           isScrollControlled: true,
@@ -170,7 +172,7 @@ class _DeleteData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: EdgeInsets.all(displaySize.width/35),
       child: FlatButton(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
@@ -180,7 +182,7 @@ class _DeleteData extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.all(15),
+              padding: EdgeInsets.symmetric(vertical:displaySize.width/25),
               child: Text(
                 'リセットする',
                 style: TextStyle(

@@ -20,12 +20,12 @@ class TotalRecordPage extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: displaySize.width / 5.5,
-              vertical: 10,
+              vertical: displaySize.width/35,
             ),
             child: _TopCardSwiper(),
           ),
-          const SizedBox(
-            height: 10,
+          SizedBox(
+            height: displaySize.width/35,
           ),
           _CategoryGrid(),
           SizedBox(
@@ -100,7 +100,7 @@ class _TopAlignCard extends StatelessWidget {
           size: displaySize.width / 10,
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+          padding: EdgeInsets.symmetric(horizontal: displaySize.width/70),
           child: Text(
             dataValue,
             style: TextStyle(
@@ -133,8 +133,8 @@ class _CategoryGrid extends StatelessWidget {
         (index) {
           if (categoryView[index]) {
             return Padding(
-              padding: const EdgeInsets.only(
-                bottom: 10.0,
+              padding: EdgeInsets.only(
+                bottom: displaySize.width/35,
               ),
               child: _GridCard(index: index),
             );
@@ -205,7 +205,7 @@ class _CategoryDataWidget extends StatelessWidget {
     int icon = list[0];
     String title = list[1];
     return Padding(
-      padding: const EdgeInsets.only(top: 5),
+      padding: EdgeInsets.only(top: displaySize.width/70),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -213,15 +213,15 @@ class _CategoryDataWidget extends StatelessWidget {
             IconData(icon, fontFamily: 'MaterialIcons'),
             size: displaySize.width / 15,
           ),
-          const SizedBox(
-            width: 5,
+          SizedBox(
+            width: displaySize.width/70,
           ),
           Expanded(
             child: Text(
               title,
               textAlign: TextAlign.end,
               softWrap: false,
-              overflow: TextOverflow.fade,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 color: Colors.grey,
                 fontSize: FontSize.xsmall,

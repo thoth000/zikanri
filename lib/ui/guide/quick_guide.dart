@@ -129,7 +129,7 @@ class _ActiveTimer extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
         ),
-        padding: const EdgeInsets.all(10),
+        padding: EdgeInsets.all(displaySize.width/35),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -149,13 +149,13 @@ class _ActiveTimer extends StatelessWidget {
                           size: displaySize.width / 10,
                           color: Colors.grey,
                         ),
-                        const SizedBox(
-                          width: 10,
+                        SizedBox(
+                          width: displaySize.width/35
                         ),
                         Flexible(
                           child: Text(
                             '活動タイトル',
-                            overflow: TextOverflow.fade,
+                            overflow: TextOverflow.ellipsis,
                             softWrap: false,
                             style: TextStyle(
                               fontSize: FontSize.small,
@@ -299,7 +299,7 @@ class _ClosePageButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return RaisedButton(
       child: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: EdgeInsets.all(displaySize.width/35),
         child: Text(
           'クイックガイドを閉じる',
           style: TextStyle(

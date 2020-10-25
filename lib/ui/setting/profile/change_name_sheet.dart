@@ -5,6 +5,7 @@ import 'package:zikanri/config.dart';
 import 'package:zikanri/controller/theme_notifier.dart';
 //my files
 import 'package:zikanri/controller/user_data_notifier.dart';
+import 'package:zikanri/ui/parts/bottom_sheet_bar.dart';
 
 class ChangeNameSheet extends StatefulWidget {
   @override
@@ -49,20 +50,12 @@ class _ChangeNameSheetState extends State<ChangeNameSheet> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            margin: EdgeInsets.all(10),
-            height: 5,
-            width: 70,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(500),
-              color: Colors.grey,
-            ),
-          ),
-          const SizedBox(
-            height: 20,
+          BottomSheetBar(),
+          SizedBox(
+            height: displaySize.width/17,
           ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 15),
+            margin: EdgeInsets.symmetric(horizontal: displaySize.width/25),
             child: TextField(
               autofocus: true,
               controller: nameController,
@@ -99,8 +92,8 @@ class _ChangeNameSheetState extends State<ChangeNameSheet> {
               ),
             ),
           ),
-          const SizedBox(
-            height: 15,
+          SizedBox(
+            height: displaySize.width/25,
           ),
           Container(
             margin: EdgeInsets.all(15),

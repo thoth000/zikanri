@@ -8,6 +8,7 @@ import 'package:zikanri/ui/category/category.dart';
 import 'package:zikanri/controller/record_notifier.dart';
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
+import 'package:zikanri/ui/parts/bottom_sheet_bar.dart';
 import 'package:zikanri/ui/record/notification.dart';
 import 'package:zikanri/config.dart';
 
@@ -34,21 +35,13 @@ class RecordBottomSheet extends StatelessWidget {
       child: FractionallySizedBox(
         heightFactor: 0.7,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
+          padding: EdgeInsets.symmetric(
+            horizontal: displaySize.width / 17,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Container(
-                height: 5,
-                width: 70,
-                margin: const EdgeInsets.all(12.5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: Colors.grey,
-                ),
-              ),
+              BottomSheetBar(),
               Text(
                 '記録の追加',
                 style: TextStyle(
@@ -56,12 +49,12 @@ class RecordBottomSheet extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              const SizedBox(
-                height: 20,
+              SizedBox(
+                height: displaySize.width / 17,
               ),
               _SelectModeWidget(),
-              const SizedBox(
-                height: 20,
+              SizedBox(
+                height: displaySize.width / 17,
               ),
               const Divider(
                 height: 1,
@@ -73,28 +66,28 @@ class RecordBottomSheet extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        const SizedBox(
-                          height: 10,
+                        SizedBox(
+                          height: displaySize.width / 35,
                         ),
                         Text(
                           'タイトル',
                           style: _headlineStyle,
                         ),
-                        const SizedBox(
-                          height: 10,
+                        SizedBox(
+                          height: displaySize.width / 70,
                         ),
                         _TitleFieldWidget(),
                       ],
                     ),
                     _ActivityInfoWidget(),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: displaySize.width / 17,
                     ),
                     Center(
                       child: _SaveActivityButton(),
                     ),
-                    const Divider(
-                      height: 30,
+                    Divider(
+                      height: displaySize.width / 17,
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,8 +96,8 @@ class RecordBottomSheet extends StatelessWidget {
                           'カテゴリー',
                           style: _headlineStyle,
                         ),
-                        const SizedBox(
-                          height: 5,
+                        SizedBox(
+                          height: displaySize.width / 70,
                         ),
                         _SelectCategoryWidget(),
                       ],
@@ -307,15 +300,15 @@ class _ActivityInfoWidget extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const SizedBox(
-                height: 25,
+              SizedBox(
+                height: displaySize.width / 20,
               ),
               Text(
                 '時間(分)',
                 style: _headlineStyle,
               ),
-              const SizedBox(
-                height: 5,
+              SizedBox(
+                height: displaySize.width / 70,
               ),
               SizedBox(
                 height: displaySize.width / 7,
@@ -327,15 +320,15 @@ class _ActivityInfoWidget extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const SizedBox(
-                height: 25,
+              SizedBox(
+                height: displaySize.width / 20,
               ),
               Text(
                 '時間の価値',
                 style: _headlineStyle,
               ),
-              const SizedBox(
-                height: 5,
+              SizedBox(
+                height: displaySize.width / 70,
               ),
               SizedBox(
                 width: displaySize.width / 2.5,
@@ -360,8 +353,8 @@ class _ActivityInfoWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 5,
+              SizedBox(
+                height: displaySize.width / 70,
               ),
             ],
           ),
@@ -541,137 +534,155 @@ class _SaveActivityButton extends StatelessWidget {
 class _SelectCategoryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final userData = Provider.of<UserDataNotifier>(context);
+    return Wrap(
+      children: List.generate(
+        userData.categories.length + 1,
+        (index) {
+          if (index == userData.categories.length) {
+            return _CategoryEditButton();
+          } else {
+            if (userData.categoryView[index]) {
+              return _SelectCategoryButton(index: index);
+            } else {
+              return const SizedBox();
+            }
+          }
+        },
+      ),
+    );
+  }
+}
+
+class _SelectCategoryButton extends StatelessWidget {
+  _SelectCategoryButton({@required this.index});
+  final int index;
+  @override
+  Widget build(BuildContext context) {
     //controller
     final userData = Provider.of<UserDataNotifier>(context);
     final theme = Provider.of<ThemeNotifier>(context);
     final record = Provider.of<RecordNotifier>(context);
     //style
     Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
-    //widget
-    return Wrap(
-      children: <Widget>[
-        for (int i = 0; i < userData.categories.length; i++)
-          (userData.categoryView[i])
-              ? Padding(
-                  padding: const EdgeInsets.only(
-                    right: 5,
-                    bottom: 10,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        height: displaySize.width / 6.5,
-                        width: displaySize.width / 6.5,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            color: (record.categoryIndex == i)
-                                ? color
-                                : Colors.grey,
-                            width: (record.categoryIndex == i) ? 3 : 1.5,
-                          ),
-                        ),
-                        child: Stack(
-                          children: <Widget>[
-                            Center(
-                              child: Icon(
-                                IconData(
-                                  userData.categories[i][0],
-                                  fontFamily: 'MaterialIcons',
-                                ),
-                                color: (theme.isDark)
-                                    ? Colors.white
-                                    : Colors.black,
-                                size: displaySize.width / 15,
-                              ),
-                            ),
-                            SizedBox(
-                              height: displaySize.width / 6.5,
-                              width: displaySize.width / 6.5,
-                              child: FlatButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                    10,
-                                  ),
-                                ),
-                                child: const SizedBox(),
-                                color: Colors.transparent,
-                                onPressed: () => record.changeCategoryIndex(i),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: displaySize.width / 5.1,
-                        child: Text(
-                          userData.categories[i][1],
-                          textAlign: TextAlign.center,
-                          softWrap: false,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: FontSize.xxsmall,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              : const SizedBox(),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(
-                width: displaySize.width / 5,
+    return Padding(
+      padding: EdgeInsets.only(
+        right: displaySize.width / 70,
+        bottom: displaySize.width / 35,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            height: displaySize.width / 6.5,
+            width: displaySize.width / 6.5,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: (record.categoryIndex == index) ? color : Colors.grey,
+                width: (record.categoryIndex == index) ? 3 : 1.5,
               ),
-              Container(
-                height: displaySize.width / 6.5,
-                width: displaySize.width / 6.5,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(
-                    color: Colors.grey,
-                    width: 1,
+            ),
+            child: Stack(
+              children: <Widget>[
+                Center(
+                  child: Icon(
+                    IconData(
+                      userData.categories[index][0],
+                      fontFamily: 'MaterialIcons',
+                    ),
+                    color: (theme.isDark) ? Colors.white : Colors.black,
+                    size: displaySize.width / 15,
                   ),
                 ),
-                child: Stack(
-                  children: <Widget>[
-                    Center(
-                      child: Icon(
-                        Icons.more_horiz,
-                        color: (theme.isDark) ? Colors.white : Colors.black,
-                        size: displaySize.width / 15,
-                      ),
+                SizedBox(
+                  height: displaySize.width / 6.5,
+                  width: displaySize.width / 6.5,
+                  child: FlatButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    SizedBox(
-                      height: displaySize.width / 6.5,
-                      width: displaySize.width / 6.5,
-                      child: FlatButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: SizedBox(),
-                        color: Colors.transparent,
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CategoryPage(),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
+                    child: const SizedBox(),
+                    color: Colors.transparent,
+                    onPressed: () => record.changeCategoryIndex(index),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+          SizedBox(
+            width: displaySize.width / 5.1,
+            child: Text(
+              userData.categories[index][1],
+              textAlign: TextAlign.center,
+              softWrap: false,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: FontSize.xxsmall,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CategoryEditButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeNotifier>(context, listen: false);
+    return Padding(
+      padding: EdgeInsets.only(bottom: displaySize.width / 17),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          SizedBox(
+            width: displaySize.width / 5,
+          ),
+          Container(
+            height: displaySize.width / 6.5,
+            width: displaySize.width / 6.5,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: Colors.grey,
+                width: 1.5,
+              ),
+            ),
+            child: Stack(
+              children: <Widget>[
+                Center(
+                  child: Icon(
+                    Icons.more_horiz,
+                    color: (theme.isDark) ? Colors.white : Colors.black,
+                    size: displaySize.width / 15,
+                  ),
+                ),
+                SizedBox(
+                  height: displaySize.width / 6.5,
+                  width: displaySize.width / 6.5,
+                  child: FlatButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: SizedBox(),
+                    color: Colors.transparent,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CategoryPage(),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

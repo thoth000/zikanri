@@ -21,55 +21,56 @@ class FinishActivitySheet extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: displaySize.width / 20),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          BottomSheetBar(),
-          Text(
-            '活動の記録',
-            style: TextStyle(
-              fontSize: FontSize.large,
-              fontWeight: FontWeight.w700,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        BottomSheetBar(),
+        Text(
+          '活動の記録',
+          style: TextStyle(
+            fontSize: FontSize.large,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        SizedBox(
+          height: displaySize.width / 25,
+        ),
+        const Divider(
+          height: 1,
+          thickness: 1,
+        ),
+        Column(
+          children: [
+            SizedBox(
+              height: displaySize.width / 25,
             ),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          const Divider(
-            height: 1,
-            thickness: 1,
-          ),
-          SizedBox(
-            height: displaySize.width / 1.35,
-            child: ListView(
+            _ActivityInfo(index: index),
+            SizedBox(
+              height: displaySize.width / 20,
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                const SizedBox(
-                  height: 15,
-                ),
-                _ActivityInfo(index: index),
                 SizedBox(
-                  height: displaySize.width / 30,
+                  width: displaySize.width / 30,
                 ),
                 _SelectValueBlocList(),
-                SizedBox(
-                  height: displaySize.width / 15,
-                ),
-                Center(
-                  child: _RecordActivityButton(
-                    index: index,
-                  ),
+                Spacer(),
+                _RecordActivityButton(
+                  index: index,
                 ),
                 SizedBox(
-                  height: displaySize.width / 15,
+                  width: displaySize.width / 30,
                 ),
               ],
             ),
-          ),
-        ],
-      ),
+            SizedBox(
+              height: displaySize.width / 15,
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
@@ -87,47 +88,50 @@ class _ActivityInfo extends StatelessWidget {
         : userData.activities[index];
     String title = activity[2];
     int categoryIndex = activity[3];
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "活動の情報",
-          style: TextStyle(
-            fontSize: FontSize.small,
-            fontWeight: FontWeight.w700,
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: displaySize.width / 30),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "活動情報",
+            style: TextStyle(
+              fontSize: FontSize.midium,
+              fontWeight: FontWeight.w700,
+            ),
           ),
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Row(
-          children: [
-            SizedBox(
-              width: displaySize.width / 50,
-            ),
-            Icon(
-              IconData(
-                userData.categories[categoryIndex][0],
-                fontFamily: 'MaterialIcons',
+          SizedBox(
+            height: displaySize.width/70,
+          ),
+          Row(
+            children: [
+              SizedBox(
+                width: displaySize.width / 50,
               ),
-              size: displaySize.width / 6,
-            ),
-            SizedBox(
-              width: displaySize.width / 50,
-            ),
-            Flexible(
-              child: Text(
-                title,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: FontSize.large,
+              Icon(
+                IconData(
+                  userData.categories[categoryIndex][0],
+                  fontFamily: 'MaterialIcons',
+                ),
+                size: displaySize.width / 6,
+              ),
+              SizedBox(
+                width: displaySize.width / 40,
+              ),
+              Flexible(
+                child: Text(
+                  title,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: FontSize.midium,
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-      ],
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
@@ -135,19 +139,37 @@ class _ActivityInfo extends StatelessWidget {
 class _SelectValueBlocList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        _SelectValueBloc(
-          boolean: false,
-        ),
-        SizedBox(
-          width: displaySize.width / 10,
-        ),
-        _SelectValueBloc(
-          boolean: true,
-        ),
-      ],
+    return Container(
+      width: displaySize.width / 2.3,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "時間の価値",
+            style: TextStyle(
+              fontSize: FontSize.midium,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          SizedBox(
+            height: displaySize.width/70,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              _SelectValueBloc(
+                boolean: false,
+              ),
+              SizedBox(
+                width: displaySize.width / 15,
+              ),
+              _SelectValueBloc(
+                boolean: true,
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
@@ -223,7 +245,7 @@ class _RecordActivityButton extends StatelessWidget {
     int time = activity[5];
     return Container(
       height: displaySize.width / 6.5,
-      width: displaySize.width,
+      width: displaySize.width / 2.3,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(500),
         border: Border.all(

@@ -112,13 +112,13 @@ class _AchieveBody extends StatelessWidget {
     final achieveController = Provider.of<AchieveController>(context);
     return Expanded(
       child: (achieveController.isRecord)
-          ? _AchiveMiniteWidget()
-          : _AchiveDayWidget(),
+          ? _AchieveMiniteWidget()
+          : _AchieveDayWidget(),
     );
   }
 }
 
-class _AchiveMiniteWidget extends StatelessWidget {
+class _AchieveMiniteWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context);
@@ -126,8 +126,8 @@ class _AchiveMiniteWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          const SizedBox(
-            height: 10,
+          SizedBox(
+            height: displaySize.width/35,
           ),
           Text(
             '記録時間',
@@ -140,52 +140,27 @@ class _AchiveMiniteWidget extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
           ),
-          for (int i = 0; i < achiveM.length; i++)
-            achive(i, userData.checkM[i]),
+          _AchieveMinuteList(),
         ],
-      ),
-    );
-  }
-
-  Widget achive(int i, check) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: displaySize.width / 20,
-        vertical: 10,
-      ),
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: SizedBox(
-          height: displaySize.width / 4,
-          width: displaySize.width / 1.2,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: displaySize.width / 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  achiveM[i].toString() + '分',
-                  style: TextStyle(
-                    fontSize: FontSize.large,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                _ColorBox(
-                  index: i * 2 + 3,
-                  isGetTheme: check,
-                ),
-              ],
-            ),
-          ),
-        ),
       ),
     );
   }
 }
 
-class _AchiveDayWidget extends StatelessWidget {
+class _AchieveMinuteList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final userData = Provider.of<UserDataNotifier>(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: List.generate(achiveM.length, (index) {
+        return _AchieveBox(index: index, check: userData.checkM[index], tail: '分');
+      }),
+    );
+  }
+}
+
+class _AchieveDayWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context, listen: false);
@@ -193,8 +168,8 @@ class _AchiveDayWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          const SizedBox(
-            height: 10,
+          SizedBox(
+            height: displaySize.width/35,
           ),
           Text(
             'ログイン日数',
@@ -209,18 +184,39 @@ class _AchiveDayWidget extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
           ),
-          for (int i = 0; i < achiveD.length; i++)
-            achive(i, userData.checkD[i]),
+          _AchieveDayList(),
         ],
       ),
     );
   }
+}
 
-  Widget achive(int i, check) {
+class _AchieveDayList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final userData = Provider.of<UserDataNotifier>(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: List.generate(achiveD.length, (index) {
+        return _AchieveBox(index: index, check: userData.checkD[index], tail: '日');
+      }),
+    );
+  }
+}
+
+class _AchieveBox extends StatelessWidget {
+  _AchieveBox({@required this.index, @required this.check, @required this.tail});
+  final int index;
+  final bool check;
+  final String tail;
+  @override
+  Widget build(BuildContext context) {
+    final int colorIndex = (tail=='分')?index*2+3:index*2+2;
+    final String text = (tail=='分')?achiveM[index].toString()+tail:achiveD[index].toString()+tail;
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: displaySize.width / 20,
-        vertical: 10,
+        vertical: displaySize.width/35,
       ),
       child: Card(
         shape: RoundedRectangleBorder(
@@ -235,14 +231,14 @@ class _AchiveDayWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
-                  achiveD[i].toString() + '日',
+                  text,
                   style: TextStyle(
                     fontSize: FontSize.large,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
                 _ColorBox(
-                  index: i * 2 + 2,
+                  index: colorIndex,
                   isGetTheme: check,
                 ),
               ],

@@ -42,15 +42,15 @@ class ShortCutSheet extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
-            const SizedBox(
-              height: 10,
+            SizedBox(
+              height: displaySize.width/35,
             ),
             _MoveShortCutEditButton(),
-            const SizedBox(
-              height: 5,
+            SizedBox(
+              height: displaySize.width/70,
             ),
-            const Divider(
-              height: 10,
+            Divider(
+              height: displaySize.width/35,
             ),
             _ShortCutList(),
           ],
@@ -123,7 +123,7 @@ class _ShortCut extends StatelessWidget {
     final Color color =
         (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
+      padding: EdgeInsets.symmetric(vertical: displaySize.width/70),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
@@ -166,13 +166,13 @@ class _ShortCut extends StatelessWidget {
                           color: (itemList[3]) ? color : Colors.grey,
                           size: displaySize.width / 10,
                         ),
-                        const SizedBox(
-                          width: 10,
+                        SizedBox(
+                          width: displaySize.width/35,
                         ),
                         Flexible(
                           child: Text(
                             itemList[1],
-                            overflow: TextOverflow.fade,
+                            overflow: TextOverflow.ellipsis,
                             softWrap: false,
                             style: TextStyle(
                               fontSize: FontSize.xsmall,
@@ -182,8 +182,8 @@ class _ShortCut extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    width: 10,
+                  SizedBox(
+                    width: displaySize.width/35,
                   ),
                   Container(
                     padding: EdgeInsets.all(5),

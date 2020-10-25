@@ -11,12 +11,12 @@ class ThisMonthWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context);
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: EdgeInsets.all(displaySize.width/35),
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         elevation: 5,
         child: Container(
-          padding: const EdgeInsets.all(10),
+          padding: EdgeInsets.all(displaySize.width/35),
           height: displaySize.width / 2.2,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

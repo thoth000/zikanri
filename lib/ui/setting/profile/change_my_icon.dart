@@ -23,7 +23,7 @@ class ChangeMyIconPage extends StatelessWidget {
     return Scaffold(
       appBar: _AppBar(),
       body: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: EdgeInsets.all(10),
         child: Wrap(
           children: List.generate(
             newIconList.length,

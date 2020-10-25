@@ -15,7 +15,7 @@ class TodayWidget extends StatelessWidget {
     final Color color =
         (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: EdgeInsets.all(displaySize.width/35),
       child: Card(
         elevation: 5,
         shape: RoundedRectangleBorder(
@@ -31,13 +31,13 @@ class TodayWidget extends StatelessWidget {
             ),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.all(displaySize.width/35),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 TodayDataWidget(),
-                const Divider(
-                  height: 20,
+                Divider(
+                  height: displaySize.width/17,
                 ),
                 Text(
                   '記録',
@@ -46,8 +46,8 @@ class TodayWidget extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: displaySize.width/35,
                 ),
                 TodayDoneList(),
                 Center(

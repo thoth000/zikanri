@@ -16,7 +16,7 @@ class CategoryPage extends StatelessWidget {
       body: ListView(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.symmetric(horizontal: displaySize.width / 35),
             child: Column(
               children: List<Widget>.generate(
                 7,
@@ -42,6 +42,7 @@ class _CategoryCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Card(
+            elevation: 3,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
@@ -61,54 +62,40 @@ class _CategoryDataWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context);
     return Container(
+      height: displaySize.width / 3.4,
       width: displaySize.width / 1.7,
-      padding: const EdgeInsets.all(10),
+      padding: EdgeInsets.all(displaySize.width / 35),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                (index).toString() + '.',
-                style: TextStyle(
-                  fontSize: FontSize.midium,
-                  fontWeight: FontWeight.w700,
-                ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: displaySize.width / 8,
+            width: displaySize.width / 8,
+            child: Icon(
+              IconData(
+                userData.categories[index][0],
+                fontFamily: 'MaterialIcons',
               ),
-            ],
+              size: displaySize.width / 8,
+            ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              SizedBox(
-                  height: displaySize.width / 8,
-                  width: displaySize.width / 8,
-                  child: Icon(
-                    IconData(userData.categories[index][0],
-                        fontFamily: 'MaterialIcons'),
-                    size: displaySize.width / 8,
-                  )),
-              const SizedBox(
-                width: 10,
+          SizedBox(
+            width: displaySize.width / 35,
+          ),
+          Flexible(
+            child: Text(
+              userData.categories[index][1],
+              maxLines: 4,
+              softWrap: true,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: FontSize.midium,
+                fontWeight: FontWeight.w700,
               ),
-              Flexible(
-                child: Text(
-                  userData.categories[index][1],
-                  maxLines: 2,
-                  softWrap: true,
-                  overflow: TextOverflow.fade,
-                  style: TextStyle(
-                    fontSize: FontSize.small,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
         ],
       ),

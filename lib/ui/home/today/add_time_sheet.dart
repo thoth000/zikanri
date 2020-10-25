@@ -59,15 +59,15 @@ class AddSheet extends StatelessWidget {
             ),
             child: _TimeFieldWidget(),
           ),
-          const SizedBox(
-            height: 15,
+          SizedBox(
+            height: displaySize.width/25,
           ),
           Padding(
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.all(displaySize.width/35),
             child: _AddTimeButton(),
           ),
-          const SizedBox(
-            height: 15,
+          SizedBox(
+            height: displaySize.width/25,
           ),
         ],
       ),

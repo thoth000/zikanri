@@ -23,16 +23,16 @@ class CategoryDataPage extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: displaySize.width / 20),
         child: Column(
           children: <Widget>[
-            const SizedBox(
-              height: 10,
+            SizedBox(
+              height: displaySize.width/35,
             ),
             _CategoryInfo(index: index),
-            const SizedBox(
-              height: 10,
+            SizedBox(
+              height: displaySize.width/35,
             ),
             _CircularChart(index: index),
-            const SizedBox(
-              height: 10,
+            SizedBox(
+              height: displaySize.width/35,
             ),
             _CategoryRecordData(index: index),
           ],
@@ -57,8 +57,8 @@ class _CategoryInfo extends StatelessWidget {
           IconData(icon, fontFamily: 'MaterialIcons'),
           size: displaySize.width / 10,
         ),
-        const SizedBox(
-          width: 10,
+        SizedBox(
+          width: displaySize.width/35,
         ),
         Flexible(
           child: Text(

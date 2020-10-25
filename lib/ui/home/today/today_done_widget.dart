@@ -17,15 +17,15 @@ class TodayDoneWidget extends StatelessWidget {
     final color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     final List itemList = userData.todayDoneList[index];
     return Padding(
-      padding: const EdgeInsets.only(
-        top: 10,
-        left: 10,
+      padding: EdgeInsets.only(
+        top: displaySize.width/35,
+        left: displaySize.width/35,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(right: 10),
+            padding: EdgeInsets.only(right: displaySize.width/35),
             child: Icon(
               IconData(
                 userData.categories[itemList[0]][0],

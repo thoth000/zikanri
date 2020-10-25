@@ -201,8 +201,8 @@ class __UserIDFieldState extends State<_UserIDField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 15,
+      padding: EdgeInsets.symmetric(
+        horizontal: displaySize.width/25,
       ),
       child: TextField(
         controller: userIDController,
@@ -211,8 +211,8 @@ class __UserIDFieldState extends State<_UserIDField> {
             borderRadius: BorderRadius.circular(5),
           ),
           contentPadding: EdgeInsets.symmetric(
-            vertical: 10,
-            horizontal: 10,
+            vertical: displaySize.width/35,
+            horizontal: displaySize.width/35,
           ),
           labelText: 'ユーザーID',
         ),
@@ -241,8 +241,8 @@ class __CodeFieldState extends State<_CodeField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 15,
+      padding: EdgeInsets.symmetric(
+        horizontal: displaySize.width/25,
       ),
       child: TextField(
         controller: codeController,
@@ -251,8 +251,8 @@ class __CodeFieldState extends State<_CodeField> {
             borderRadius: BorderRadius.circular(5),
           ),
           contentPadding: EdgeInsets.symmetric(
-            vertical: 10,
-            horizontal: 10,
+            vertical: displaySize.width/35,
+            horizontal: displaySize.width/35,
           ),
           labelText: 'バックアップコード',
         ),

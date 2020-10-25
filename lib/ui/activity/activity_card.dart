@@ -22,13 +22,13 @@ class ActivityCard extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
         ),
-        padding: const EdgeInsets.all(10),
+        padding: EdgeInsets.all(displaySize.width/35),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             _ActivityInfo(index: index),
             SizedBox(
-              height: displaySize.width / 36,
+              height: displaySize.width / 35,
             ),
             _ActivityActionButtonList(index: index),
           ],

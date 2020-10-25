@@ -53,8 +53,8 @@ class _ShortCutItem extends StatelessWidget {
         (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return Row(
       children: <Widget>[
-        const SizedBox(
-          width: 5,
+        SizedBox(
+          width: displaySize.width/70,
         ),
         Expanded(
           child: Card(
@@ -69,11 +69,11 @@ class _ShortCutItem extends StatelessWidget {
               ),
               title: Text(
                 userData.shortCuts[index][1],
-                overflow: TextOverflow.fade,
+                overflow: TextOverflow.ellipsis,
                 softWrap: false,
               ),
               trailing: Container(
-                padding: const EdgeInsets.all(5),
+                padding: EdgeInsets.all(displaySize.width/70),
                 decoration: BoxDecoration(
                     border: Border.all(
                       color: Colors.grey[300],
@@ -103,8 +103,8 @@ class _ShortCutItem extends StatelessWidget {
             );
           },
         ),
-        const SizedBox(
-          width: 5,
+        SizedBox(
+          width: displaySize.width/70,
         ),
       ],
     );

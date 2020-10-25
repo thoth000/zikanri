@@ -19,26 +19,26 @@ class HomePage extends StatelessWidget {
       children: <Widget>[
         _NoticeGuide(),
         TotalScoreWidget(),
-        const Divider(
-          height: 20,
+        Divider(
+          height: displaySize.width / 17,
           thickness: 1,
-          indent: 10,
-          endIndent: 10,
+          indent: displaySize.width / 35,
+          endIndent: displaySize.width / 35,
         ),
         MinuteMeter(),
         Padding(
-          padding: const EdgeInsets.all(10),
+          padding: EdgeInsets.all(displaySize.width / 35),
           child: _DataInfoText(
             today: today,
             dataTitle: '今月の情報',
           ),
         ),
         ThisMonthWidget(),
-        const SizedBox(
-          height: 20,
+        SizedBox(
+          height: displaySize.width / 17,
         ),
         Padding(
-          padding: const EdgeInsets.all(10),
+          padding: EdgeInsets.all(displaySize.width/35),
           child: _DataInfoText(
             today: today,
             dataTitle: '今日の情報',

@@ -26,22 +26,22 @@ class ThemeSettingPage extends StatelessWidget {
           SizedBox(
             height: displaySize.width / 20,
           ),
-          const Divider(
-            height: 30,
+          Divider(
+            height: displaySize.width/12,
             thickness: 1,
-            indent: 10,
-            endIndent: 10,
+            indent: displaySize.width/35,
+            endIndent: displaySize.width/35,
           ),
           _DarkModeChanger(),
-          const Divider(
-            height: 30,
+          Divider(
+            height: displaySize.width/12,
             thickness: 1,
-            indent: 10,
-            endIndent: 10,
+            indent: displaySize.width/35,
+            endIndent: displaySize.width/35,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 10,
+            padding: EdgeInsets.symmetric(
+              horizontal: displaySize.width/35,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,8 +53,8 @@ class ThemeSettingPage extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: displaySize.width/35,
                 ),
                 Wrap(
                   children: List.generate(
@@ -159,7 +159,7 @@ class _DarkModeChanger extends StatelessWidget {
     return Container(
       height: displaySize.width / 9,
       width: displaySize.width,
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: EdgeInsets.symmetric(horizontal: displaySize.width/35),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -195,7 +195,7 @@ class _ThemeChanger extends StatelessWidget {
     final userData = Provider.of<UserDataNotifier>(context);
     if (userData.myColors[i]) {
       return Padding(
-        padding: const EdgeInsets.all(10),
+        padding: EdgeInsets.all(displaySize.width/35),
         child: Container(
           height: displaySize.width / 8,
           width: displaySize.width / 8,

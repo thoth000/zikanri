@@ -1,11 +1,13 @@
 //packages
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 //my files
 import 'package:zikanri/controller/theme_notifier.dart';
 import 'package:zikanri/controller/user_data_notifier.dart';
 import 'package:zikanri/config.dart';
+import 'package:zikanri/ui/parts/bottom_sheet_bar.dart';
 
 class EditNameSheet extends StatefulWidget {
   const EditNameSheet({this.name, this.index});
@@ -44,15 +46,7 @@ class _EditNameSheetState extends State<EditNameSheet> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            height: 5,
-            width: 70,
-            margin: const EdgeInsets.all(12.5),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
-              color: Colors.grey,
-            ),
-          ),
+          BottomSheetBar(),
           SizedBox(
             height: displaySize.width / 50,
           ),
@@ -89,7 +83,7 @@ class _EditNameSheetState extends State<EditNameSheet> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.all(displaySize.width/35),
             child: Container(
               height: displaySize.width / 6.5,
               decoration: BoxDecoration(
@@ -101,23 +95,17 @@ class _EditNameSheetState extends State<EditNameSheet> {
               ),
               child: FlatButton(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
+                  borderRadius: BorderRadius.circular(500),
                 ),
                 color: Colors.transparent,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(displaySize.width / 100),
-                      child: Text(
-                        '保存する',
-                        style: TextStyle(
-                          fontSize: FontSize.small,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
+                child: Center(
+                  child: Text(
+                    '保存する',
+                    style: TextStyle(
+                      fontSize: FontSize.small,
+                      fontWeight: FontWeight.w700,
                     ),
-                  ],
+                  ),
                 ),
                 onPressed: () {
                   userData.editCategoryTitle(widget.index, controller.text);

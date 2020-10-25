@@ -191,7 +191,7 @@ class __UserIDFieldState extends State<_UserIDField> {
     final Color themeColor =
         (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      padding: EdgeInsets.symmetric(horizontal: displaySize.width/25),
       child: TextField(
         controller: userIDController,
         cursorColor: themeColor,
@@ -200,8 +200,8 @@ class __UserIDFieldState extends State<_UserIDField> {
             borderRadius: BorderRadius.circular(5),
           ),
           contentPadding: EdgeInsets.symmetric(
-            vertical: 10,
-            horizontal: 10,
+            vertical: displaySize.width/35,
+            horizontal: displaySize.width/35,
           ),
           labelText: 'ユーザーID',
           errorText:
@@ -240,7 +240,7 @@ class __CodeFieldState extends State<_CodeField> {
     final Color themeColor =
         (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      padding: EdgeInsets.symmetric(horizontal: displaySize.width/25),
       child: TextField(
         controller: codeController,
         cursorColor: themeColor,
@@ -249,8 +249,8 @@ class __CodeFieldState extends State<_CodeField> {
             borderRadius: BorderRadius.circular(5),
           ),
           contentPadding: EdgeInsets.symmetric(
-            vertical: 10,
-            horizontal: 10,
+            vertical: displaySize.width/35,
+            horizontal: displaySize.width/35,
           ),
           labelText: 'バックアップコード',
           errorText: (copyController.checkCode || !copyController.isTapCode)

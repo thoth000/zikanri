@@ -19,15 +19,13 @@ class ActivityList extends StatelessWidget {
     final int index = controller.index;
     //widget
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: EdgeInsets.symmetric(horizontal: displaySize.width/35,),
       child: Card(
         elevation: 5,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(30),
-            ),
+            borderRadius: BorderRadius.circular(30),
             border: Border.all(
               color: color,
               width: 2,
@@ -35,15 +33,15 @@ class ActivityList extends StatelessWidget {
             color: Colors.transparent,
           ),
           child: Padding(
-            padding: const EdgeInsets.only(
-              top: 10,
-              left: 20,
-              right: 20,
+            padding: EdgeInsets.only(
+              top: displaySize.width/35,
+              left: displaySize.width/17,
+              right: displaySize.width/17,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const SizedBox(height: 10),
+                SizedBox(height: displaySize.width/35),
                 Text(
                   '記録',
                   style: TextStyle(
@@ -51,8 +49,8 @@ class ActivityList extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                const Divider(
-                  height: 5,
+                Divider(
+                  height: displaySize.width/70,
                 ),
                 _ActivityList(index: index),
                 _NotifyTextWidget(index: index),

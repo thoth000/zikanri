@@ -45,11 +45,11 @@ class SettingPage extends StatelessWidget {
       color: theme.isDark ? null : const Color(0XFFe7ecf0),
       child: ListView(
         children: <Widget>[
-          const SizedBox(
-            height: 30,
+          SizedBox(
+            height: displaySize.width/12,
           ),
           Padding(
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.all(displaySize.width/35),
             child: Text(
               '基本機能',
               style: TextStyle(
@@ -180,11 +180,11 @@ class SettingPage extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(
-            height: 30,
+          SizedBox(
+            height: displaySize.width/12,
           ),
           Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: EdgeInsets.all(displaySize.width/35),
             child: Text(
               'その他',
               style: TextStyle(

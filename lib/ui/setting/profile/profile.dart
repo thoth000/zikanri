@@ -21,8 +21,8 @@ class ProfileSettingPage extends StatelessWidget {
       ),
       body: ListView(
         children: <Widget>[
-          const SizedBox(
-            height: 10,
+          SizedBox(
+            height: displaySize.width/35,
           ),
           _MyIconWidget(
             themeColor: color,

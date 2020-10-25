@@ -302,11 +302,11 @@ class _ShortCut extends StatelessWidget {
         ),
         title: Text(
           'ショートカット時短',
-          overflow: TextOverflow.fade,
+          overflow: TextOverflow.ellipsis,
           softWrap: false,
         ),
         trailing: Container(
-          padding: const EdgeInsets.all(5),
+          padding: EdgeInsets.all(displaySize.width/70),
           decoration: BoxDecoration(
             border: Border.all(
               color: Colors.grey[300],
@@ -385,7 +385,7 @@ class _ClosePageButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return RaisedButton(
       child: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: EdgeInsets.all(displaySize.width/35),
         child: Text(
           '機能ガイドを閉じる',
           style: TextStyle(
