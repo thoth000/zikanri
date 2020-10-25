@@ -172,7 +172,7 @@ class _DeleteData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(displaySize.width/35),
+      padding: EdgeInsets.all(displaySize.width / 35),
       child: FlatButton(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
@@ -182,7 +182,7 @@ class _DeleteData extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(vertical:displaySize.width/25),
+              padding: EdgeInsets.symmetric(vertical: displaySize.width / 25),
               child: Text(
                 'リセットする',
                 style: TextStyle(

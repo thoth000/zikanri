@@ -306,7 +306,7 @@ class _ShortCut extends StatelessWidget {
           softWrap: false,
         ),
         trailing: Container(
-          padding: EdgeInsets.all(displaySize.width/70),
+          padding: EdgeInsets.all(displaySize.width / 70),
           decoration: BoxDecoration(
             border: Border.all(
               color: Colors.grey[300],
@@ -385,7 +385,7 @@ class _ClosePageButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return RaisedButton(
       child: Padding(
-        padding: EdgeInsets.all(displaySize.width/35),
+        padding: EdgeInsets.all(displaySize.width / 35),
         child: Text(
           '機能ガイドを閉じる',
           style: TextStyle(

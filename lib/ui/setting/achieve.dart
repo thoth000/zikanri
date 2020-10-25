@@ -127,7 +127,7 @@ class _AchieveMiniteWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           SizedBox(
-            height: displaySize.width/35,
+            height: displaySize.width / 35,
           ),
           Text(
             '記録時間',
@@ -154,7 +154,8 @@ class _AchieveMinuteList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: List.generate(achiveM.length, (index) {
-        return _AchieveBox(index: index, check: userData.checkM[index], tail: '分');
+        return _AchieveBox(
+            index: index, check: userData.checkM[index], tail: '分');
       }),
     );
   }
@@ -169,7 +170,7 @@ class _AchieveDayWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           SizedBox(
-            height: displaySize.width/35,
+            height: displaySize.width / 35,
           ),
           Text(
             'ログイン日数',
@@ -198,25 +199,29 @@ class _AchieveDayList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: List.generate(achiveD.length, (index) {
-        return _AchieveBox(index: index, check: userData.checkD[index], tail: '日');
+        return _AchieveBox(
+            index: index, check: userData.checkD[index], tail: '日');
       }),
     );
   }
 }
 
 class _AchieveBox extends StatelessWidget {
-  _AchieveBox({@required this.index, @required this.check, @required this.tail});
+  _AchieveBox(
+      {@required this.index, @required this.check, @required this.tail});
   final int index;
   final bool check;
   final String tail;
   @override
   Widget build(BuildContext context) {
-    final int colorIndex = (tail=='分')?index*2+3:index*2+2;
-    final String text = (tail=='分')?achiveM[index].toString()+tail:achiveD[index].toString()+tail;
+    final int colorIndex = (tail == '分') ? index * 2 + 3 : index * 2 + 2;
+    final String text = (tail == '分')
+        ? achiveM[index].toString() + tail
+        : achiveD[index].toString() + tail;
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: displaySize.width / 20,
-        vertical: displaySize.width/35,
+        vertical: displaySize.width / 35,
       ),
       child: Card(
         shape: RoundedRectangleBorder(

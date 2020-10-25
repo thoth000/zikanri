@@ -200,6 +200,7 @@ class __TitleFieldWidgetState extends State<_TitleFieldWidget> {
       ),
       decoration: InputDecoration(
         hintText: 'どんな活動？',
+        contentPadding: EdgeInsets.all(displaySize.width / 35),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
@@ -207,7 +208,6 @@ class __TitleFieldWidgetState extends State<_TitleFieldWidget> {
             width: 2,
           ),
         ),
-        contentPadding: EdgeInsets.all(displaySize.width / 30),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
@@ -260,6 +260,7 @@ class __MinuteFieldWidgetState extends State<_MinuteFieldWidget> {
       textInputAction: TextInputAction.go,
       decoration: InputDecoration(
         hintText: '何分？',
+        contentPadding: EdgeInsets.all(displaySize.width / 35),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
@@ -267,7 +268,6 @@ class __MinuteFieldWidgetState extends State<_MinuteFieldWidget> {
             width: 2,
           ),
         ),
-        contentPadding: EdgeInsets.all(displaySize.width / 30),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
@@ -342,7 +342,7 @@ class _ActivityInfoWidget extends StatelessWidget {
                             boolean: false,
                           ),
                           SizedBox(
-                            width: displaySize.width / 50,
+                            width: displaySize.width / 35,
                           ),
                           _ValueSelectBloc(
                             boolean: true,
@@ -378,8 +378,8 @@ class _ValueSelectBloc extends StatelessWidget {
     Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     //widget
     return Container(
-      height: displaySize.width / 7,
-      width: displaySize.width / 7,
+      height: displaySize.width / 7.5,
+      width: displaySize.width / 7.5,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         border: Border.all(

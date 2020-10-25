@@ -38,7 +38,7 @@ class HomePage extends StatelessWidget {
           height: displaySize.width / 17,
         ),
         Padding(
-          padding: EdgeInsets.all(displaySize.width/35),
+          padding: EdgeInsets.all(displaySize.width / 35),
           child: _DataInfoText(
             today: today,
             dataTitle: '今日の情報',

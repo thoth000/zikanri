@@ -14,7 +14,7 @@ class PrivacyPage extends StatelessWidget {
         pageTitle: 'プライバシーポリシー',
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: displaySize.width/35),
+        padding: EdgeInsets.symmetric(horizontal: displaySize.width / 35),
         child: ListView(
           children: [
             Text(

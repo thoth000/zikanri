@@ -296,7 +296,7 @@ class _ThemeChanger extends StatelessWidget {
     return Container(
       height: displaySize.width / 7,
       width: displaySize.width / 7,
-      margin: EdgeInsets.all(displaySize.width/35),
+      margin: EdgeInsets.all(displaySize.width / 35),
       child: Stack(
         children: [
           Container(

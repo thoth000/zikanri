@@ -52,10 +52,10 @@ class _ChangeNameSheetState extends State<ChangeNameSheet> {
         children: [
           BottomSheetBar(),
           SizedBox(
-            height: displaySize.width/17,
+            height: displaySize.width / 17,
           ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: displaySize.width/25),
+            margin: EdgeInsets.symmetric(horizontal: displaySize.width / 25),
             child: TextField(
               autofocus: true,
               controller: nameController,
@@ -65,16 +65,19 @@ class _ChangeNameSheetState extends State<ChangeNameSheet> {
                 labelStyle: TextStyle(
                   color: themeColor,
                 ),
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: displaySize.width / 35,
+                  horizontal: displaySize.width / 35,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                   borderSide: BorderSide(
                     color: themeColor,
                     width: 2,
                   ),
-                ),
-                contentPadding: EdgeInsets.symmetric(
-                  vertical: displaySize.width / 30,
-                  horizontal: 10,
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -88,12 +91,12 @@ class _ChangeNameSheetState extends State<ChangeNameSheet> {
                 check(text);
               },
               style: TextStyle(
-                fontSize: FontSize.midium,
+                fontSize: FontSize.small,
               ),
             ),
           ),
           SizedBox(
-            height: displaySize.width/25,
+            height: displaySize.width / 25,
           ),
           Container(
             margin: EdgeInsets.all(15),

@@ -19,8 +19,8 @@ class Activity extends StatelessWidget {
     Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     //widget
     return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: displaySize.width/35,
+      padding: EdgeInsets.only(
+        top: displaySize.width / 30,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -34,7 +34,7 @@ class Activity extends StatelessWidget {
             color: (itemList[3]) ? color : Colors.grey,
           ),
           SizedBox(
-            width: displaySize.width/35,
+            width: displaySize.width / 35,
           ),
           Expanded(
             child: Row(
@@ -47,13 +47,13 @@ class Activity extends StatelessWidget {
                     softWrap: false,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      fontSize: FontSize.midium,
+                      fontSize: FontSize.small,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
                 SizedBox(
-                  width: displaySize.width/35,
+                  width: displaySize.width / 35,
                 ),
                 Text(
                   itemList[2].toString() + '分',

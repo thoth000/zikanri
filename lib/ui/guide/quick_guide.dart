@@ -129,7 +129,7 @@ class _ActiveTimer extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
         ),
-        padding: EdgeInsets.all(displaySize.width/35),
+        padding: EdgeInsets.all(displaySize.width / 35),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -149,9 +149,7 @@ class _ActiveTimer extends StatelessWidget {
                           size: displaySize.width / 10,
                           color: Colors.grey,
                         ),
-                        SizedBox(
-                          width: displaySize.width/35
-                        ),
+                        SizedBox(width: displaySize.width / 35),
                         Flexible(
                           child: Text(
                             '活動タイトル',
@@ -299,7 +297,7 @@ class _ClosePageButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return RaisedButton(
       child: Padding(
-        padding: EdgeInsets.all(displaySize.width/35),
+        padding: EdgeInsets.all(displaySize.width / 35),
         child: Text(
           'クイックガイドを閉じる',
           style: TextStyle(

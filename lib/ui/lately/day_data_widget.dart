@@ -49,12 +49,12 @@ class DayDataWidget extends StatelessWidget {
     return RepaintBoundary(
       key: _globalKey,
       child: Container(
-        height: displaySize.width / 2 + displaySize.width/17,
+        height: displaySize.width / 2 + displaySize.width / 17,
         width: displaySize.width,
         color:
             (theme.isDark) ? const Color(0XFF303030) : const Color(0XFFFAFAFA),
         child: Padding(
-          padding: EdgeInsets.all(displaySize.width/35),
+          padding: EdgeInsets.all(displaySize.width / 35),
           child: Card(
             elevation: 5,
             shape: RoundedRectangleBorder(

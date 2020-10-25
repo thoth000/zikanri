@@ -43,14 +43,14 @@ class ShortCutSheet extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: displaySize.width/35,
+              height: displaySize.width / 35,
             ),
             _MoveShortCutEditButton(),
             SizedBox(
-              height: displaySize.width/70,
+              height: displaySize.width / 70,
             ),
             Divider(
-              height: displaySize.width/35,
+              height: displaySize.width / 35,
             ),
             _ShortCutList(),
           ],
@@ -123,7 +123,7 @@ class _ShortCut extends StatelessWidget {
     final Color color =
         (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: displaySize.width/70),
+      padding: EdgeInsets.symmetric(vertical: displaySize.width / 70),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
@@ -167,7 +167,7 @@ class _ShortCut extends StatelessWidget {
                           size: displaySize.width / 10,
                         ),
                         SizedBox(
-                          width: displaySize.width/35,
+                          width: displaySize.width / 35,
                         ),
                         Flexible(
                           child: Text(
@@ -183,7 +183,7 @@ class _ShortCut extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    width: displaySize.width/35,
+                    width: displaySize.width / 35,
                   ),
                   Container(
                     padding: EdgeInsets.all(5),

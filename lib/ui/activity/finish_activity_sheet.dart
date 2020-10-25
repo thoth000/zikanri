@@ -101,7 +101,7 @@ class _ActivityInfo extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: displaySize.width/70,
+            height: displaySize.width / 70,
           ),
           Row(
             children: [
@@ -152,7 +152,7 @@ class _SelectValueBlocList extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: displaySize.width/70,
+            height: displaySize.width / 70,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,

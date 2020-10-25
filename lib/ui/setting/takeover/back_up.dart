@@ -200,21 +200,41 @@ class __UserIDFieldState extends State<_UserIDField> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeNotifier>(context);
+    final Color themeColor =
+        (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: displaySize.width/25,
+        horizontal: displaySize.width / 25,
       ),
       child: TextField(
         controller: userIDController,
         decoration: InputDecoration(
+          labelText: 'ユーザーID',
+          labelStyle: TextStyle(
+            color: themeColor,
+          ),
+          contentPadding: EdgeInsets.symmetric(
+            vertical: displaySize.width / 35,
+            horizontal: displaySize.width / 35,
+          ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5),
           ),
-          contentPadding: EdgeInsets.symmetric(
-            vertical: displaySize.width/35,
-            horizontal: displaySize.width/35,
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: themeColor,
+              width: 2,
+            ),
           ),
-          labelText: 'ユーザーID',
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: Colors.grey,
+              width: 2,
+            ),
+          ),
         ),
         readOnly: true,
         onTap: () {},
@@ -240,21 +260,41 @@ class __CodeFieldState extends State<_CodeField> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeNotifier>(context);
+    final Color themeColor =
+        (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: displaySize.width/25,
+        horizontal: displaySize.width / 25,
       ),
       child: TextField(
         controller: codeController,
         decoration: InputDecoration(
+          labelText: 'バックアップコード',
+          labelStyle: TextStyle(
+            color: themeColor,
+          ),
+          contentPadding: EdgeInsets.symmetric(
+            vertical: displaySize.width / 35,
+            horizontal: displaySize.width / 35,
+          ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5),
           ),
-          contentPadding: EdgeInsets.symmetric(
-            vertical: displaySize.width/35,
-            horizontal: displaySize.width/35,
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: themeColor,
+              width: 2,
+            ),
           ),
-          labelText: 'バックアップコード',
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: Colors.grey,
+              width: 2,
+            ),
+          ),
         ),
         readOnly: true,
       ),

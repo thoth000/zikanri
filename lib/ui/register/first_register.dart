@@ -66,15 +66,15 @@ class __UserIDFieldState extends State<_UserIDField> {
   Widget build(BuildContext context) {
     final RegisterController registerController =
         Provider.of<RegisterController>(context);
+    final theme = Provider.of<ThemeNotifier>(context);
+    final Color themeColor =
+        (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return Container(
       margin: EdgeInsets.symmetric(horizontal: displaySize.width / 15),
       child: TextField(
         controller: userIDController,
         decoration: InputDecoration(
           hintText: 'ユーザーID',
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-          ),
           contentPadding: EdgeInsets.symmetric(
             vertical: 10,
             horizontal: 10,
@@ -83,6 +83,23 @@ class __UserIDFieldState extends State<_UserIDField> {
               (registerController.isCanRegister || !registerController.isTap)
                   ? null
                   : registerController.message,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: themeColor,
+              width: 2,
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: Colors.grey,
+              width: 2,
+            ),
+          ),
         ),
         onChanged: (text) {
           registerController.changeID(text);

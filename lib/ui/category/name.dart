@@ -1,6 +1,5 @@
 //packages
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 //my files
@@ -42,7 +41,8 @@ class _EditNameSheetState extends State<EditNameSheet> {
         (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return Padding(
       padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom * 1.1),
+        bottom: MediaQuery.of(context).viewInsets.bottom * 1.1,
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -61,16 +61,19 @@ class _EditNameSheetState extends State<EditNameSheet> {
               autofocus: true,
               decoration: InputDecoration(
                 hintText: 'カテゴリーの名前',
-                focusedBorder: OutlineInputBorder(
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: displaySize.width / 35,
+                  horizontal: displaySize.width / 35,
+                ),
+                border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(5),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
                   borderSide: BorderSide(
                     color: themeColor,
                     width: 2,
                   ),
-                ),
-                contentPadding: EdgeInsets.symmetric(
-                  vertical: displaySize.width / 30,
-                  horizontal: 10,
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -83,7 +86,7 @@ class _EditNameSheetState extends State<EditNameSheet> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(displaySize.width/35),
+            padding: EdgeInsets.all(displaySize.width / 35),
             child: Container(
               height: displaySize.width / 6.5,
               decoration: BoxDecoration(

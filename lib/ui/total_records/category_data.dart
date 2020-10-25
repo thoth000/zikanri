@@ -24,15 +24,15 @@ class CategoryDataPage extends StatelessWidget {
         child: Column(
           children: <Widget>[
             SizedBox(
-              height: displaySize.width/35,
+              height: displaySize.width / 35,
             ),
             _CategoryInfo(index: index),
             SizedBox(
-              height: displaySize.width/35,
+              height: displaySize.width / 35,
             ),
             _CircularChart(index: index),
             SizedBox(
-              height: displaySize.width/35,
+              height: displaySize.width / 35,
             ),
             _CategoryRecordData(index: index),
           ],
@@ -58,7 +58,7 @@ class _CategoryInfo extends StatelessWidget {
           size: displaySize.width / 10,
         ),
         SizedBox(
-          width: displaySize.width/35,
+          width: displaySize.width / 35,
         ),
         Flexible(
           child: Text(
@@ -82,7 +82,7 @@ class _CircularChart extends StatelessWidget {
     final theme = Provider.of<ThemeNotifier>(context, listen: false);
     final userData = Provider.of<UserDataNotifier>(context, listen: false);
     Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
-    Color subcolor = (theme.isDark) ? Colors.grey[700] : Colors.grey[200];
+    Color subcolor = (theme.isDark) ? Colors.grey[700] : Colors.grey[300];
     //chart data
     final GlobalKey<AnimatedCircularChartState> _chartKey =
         new GlobalKey<AnimatedCircularChartState>();

@@ -46,10 +46,10 @@ class SettingPage extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           SizedBox(
-            height: displaySize.width/12,
+            height: displaySize.width / 12,
           ),
           Padding(
-            padding: EdgeInsets.all(displaySize.width/35),
+            padding: EdgeInsets.all(displaySize.width / 35),
             child: Text(
               '基本機能',
               style: TextStyle(
@@ -181,10 +181,10 @@ class SettingPage extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: displaySize.width/12,
+            height: displaySize.width / 12,
           ),
           Padding(
-            padding: EdgeInsets.all(displaySize.width/35),
+            padding: EdgeInsets.all(displaySize.width / 35),
             child: Text(
               'その他',
               style: TextStyle(

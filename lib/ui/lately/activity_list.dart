@@ -19,7 +19,9 @@ class ActivityList extends StatelessWidget {
     final int index = controller.index;
     //widget
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: displaySize.width/35,),
+      padding: EdgeInsets.symmetric(
+        horizontal: displaySize.width / 35,
+      ),
       child: Card(
         elevation: 5,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
@@ -34,14 +36,14 @@ class ActivityList extends StatelessWidget {
           ),
           child: Padding(
             padding: EdgeInsets.only(
-              top: displaySize.width/35,
-              left: displaySize.width/17,
-              right: displaySize.width/17,
+              top: displaySize.width / 35,
+              left: displaySize.width / 17,
+              right: displaySize.width / 17,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                SizedBox(height: displaySize.width/35),
+                SizedBox(height: displaySize.width / 35),
                 Text(
                   '記録',
                   style: TextStyle(
@@ -50,7 +52,7 @@ class ActivityList extends StatelessWidget {
                   ),
                 ),
                 Divider(
-                  height: displaySize.width/70,
+                  height: displaySize.width / 70,
                 ),
                 _ActivityList(index: index),
                 _NotifyTextWidget(index: index),

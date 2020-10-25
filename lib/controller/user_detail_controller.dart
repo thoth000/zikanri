@@ -7,7 +7,7 @@ class UserDetailController with ChangeNotifier {
     @required this.isDark,
     @required this.isFavorite,
     @required this.user,
-  }){
+  }) {
     this.hideColor = this.themeColor;
     notifyListeners();
   }

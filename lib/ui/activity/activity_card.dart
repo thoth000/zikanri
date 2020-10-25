@@ -22,7 +22,7 @@ class ActivityCard extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
         ),
-        padding: EdgeInsets.all(displaySize.width/35),
+        padding: EdgeInsets.all(displaySize.width / 35),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -49,47 +49,36 @@ class _ActivityInfo extends StatelessWidget {
       width: displaySize.width,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
+          Icon(
+            IconData(
+              userData.categories[userData.activities[index][3]][0],
+              fontFamily: 'MaterialIcons',
+            ),
+            size: displaySize.width / 10,
+            color: Colors.grey,
+          ),
           SizedBox(
-            width: displaySize.width / 1.6,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Icon(
-                  IconData(
-                    userData.categories[userData.activities[index][3]][0],
-                    fontFamily: 'MaterialIcons',
-                  ),
-                  size: displaySize.width / 10,
-                  color: Colors.grey,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Flexible(
-                  child: Text(
-                    userData.activities[index][2],
-                    overflow: TextOverflow.ellipsis,
-                    softWrap: false,
-                    style: TextStyle(
-                      fontSize: FontSize.small,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-              ],
+            width: displaySize.width / 35,
+          ),
+          Flexible(
+            child: Text(
+              userData.activities[index][2],
+              overflow: TextOverflow.ellipsis,
+              softWrap: false,
+              style: TextStyle(
+                fontSize: FontSize.small,
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Text(
-                  userData.activities[index][5].toString() + '分',
-                  style: TextStyle(fontSize: FontSize.midium),
-                ),
-              ],
-            ),
+          SizedBox(
+            width: displaySize.width / 35,
+          ),
+          Text(
+            userData.activities[index][5].toString() + '分',
+            style: TextStyle(fontSize: FontSize.midium),
           ),
         ],
       ),

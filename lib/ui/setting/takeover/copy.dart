@@ -191,23 +191,40 @@ class __UserIDFieldState extends State<_UserIDField> {
     final Color themeColor =
         (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: displaySize.width/25),
+      padding: EdgeInsets.symmetric(horizontal: displaySize.width / 25),
       child: TextField(
         controller: userIDController,
         cursorColor: themeColor,
         decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-          ),
-          contentPadding: EdgeInsets.symmetric(
-            vertical: displaySize.width/35,
-            horizontal: displaySize.width/35,
-          ),
           labelText: 'ユーザーID',
+          labelStyle: TextStyle(
+            color: userIDController.text.isEmpty ? Colors.grey : themeColor,
+          ),
           errorText:
               (copyController.checkUserID.isEmpty || !copyController.isTapID)
                   ? null
                   : copyController.checkUserID,
+          contentPadding: EdgeInsets.symmetric(
+            vertical: displaySize.width / 35,
+            horizontal: displaySize.width / 35,
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: themeColor,
+              width: 2,
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: Colors.grey,
+              width: 2,
+            ),
+          ),
         ),
         onChanged: (text) {
           copyController.changeUserID(text);
@@ -240,22 +257,39 @@ class __CodeFieldState extends State<_CodeField> {
     final Color themeColor =
         (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: displaySize.width/25),
+      padding: EdgeInsets.symmetric(horizontal: displaySize.width / 25),
       child: TextField(
         controller: codeController,
         cursorColor: themeColor,
         decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-          ),
-          contentPadding: EdgeInsets.symmetric(
-            vertical: displaySize.width/35,
-            horizontal: displaySize.width/35,
-          ),
           labelText: 'バックアップコード',
+          labelStyle: TextStyle(
+            color: codeController.text.isEmpty ? Colors.grey : themeColor,
+          ),
           errorText: (copyController.checkCode || !copyController.isTapCode)
               ? null
               : 'バックアップコードは6文字です。',
+          contentPadding: EdgeInsets.symmetric(
+            vertical: displaySize.width / 35,
+            horizontal: displaySize.width / 35,
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: themeColor,
+              width: 2,
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: Colors.grey,
+              width: 2,
+            ),
+          ),
         ),
         onChanged: (text) {
           copyController.changeCode(text);

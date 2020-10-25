@@ -49,7 +49,7 @@ class WelcomePage extends StatelessWidget {
             ),
             child: RaisedButton(
               child: Padding(
-                padding: EdgeInsets.all(displaySize.width/25),
+                padding: EdgeInsets.all(displaySize.width / 25),
                 child: Text(
                   '次に進む',
                   style: TextStyle(

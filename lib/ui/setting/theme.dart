@@ -27,21 +27,21 @@ class ThemeSettingPage extends StatelessWidget {
             height: displaySize.width / 20,
           ),
           Divider(
-            height: displaySize.width/12,
+            height: displaySize.width / 12,
             thickness: 1,
-            indent: displaySize.width/35,
-            endIndent: displaySize.width/35,
+            indent: displaySize.width / 35,
+            endIndent: displaySize.width / 35,
           ),
           _DarkModeChanger(),
           Divider(
-            height: displaySize.width/12,
+            height: displaySize.width / 12,
             thickness: 1,
-            indent: displaySize.width/35,
-            endIndent: displaySize.width/35,
+            indent: displaySize.width / 35,
+            endIndent: displaySize.width / 35,
           ),
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: displaySize.width/35,
+              horizontal: displaySize.width / 35,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +54,7 @@ class ThemeSettingPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: displaySize.width/35,
+                  height: displaySize.width / 35,
                 ),
                 Wrap(
                   children: List.generate(
@@ -159,7 +159,7 @@ class _DarkModeChanger extends StatelessWidget {
     return Container(
       height: displaySize.width / 9,
       width: displaySize.width,
-      padding: EdgeInsets.symmetric(horizontal: displaySize.width/35),
+      padding: EdgeInsets.symmetric(horizontal: displaySize.width / 35),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -195,7 +195,7 @@ class _ThemeChanger extends StatelessWidget {
     final userData = Provider.of<UserDataNotifier>(context);
     if (userData.myColors[i]) {
       return Padding(
-        padding: EdgeInsets.all(displaySize.width/35),
+        padding: EdgeInsets.all(displaySize.width / 35),
         child: Container(
           height: displaySize.width / 8,
           width: displaySize.width / 8,

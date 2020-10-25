@@ -590,8 +590,8 @@ class UserDataNotifier with ChangeNotifier {
     await userDataBox.put('myColors', myColors);
   }
 
-  Future<void> changeBackUpCanDate() async{
-    backUpCanDate = DateTime.now().add(Duration(days:30));
+  Future<void> changeBackUpCanDate() async {
+    backUpCanDate = DateTime.now().add(Duration(days: 30));
     notifyListeners();
     await userDataBox.put('backUpCanDate', backUpCanDate);
   }

@@ -62,9 +62,9 @@ class _CategoryDataWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context);
     return Container(
-      height: displaySize.width / 3.4,
+      height: displaySize.width / 3.2,
       width: displaySize.width / 1.7,
-      padding: EdgeInsets.all(displaySize.width / 35),
+      padding: EdgeInsets.all(displaySize.width / 50),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
       ),

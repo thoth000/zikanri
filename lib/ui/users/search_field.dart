@@ -60,8 +60,8 @@ class __SearchTextFieldState extends State<_SearchTextField> {
               decoration: InputDecoration(
                 hintText: '@でID検索, 名前検索',
                 contentPadding: EdgeInsets.symmetric(
-                  vertical: displaySize.width / 30,
-                  horizontal: 10,
+                  vertical: displaySize.width / 35,
+                  horizontal: displaySize.width / 35,
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),

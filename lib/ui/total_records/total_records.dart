@@ -20,12 +20,12 @@ class TotalRecordPage extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: displaySize.width / 5.5,
-              vertical: displaySize.width/35,
+              vertical: displaySize.width / 35,
             ),
             child: _TopCardSwiper(),
           ),
           SizedBox(
-            height: displaySize.width/35,
+            height: displaySize.width / 35,
           ),
           _CategoryGrid(),
           SizedBox(
@@ -100,7 +100,7 @@ class _TopAlignCard extends StatelessWidget {
           size: displaySize.width / 10,
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: displaySize.width/70),
+          padding: EdgeInsets.symmetric(horizontal: displaySize.width / 70),
           child: Text(
             dataValue,
             style: TextStyle(
@@ -134,7 +134,7 @@ class _CategoryGrid extends StatelessWidget {
           if (categoryView[index]) {
             return Padding(
               padding: EdgeInsets.only(
-                bottom: displaySize.width/35,
+                bottom: displaySize.width / 35,
               ),
               child: _GridCard(index: index),
             );
@@ -205,7 +205,7 @@ class _CategoryDataWidget extends StatelessWidget {
     int icon = list[0];
     String title = list[1];
     return Padding(
-      padding: EdgeInsets.only(top: displaySize.width/70),
+      padding: EdgeInsets.only(top: displaySize.width / 70),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -214,7 +214,7 @@ class _CategoryDataWidget extends StatelessWidget {
             size: displaySize.width / 15,
           ),
           SizedBox(
-            width: displaySize.width/70,
+            width: displaySize.width / 70,
           ),
           Expanded(
             child: Text(
@@ -242,7 +242,7 @@ class _CircularChart extends StatelessWidget {
     final theme = Provider.of<ThemeNotifier>(context);
     final userData = Provider.of<UserDataNotifier>(context);
     Color color = (theme.isDark) ? theme.themeColors[0] : theme.themeColors[1];
-    Color subcolor = (theme.isDark) ? Colors.grey[700] : Colors.grey[200];
+    Color subcolor = (theme.isDark) ? Colors.grey[700] : Colors.grey[300];
     //chart data
     final GlobalKey<AnimatedCircularChartState> _chartKey =
         new GlobalKey<AnimatedCircularChartState>();

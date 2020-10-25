@@ -18,22 +18,22 @@ class TodayDoneWidget extends StatelessWidget {
     final List itemList = userData.todayDoneList[index];
     return Padding(
       padding: EdgeInsets.only(
-        top: displaySize.width/35,
-        left: displaySize.width/35,
+        top: displaySize.width / 35,
+        left: displaySize.width / 70,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(right: displaySize.width/35),
-            child: Icon(
-              IconData(
-                userData.categories[itemList[0]][0],
-                fontFamily: 'MaterialIcons',
-              ),
-              size: displaySize.width / 10,
-              color: (itemList[3]) ? color : Colors.grey,
+          Icon(
+            IconData(
+              userData.categories[itemList[0]][0],
+              fontFamily: 'MaterialIcons',
             ),
+            size: displaySize.width / 10,
+            color: (itemList[3]) ? color : Colors.grey,
+          ),
+          SizedBox(
+            width: displaySize.width / 35,
           ),
           Expanded(
             child: Column(

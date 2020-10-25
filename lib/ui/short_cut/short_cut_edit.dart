@@ -54,7 +54,7 @@ class _ShortCutItem extends StatelessWidget {
     return Row(
       children: <Widget>[
         SizedBox(
-          width: displaySize.width/70,
+          width: displaySize.width / 70,
         ),
         Expanded(
           child: Card(
@@ -73,7 +73,7 @@ class _ShortCutItem extends StatelessWidget {
                 softWrap: false,
               ),
               trailing: Container(
-                padding: EdgeInsets.all(displaySize.width/70),
+                padding: EdgeInsets.all(displaySize.width / 70),
                 decoration: BoxDecoration(
                     border: Border.all(
                       color: Colors.grey[300],
@@ -104,7 +104,7 @@ class _ShortCutItem extends StatelessWidget {
           },
         ),
         SizedBox(
-          width: displaySize.width/70,
+          width: displaySize.width / 70,
         ),
       ],
     );

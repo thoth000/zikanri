@@ -60,14 +60,14 @@ class AddSheet extends StatelessWidget {
             child: _TimeFieldWidget(),
           ),
           SizedBox(
-            height: displaySize.width/25,
+            height: displaySize.width / 25,
           ),
           Padding(
-            padding: EdgeInsets.all(displaySize.width/35),
+            padding: EdgeInsets.all(displaySize.width / 35),
             child: _AddTimeButton(),
           ),
           SizedBox(
-            height: displaySize.width/25,
+            height: displaySize.width / 25,
           ),
         ],
       ),
@@ -100,7 +100,7 @@ class __TimeFieldWidgetState extends State<_TimeFieldWidget> {
       autofocus: true,
       controller: textController,
       style: TextStyle(
-        fontSize: FontSize.midium,
+        fontSize: FontSize.small,
       ),
       keyboardType: TextInputType.number,
       textInputAction: TextInputAction.go,
@@ -118,8 +118,8 @@ class __TimeFieldWidgetState extends State<_TimeFieldWidget> {
           ),
         ),
         contentPadding: EdgeInsets.symmetric(
-          vertical: 10,
-          horizontal: 10,
+          vertical: displaySize.width / 35,
+          horizontal: displaySize.width / 35,
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
