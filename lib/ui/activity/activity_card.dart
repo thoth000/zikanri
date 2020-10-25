@@ -13,7 +13,7 @@ class ActivityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 5,
+      elevation: 3,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
@@ -62,7 +62,7 @@ class _ActivityInfo extends StatelessWidget {
           SizedBox(
             width: displaySize.width / 35,
           ),
-          Flexible(
+          Expanded(
             child: Text(
               userData.activities[index][2],
               overflow: TextOverflow.ellipsis,

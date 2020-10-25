@@ -59,6 +59,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'ジカンリ',
       theme: Provider.of<ThemeNotifier>(context).buildTheme(),
       home: SplashPage(),
