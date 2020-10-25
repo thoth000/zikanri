@@ -55,7 +55,7 @@ class BackUpPage extends StatelessWidget {
           SizedBox(
             height: displaySize.width / 10,
           ),
-          BackUpButton(),
+          _BackUpButton(),
         ],
       ),
     );
@@ -114,7 +114,7 @@ class _HelpDialog extends StatelessWidget {
   }
 }
 
-class BackUpButton extends StatelessWidget {
+class _BackUpButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userData = Provider.of<UserDataNotifier>(context);
@@ -151,6 +151,7 @@ class BackUpButton extends StatelessWidget {
                     final String result = await FirebaseBackUpService()
                         .uploadData(userID, data, userData.categories);
                     if (result == 'success') {
+                      await userData.changeBackUpCanDate();
                       final String message =
                           'データのバックアップが完了しました。次のバックアップは1ヶ月後に可能です。';
                       await showDialog(

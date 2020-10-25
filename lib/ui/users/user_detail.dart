@@ -127,7 +127,7 @@ class _FavoriteAppBar extends StatelessWidget with PreferredSizeWidget {
     final userData = Provider.of<UserDataNotifier>(context);
 
     Future<void> changeIsFavorite(bool isFavorite) async {
-      if (isFavorite) {
+      if (!isFavorite) {
         Provider.of<UsersController>(context, listen: false)
             .addFavoriteUser(user);
         await Provider.of<UserDataNotifier>(context, listen: false)
@@ -158,8 +158,10 @@ class _FavoriteAppBar extends StatelessWidget with PreferredSizeWidget {
                 ),
                 color: (isFavorite) ? themeColor : Colors.grey,
                 onPressed: () async {
-                  userDetailController.switchFavorite();
                   await changeIsFavorite(isFavorite);
+                  userDetailController.switchFavorite();
+                  await Future.delayed(Duration(milliseconds: 100));
+                  print(isFavorite);
                 },
               )
             : SizedBox(),
@@ -189,7 +191,8 @@ class _PageCover extends StatelessWidget {
         curve: Curves.linear,
         decoration: BoxDecoration(
           color: userDetailController.hideColor.withOpacity(0.7),
-          borderRadius: BorderRadius.circular(userDetailController.borderRadius),
+          borderRadius:
+              BorderRadius.circular(userDetailController.borderRadius),
         ),
       ),
     );
