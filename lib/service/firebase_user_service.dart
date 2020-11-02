@@ -16,12 +16,12 @@ class FirebaseUserService {
   Future<List<Map>> getFeaturedUserData() async {
     final DateTime now = DateTime.now();
     final DateTime today = DateTime(now.year, now.month, now.day);
-    final int getLimit = 5;
+    final int getLimit = 8;
     List<Map<String, dynamic>> featuredUsers;
     //日付が今日のデータのみ抽出する
     final QuerySnapshot result = await db
         .collection('data/v2/users')
-        .orderBy('todayGood', descending: true)
+        .orderBy('openDate', descending: true)
         .limit(getLimit)
         .get();
     featuredUsers = result.docs.map((doc) {
