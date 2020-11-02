@@ -228,7 +228,7 @@ class _FeaturedUserList extends StatelessWidget {
                         softWrap: false,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      trailing: Text(user['todayGood'].toString() + '分'),
+                      //trailing: Text(user['todayGood'].toString() + '分'),
                       onTap: () {
                         Navigator.push(
                           context,
