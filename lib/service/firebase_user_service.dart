@@ -66,6 +66,8 @@ class FirebaseUserService {
   //検索無効時には[]を返す
   //ユーザーが見つからない場合、userID='noUser'のMapを一つ返す
   Future<List<Map<String, dynamic>>> getSearchedUsers(String text) async {
+    final DateTime now = DateTime.now();
+    final DateTime today = DateTime(now.year, now.month, now.day);
     if (text.isEmpty) {
       return [];
     }
@@ -74,7 +76,14 @@ class FirebaseUserService {
       final String userID = text.substring(1);
       final result = await db.collection('data/v2/users').doc('$userID').get();
       if (result.exists) {
-        return [result.data()];
+        final userData = result.data();
+        //データ保存日時の判定
+        final Timestamp openTimestamp = userData['openDate'];
+        if (openTimestamp.toDate() != today) {
+          userData['todayTime'] = 0;
+          userData['todayGood'] = 0;
+        }
+        return [userData];
       }
       return [
         {
@@ -88,8 +97,15 @@ class FirebaseUserService {
         .collection('data/v2/users')
         .orderBy('name')
         .startAt([text]).endAt([text + '\uf8ff']).get();
-    final List<Map<String, dynamic>> searchedUsers =
-        result.docs.map((doc) => doc.data()).toList();
+    final List<Map<String, dynamic>> searchedUsers = result.docs.map((doc) {
+      final userData = doc.data();
+      final Timestamp openTimestamp = userData['openDate'];
+      if (openTimestamp.toDate() != today) {
+        userData['todayTime'] = 0;
+        userData['todayGood'] = 0;
+      }
+      return userData;
+    }).toList();
     if (searchedUsers.isEmpty) {
       return [
         {
