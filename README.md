@@ -1,6 +1,7 @@
 # zikanri
 
 A new Flutter application.
+
 アプリ甲子園2020 全国4位
 
 ## 開発環境
